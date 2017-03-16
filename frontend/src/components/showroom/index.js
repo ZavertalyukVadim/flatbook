@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-
+import GridExample from '../grid';
 import Input from '../input';
 
 export default class Showroom extends Component {
@@ -23,6 +23,7 @@ export default class Showroom extends Component {
                        validationState="success"/>
                 <Input placeholder="success" type="text" value={this.state.value} onChange={this.onChange}
                        disabled={true}/>
+                <GridExample/>
             </div>
         );
     }
