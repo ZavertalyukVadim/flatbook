@@ -1,6 +1,6 @@
 import React from 'react';
 import {render} from 'react-dom';
 
-import Showroom from './components/showroom'
+import App from './app';
 
-render(<Showroom/>, document.getElementById('root'));
+render(<App/>, document.getElementById('root'));
