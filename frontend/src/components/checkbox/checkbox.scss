@@ -1,0 +1,33 @@
+.checkbox {
+  display: flex;
+
+  .checkbox-checked,
+  .checkbox-unchecked {
+    width: 20px;
+    height: 20px;
+    border-radius: 3px;
+    font-size: 14px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: 0.2s linear;
+    color: #FFFFFF;
+    margin-right: 4px;
+  }
+
+  .checkbox-checked {
+    background-color: #1ABC9C;
+
+    &:before {
+      content: "\2714";
+    }
+  }
+
+  .checkbox-unchecked {
+    background-color: #BDC3C7;
+  }
+
+  .checkbox-disabled {
+    background-color: #E6E8EA;
+  }
+}
