@@ -1,0 +1,13 @@
+{
+    "plugins": [
+        "syntax-flow",
+        "transform-flow-strip-types",
+        "transform-object-rest-spread",
+        "transform-class-properties"
+    ],
+    "presets": [
+        "es2015",
+        "es2016",
+        "react"
+    ]
+}
