@@ -20,7 +20,7 @@ const Input = props => {
             value={value}
             className={`input input-${validationState}`}
         />
-    )
+    );
 };
 
 Input.propTypes = {
