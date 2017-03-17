@@ -1,10 +1,9 @@
 import React, {Component} from 'react';
-import GridExample from '../grid';
+import GridExample from './grid-example';
 import Input from '../input';
 import Checkbox from '../checkbox';
 import Button from '../button';
 import Textarea from '../textarea';
-import '../grid/grid.scss';
 
 export default class Showroom extends Component {
     constructor(props) {

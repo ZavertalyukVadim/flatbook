@@ -1,13 +1,5 @@
-$btn-success-background: #2ecc71;
-$btn-primary-background: #3498db;
-$btn-danger-background: #e74c3c;
-$btn-info-background: #3498db;
+@import "../../style/color-theme.scss";
 
-$btn-success-hover: #58d68d;
-$btn-primary-hover: #5dade2;
-$btn-danger-hover: #ec7063;
-
-$btn-text-color: #fff;
 $btn-border-radius: 6px;
 
 .btn-default {
@@ -26,19 +18,19 @@ $btn-border-radius: 6px;
 /*Type*/
 
 .btn-info {
-  background-color: $btn-info-background;
+  background-color: $info;
 }
 
 .btn-danger {
-  background-color: $btn-danger-background;
+  background-color: $danger;
 }
 
 .btn-success {
-  background-color: $btn-success-background;
+  background-color: $success;
 }
 
 .btn-primary {
-  background-color: #1abc9c;
+  background-color: $primary;
 }
 
 .btn-disabled {
