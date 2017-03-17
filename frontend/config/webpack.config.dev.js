@@ -5,6 +5,7 @@ module.exports = webpackMerge(commonConfig, {
     devtool: 'source-map',
     devServer: {
         historyApiFallback: true,
-        stats: 'minimal'
+        stats: 'minimal',
+        port: 7070
     }
 });

@@ -1,14 +1,13 @@
 {
   "engines": {
-    "node": "6.9.1",
-    "npm": "3.10.8"
+    "node": "7.7.2",
+    "npm": "4.1.2"
   },
   "scripts": {
     "check": "npm run check:lint && npm run check:jest",
     "check:lint": "eslint .",
     "check:jest": "jest",
     "start": "cross-env NODE_ENV=development webpack-dev-server --inline --hot --config config/webpack.config.dev.js",
-    "prod": "npm run prod:build && npm run prod:launch",
     "prod:build": "rimraf build && npm run check && cross-env NODE_ENV=production webpack --config config/webpack.config.prod.js"
   },
   "devDependencies": {
