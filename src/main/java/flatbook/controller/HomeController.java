@@ -15,7 +15,7 @@ public class HomeController {
     @Autowired
     private TestService service;
 
-    @RequestMapping(value = "/test")
+    @RequestMapping(value = "/")
     @ResponseBody
     List<TestEntity> test(){
         return service.testEntities();
