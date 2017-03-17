@@ -1,11 +1,8 @@
-import React, {Component, PropTypes} from 'react';
+import React, {Component} from 'react';
 import './grid.scss';
 
 class GridExample extends Component {
-
     render() {
-      
-
         return (
             <div className="row">
                 <div className="col-1 offset-11">Col 1</div>

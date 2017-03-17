@@ -9,19 +9,20 @@ $column-numbers: (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12);
   content: " ";
   display: table;
 }
- 
-.row {
+
+.default-styles {
   width: 100%;
   box-sizing: border-box;
+}
+
+.row {
+  @extend .default-styles;
   overflow: hidden;
-  border: 1px solid black; //
 }
 
 [class^="col-"] {
-    width: 100%;
+    @extend .default-styles;
     float: left;
-    box-sizing: border-box;
-    border: 1px solid black; //
 }
   
 @each $column-number in $column-numbers {
