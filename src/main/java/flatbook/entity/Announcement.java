@@ -1,6 +1,7 @@
 package flatbook.entity;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 @Table(name ="announcement")
@@ -19,13 +20,17 @@ public class Announcement {
     @Column(name = "marker")
     private Boolean marker;
 
+    @Column(name = "date")
+    private Date date;
+
     public Announcement() {
     }
 
-    public Announcement(Integer price, String description, Boolean marker) {
+    public Announcement(Integer price, String description, Boolean marker, Date date) {
         this.price = price;
         this.description = description;
         this.marker = marker;
+        this.date = date;
     }
 
     public Integer getId() {
@@ -54,5 +59,13 @@ public class Announcement {
 
     public void setMarker(Boolean marker) {
         this.marker = marker;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
     }
 }
