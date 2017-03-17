@@ -1,0 +1,68 @@
+$btn-success-background: #2ecc71;
+$btn-primary-background: #3498db;
+$btn-danger-background: #e74c3c;
+$btn-info-background: #3498db;
+
+$btn-success-hover: #58d68d;
+$btn-primary-hover: #5dade2;
+$btn-danger-hover: #ec7063;
+
+$btn-text-color: #fff;
+$btn-border-radius: 6px;
+
+.btn-default {
+  text-align: center;
+  border: none;
+  border-radius: $btn-border-radius;
+  color: $btn-text-color;
+  margin: 5px;
+
+  &:hover {
+    opacity: .75;
+    transition: opacity 0.5s linear;
+  }
+}
+
+/*Type*/
+
+.btn-info {
+  background-color: $btn-info-background;
+}
+
+.btn-danger {
+  background-color: $btn-danger-background;
+}
+
+.btn-success {
+  background-color: $btn-success-background;
+}
+
+.btn-primary {
+  background-color: #1abc9c;
+}
+
+.btn-disabled {
+  cursor: not-allowed;
+  filter: alpha(opacity=65);
+  -webkit-box-shadow: none;
+  box-shadow: none;
+  opacity: .65;
+  background-color: #bdc3c7;
+}
+
+/*Size*/
+
+.small {
+  padding: 5px 10px;
+  font-size: 12px;
+}
+
+.medium {
+  padding: 6px 8px;
+  font-size: 16px;
+}
+
+.large {
+  padding: 10px 16px;
+  font-size: 18px;
+}
