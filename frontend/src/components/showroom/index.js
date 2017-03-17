@@ -3,6 +3,7 @@ import GridExample from '../grid';
 import Input from '../input';
 import Checkbox from '../checkbox';
 import Button from '../buttons';
+import Textarea from '../textarea';
 
 export default class Showroom extends Component {
     constructor(props) {
@@ -20,6 +21,7 @@ export default class Showroom extends Component {
         return (
             <div>
                 <h1>Hello world!</h1>
+                <Textarea value={this.state.value} onChange={this.onInputChange}/>
                 <Input placeholder="input" type="text" value={this.state.value} onChange={this.onInputChange}/>
                 <Input placeholder="error" type="text" value={this.state.value} onChange={this.onInputChange}
                        validationState="error"
