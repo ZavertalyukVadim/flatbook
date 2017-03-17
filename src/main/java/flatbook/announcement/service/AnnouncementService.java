@@ -13,11 +13,10 @@ public class AnnouncementService {
     private AnnouncementDao dao;
 
     public List<Announcement> getAllAnnouncement() {
-        test();
         return dao.findAll();
     }
 
-    private void test() {
+    public void test() {
         Announcement announcement = new Announcement(120, "ololo", false);
         Announcement announcement1 = new Announcement(121, "ololo1", false);
         Announcement announcement2 = new Announcement(122, "ololo2", false);

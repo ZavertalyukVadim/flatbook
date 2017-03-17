@@ -13,6 +13,11 @@ public class AnnouncementController {
     @Autowired
     private AnnouncementService service;
 
+    @RequestMapping(value = "/test", method = RequestMethod.GET)
+    public void test() {
+       service.test();
+    }
+
     @RequestMapping(value = "", method = RequestMethod.GET)
     public List<Announcement> getAllAnnouncement() {
         return service.getAllAnnouncement();
