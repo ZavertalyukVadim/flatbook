@@ -2,8 +2,9 @@ import React, {Component} from 'react';
 import GridExample from '../grid';
 import Input from '../input';
 import Checkbox from '../checkbox';
-import Button from '../buttons';
+import Button from '../button';
 import Textarea from '../textarea';
+import '../grid/grid.scss';
 
 export default class Showroom extends Component {
     constructor(props) {
@@ -35,47 +36,46 @@ export default class Showroom extends Component {
                 <Checkbox onClick={this.onCheckboxClick} checked={this.state.checked} disabled={false}>
                     Label </Checkbox>
                 <GridExample/>
-                <div>                   
                     <Button
-                        className='btn-success'
-                        size='large'
-                        children='Success'
-                    />
-                    
-                    <Button
-                        className='btn-danger'
-                        size='large'
-                        children='Danger'
+                        type="btn-primary"
+                        size="large"
+                        children="Primary Button"
                     />
                     <Button
-                        className='btn-primary'
-                        size='large'
-                        children='Primary'
-                    />
-                
-                    <Button
-                        className='btn-success'
-                        size='large'
-                        children='Large'
-                    />
-                    
-                    <Button
-                        className='btn-danger'
-                        size='medium'
-                        children='Medium'
+                        type="btn-success"
+                        size="large"
+                        children="Success Button"
                     />
                     <Button
-                        className='btn-primary'
-                        size='small'
-                        children='Small'
+                        type="btn-danger"
+                        size="large"
+                        children="Danger Button"
                     />
                     <Button
-                        className='btn-success'
-                        size='medium'
-                        children='Disabled'
+                        type="btn-info"
+                        size="large"
+                        children="Info Button"
+                    />
+                    <Button
+                        type="btn-success"
+                        size="large"
+                        children="Large"
+                    />
+                    <Button
+                        type="btn-danger"
+                        size="medium"
+                        children="Medium"
+                    />
+                    <Button
+                        type="btn-primary"
+                        size="small"
+                        children="Small"
+                    />
+                    <Button
+                        size="medium"
+                        children="Disabled"
                         disabled={true}
                     />
-                </div>
             </div>
         );
     }
