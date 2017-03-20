@@ -15,7 +15,7 @@ public class Amenity {
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinTable(name = "announcements_amenities", joinColumns = {
             @JoinColumn(name = "announcement_id", nullable = false, updatable = false)},
-            inverseJoinColumns = {@JoinColumn(name = "photo_id",
+            inverseJoinColumns = {@JoinColumn(name = "amenity_id",
                     nullable = false, updatable = false)})
     private List<Announcement> announcements = new ArrayList<>();
 
