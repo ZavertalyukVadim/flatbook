@@ -1,7 +1,7 @@
 package flatbook.announcement.service;
 
 import flatbook.announcement.dao.AnnouncementDao;
-import flatbook.entity.Announcement;
+import flatbook.announcement.entity.Announcement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

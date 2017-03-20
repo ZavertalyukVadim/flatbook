@@ -1,7 +1,7 @@
 package flatbook.announcement.controller;
 
 import flatbook.announcement.service.AnnouncementService;
-import flatbook.entity.Announcement;
+import flatbook.announcement.entity.Announcement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
