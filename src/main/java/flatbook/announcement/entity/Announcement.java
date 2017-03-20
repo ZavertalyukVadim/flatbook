@@ -6,11 +6,12 @@ import java.util.Date;
 import java.util.List;
 
 @Entity
-@Table(name ="announcement")
+@Table(name = "announcement")
 public class Announcement {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "announcement_id", nullable = false)
+    @Column(name = "id", nullable = false)
     private Integer id;
 
     @Column(name = "price")
@@ -25,12 +26,24 @@ public class Announcement {
     @Column(name = "visibility")
     private Boolean visibility;
 
-    @Column(name = "date")
-    private Date date;
+    @Column(name = "last_updated")
+    private Date lastUpdated;
 
-    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "announcements")
-    private
-    List<Amenity> amenities = new ArrayList<>();
+    @Column(name = "rooms")
+    private Integer rooms;
+
+    @Column(name = "living_places")
+    private Integer livingPlaces;
+
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinTable(name = "announcements_amenities", joinColumns = {
+            @JoinColumn(name = "id", nullable = false)},
+            inverseJoinColumns = {@JoinColumn(name = "amenity_id",
+                    nullable = false)})
+    private List<Amenity> amenities = new ArrayList<>();
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "announcement", cascade = CascadeType.ALL)
+    private List<Photo> photos = new ArrayList<>();
 
     public Announcement() {
     }
@@ -39,7 +52,7 @@ public class Announcement {
         this.price = price;
         this.description = description;
         this.visibility = visibility;
-        this.date = date;
+        this.lastUpdated = date;
     }
 
     public Integer getId() {
@@ -78,12 +91,12 @@ public class Announcement {
         this.visibility = visibility;
     }
 
-    public Date getDate() {
-        return date;
+    public Date getLastUpdated() {
+        return lastUpdated;
     }
 
-    public void setDate(Date date) {
-        this.date = date;
+    public void setLastUpdated(Date lastUpdated) {
+        this.lastUpdated = lastUpdated;
     }
 
     public List<Amenity> getAmenities() {
@@ -92,5 +105,29 @@ public class Announcement {
 
     public void setAmenities(List<Amenity> amenities) {
         this.amenities = amenities;
+    }
+
+    public Integer getRooms() {
+        return rooms;
+    }
+
+    public void setRooms(Integer rooms) {
+        this.rooms = rooms;
+    }
+
+    public Integer getLivingPlaces() {
+        return livingPlaces;
+    }
+
+    public void setLivingPlaces(Integer livingPlaces) {
+        this.livingPlaces = livingPlaces;
+    }
+
+    public List<Photo> getPhotos() {
+        return photos;
+    }
+
+    public void setPhotos(List<Photo> photos) {
+        this.photos = photos;
     }
 }
