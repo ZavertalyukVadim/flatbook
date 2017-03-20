@@ -1,7 +1,9 @@
 package flatbook.announcement.entity;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name ="announcement")
@@ -14,22 +16,29 @@ public class Announcement {
     @Column(name = "price")
     private Integer price;
 
+    @Column(name = "title")
+    private String title;
+
     @Column(name = "description")
     private String description;
 
-    @Column(name = "marker")
-    private Boolean marker;
+    @Column(name = "visibility")
+    private Boolean visibility;
 
     @Column(name = "date")
     private Date date;
 
+    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "announcements")
+    private
+    List<Amenity> amenities = new ArrayList<>();
+
     public Announcement() {
     }
 
-    public Announcement(Integer price, String description, Boolean marker, Date date) {
+    public Announcement(Integer price, String description, Boolean visibility, Date date) {
         this.price = price;
         this.description = description;
-        this.marker = marker;
+        this.visibility = visibility;
         this.date = date;
     }
 
@@ -45,6 +54,14 @@ public class Announcement {
         this.price = price;
     }
 
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
     public String getDescription() {
         return description;
     }
@@ -53,12 +70,12 @@ public class Announcement {
         this.description = description;
     }
 
-    public Boolean getMarker() {
-        return marker;
+    public Boolean getVisibility() {
+        return visibility;
     }
 
-    public void setMarker(Boolean marker) {
-        this.marker = marker;
+    public void setVisibility(Boolean visibility) {
+        this.visibility = visibility;
     }
 
     public Date getDate() {
@@ -67,5 +84,13 @@ public class Announcement {
 
     public void setDate(Date date) {
         this.date = date;
+    }
+
+    public List<Amenity> getAmenities() {
+        return amenities;
+    }
+
+    public void setAmenities(List<Amenity> amenities) {
+        this.amenities = amenities;
     }
 }
