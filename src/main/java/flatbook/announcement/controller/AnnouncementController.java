@@ -11,35 +11,35 @@ import java.util.List;
 @RequestMapping(value = "/announcement")
 public class AnnouncementController {
     @Autowired
-    private AnnouncementService service;
+    private AnnouncementService announcementService;
 
     @RequestMapping(value = "/test", method = RequestMethod.GET)
     public void test() {
-       service.test();
+       announcementService.test();
     }
 
     @RequestMapping(value = "", method = RequestMethod.GET)
     public List<Announcement> getAllAnnouncement() {
-        return service.getAllAnnouncement();
+        return announcementService.getAllAnnouncement();
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public Announcement getAnnouncementById(@PathVariable("id") Integer id) {
-        return service.getAnnouncementById(id);
+        return announcementService.getAnnouncementById(id);
     }
 
     @RequestMapping(value = "", method = RequestMethod.POST)
     public Announcement createAnnouncement(@RequestBody Announcement announcement) {
-        return service.createAnnouncement(announcement);
+        return announcementService.createAnnouncement(announcement);
     }
 
     @RequestMapping(value = "", method = RequestMethod.PUT)
     public Announcement updateAnnouncement(@RequestBody Announcement announcement) {
-        return service.updateAnnouncement(announcement);
+        return announcementService.updateAnnouncement(announcement);
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public Announcement deleteAnnouncement(@PathVariable("id") Integer id) {
-        return service.deleteAnnouncement(id);
+        return announcementService.deleteAnnouncement(id);
     }
 }
