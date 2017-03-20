@@ -10,9 +10,8 @@ const Checkbox = props => {
         onClick,
         children
     } = props;
-    const className = classNames({
+    const className = classNames('checkbox-icon', {
         'checkbox-checked': checked,
-        'checkbox-unchecked': !checked,
         'checkbox-disabled': disabled
     });
 

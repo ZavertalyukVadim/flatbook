@@ -1,33 +1,35 @@
+@import "../../style/color-theme.scss";
+@import "../../style/font.scss";
+
+$checkbox-size: 20px;
+$checkbox-border-radius: 3px;
+
 .checkbox {
   display: flex;
 
-  .checkbox-checked,
-  .checkbox-unchecked {
-    width: 20px;
-    height: 20px;
-    border-radius: 3px;
-    font-size: 14px;
+  .checkbox-icon {
+    width: $checkbox-size;
+    height: $checkbox-size;
+    border-radius: $checkbox-border-radius;
+    font-size: $default-font-size;
     display: flex;
     justify-content: center;
     align-items: center;
     transition: 0.2s linear;
-    color: #FFFFFF;
+    color: $check-icon-color;
     margin-right: 4px;
+    background-color: $checkbox-background;
   }
 
   .checkbox-checked {
-    background-color: #1ABC9C;
+    background-color: $primary;
 
     &:before {
       content: "\2714";
     }
   }
 
-  .checkbox-unchecked {
-    background-color: #BDC3C7;
-  }
-
   .checkbox-disabled {
-    background-color: #E6E8EA;
+    background-color: $checkbox-disabled;
   }
 }

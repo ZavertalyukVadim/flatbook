@@ -34,6 +34,8 @@ export default class Showroom extends Component {
                 />
                 <Checkbox onClick={this.onCheckboxClick} checked={this.state.checked} disabled={false}>
                     Label </Checkbox>
+                <Checkbox onClick={this.onCheckboxClick} checked={this.state.checked} disabled={true}>
+                    Disabled </Checkbox>
                 <GridExample/>
                     <Button
                         type="btn-primary"
