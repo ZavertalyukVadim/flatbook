@@ -4,6 +4,7 @@ import Input from '../input';
 import Checkbox from '../checkbox';
 import Button from '../button';
 import Textarea from '../textarea';
+import Image from '../image';
 
 export default class Showroom extends Component {
     constructor(props) {
@@ -76,6 +77,16 @@ export default class Showroom extends Component {
                         size="medium"
                         children="Disabled"
                         disabled={true}
+                    />
+                    <Image
+                        shape="img-circle"
+                        size="small"
+                        src="http://www.pnas.org/site/misc/images/16-01910.500.jpg"
+                    />
+                    <Image
+                        shape="img-rectangle"
+                        size="small"
+                        src="http://www.pnas.org/site/misc/images/16-01910.500.jpg"
                     />
             </div>
         );
