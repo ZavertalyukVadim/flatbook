@@ -10,8 +10,7 @@ const Textarea = props => {
         onChange,
         placeholder
     } = props;
-    const ClassName = classNames({
-        'textarea': true,
+    const ClassName = classNames('textarea', {
         [className]: className
     });
 

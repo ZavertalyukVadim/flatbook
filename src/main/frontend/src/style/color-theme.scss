@@ -9,12 +9,13 @@ $info: #3498db;
 
 $btn-text-color: #fff;
 
-//Input
-$default-border-color: #bdc3c7;
-$default-text-color: #34495e;
-$disabled-background: #f4f6f6;
-$disabled-border: #d5dbdb;
-$disabled-text-color: #d5dbdb;
+//Input and Textarea
+$text-field-default-border-color: #bdc3c7;
+$text-field-default-text-color: #34495e;
+$text-field-background: #fff;
+$text-field-disabled-background: #f4f6f6;
+$text-field-disabled-border: #d5dbdb;
+$text-field-disabled-text-color: #d5dbdb;
 
 //Checkbox
 $checkbox-background: #bdc3c7;
