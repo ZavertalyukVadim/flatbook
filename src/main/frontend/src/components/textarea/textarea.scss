@@ -1,27 +1,30 @@
+@import "../../style/color-theme.scss";
+@import "../../style/font.scss";
+
 .textarea {
   display: block;
   width: 100%;
   border: 2px solid #bdc3c7;
-  color: #34495e;
-  font-family: "Lato", sans-serif;
-  font-size: 15px;
+  color: $text-field-default-text-color;
+  font-family: $default-font-family;
+  font-size: $text-field-font-size;
   line-height: 1.467;
   padding: 8px 12px;
   height: 90px;
   border-radius: 6px;
   box-shadow: none;
   box-sizing: border-box;
-  background: #fff none;
+  background: $text-field-background;
 
   &:focus {
-    border: 2px solid #1ABC9C;
+    border: 2px solid $primary;
     outline: none;
   }
 
   &:disabled {
-    background-color: #f4f6f6;
-    border-color: #d5dbdb;
-    color: #d5dbdb;
+    background-color: $text-field-disabled-background;
+    border-color: $text-field-disabled-border;
+    color: $text-field-disabled-text-color;
     cursor: default;
     opacity: 0.7;
     filter: alpha(opacity=70);

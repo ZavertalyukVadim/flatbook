@@ -16,22 +16,22 @@ public class AnnouncementService {
 
     public List<Announcement> getAllAnnouncement() {
         List<Announcement> list = announcementDao.findAll();
-        list.sort(Comparator.comparing(Announcement::getDate));
+        list.sort(Comparator.comparing(Announcement::getLastUpdated));
         return list;
     }
 
     public void test() {
         Announcement announcement = new Announcement(123, "ololo", false, new Date());
-        announcement.setDate(new Date());
+        announcement.setLastUpdated(new Date());
         announcement.setTitle("title1");
         Announcement announcement1 = new Announcement(122, "ololo1", false, new Date());
-        announcement1.setDate(new Date());
+        announcement1.setLastUpdated(new Date());
         announcement1.setTitle("title2");
         Announcement announcement2 = new Announcement(121, "ololo2", false, new Date());
-        announcement2.setDate(new Date());
+        announcement2.setLastUpdated(new Date());
         announcement2.setTitle("title3");
         Announcement announcement3 = new Announcement(120, "ololo3", false, new Date());
-        announcement3.setDate(new Date());
+        announcement3.setLastUpdated(new Date());
         announcement3.setTitle("title4");
         announcementDao.save(announcement);
         announcementDao.save(announcement1);
@@ -48,7 +48,7 @@ public class AnnouncementService {
         announcement.setDescription(oldAnnouncement.getDescription());
         announcement.setVisibility(oldAnnouncement.getVisibility());
         announcement.setPrice(oldAnnouncement.getPrice());
-        announcement.setDate(new Date());
+        announcement.setLastUpdated(new Date());
         announcement.setTitle(oldAnnouncement.getTitle());
         announcementDao.save(announcement);
         return announcement;
@@ -60,7 +60,7 @@ public class AnnouncementService {
     }
 
     public Announcement createAnnouncement(Announcement announcement) {
-        announcement.setDate(new Date());
+        announcement.setLastUpdated(new Date());
         announcementDao.save(announcement);
         return announcement;
     }

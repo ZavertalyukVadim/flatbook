@@ -1,20 +1,20 @@
 //Common colors
-
 $success: #2ecc71;
 $primary: #1abc9c;
 $danger: #e74c3c;
 $info: #3498db;
+$default-text-color: #34495e;
 
 //Buttons
-
 $btn-text-color: #fff;
 
-//Input
-$default-border-color: #bdc3c7;
-$default-text-color: #34495e;
-$disabled-background: #f4f6f6;
-$disabled-border: #d5dbdb;
-$disabled-text-color: #d5dbdb;
+//Input and Textarea
+$text-field-default-border-color: #bdc3c7;
+$text-field-default-text-color: #34495e;
+$text-field-background: #fff;
+$text-field-disabled-background: #f4f6f6;
+$text-field-disabled-border: #d5dbdb;
+$text-field-disabled-text-color: #d5dbdb;
 
 //Checkbox
 $checkbox-background: #bdc3c7;

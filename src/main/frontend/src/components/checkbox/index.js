@@ -1,4 +1,5 @@
 import React, {PropTypes} from 'react';
+import {noop} from 'lodash';
 import classNames from 'classnames';
 
 import './checkbox.scss';
@@ -16,7 +17,7 @@ const Checkbox = props => {
     });
 
     return (
-        <div className="checkbox" onClick={!disabled ? onClick : _ => _}>
+        <div className="checkbox" onClick={!disabled ? onClick : noop}>
             <span className={className}/>
             <label>{children}</label>
         </div>
