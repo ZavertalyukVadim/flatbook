@@ -30,11 +30,11 @@ public class PhotoService {
         return null;
     }
 
-    public Photo updatePhoto(Photo oldPhoto) {
-        Photo photo = photoDao.findOne(oldPhoto.getId());
-        photo.setTitle(oldPhoto.getTitle());
-        photo.setLink(oldPhoto.getLink());
-        photo.setDefaultImage(oldPhoto.getDefaultImage());
+    public Photo updatePhoto(Photo newPhoto) {
+        Photo photo = photoDao.findOne(newPhoto.getId());
+        photo.setTitle(newPhoto.getTitle());
+        photo.setLink(newPhoto.getLink());
+        photo.setDefaultImage(newPhoto.getDefaultImage());
         return photo;
     }
 }
