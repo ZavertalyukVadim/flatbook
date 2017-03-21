@@ -8,18 +8,22 @@ const Input = props => {
         disabled,
         onChange,
         value,
-        validationState
+        validationState,
+        errorMessage
     } = props;
 
     return (
-        <input
-            placeholder={placeholder}
-            type={type}
-            disabled={disabled}
-            onChange={onChange}
-            value={value}
-            className={`input input-${validationState}`}
-        />
+        <div className="input-container">
+            <input
+                placeholder={placeholder}
+                type={type}
+                disabled={disabled}
+                onChange={onChange}
+                value={value}
+                className={`input input-${validationState}`}
+            />
+            { errorMessage ? <span className="error-massage">{errorMessage}</span> : null}
+        </div>
     );
 };
 
@@ -29,7 +33,8 @@ Input.propTypes = {
     disabled: PropTypes.bool,
     onChange: PropTypes.func.isRequired,
     value: PropTypes.string.isRequired,
-    validationState: PropTypes.oneOf(['default', 'error', 'success'])
+    validationState: PropTypes.oneOf(['default', 'error', 'success']),
+    errorMessage: PropTypes.string
 };
 
 Input.defaultProps = {
@@ -37,7 +42,8 @@ Input.defaultProps = {
     type: 'text',
     disabled: false,
     validationState: 'default',
-    value: ''
+    value: '',
+    errorMessage: ''
 };
 
 export default Input;
