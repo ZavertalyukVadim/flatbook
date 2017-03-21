@@ -11,8 +11,8 @@ public class Photo {
     @Column(name = "photo_id", nullable = false)
     private Integer id;
 
-    @Column(name = "link")
-    private String link;
+    @Column(name = "image")
+    private byte[] image;
 
     @Column(name = "default_image")
     private Boolean defaultImage;
@@ -50,12 +50,12 @@ public class Photo {
         this.defaultImage = defaultImage;
     }
 
-    public String getLink() {
-        return link;
+    public byte[] getImage() {
+        return image;
     }
 
-    public void setLink(String link) {
-        this.link = link;
+    public void setImage(byte[] image) {
+        this.image = image;
     }
 
     public String getTitle() {

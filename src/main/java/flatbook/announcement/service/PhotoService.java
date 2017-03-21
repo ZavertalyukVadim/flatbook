@@ -33,7 +33,7 @@ public class PhotoService {
     public Photo updatePhoto(Photo newPhoto) {
         Photo photo = photoDao.findOne(newPhoto.getId());
         photo.setTitle(newPhoto.getTitle());
-        photo.setLink(newPhoto.getLink());
+        photo.setImage(newPhoto.getImage());
         photo.setDefaultImage(newPhoto.getDefaultImage());
         return photo;
     }
