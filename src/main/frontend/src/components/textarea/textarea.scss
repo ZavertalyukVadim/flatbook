@@ -4,11 +4,11 @@
 .textarea {
   display: block;
   width: 100%;
-  border: 2px solid #bdc3c7;
+  border: 2px solid $text-field-default-border-color;
   color: $text-field-default-text-color;
   font-family: $default-font-family;
   font-size: $text-field-font-size;
-  line-height: 1.467;
+  line-height: $text-field-default-line-height;
   padding: 8px 12px;
   height: 90px;
   border-radius: 6px;

@@ -1,5 +1,4 @@
 import React, {PropTypes} from 'react';
-import classNames from 'classnames';
 import './textarea.scss';
 
 const Textarea = props => {
@@ -10,13 +9,10 @@ const Textarea = props => {
         onChange,
         placeholder
     } = props;
-    const ClassName = classNames('textarea', {
-        [className]: className
-    });
 
     return (
         <textarea
-            className={ClassName}
+            className={`textarea ${className}`}
             disabled={disabled}
             value={value}
             onChange={onChange}
