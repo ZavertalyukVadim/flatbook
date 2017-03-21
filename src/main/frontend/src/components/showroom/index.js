@@ -25,7 +25,7 @@ export default class Showroom extends Component {
                 <Textarea value={this.state.value} onChange={this.onInputChange}/>
                 <Input placeholder="input" type="text" value={this.state.value} onChange={this.onInputChange}/>
                 <Input placeholder="error" type="text" value={this.state.value} onChange={this.onInputChange}
-                       validationState="error"
+                       validationState="error" errorMessage="Error message..."
                 />
                 <Input placeholder="success" type="text" value={this.state.value} onChange={this.onInputChange}
                        validationState="success"
