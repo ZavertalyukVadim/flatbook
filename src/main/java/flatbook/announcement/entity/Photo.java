@@ -22,7 +22,7 @@ public class Photo {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinTable(name = "announcements_photos", joinColumns = {
-            @JoinColumn(name = "id", nullable = false)},
+            @JoinColumn(name = "announcement_id", nullable = false)},
             inverseJoinColumns = {@JoinColumn(name = "photo_id",
                     nullable = false)})
     private Announcement announcement;
