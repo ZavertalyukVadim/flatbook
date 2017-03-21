@@ -13,7 +13,7 @@ public class Phone {
     @Column(name = "number")
     private String number;
 
-    @Column(name = "primary")
+    @Column(name = "is_primary")
     private Boolean primary;
 
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = User.class)
