@@ -1,17 +1,12 @@
 package flatbook.announcement.service;
 
-import flatbook.announcement.dao.AnnouncementDao;
-import flatbook.announcement.dao.CityDao;
-import flatbook.announcement.dao.CountryDao;
-import flatbook.announcement.dao.RegionDao;
-import flatbook.announcement.entity.Announcement;
-import flatbook.announcement.entity.City;
-import flatbook.announcement.entity.Country;
-import flatbook.announcement.entity.Region;
+import flatbook.announcement.dao.*;
+import flatbook.announcement.entity.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
@@ -30,6 +25,9 @@ public class AnnouncementService {
     @Autowired
     private CityDao cityDao;
 
+    @Autowired
+    private AmenityDao amenityDao;
+
     public List<Announcement> getAllAnnouncement() {
         List<Announcement> list = announcementDao.findAll();
         list.sort(Comparator.comparing(Announcement::getLastUpdated));
@@ -37,6 +35,7 @@ public class AnnouncementService {
     }
     @Transactional
     public void test() {
+        List<Amenity> amenityList = new ArrayList<>();
         Country coutry = new Country();
         coutry.setName("Ukraine");
         countryDao.save(coutry);
@@ -48,6 +47,18 @@ public class AnnouncementService {
         city.setName("Cherkasy");
         city.setRegion(region);
         cityDao.save(city);
+        Amenity amenity = new Amenity();
+        amenity.setName("amenity");
+        amenityDao.save(amenity);
+        Amenity amenity1 = new Amenity();
+        amenity1.setName("amenity1");
+        amenityDao.save(amenity1);
+        Amenity amenity2 = new Amenity();
+        amenity2.setName("amenity2");
+        amenityDao.save(amenity2);
+        amenityList.add(amenity);
+        amenityList.add(amenity1);
+        amenityList.add(amenity2);
         Announcement announcement = new Announcement(123, "ololo", false, new Date());
         announcement.setLastUpdated(new Date());
         announcement.setTitle("title1");
@@ -58,6 +69,7 @@ public class AnnouncementService {
         announcement.setCountry(coutry);
         announcement.setRegion(region);
         announcement.setCity(city);
+        announcement.setAmenities(amenityList);
         announcementDao.save(announcement);
         Announcement announcement1 = new Announcement(122, "ololo1", false, new Date());
         announcement1.setLastUpdated(new Date());
