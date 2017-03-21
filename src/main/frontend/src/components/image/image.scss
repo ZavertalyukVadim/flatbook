@@ -1,5 +1,6 @@
-.img-circle {
-  border-radius: 50%;
+.image {
+	position: relative;
+	display: inline-block;
 }
 
 .img-rectangle {
@@ -18,3 +19,31 @@
   max-width: 800px;
 }
 
+.like {
+	position: absolute;
+	top: 0;
+	right: 0;
+	left: 0;
+	bottom: 0;
+	font-size: 28px;
+	padding: 10px;
+	color: white;
+	text-align: right;
+	opacity: 0;
+	transition: opacity 0.6s;
+	&:hover {
+		opacity: .7;
+
+	};
+}
+
+.liked {
+	opacity: 1;
+	&:hover {
+		opacity: 1;
+	};
+}
+
+.like-symbol {
+	cursor: pointer;
+}

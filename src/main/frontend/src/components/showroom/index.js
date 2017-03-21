@@ -79,12 +79,6 @@ export default class Showroom extends Component {
                         disabled={true}
                     />
                     <Image
-                        shape="img-circle"
-                        size="small"
-                        src="http://www.pnas.org/site/misc/images/16-01910.500.jpg"
-                    />
-                    <Image
-                        shape="img-rectangle"
                         size="small"
                         src="http://www.pnas.org/site/misc/images/16-01910.500.jpg"
                     />
