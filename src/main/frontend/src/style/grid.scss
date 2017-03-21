@@ -1,13 +1,14 @@
 $grid-margin: 1%;
 $grid-number: 12;
-$column-width: ( 100 - ( $grid-margin * $grid-number - 1 ) ) / $grid-number ;
+$column-width: (100 - ( $grid-margin * $grid-number - 1 )) / $grid-number;
 $column-numbers: (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12);
 
 .row:before,
 .row:after,
 .clearfix:after {
   content: " ";
-  display: table;
+  clear:both;
+  display: block;
 }
 
 .default-styles {
@@ -23,18 +24,25 @@ $column-numbers: (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12);
 [class^="col-"] {
     @extend .default-styles;
     float: left;
+    margin-left: $grid-margin;
     padding: 15px;
+    &:last-child {
+      margin-left: 0;
+    }
 }
   
 @each $column-number in $column-numbers {
   $i: index($column-numbers, $column-number);
 
   .col-#{$column-number} { 
-    width: $column-width + ( ($column-width + $grid-margin)  * ( $i - 1 ) ) 
+    width: $column-width + (($column-width + $grid-margin)  * ($i - 1));
   }
   .offset-#{$column-number} {
-    margin-left: $column-width  * $i  + $grid-margin * $i  !important; 
+    margin-left: $column-width  * $i  + $grid-margin * $i; 
   }
  
 }
  
+.grid-example div {
+  border: 1px solid black;
+}

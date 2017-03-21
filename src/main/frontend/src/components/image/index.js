@@ -31,7 +31,7 @@ class Image extends Component {
                     src={src}
                 />
                 <div className={likeClassName}>
-                    <i onClick={this.handleClick} className="like-icon fa fa-heart" aria-hidden="true"/>
+                    <i onClick={this.handleClick} className="like-icon fa fa-heart"/>
                 </div>
             </div>
         );
