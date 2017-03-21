@@ -13,20 +13,24 @@ import java.util.List;
 
 @Service
 public class AnnouncementService {
-    @Autowired
-    private AnnouncementDao announcementDao;
+    private final AnnouncementDao announcementDao;
+
+    private final CountryDao countryDao;
+
+    private final RegionDao regionDao;
+
+    private final CityDao cityDao;
+
+    private final AmenityDao amenityDao;
 
     @Autowired
-    private CountryDao countryDao;
-
-    @Autowired
-    private RegionDao regionDao;
-
-    @Autowired
-    private CityDao cityDao;
-
-    @Autowired
-    private AmenityDao amenityDao;
+    public AnnouncementService(AnnouncementDao announcementDao, CountryDao countryDao, RegionDao regionDao, CityDao cityDao, AmenityDao amenityDao) {
+        this.announcementDao = announcementDao;
+        this.countryDao = countryDao;
+        this.regionDao = regionDao;
+        this.cityDao = cityDao;
+        this.amenityDao = amenityDao;
+    }
 
     public List<Announcement> getAllAnnouncement() {
         List<Announcement> list = announcementDao.findAll();

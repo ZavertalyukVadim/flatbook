@@ -34,7 +34,6 @@ public class PhotoService {
         Photo photo = photoDao.findOne(newPhoto.getId());
         photo.setTitle(newPhoto.getTitle());
         photo.setImage(newPhoto.getImage());
-        photo.setDefaultImage(newPhoto.getDefaultImage());
         return photo;
     }
 }
