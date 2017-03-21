@@ -2,6 +2,12 @@ import React, {PropTypes, Component} from 'react';
 import classNames from 'classnames';
 import './image.scss';
 
+export const ImageSizes = {
+    small: 'small',
+    medium:'medium',
+    large: 'large'
+};
+
 class Image extends Component {
     constructor(props) {
         super(props);
@@ -17,18 +23,15 @@ class Image extends Component {
         const likeClassName = classNames('like', {
             liked: this.state.liked
         });
-        const imageClassName = classNames('img-rectangle', {
-            [size]: true
-        });
 
         return (
-            <div className="image">
+            <div className="image-wrapper">
                 <img
-                    className={imageClassName}
+                    className={`img-rectangle ${size}`}
                     src={src}
                 />
                 <div className={likeClassName}>
-                    <span onClick={this.handleClick} className="like-symbol">&#10084;</span>
+                    <i onClick={this.handleClick} className="like-icon fa fa-heart" aria-hidden="true"/>
                 </div>
             </div>
         );
@@ -36,12 +39,12 @@ class Image extends Component {
 }
 
 Image.propTypes = {
-    size: PropTypes.oneOf(['small', 'medium', 'large']),
+    size: PropTypes.oneOf(Object.values(ImageSizes)),
     src: PropTypes.string
 };
 
 Image.defaultProps = {
-    size: 'medium',
+    size: ImageSizes.medium,
     src: 'https://skpsoft.com/baby/wp-content/uploads/2016/09/default-thumbnail.jpg'
 };
 
