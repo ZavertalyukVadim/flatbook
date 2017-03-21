@@ -14,10 +14,10 @@ public class Photo {
     @Column(name = "link")
     private String link;
 
-    @Column
+    @Column(name = "default_image")
     private Boolean defaultImage;
 
-    @Column
+    @Column(name = "description")
     private String description;
 
     @ManyToOne(fetch = FetchType.LAZY)
