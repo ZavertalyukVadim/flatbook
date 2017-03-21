@@ -1,5 +1,7 @@
 package flatbook.announcement.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 
 @Entity
@@ -12,20 +14,18 @@ public class Photo {
     private Integer id;
 
     @Column(name = "image")
-    private byte[] image;
-
-    @Column(name = "default_image")
-    private Boolean defaultImage;
+    private String image;
 
     @Column(name = "title")
     private String title;
 
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinTable(name = "announcements_photos", joinColumns = {
             @JoinColumn(name = "announcement_id", nullable = false)},
             inverseJoinColumns = {@JoinColumn(name = "photo_id",
                     nullable = false)})
-    private Announcement announcement;
+    private Announcement announcement;////!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
     public Photo() {
     }
@@ -42,19 +42,11 @@ public class Photo {
         this.announcement = announcement;
     }
 
-    public Boolean getDefaultImage() {
-        return defaultImage;
-    }
-
-    public void setDefaultImage(Boolean defaultImage) {
-        this.defaultImage = defaultImage;
-    }
-
-    public byte[] getImage() {
+    public String getImage() {
         return image;
     }
 
-    public void setImage(byte[] image) {
+    public void setImage(String image) {
         this.image = image;
     }
 
