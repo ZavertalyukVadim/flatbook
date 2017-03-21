@@ -20,6 +20,9 @@ public class Announcement {
     @Column(name = "title")
     private String title;
 
+    @Column(name = "description")
+    private String description;
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "country_id")
     private Country country;
@@ -37,9 +40,6 @@ public class Announcement {
 
     @Column(name = "house_number")
     private String houseNumber;
-
-    @Column(name = "description")
-    private String description;
 
     @Column(name = "visibility")
     private Boolean visibility;
