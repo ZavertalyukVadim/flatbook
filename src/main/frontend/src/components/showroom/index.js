@@ -2,9 +2,9 @@ import React, {Component} from 'react';
 import GridExample from './grid-example';
 import Input from '../input';
 import Checkbox from '../checkbox';
-import Button from '../button';
+import Button, {ButtonTypes, ButtonSizes} from '../button';
 import Textarea from '../textarea';
-import Image from '../image';
+import Image, {ImageSizes} from '../image';
 import Avatar from '../avatar';
 
 export default class Showroom extends Component {
@@ -40,47 +40,47 @@ export default class Showroom extends Component {
                     Disabled </Checkbox>
                 <GridExample/>
                     <Button
-                        type="btn-primary"
-                        size="large"
-                        children="Primary Button"
+                        type={ButtonTypes.primary}
+                        size={ButtonSizes.large}
+                        caption="Primary Button"
                     />
                     <Button
-                        type="btn-success"
-                        size="large"
-                        children="Success Button"
+                        type={ButtonTypes.success}
+                        size={ButtonSizes.large}
+                        caption="Success Button"
                     />
                     <Button
-                        type="btn-danger"
-                        size="large"
-                        children="Danger Button"
+                        type={ButtonTypes.danger}
+                        size={ButtonSizes.large}
+                        caption="Danger Button"
                     />
                     <Button
-                        type="btn-info"
-                        size="large"
-                        children="Info Button"
+                        type={ButtonTypes.info}
+                        size={ButtonSizes.large}
+                        caption="Info Button"
                     />
                     <Button
-                        type="btn-success"
-                        size="large"
-                        children="Large"
+                        type={ButtonTypes.success}
+                        size={ButtonSizes.large}
+                        caption="Large"
                     />
                     <Button
-                        type="btn-danger"
-                        size="medium"
-                        children="Medium"
+                        type={ButtonTypes.danger}
+                        size={ButtonSizes.medium}
+                        caption="Medium"
                     />
                     <Button
-                        type="btn-primary"
-                        size="small"
-                        children="Small"
+                        type={ButtonTypes.primary}
+                        size={ButtonSizes.small}
+                        caption="Small"
                     />
                     <Button
-                        size="medium"
-                        children="Disabled"
+                        size={ButtonSizes.medium}
                         disabled={true}
+                        caption="Disabled button"
                     />
                     <Image
-                        size="small"
+                        size={ImageSizes.small}
                         src="http://www.pnas.org/site/misc/images/16-01910.500.jpg"
                     />
                     <Avatar
