@@ -5,6 +5,7 @@ import Checkbox from '../checkbox';
 import Button from '../button';
 import Textarea from '../textarea';
 import Image from '../image';
+import Avatar from '../avatar';
 
 export default class Showroom extends Component {
     constructor(props) {
@@ -80,6 +81,9 @@ export default class Showroom extends Component {
                     />
                     <Image
                         size="small"
+                        src="http://www.pnas.org/site/misc/images/16-01910.500.jpg"
+                    />
+                    <Avatar
                         src="http://www.pnas.org/site/misc/images/16-01910.500.jpg"
                     />
             </div>
