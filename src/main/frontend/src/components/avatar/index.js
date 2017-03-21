@@ -1,5 +1,6 @@
 import React, {PropTypes} from 'react';
 import './avatar.scss';
+
 const Avatar = props => {
     const {src} = props;
 
@@ -11,6 +12,7 @@ const Avatar = props => {
 Avatar.propTypes = {
     src: PropTypes.string
 };
+
 Avatar.defaultProps = {
     src: 'http://wowawards.ru/public/img/judge_noimg.jpg'
 };
