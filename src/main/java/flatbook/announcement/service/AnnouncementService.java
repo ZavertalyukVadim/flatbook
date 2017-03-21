@@ -95,22 +95,22 @@ public class AnnouncementService {
         return announcementDao.findOne(id);
     }
 
-    public Announcement updateAnnouncement(Announcement oldAnnouncement) {
-        Announcement announcement = announcementDao.findOne(oldAnnouncement.getId());
-        announcement.setPrice(oldAnnouncement.getPrice());
-        announcement.setTitle(oldAnnouncement.getTitle());
-        announcement.setDescription(oldAnnouncement.getDescription());
-        announcement.setCountry(oldAnnouncement.getCountry());
-        announcement.setRegion(oldAnnouncement.getRegion());
-        announcement.setCity(oldAnnouncement.getCity());
-        announcement.setStreet(oldAnnouncement.getStreet());
-        announcement.setHouseNumber(oldAnnouncement.getHouseNumber());
-        announcement.setVisibility(oldAnnouncement.getVisibility());
+    public Announcement updateAnnouncement(Announcement newAnnouncement) {
+        Announcement announcement = announcementDao.findOne(newAnnouncement.getId());
+        announcement.setPrice(newAnnouncement.getPrice());
+        announcement.setTitle(newAnnouncement.getTitle());
+        announcement.setDescription(newAnnouncement.getDescription());
+        announcement.setCountry(newAnnouncement.getCountry());
+        announcement.setRegion(newAnnouncement.getRegion());
+        announcement.setCity(newAnnouncement.getCity());
+        announcement.setStreet(newAnnouncement.getStreet());
+        announcement.setHouseNumber(newAnnouncement.getHouseNumber());
+        announcement.setVisibility(newAnnouncement.getVisibility());
         announcement.setLastUpdated(new Date());
-        announcement.setRooms(oldAnnouncement.getRooms());
-        announcement.setLivingPlaces(oldAnnouncement.getLivingPlaces());
-        announcement.setAmenities(oldAnnouncement.getAmenities());
-        announcement.setPhotos(oldAnnouncement.getPhotos());
+        announcement.setRooms(newAnnouncement.getRooms());
+        announcement.setLivingPlaces(newAnnouncement.getLivingPlaces());
+        announcement.setAmenities(newAnnouncement.getAmenities());
+        announcement.setPhotos(newAnnouncement.getPhotos());
 
         announcementDao.save(announcement);
         return announcement;
