@@ -17,8 +17,8 @@ public class Photo {
     @Column(name = "default_image")
     private Boolean defaultImage;
 
-    @Column(name = "description")
-    private String description;
+    @Column(name = "title")
+    private String title;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinTable(name = "announcements_photos", joinColumns = {
@@ -58,11 +58,11 @@ public class Photo {
         this.link = link;
     }
 
-    public String getDescription() {
-        return description;
+    public String getTitle() {
+        return title;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setTitle(String title) {
+        this.title = title;
     }
 }
