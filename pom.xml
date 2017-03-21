@@ -13,13 +13,10 @@
         <!--<springsecurity.version>4.0.1.RELEASE</springsecurity.version>-->
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <java.version>1.8</java.version>
-        <orika-core.version>1.4.6</orika-core.version>
-        <assertj-core.version>3.2.0</assertj-core.version>
-        <lombok.version>1.16.6</lombok.version>
         <cobertura-plugin.version>2.7</cobertura-plugin.version>
         <coveralls-plugin.version>4.0.0</coveralls-plugin.version>
         <frontend-plugin.version>0.0.27</frontend-plugin.version>
-        <node.version>v5.7.0</node.version>
+        <node.version>v7.6.0</node.version>
         <npm.version>3.7.1</npm.version>
     </properties>
     <parent>
@@ -63,7 +60,6 @@
                     <repoToken>your coveralls repository token goes here</repoToken>
                 </configuration>
             </plugin>
-            <!-- Frontend -->
             <!-- Frontend -->
             <plugin>
                 <groupId>com.github.eirslett</groupId>
@@ -139,35 +135,24 @@
             <artifactId>h2</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.postgresql</groupId>
-            <artifactId>postgresql</artifactId>
-            <scope>runtime</scope>
-        </dependency>
-        <dependency>
             <groupId>com.zaxxer</groupId>
             <artifactId>HikariCP</artifactId>
         </dependency>
         <!-- Other -->
-        <dependency>
-            <groupId>ma.glasnost.orika</groupId>
-            <artifactId>orika-core</artifactId>
-            <version>${orika-core.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-            <version>${lombok.version}</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.assertj</groupId>
-            <artifactId>assertj-core</artifactId>
-            <version>${assertj-core.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-jpamodelgen</artifactId>
-        </dependency>
+        <!--<dependency>-->
+            <!--<groupId>ma.glasnost.orika</groupId>-->
+            <!--<artifactId>orika-core</artifactId>-->
+            <!--<version>${orika-core.version}</version>-->
+        <!--</dependency>-->
+        <!--<dependency>-->
+            <!--<groupId>org.assertj</groupId>-->
+            <!--<artifactId>assertj-core</artifactId>-->
+            <!--<version>${assertj-core.version}</version>-->
+        <!--</dependency>-->
+        <!--<dependency>-->
+            <!--<groupId>org.hibernate</groupId>-->
+            <!--<artifactId>hibernate-jpamodelgen</artifactId>-->
+        <!--</dependency>-->
     </dependencies>
     <repositories>
         <repository>

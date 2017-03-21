@@ -1,4 +1,4 @@
-package flatbook.entity;
+package flatbook.announcement.entity;
 
 import javax.persistence.*;
 import java.util.Date;
