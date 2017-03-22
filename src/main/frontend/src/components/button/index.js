@@ -3,16 +3,16 @@ import classNames from 'classnames';
 import './button.scss';
 
 export const ButtonTypes = {
-    info:'btn-info',
-    success:'btn-success',
+    info: 'btn-info',
+    success: 'btn-success',
     danger: 'btn-danger',
-    primary:  'btn-primary',
+    primary: 'btn-primary',
     disabled: 'btn-disabled'
 };
 
 export const ButtonSizes = {
     small: 'small',
-    medium:'medium',
+    medium: 'medium',
     large: 'large'
 };
 
