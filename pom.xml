@@ -14,8 +14,8 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <java.version>1.8</java.version>
         <frontend-plugin.version>0.0.27</frontend-plugin.version>
-        <node.version>v7.6.0</node.version>
-        <npm.version>3.7.1</npm.version>
+        <node.version>v7.7.3</node.version>
+        <npm.version>4.1.2</npm.version>
     </properties>
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -59,10 +59,13 @@
                         </configuration>
                     </execution>
                     <execution>
-                        <id>webpack build</id>
+                        <id>build</id>
                         <goals>
-                            <goal>webpack</goal>
+                            <goal>npm</goal>
                         </goals>
+                        <configuration>
+                            <arguments>run build</arguments>
+                        </configuration>
                     </execution>
                 </executions>
             </plugin>
@@ -72,13 +75,6 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
-            <exclusions>
-                <exclusion>
-                    <!-- We use HikariCP instead -->
-                    <groupId>org.apache.tomcat</groupId>
-                    <artifactId>tomcat-jdbc</artifactId>
-                </exclusion>
-            </exclusions>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>

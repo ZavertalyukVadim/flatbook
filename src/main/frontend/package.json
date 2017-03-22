@@ -8,6 +8,7 @@
     "check:lint": "eslint .",
     "check:jest": "jest",
     "start": "cross-env NODE_ENV=development webpack-dev-server --inline --hot --config config/webpack.config.dev.js",
+    "build": "cross-env NODE_ENV=development webpack -p --config config/webpack.config.dev.js",
     "prod:build": "rimraf build && npm run check && cross-env NODE_ENV=production webpack --config config/webpack.config.prod.js"
   },
   "devDependencies": {
@@ -32,9 +33,9 @@
     "file-loader": "0.10.0",
     "jest": "18.1.0",
     "html-webpack-plugin": "2.26.0",
-    "node-sass": "3.13.0",
+    "node-sass": "4.2.0",
     "rimraf": "2.5.4",
-    "sass-loader": "4.0.2",
+    "sass-loader": "6.0.3",
     "style-loader": "0.13.1",
     "url-loader": "0.5.7",
     "react-addons-test-utils": "15.4.2",
