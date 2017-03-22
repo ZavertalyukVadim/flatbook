@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import GridExample from './grid-example';
-import Input from '../input';
+import Input, {inputValidationStateTypes} from '../input';
 import Checkbox from '../checkbox';
 import Button, {ButtonTypes, ButtonSizes} from '../button';
 import Textarea from '../textarea';
@@ -26,12 +26,12 @@ export default class Showroom extends Component {
                 <Textarea value={this.state.value} onChange={this.onInputChange}/>
                 <Input placeholder="input" type="text" value={this.state.value} onChange={this.onInputChange}/>
                 <Input placeholder="error" type="text" value={this.state.value} onChange={this.onInputChange}
-                       validationState="error" errorMessage="Error message..."
+                       validationState={inputValidationStateTypes.error} errorMessage="Error message..."
                 />
                 <Input placeholder="success" type="text" value={this.state.value} onChange={this.onInputChange}
-                       validationState="success"
+                       validationState={inputValidationStateTypes.success}
                 />
-                <Input placeholder="success" type="text" value={this.state.value} onChange={this.onInputChange}
+                <Input placeholder="disabled" type="text" value={this.state.value} onChange={this.onInputChange}
                        disabled={true}
                 />
                 <Checkbox onClick={this.onCheckboxClick} checked={this.state.checked} disabled={false}>
@@ -39,10 +39,9 @@ export default class Showroom extends Component {
                 <Checkbox onClick={this.onCheckboxClick} checked={this.state.checked} disabled={true}>
                     Disabled </Checkbox>
                 <GridExample/>
-                    <Button
-                        type={ButtonTypes.primary}
-                        size={ButtonSizes.large}
-                        caption="Primary Button"
+                    <Button type={ButtonTypes.primary}
+                            size={ButtonSizes.large}
+                            caption="Primary Button"
                     />
                     <Button
                         type={ButtonTypes.success}

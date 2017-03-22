@@ -1,6 +1,12 @@
 import React, {PropTypes} from 'react';
 import './input.scss';
 
+export const inputValidationStateTypes = {
+    default: 'default',
+    error: 'error',
+    success: 'success'
+};
+
 const Input = props => {
     const {
         placeholder,
@@ -22,7 +28,7 @@ const Input = props => {
                 value={value}
                 className={`input input-${validationState}`}
             />
-            { errorMessage ? <span className="error-massage">{errorMessage}</span> : null}
+            {errorMessage ? <span className="error-massage">{errorMessage}</span> : null}
         </div>
     );
 };
@@ -33,7 +39,7 @@ Input.propTypes = {
     disabled: PropTypes.bool,
     onChange: PropTypes.func.isRequired,
     value: PropTypes.string.isRequired,
-    validationState: PropTypes.oneOf(['default', 'error', 'success']),
+    validationState: PropTypes.oneOf(Object.values(inputValidationStateTypes)),
     errorMessage: PropTypes.string
 };
 

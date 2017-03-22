@@ -1,5 +1,6 @@
 @import "../../style/color-theme.scss";
 @import "../../style/font.scss";
+@import "../../style/sizes.scss";
 
 .input-container {
 
@@ -10,8 +11,8 @@
     color: $text-field-default-text-color;
     font-family: $default-font-family;
     font-size: $text-field-font-size;
-    line-height: 1.467;
-    padding: 8px 12px;
+    line-height: $text-field-default-line-height;
+    padding: map-get($indentSizes, s) map-get($indentSizes, m);
     height: 42px;
     border-radius: 6px;
     box-shadow: none;
@@ -53,6 +54,6 @@
 
   .error-massage {
     color: $danger;
-    padding-left: 12px;
+    padding-left: map-get($indentSizes, m);
   }
 }

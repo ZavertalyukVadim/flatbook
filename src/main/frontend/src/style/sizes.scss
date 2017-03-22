@@ -1,13 +1,12 @@
-$baseIndent: 8px;
+$baseIndent: 4px;
 
 $indentSizes: (
-  xxs: $baseIndent / 4,
-  xs: $baseIndent / 2,
-  s: $baseIndent,
-  m: $baseIndent * 2,
-  l: $baseIndent * 3,
-  xl: $baseIndent * 4,
-  xls: $baseIndent * 6,
-  xxl: $baseIndent * 8,
-  xxxl: $baseIndent * 16
+  xxs: $baseIndent / 2,
+  xs: $baseIndent,
+  s: $baseIndent * 2,
+  m: $baseIndent * 3,
+  l: $baseIndent * 4,
+  xl: $baseIndent * 6,
+  xls: $baseIndent * 8,
+  xxl: $baseIndent * 16
 );

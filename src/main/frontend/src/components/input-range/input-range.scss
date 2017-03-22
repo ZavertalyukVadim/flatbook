@@ -1,0 +1,41 @@
+@import "../../style/color-theme.scss";
+@import "../../style/font.scss";
+
+.input-range {
+
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  border: 2px solid $primary;
+  border-radius: 6px;
+  height: 42px;
+  width: 130px;
+
+  input {
+    width: 40%;
+    outline: none;
+    border: none;
+    text-align: center;
+    font-size: 24px;
+  }
+
+  .arrow {
+    border: 1px solid $primary;
+    background-color: $primary;
+    color: #34495E;
+    opacity: .75;
+    margin: 2px;
+    width: 30%;
+    text-align: center;
+    border-radius: 4px;
+    font-size: 30px;
+
+    &:hover {
+      opacity: .65;
+    }
+  }
+
+  .arrow-disabled {
+    background-color: black !important;
+  }
+}
