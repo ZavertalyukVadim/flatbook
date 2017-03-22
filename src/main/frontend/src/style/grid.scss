@@ -1,3 +1,5 @@
+@import "./sizes";
+
 $grid-margin: 1%;
 $grid-number: 12;
 $column-width: (100 - ( $grid-margin * $grid-number - 1 )) / $grid-number;
@@ -25,12 +27,13 @@ $column-numbers: (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12);
     @extend .default-styles;
     float: left;
     margin-left: $grid-margin;
-    padding: 15px;
-    &:last-child {
-      margin-left: 0;
-    }
+    padding: map-get($indentSizes, m);
 }
-  
+
+.col-12 {
+  margin-left: 0;
+}
+
 @each $column-number in $column-numbers {
   $i: index($column-numbers, $column-number);
 
