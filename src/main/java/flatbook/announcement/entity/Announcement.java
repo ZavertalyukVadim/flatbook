@@ -14,8 +14,11 @@ public class Announcement {
     @Column(name = "announcement_id", nullable = false)
     private Integer id;
 
-    @Column(name = "price")
-    private Integer price;
+    @Column(name = "price_per_day")
+    private Integer pricePerDay;
+
+    @Column(name = "price_per_month")
+    private Integer pricePerMonth;
 
     @Column(name = "title")
     private String title;
@@ -66,8 +69,8 @@ public class Announcement {
     public Announcement() {
     }
 
-    public Announcement(Integer price, String description, Boolean visibility, Date date) {
-        this.price = price;
+    public Announcement(Integer pricePerDay, String description, Boolean visibility, Date date) {
+        this.pricePerDay = pricePerDay;
         this.description = description;
         this.visibility = visibility;
         this.lastUpdated = date;
@@ -81,12 +84,20 @@ public class Announcement {
         this.id = id;
     }
 
-    public Integer getPrice() {
-        return price;
+    public Integer getPricePerDay() {
+        return pricePerDay;
     }
 
-    public void setPrice(Integer price) {
-        this.price = price;
+    public void setPricePerDay(Integer pricePerDay) {
+        this.pricePerDay = pricePerDay;
+    }
+
+    public Integer getPricePerMonth() {
+        return pricePerMonth;
+    }
+
+    public void setPricePerMonth(Integer pricePerMonth) {
+        this.pricePerMonth = pricePerMonth;
     }
 
     public String getTitle() {
