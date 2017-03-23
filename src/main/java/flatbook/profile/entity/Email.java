@@ -10,13 +10,13 @@ public class Email {
     private Integer id;
 
     @Column(name = "address")
+    @org.hibernate.validator.constraints.Email
     private String address;
 
     @Column(name = "is_primary")
-    private Boolean primary;
+    private Boolean isPrimary;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
     private User user;
 
     public Integer getId() {
@@ -36,10 +36,10 @@ public class Email {
     }
 
     public Boolean getPrimary() {
-        return primary;
+        return isPrimary;
     }
 
     public void setPrimary(Boolean primary) {
-        this.primary = primary;
+        this.isPrimary = primary;
     }
 }

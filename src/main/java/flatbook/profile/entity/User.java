@@ -1,6 +1,7 @@
 package flatbook.profile.entity;
 
 import javax.persistence.*;
+import javax.validation.constraints.Size;
 import java.util.List;
 
 @Entity
@@ -18,22 +19,21 @@ public class User {
     @Column(name = "last_name")
     private String lastName;
 
-    @Column(name = "user_name")
+    @Column(name = "user_name", unique = true)
     private String userName;
 
     @Column(name = "password")
     private String password;
 
-    public List<Email> getEmails() {
-        return emails;
-    }
-
-    public void setEmails(List<Email> emails) {
-        this.emails = emails;
-    }
+    @OneToMany(mappedBy = "user")
+    @JoinColumn(name = "email_id")
+    @Size(min = 1)
+    private List<Email> emails;
 
     @OneToMany(mappedBy = "user")
-    private List<Email> emails;
+    @JoinColumn(name = "phone_id")
+    @Size(min = 1)
+    private List<Phone> phones;
 
     public Integer getId() {
         return id;
@@ -73,5 +73,13 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public List<Email> getEmails() {
+        return emails;
+    }
+
+    public void setEmails(List<Email> emails) {
+        this.emails = emails;
     }
 }
