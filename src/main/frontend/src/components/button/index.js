@@ -13,7 +13,8 @@ export const ButtonTypes = {
 export const ButtonSizes = {
     small: 'small',
     medium: 'medium',
-    large: 'large'
+    large: 'large',
+    block: 'btn-block'
 };
 
 const Button = props => {
