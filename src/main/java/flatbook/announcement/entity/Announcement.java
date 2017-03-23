@@ -20,6 +20,12 @@ public class Announcement {
     @Column(name = "price_per_month")
     private Integer pricePerMonth;
 
+    @Column(name = "email")
+    private String email;
+
+    @Column(name = "phone")
+    private String phone;
+
     @Column(name = "title")
     private String title;
 
@@ -114,6 +120,22 @@ public class Announcement {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
     public Boolean getVisibility() {

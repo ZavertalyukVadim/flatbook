@@ -120,7 +120,8 @@ public class AnnouncementService {
         announcement.setLivingPlaces(newAnnouncement.getLivingPlaces());
         announcement.setAmenities(newAnnouncement.getAmenities());
         announcement.setPhotos(newAnnouncement.getPhotos());
-
+        announcement.setPhone(newAnnouncement.getPhone());
+        announcement.setEmail(newAnnouncement.getEmail());
         announcementDao.save(announcement);
         return announcement;
     }
