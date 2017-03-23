@@ -1,0 +1,25 @@
+@import "../../style/color-theme";
+
+.account {
+	margin: 8px 0;
+	text-align: left;
+}
+
+.registration-item {
+	
+	color: $info;
+	font-weight: bold;
+}
+
+.registration-form {
+	text-align: center;
+}
+
+.registration-terms {
+	text-align: left;
+}
+
+.registration-icon {
+	float: left;
+	font-size: 20px;
+}
