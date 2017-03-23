@@ -1,7 +1,7 @@
 package flatbook.announcement.controller;
 
-import flatbook.announcement.service.AnnouncementService;
 import flatbook.announcement.entity.Announcement;
+import flatbook.announcement.service.AnnouncementService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -36,6 +36,11 @@ public class AnnouncementController {
     @RequestMapping(value = "", method = RequestMethod.PUT)
     public Announcement updateAnnouncement(@RequestBody Announcement announcement) {
         return announcementService.updateAnnouncement(announcement);
+    }
+
+    @RequestMapping(value = "/{id}/changeVisibility", method = RequestMethod.PUT)
+    public Announcement updateVisibility(@PathVariable("id") Integer id) {
+        return announcementService.updateVisibility(id);
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)

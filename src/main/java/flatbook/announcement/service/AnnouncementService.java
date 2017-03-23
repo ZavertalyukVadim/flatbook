@@ -63,7 +63,7 @@ public class AnnouncementService {
         amenityList.add(amenity);
         amenityList.add(amenity1);
         amenityList.add(amenity2);
-        Announcement announcement = new Announcement(123, "ololo", false, new Date());
+        Announcement announcement = new Announcement(123, "ololo", true, new Date());
         announcement.setLastUpdated(new Date());
         announcement.setTitle("title1");
         announcement.setRooms(1);
@@ -75,17 +75,17 @@ public class AnnouncementService {
         announcement.setCity(city);
         announcement.setAmenities(amenityList);
         announcementDao.save(announcement);
-        Announcement announcement1 = new Announcement(122, "ololo1", false, new Date());
+        Announcement announcement1 = new Announcement(122, "ololo1", true, new Date());
         announcement1.setLastUpdated(new Date());
         announcement1.setTitle("title2");
         announcement1.setRooms(1);
         announcement1.setLivingPlaces(100);
-        Announcement announcement2 = new Announcement(121, "ololo2", false, new Date());
+        Announcement announcement2 = new Announcement(121, "ololo2", true, new Date());
         announcement2.setLastUpdated(new Date());
         announcement2.setTitle("title3");
         announcement2.setRooms(1);
         announcement2.setLivingPlaces(100);
-        Announcement announcement3 = new Announcement(120, "ololo3", false, new Date());
+        Announcement announcement3 = new Announcement(120, "ololo3", true, new Date());
         announcement3.setLastUpdated(new Date());
         announcement3.setTitle("title4");
         announcement3.setRooms(1);
@@ -127,6 +127,13 @@ public class AnnouncementService {
 
     public Announcement createAnnouncement(Announcement announcement) {
         announcement.setLastUpdated(new Date());
+        announcementDao.save(announcement);
+        return announcement;
+    }
+
+    public Announcement updateVisibility(Integer id) {
+        Announcement announcement = announcementDao.findOne(id);
+        announcement.setVisibility(!announcement.getVisibility());
         announcementDao.save(announcement);
         return announcement;
     }
