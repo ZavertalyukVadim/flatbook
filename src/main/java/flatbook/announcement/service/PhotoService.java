@@ -1,10 +1,13 @@
 package flatbook.announcement.service;
 
 import flatbook.announcement.dao.PhotoDao;
+import flatbook.announcement.entity.FileBucket;
 import flatbook.announcement.entity.Photo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
 @Service
@@ -13,11 +16,10 @@ public class PhotoService {
     private PhotoDao photoDao;
 
     public List<Photo> getAllPhoto() {
-        test();
         return photoDao.findAll();
     }
 
-    private void test() {
+    public void test() {
         Photo photo = new Photo();
         photo.setTitle("photo");
         photoDao.save(photo);
@@ -33,9 +35,16 @@ public class PhotoService {
         return photoDao.findOne(id);
     }
 
-    public Photo createPhoto(Photo photo) {
+    public Photo createPhoto(FileBucket fileBucket) {
+        MultipartFile multipartFile = fileBucket.getFile();
+        Photo photo = new Photo();
+        photo.setTitle(fileBucket.getDescription());
+        try {
+            photo.setImage(multipartFile.getBytes());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         return photoDao.save(photo);
-
     }
 
     public Photo deletePhoto(Integer id) {
