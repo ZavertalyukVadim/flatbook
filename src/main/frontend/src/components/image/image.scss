@@ -1,48 +1,54 @@
+@import '../../style/sizes';
+@import '../../style/color-theme';
+
 .image-wrapper {
-	position: relative;
-	display: inline-block;
+  position: relative;
+  display: inline-block;
 }
 
 .img-rectangle {
-  background-color: #fff;
-  border: 1px solid #ddd;
+  background-color: $img-background-color;
+  border: 1px solid $img-border-color;
   border-radius: 4px;
-  padding: 4px;
+  padding: map-get($indentSizes, xxs);
 }
+
 .small {
-  max-width: 200px;
+  max-width: $img-small-width;
 }
+
 .medium {
-  max-width: 500px;
+  max-width: $img-medium-width;
 }
+
 .large {
-  max-width: 800px;
+  max-width: $img-large-width;
 }
 
 .like {
-	position: absolute;
-	top: 0;
-	right: 0;
-	left: 0;
-	bottom: 0;
-	font-size: 28px;
-	padding: 10px;
-	color: white;
-	text-align: right;
-	opacity: 0;
-	transition: opacity 0.6s;
-	&:hover {
-		opacity: .7;
-	};
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  font-size: 28px;
+  padding: map-get($indentSizes, m);
+  color: #fff;
+  text-align: right;
+  opacity: 0;
+  transition: opacity 0.6s;
+  &:hover {
+    opacity: .7;
+  }
 }
 
 .liked {
-	opacity: 1;
-	&:hover {
-		opacity: 1;
-	};
+  opacity: 1;
+  &:hover {
+    opacity: 1;
+  }
 }
 
 .like-icon {
-	cursor: pointer;
+  cursor: pointer;
 }
