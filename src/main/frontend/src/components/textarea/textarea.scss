@@ -1,5 +1,6 @@
 @import "../../style/color-theme.scss";
 @import "../../style/font.scss";
+@import "../../style/sizes.scss";
 
 .textarea {
   display: block;
@@ -9,7 +10,7 @@
   font-family: $default-font-family;
   font-size: $text-field-font-size;
   line-height: $text-field-default-line-height;
-  padding: 8px 12px;
+  padding: map-get($indentSizes, s) map-get($indentSizes, m);
   height: 90px;
   border-radius: 6px;
   box-shadow: none;

@@ -1,5 +1,6 @@
 @import "../../style/color-theme.scss";
 @import "../../style/font.scss";
+@import "../../style/sizes.scss";
 
 $checkbox-size: 20px;
 $checkbox-border-radius: 3px;
@@ -17,7 +18,7 @@ $checkbox-border-radius: 3px;
     align-items: center;
     transition: 0.2s linear;
     color: $check-icon-color;
-    margin-right: 4px;
+    margin-right: map-get($indentSizes, xs);
     background-color: $checkbox-background;
   }
 
