@@ -14,7 +14,7 @@ public class Photo {
     private Integer id;
 
     @Column(name = "image")
-    private String image;
+    private byte[] image;
 
     @Column(name = "title")
     private String title;
@@ -25,7 +25,7 @@ public class Photo {
             @JoinColumn(name = "announcement_id", nullable = false)},
             inverseJoinColumns = {@JoinColumn(name = "photo_id",
                     nullable = false)})
-    private Announcement announcement;////!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    private Announcement announcement;
 
     public Photo() {
     }
@@ -42,11 +42,28 @@ public class Photo {
         this.announcement = announcement;
     }
 
-    public String getImage() {
+//    public MultipartFile getImage() {
+//        return image;
+//    }
+//
+//    public void setImage(MultipartFile image) {
+//        this.image = image;
+//    }
+
+
+//    public String getImage() {
+//        return image;
+//    }
+//
+//    public void setImage(String image) {
+//        this.image = image;
+//    }
+
+    public byte[] getImage() {
         return image;
     }
 
-    public void setImage(String image) {
+    public void setImage(byte[] image) {
         this.image = image;
     }
 
