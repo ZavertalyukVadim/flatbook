@@ -4,7 +4,6 @@ import flatbook.announcement.dao.PhotoDao;
 import flatbook.announcement.entity.Photo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -34,17 +33,8 @@ public class PhotoService {
         return photoDao.findOne(id);
     }
 
-    public void createPhoto(MultipartFile image) {
-        Photo photo = new Photo();
-        photo.setTitle("MYPHOTO");
-        if (!image.isEmpty()) {
-            try {
-                byte[] bytes = image.getBytes();
-                photo.setImage(bytes);
-            } catch (Exception ignored) {
-            }
-        }
-        photoDao.save(photo);
+    public Photo createPhoto(Photo photo) {
+        return photoDao.save(photo);
 
     }
 

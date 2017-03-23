@@ -4,7 +4,6 @@ import flatbook.announcement.entity.Photo;
 import flatbook.announcement.service.PhotoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -21,11 +20,8 @@ public class PhotoController {
 
     @RequestMapping(value = "/one", method = RequestMethod.POST, headers = "content-type!=multipart/form-data")
     @ResponseBody
-    public void getPhotoById(
-//            @RequestBody Photo photo,
-            @RequestParam(value = "file", required = false) MultipartFile submissions
-    ) {
-        photoService.createPhoto(submissions);
+    public Photo getPhotoById(@RequestBody Photo photo) {
+        return photoService.createPhoto(photo);
 //        return photoService.getPhotoById(id);
     }
 
