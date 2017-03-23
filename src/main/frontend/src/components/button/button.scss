@@ -1,4 +1,5 @@
 @import "../../style/color-theme.scss";
+@import "../../style/sizes.scss";
 
 $btn-border-radius: 6px;
 
@@ -7,7 +8,7 @@ $btn-border-radius: 6px;
   border: none;
   border-radius: $btn-border-radius;
   color: $btn-text-color;
-  margin: 5px;
+  margin: map-get($indentSizes, s) 0;
 
   &:hover {
     opacity: .75;
@@ -39,27 +40,27 @@ $btn-border-radius: 6px;
   -webkit-box-shadow: none;
   box-shadow: none;
   opacity: .65;
-  background-color: #bdc3c7;
+  background-color: $btn-disabled-color;
 }
 
 /*Size*/
 
 .small {
-  padding: 5px 10px;
+  padding: map-get($indentSizes, xs) map-get($indentSizes, s);
   font-size: 12px;
 }
 
 .medium {
-  padding: 6px 8px;
+  padding:  map-get($indentSizes, s) map-get($indentSizes, l);
   font-size: 16px;
 }
 
 .large {
-  padding: 10px 16px;
+  padding:  map-get($indentSizes, l) map-get($indentSizes, xl);
   font-size: 18px;
 }
 
 .btn-block {
   width: 100%;
-  padding: 16px 20px;
+  padding: map-get($indentSizes, l) map-get($indentSizes, xl);
 }
