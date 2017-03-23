@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
-import Input from '../input';
-import Button, {ButtonTypes, ButtonSizes} from '../button';
-import Checkbox from '../checkbox';
-import Header from '../header';
-import './registration.scss';
+import Input from '../../components/input';
+import Button, {ButtonTypes, ButtonSizes} from '../../components/button';
+import Checkbox from '../../components/checkbox';
+import Header from '../../components/header';
+import './signup.scss';
 
 export default class extends Component {
 
@@ -45,28 +45,24 @@ export default class extends Component {
                     value={firstName}
                     onChange={this.onInputChange('firstName')}
                 />
-
                 <Input
                     placeholder="Last name"
                     type="text"
                     value={lastName}
                     onChange={this.onInputChange('lastName')}
                 />
-
                 <Input
                     placeholder="Email"
                     type="email"
                     value={email}
                     onChange={this.onInputChange('email')}
                 />
-
                 <Input
                     placeholder="Password"
                     type="text"
                     value={password}
                     onChange={this.onInputChange('password')}
                 />
-
                 <Input
                     placeholder="Confirm password"
                     type="text"
@@ -77,27 +73,24 @@ export default class extends Component {
                 <Button
                     type={ButtonTypes.info}
                     size={ButtonSizes.block}
-                    caption={[<i className="fa fa-facebook registration-icon"/>, "Register with Facebook"]}
+                    caption={[<i className="fa fa-facebook registration-icon"/>, 'Register with Facebook']}
                 />
-
                 <Button
                     type={ButtonTypes.danger}
                     size={ButtonSizes.block}
-                    caption={[<i className="fa fa-google registration-icon"/>, "Register with Google"]}
+                    caption={[<i className="fa fa-google registration-icon"/>, 'Register with Google']}
                 />
                 <div className="row">
-                    <div className="col-2">
-                        <Checkbox
-                            onClick={this.onCheckboxClick}
-                            checked={checked}
-                            disabled={false}>
-                        </Checkbox>
-                    </div>
-                    <div className="col-10">
+                    <Checkbox
+                        onClick={this.onCheckboxClick}
+                        checked={checked}
+                        disabled={false}
+                    >
                         <p className="registration-terms">By signing up, I agree with <a href="#">Terms of Service,
                             Nondiscrimination Policy, Payments Terms of Service,
-                            Privacy Policy, Guest Refund Policy</a> and <a href="#">Host Guarantee Terms</a></p>
-                    </div>
+                            Privacy Policy, Guest Refund Policy</a> and <a href="#">Host Guarantee Terms</a>
+                        </p>
+                    </Checkbox>
                 </div>
                 <Button
                     type={ButtonTypes.primary}
@@ -118,8 +111,6 @@ export default class extends Component {
                     </div>
                 </div>
             </div>
-
-        )
+        );
     }
-
 }

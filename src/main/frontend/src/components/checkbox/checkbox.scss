@@ -10,6 +10,7 @@ $checkbox-border-radius: 3px;
 
   .checkbox-icon {
     width: $checkbox-size;
+    min-width: $checkbox-size;
     height: $checkbox-size;
     border-radius: $checkbox-border-radius;
     font-size: $default-font-size;

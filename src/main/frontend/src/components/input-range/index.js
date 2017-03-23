@@ -16,12 +16,7 @@ const InputRange = props => {
     const onRightArrowClick = () => onChangeValue(value + 1);
     const leftArrowClassName = classNames('arrow', {'arrow-disabled': isLeftArrowDisabled});
     const rightArrowClassName = classNames('arrow', {'arrow-disabled': isRightArrowDisabled});
-    const onChangeInput = ({target: {value}}) => {
-        console.log(value);
-        console.log(+value);
-
-        return +value < 0 || +value > maxValue ? false : onChangeValue(+value)
-    };
+    const onChangeInput = e => +e.target.value < 0 || +e.target.value > maxValue ? false : onChangeValue(+e.target.value);
 
 
     return (
@@ -34,7 +29,7 @@ const InputRange = props => {
                 &#62;
             </span>
         </div>
-    )
+    );
 };
 
 InputRange.propTypes = {
@@ -47,4 +42,4 @@ InputRange.defaultProps = {
     value: 100
 };
 
-export default InputRange
+export default InputRange;

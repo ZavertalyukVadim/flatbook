@@ -2,7 +2,6 @@ let webpack = require('webpack');
 let HtmlWebpackPlugin = require('html-webpack-plugin');
 let path = require('path');
 
-console.log(__dirname);
 const PATHS = {
     source: path.join(__dirname, '../src/index.js'),
     output: path.join(__dirname, '../../../../target/classes/static')
