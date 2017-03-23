@@ -23,13 +23,16 @@ public class AnnouncementService {
 
     private final AmenityDao amenityDao;
 
+    private final DistrictDao districtDao;
+
     @Autowired
-    public AnnouncementService(AnnouncementDao announcementDao, CountryDao countryDao, RegionDao regionDao, CityDao cityDao, AmenityDao amenityDao) {
+    public AnnouncementService(AnnouncementDao announcementDao, CountryDao countryDao, RegionDao regionDao, CityDao cityDao, AmenityDao amenityDao, DistrictDao districtDao) {
         this.announcementDao = announcementDao;
         this.countryDao = countryDao;
         this.regionDao = regionDao;
         this.cityDao = cityDao;
         this.amenityDao = amenityDao;
+        this.districtDao = districtDao;
     }
 
     public List<Announcement> getAllAnnouncement() {
@@ -51,6 +54,10 @@ public class AnnouncementService {
         city.setName("Cherkasy");
         city.setRegion(region);
         cityDao.save(city);
+        District district = new District();
+        district.setName("district");
+        district.setCity(city);
+        districtDao.save(district);
         Amenity amenity = new Amenity();
         amenity.setName("amenity");
         amenityDao.save(amenity);
@@ -74,6 +81,7 @@ public class AnnouncementService {
         announcement.setCountry(coutry);
         announcement.setRegion(region);
         announcement.setCity(city);
+        announcement.setDistrict(district);
         announcement.setAmenities(amenityList);
         announcementDao.save(announcement);
         Announcement announcement1 = new Announcement(122, "ololo1", true, new Date());
@@ -122,6 +130,7 @@ public class AnnouncementService {
         announcement.setPhotos(newAnnouncement.getPhotos());
         announcement.setPhone(newAnnouncement.getPhone());
         announcement.setEmail(newAnnouncement.getEmail());
+        announcement.setDistrict(newAnnouncement.getDistrict());
         announcementDao.save(announcement);
         return announcement;
     }

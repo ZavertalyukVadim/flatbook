@@ -44,6 +44,10 @@ public class Announcement {
     @JoinColumn(name = "city_id")
     private City city;
 
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "district_id")
+    private District district;
+
     @Column(name = "street")
     private String street;
 
@@ -224,5 +228,13 @@ public class Announcement {
 
     public void setCity(City city) {
         this.city = city;
+    }
+
+    public District getDistrict() {
+        return district;
+    }
+
+    public void setDistrict(District district) {
+        this.district = district;
     }
 }
