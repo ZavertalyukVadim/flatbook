@@ -1,5 +1,10 @@
 import React, {PropTypes} from 'react';
 
+export const HeaderTypes = {
+    primary: 'primary',
+    secondary: 'secondary'
+};
+
 const Header = props => {
     const {type, value} = props;
 
@@ -16,7 +21,7 @@ const Header = props => {
 
 Header.propTypes = {
     value: PropTypes.string,
-    type: PropTypes.oneOf(['primary', 'secondary'])
+    type: PropTypes.oneOf(Object.values(HeaderTypes))
 };
 
 export default Header;
