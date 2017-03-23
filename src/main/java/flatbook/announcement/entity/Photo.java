@@ -1,7 +1,6 @@
 package flatbook.announcement.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.*;
 
@@ -15,7 +14,7 @@ public class Photo {
     private Integer id;
 
     @Column(name = "image")
-    private MultipartFile image;
+    private byte[] image;
 
     @Column(name = "title")
     private String title;
@@ -43,11 +42,11 @@ public class Photo {
         this.announcement = announcement;
     }
 
-    public MultipartFile getImage() {
+    public byte[] getImage() {
         return image;
     }
 
-    public void setImage(MultipartFile image) {
+    public void setImage(byte[] image) {
         this.image = image;
     }
 

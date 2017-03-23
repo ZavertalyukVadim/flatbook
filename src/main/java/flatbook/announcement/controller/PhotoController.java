@@ -1,5 +1,6 @@
 package flatbook.announcement.controller;
 
+import flatbook.announcement.entity.FileBucket;
 import flatbook.announcement.entity.Photo;
 import flatbook.announcement.service.PhotoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,11 @@ public class PhotoController {
     @Autowired
     private PhotoService photoService;
 
+    @RequestMapping(value = "/test", method = RequestMethod.GET)
+    public void test() {
+        photoService.test();
+    }
+
     @RequestMapping(value = "", method = RequestMethod.GET)
     public List<Photo> getAllPhoto() {
         return photoService.getAllPhoto();
@@ -24,7 +30,7 @@ public class PhotoController {
     }
 
     @RequestMapping(value = "", method = RequestMethod.POST)
-    public Photo createPhoto(@RequestBody Photo photo) {
+    public Photo createPhoto(@RequestBody(required = false) FileBucket photo) {
         return photoService.createPhoto(photo);
     }
 
