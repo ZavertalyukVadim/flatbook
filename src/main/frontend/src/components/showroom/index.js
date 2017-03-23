@@ -6,6 +6,8 @@ import Button, {ButtonTypes, ButtonSizes} from '../button';
 import Textarea from '../textarea';
 import Image, {ImageSizes} from '../image';
 import Avatar from '../avatar';
+import Registration from '../registration';
+import Header from '../header';
 
 export default class Showroom extends Component {
     constructor(props) {
@@ -82,9 +84,26 @@ export default class Showroom extends Component {
                         size={ImageSizes.small}
                         src="http://www.pnas.org/site/misc/images/16-01910.500.jpg"
                     />
+                    <Image
+                        size={ImageSizes.small}
+                    />
                     <Avatar
                         src="http://www.pnas.org/site/misc/images/16-01910.500.jpg"
                     />
+                    <Avatar
+                    />
+                    <Header
+                        type="primary"
+                        value="Primary header"
+                    />
+                    <Header
+                        type="secondary"
+                        value="Secondary header"
+                    />
+                    <Header
+                        value="Default header"
+                    />
+                <Registration/>
             </div>
         );
     }

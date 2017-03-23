@@ -1,6 +1,9 @@
+@import "../../style/color-theme";
+@import "../../style/sizes";
+
 .img-circled {
-  width: 200px;
-  border: 1px solid #ddd;
-  padding: 4px;
+  width: $img-small-width;
+  border: 1px solid $img-border-color;
+  padding: map-get($indentSizes, xxs);
   border-radius: 50%;
 }
