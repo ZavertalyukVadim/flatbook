@@ -15,8 +15,8 @@ public class Phone {
     @Pattern(regexp = "(^[+][\\d]{1,2}[\\d]{10}$)|(^[\\d]{10})$")
     private String number;
 
-    @Column(name = "is_primary")
-    private Boolean primary;
+    @Column(name = "is_primary", nullable = false)
+    private Boolean isPrimary;
 
     @ManyToOne(fetch = FetchType.LAZY)
     private User user;
@@ -38,11 +38,11 @@ public class Phone {
     }
 
     public Boolean getPrimary() {
-        return primary;
+        return isPrimary;
     }
 
     public void setPrimary(Boolean primary) {
-        primary = primary;
+        isPrimary = primary;
     }
 
     public User getUser() {

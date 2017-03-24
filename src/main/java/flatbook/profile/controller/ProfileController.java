@@ -7,7 +7,8 @@ import flatbook.profile.service.ProfileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-@RestController(value = "/profile")
+@RestController
+@RequestMapping(value = "/profile")
 public class ProfileController {
 
     private final ProfileService profileService;
@@ -18,8 +19,8 @@ public class ProfileController {
     }
 
     @RequestMapping(value = "", method = RequestMethod.POST)
-    public User createUser(@RequestParam Phone primaryPhone, @RequestParam Email primaryEmail, @RequestBody User user) {
-        return profileService.createUser(user, primaryEmail, primaryPhone);
+    public User createUser(@RequestBody User user) throws Exception {
+        return profileService.createUser(user);
     }
 
     @RequestMapping(value = "", method = RequestMethod.DELETE)
@@ -36,5 +37,10 @@ public class ProfileController {
     public Email update(@RequestBody User user) {
         profileService.update(user);
         return null;
+    }
+
+    @RequestMapping(value = "/test", method = RequestMethod.GET)
+    public void test() {
+
     }
 }

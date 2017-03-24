@@ -7,15 +7,20 @@ import flatbook.profile.entity.Email;
 import flatbook.profile.entity.Phone;
 import flatbook.profile.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 import java.util.function.Consumer;
-import java.util.function.Predicate;
-import java.util.function.UnaryOperator;
 
 @Service
 public class ProfileService {
@@ -23,6 +28,7 @@ public class ProfileService {
     private final UserDao userDao;
     private final EmailDao emailDao;
     private final PhoneDao phoneDao;
+
 
     @Autowired
     public ProfileService(UserDao userDao, EmailDao emailDao, PhoneDao phoneDao) {
@@ -32,14 +38,15 @@ public class ProfileService {
     }
 
     @Transactional
-    public User createUser(User user, Email email, Phone phone) {
-        email.setPrimary(true);
-        emailDao.save(email);
+    public User createUser(User user) throws Exception {
+        if ( isUserExist(user) ) throw new Exception("User has been already exist");
 
-        phone.setPrimary(true);
-        phoneDao.save(phone);
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        String hashedPassword = passwordEncoder.encode(user.getPassword());
+        user.setPassword(hashedPassword);
 
         userDao.save(user);
+
         return user;
     }
 
@@ -67,24 +74,30 @@ public class ProfileService {
         if (isEmailExists(email)) setOwnersPrimaryEmail(user, email);
     }
 
+    @Transactional
     public Email addEmail(Integer userId, Email email) throws Exception {
 
         String userEmail = getCurrentUserPrimaryEmail();
-        if (!isUserExist(userEmail)) throw new Exception("Unknown user");
-
-//        if (isUserContainsEmail(e))
-//
-//        if (!userDao.exists(userEmail)) throw new Exception("Unknown user");
+        if (!isUserNameExist(userEmail)) throw new Exception("Unknown user");
 
         User user = userDao.findOne(userId);
-        List<Email> emails = user.getEmails();
-        if (emails.contains(email)) return email;
+        if (!userDao.exists(userId)) throw new Exception("Unknown user");
+
+        if (!isUserEmailOwner(user, email)) throw new Exception("User is not email owner");
+
+        if (isUserContainsEmail(user, email)) return email;
 
         Email existingEmail = emailDao.findOneByAddress(email.getAddress());
         if (existingEmail == null) throw new Exception("Email is used by another user");
 
+        if (isEmailUsed(email)) throw new Exception("Email is used");
+
         emailDao.save(email);
+
+        List<Email> emails = user.getEmails();
         emails.add(email);
+        user.setEmails(emails);
+
         userDao.save(user);
 
         return email;
@@ -114,8 +127,12 @@ public class ProfileService {
         return null;
     }
 
-    public Email getPrimaryEmail(User user) {
-        return null;
+    public Email getPrimaryEmail() throws Exception {
+        String currentUserPrimaryEmai = getCurrentUserPrimaryEmail();
+        Email email = emailDao.findOneByAddress(getCurrentUserPrimaryEmail());
+        if (email == null) throw new Exception("There is no primary email");
+
+        return email;
     }
 
     public List<Email> getAllEmails(User user) {
@@ -159,7 +176,7 @@ public class ProfileService {
         return email.getPrimary();
     }
 
-    private boolean isUserExist(String userName) throws Exception {
+    private boolean isUserNameExist(String userName) throws Exception {
         return userName != null && !userName.isEmpty();
     }
 
@@ -178,5 +195,100 @@ public class ProfileService {
         String securityPrimaryEmail = getCurrentUserPrimaryEmail();
 
         return user.getPrimaryEmail().equals(securityPrimaryEmail);
+    }
+
+    private boolean isEmailUsed(Email email) {
+        Email existingEmail = emailDao.findOneByAddress(email.getAddress());
+        return existingEmail != null;
+    }
+
+    private boolean isUserExist(User user) {
+        if (user == null) return false;
+        if (user.getEmails() == null) return false;
+
+        return user.getEmails().stream().anyMatch(email ->
+            emailDao.findOneByAddress(email.getAddress()) != null);
+    }
+
+
+    public void test() {
+        Email email = new Email();
+        email.setPrimary(true);
+        User user = new User();
+    }
+
+    public void logOut() throws Exception {
+        if (!isAuthentificated()) {
+            System.out.println("Something is going wrong");
+            throw new Exception("You have been not logged yet");
+        }
+
+        SecurityContextHolder.getContext().setAuthentication(null);
+    }
+
+    public User logIn(User user) throws Exception {
+        Email email = user.getPrimaryEmail();
+        String password = user.getPassword();
+
+        if (! (isCorrectEmail(email, user) && isCorrentPassword(password, user))) throw new Exception("credentials are wrong");
+
+        UserDetails userDetails = new UserDetails() {
+            @Override
+            public Collection<? extends GrantedAuthority> getAuthorities() {
+                GrantedAuthority[] grantedAuthorities = {(GrantedAuthority) () -> "USER"};
+                return Arrays.asList(grantedAuthorities);
+            }
+
+            @Override
+            public String getPassword() {
+                return user.getPassword();
+            }
+
+            @Override
+            public String getUsername() {
+                return user.getPrimaryEmail().getAddress();
+
+            }
+
+            @Override
+            public boolean isAccountNonExpired() {
+                return false;
+            }
+
+            @Override
+            public boolean isAccountNonLocked() {
+                return false;
+            }
+
+            @Override
+            public boolean isCredentialsNonExpired() {
+                return false;
+            }
+
+            @Override
+            public boolean isEnabled() {
+                return true;
+            }
+        };
+        SecurityContextHolder.getContext().setAuthentication(new UsernamePasswordAuthenticationToken(
+                userDetails, userDetails.getPassword(), userDetails.getAuthorities()));
+
+        return user;
+    }
+
+    private boolean isAuthentificated() {
+        return  SecurityContextHolder.getContext().getAuthentication() != null && SecurityContextHolder.getContext().getAuthentication().isAuthenticated();
+    }
+
+
+    private boolean isCorrectEmail(Email email, User user) {
+        return email != null && email.getAddress() != null;
+    }
+
+    private boolean isCorrentPassword(String password, User user) {
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        String hashedPassword = passwordEncoder.encode(password);
+
+        return password != null && !password.isEmpty() && hashedPassword.equals(user.getPassword());
     }
 }

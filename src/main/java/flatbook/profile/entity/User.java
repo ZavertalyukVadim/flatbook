@@ -1,8 +1,11 @@
 package flatbook.profile.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.List;
 
@@ -21,23 +24,23 @@ public class User {
     @Column(name = "last_name")
     private String lastName;
 
-    @Column(name = "user_name", unique = true)
-    private String userName;
+//    @Column(name = "user_name", unique = true)
+//    private String userName;
 
     @Column(name = "password")
-    @JsonIgnore
+    @NotNull
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
 
-    @OneToMany(cascade = CascadeType.REMOVE)
+    @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "email_id", nullable = false, unique = true)
     @Size(min = 1)
     private List<Email> emails;
 
-    @OneToMany(cascade = CascadeType.REMOVE)
+    @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "phone_id", nullable = false, unique = true)
     @Size(min = 1)
     private List<Phone> phones;
-
 
     public Email getPrimaryEmail() {
         List<Email> emailes = getEmails();
@@ -73,13 +76,13 @@ public class User {
         this.lastName = lastName;
     }
 
-    public String getUserName() {
-        return userName;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
+//    public String getUserName() {
+//        return userName;
+//    }
+//
+//    public void setUserName(String userName) {
+//        this.userName = userName;
+//    }
 
     public String getPassword() {
         return password;
