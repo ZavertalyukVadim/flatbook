@@ -9,7 +9,7 @@ public class Email {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name = "address")
+    @Column(name = "address", unique = true, nullable = false)
     @org.hibernate.validator.constraints.Email
     private String address;
 

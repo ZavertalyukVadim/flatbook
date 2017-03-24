@@ -1,5 +1,7 @@
 package flatbook.profile.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import javax.validation.constraints.Size;
 import java.util.List;
@@ -23,17 +25,29 @@ public class User {
     private String userName;
 
     @Column(name = "password")
+    @JsonIgnore
     private String password;
 
-    @OneToMany(mappedBy = "user")
-    @JoinColumn(name = "email_id")
+    @OneToMany(cascade = CascadeType.REMOVE)
+    @JoinColumn(name = "email_id", nullable = false, unique = true)
     @Size(min = 1)
     private List<Email> emails;
 
-    @OneToMany(mappedBy = "user")
-    @JoinColumn(name = "phone_id")
+    @OneToMany(cascade = CascadeType.REMOVE)
+    @JoinColumn(name = "phone_id", nullable = false, unique = true)
     @Size(min = 1)
     private List<Phone> phones;
+
+
+    public Email getPrimaryEmail() {
+        List<Email> emailes = getEmails();
+        return emailes.stream().filter(email -> email.getPrimary()).findFirst().get();
+    }
+
+    public Phone getPrimaryPhone() {
+        List<Phone> phones = getPhones();
+        return phones.stream().filter(phone -> phone.getPrimary()).findFirst().get();
+    }
 
     public Integer getId() {
         return id;
@@ -81,5 +95,13 @@ public class User {
 
     public void setEmails(List<Email> emails) {
         this.emails = emails;
+    }
+
+    public List<Phone> getPhones() {
+        return phones;
+    }
+
+    public void setPhones(List<Phone> phones) {
+        this.phones = phones;
     }
 }

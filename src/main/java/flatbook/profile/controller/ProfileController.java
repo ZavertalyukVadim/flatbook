@@ -1,6 +1,7 @@
 package flatbook.profile.controller;
 
 import flatbook.profile.entity.Email;
+import flatbook.profile.entity.Phone;
 import flatbook.profile.entity.User;
 import flatbook.profile.service.ProfileService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,8 +18,13 @@ public class ProfileController {
     }
 
     @RequestMapping(value = "", method = RequestMethod.POST)
-    public User createUser(@RequestBody User user) {
-        return profileService.createUser(user);
+    public User createUser(@RequestParam Phone primaryPhone, @RequestParam Email primaryEmail, @RequestBody User user) {
+        return profileService.createUser(user, primaryEmail, primaryPhone);
+    }
+
+    @RequestMapping(value = "", method = RequestMethod.DELETE)
+    public User deleteUser(@RequestBody User user) throws Exception {
+        return profileService.delete(user);
     }
 
     @RequestMapping("/{id}")

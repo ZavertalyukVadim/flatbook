@@ -1,6 +1,7 @@
 package flatbook.profile.entity;
 
 import javax.persistence.*;
+import javax.validation.constraints.Pattern;
 
 @Entity
 @Table(name = "phones")
@@ -11,13 +12,13 @@ public class Phone {
     private Integer id;
 
     @Column(name = "number")
+    @Pattern(regexp = "(^[+][\\d]{1,2}[\\d]{10}$)|(^[\\d]{10})$")
     private String number;
 
     @Column(name = "is_primary")
-    private Boolean isPrimary;
+    private Boolean primary;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
     private User user;
 
     public Integer getId() {
@@ -37,11 +38,11 @@ public class Phone {
     }
 
     public Boolean getPrimary() {
-        return isPrimary;
+        return primary;
     }
 
     public void setPrimary(Boolean primary) {
-        isPrimary = primary;
+        primary = primary;
     }
 
     public User getUser() {

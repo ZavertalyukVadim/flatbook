@@ -1,13 +1,17 @@
 package flatbook.profile.service;
 
 import flatbook.profile.dao.EmailDao;
+import flatbook.profile.dao.PhoneDao;
 import flatbook.profile.dao.UserDao;
 import flatbook.profile.entity.Email;
 import flatbook.profile.entity.Phone;
 import flatbook.profile.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
@@ -18,29 +22,45 @@ public class ProfileService {
 
     private final UserDao userDao;
     private final EmailDao emailDao;
+    private final PhoneDao phoneDao;
 
     @Autowired
-    public ProfileService(UserDao userDao, EmailDao emailDao) {
+    public ProfileService(UserDao userDao, EmailDao emailDao, PhoneDao phoneDao) {
         this.userDao = userDao;
         this.emailDao = emailDao;
+        this.phoneDao = phoneDao;
     }
 
-    public User createUser(User user) {
+    @Transactional
+    public User createUser(User user, Email email, Phone phone) {
+        email.setPrimary(true);
+        emailDao.save(email);
+
+        phone.setPrimary(true);
+        phoneDao.save(phone);
+
         userDao.save(user);
         return user;
     }
 
-    public void update(User user) {
-        user.getEmails();
+    public User delete(User user) throws Exception {
+        if (!isUserEqualsToSecurityUser(user)) return user;
+
+        userDao.delete(user);
+        return null;
+    }
+
+    public User update(User user) {
+        if (!isUserEqualsToSecurityUser(user)) return null;
+
+        User oldUser = userDao.findOne(user.getId());
+        if (!oldUser.equals(user)) return null;
+
+        return userDao.save(oldUser);
     }
 
     public User getUserById(Integer id) {
         return userDao.findOne(id);
-    }
-
-    public User deleteUser(Integer id) {
-        userDao.delete(id);
-        return null;
     }
 
     public void updatePrimaryEmail(User user, Email email) {
@@ -48,7 +68,13 @@ public class ProfileService {
     }
 
     public Email addEmail(Integer userId, Email email) throws Exception {
-        if (!userDao.exists(userId)) throw new Exception("Unknown user");
+
+        String userEmail = getCurrentUserPrimaryEmail();
+        if (!isUserExist(userEmail)) throw new Exception("Unknown user");
+
+//        if (isUserContainsEmail(e))
+//
+//        if (!userDao.exists(userEmail)) throw new Exception("Unknown user");
 
         User user = userDao.findOne(userId);
         List<Email> emails = user.getEmails();
@@ -112,6 +138,11 @@ public class ProfileService {
         if (isUserEmailOwner(user, email)) makeEmailPrimary(email);
     }
 
+    private String getCurrentUserPrimaryEmail() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        return authentication.getName();
+    }
+
     private void makeEmailPrimary(Email email) {
         if (!isEmailPrimary(email)) email.setPrimary(true);
     }
@@ -126,5 +157,26 @@ public class ProfileService {
 
     private boolean isEmailPrimary(Email email) {
         return email.getPrimary();
+    }
+
+    private boolean isUserExist(String userName) throws Exception {
+        return userName != null && !userName.isEmpty();
+    }
+
+    private boolean isUserContainsEmail(User user, Email email) {
+        List<Email> emails = user.getEmails();
+
+        return emails.stream().anyMatch(currentEmail -> {
+            String currentAddress = currentEmail.getAddress();
+            String newAddress = email.getAddress();
+
+            return currentAddress.equals(newAddress);
+        });
+    }
+
+    private boolean isUserEqualsToSecurityUser(User user) {
+        String securityPrimaryEmail = getCurrentUserPrimaryEmail();
+
+        return user.getPrimaryEmail().equals(securityPrimaryEmail);
     }
 }
