@@ -4,6 +4,7 @@ import Button, {ButtonTypes, ButtonSizes} from '../../components/button';
 import Checkbox from '../../components/checkbox';
 import Header from '../../components/header';
 import './signup.scss';
+import {noop} from 'lodash';
 
 export default class extends Component {
 
@@ -37,7 +38,7 @@ export default class extends Component {
             <div className="col-4 offset-4 registration-form">
                 <Header
                     type="primary"
-                    value="Registration"
+                    value="Sign up"
                 />
                 <Input
                     placeholder="First name"
@@ -59,13 +60,13 @@ export default class extends Component {
                 />
                 <Input
                     placeholder="Password"
-                    type="text"
+                    type="password"
                     value={password}
                     onChange={this.onInputChange('password')}
                 />
                 <Input
                     placeholder="Confirm password"
-                    type="text"
+                    type="password"
                     value={confirmPass}
                     onChange={this.onInputChange('confirmPass')}
                 />
@@ -73,12 +74,14 @@ export default class extends Component {
                 <Button
                     type={ButtonTypes.info}
                     size={ButtonSizes.block}
-                    caption={[<i className="fa fa-facebook registration-icon"/>, 'Register with Facebook']}
+                    onClick={noop}
+                    caption={[<i className="fa fa-facebook registration-icon"/>, 'Sign up with Facebook']}
                 />
                 <Button
                     type={ButtonTypes.danger}
                     size={ButtonSizes.block}
-                    caption={[<i className="fa fa-google registration-icon"/>, 'Register with Google']}
+                    onClick={noop}
+                    caption={[<i className="fa fa-google registration-icon"/>, 'Sign up with Google']}
                 />
                 <div className="row">
                     <Checkbox
@@ -95,8 +98,9 @@ export default class extends Component {
                 <Button
                     type={ButtonTypes.primary}
                     size={ButtonSizes.block}
-                    caption="Register"
-                    onClick={this.onSubmit}
+                    onClick={noop}
+                    caption="Sign up"
+
                 />
                 <div className="row">
                     <div className="col-6">
@@ -106,7 +110,8 @@ export default class extends Component {
                         <Button
                             type={ButtonTypes.info}
                             size={ButtonSizes.block}
-                            caption="Log in"
+                            onClick={noop}
+                            caption="Sign in"
                         />
                     </div>
                 </div>
