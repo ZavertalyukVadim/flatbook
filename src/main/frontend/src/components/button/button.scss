@@ -63,4 +63,5 @@ $btn-border-radius: 6px;
 .btn-block {
   width: 100%;
   padding: map-get($indentSizes, l) map-get($indentSizes, xl);
+  font-size: 18px;
 }

@@ -2,7 +2,7 @@ import React from 'react';
 import {Link} from 'react-router';
 
 export default () =>
-    <div>
+    <div style={{marginLeft: '50px', fontSize: '20px'}}>
         <h1>Root page</h1>
         <Link to="showroom">Showroom</Link>
         <br/>

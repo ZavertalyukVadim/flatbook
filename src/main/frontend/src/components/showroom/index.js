@@ -6,7 +6,6 @@ import Button, {ButtonTypes, ButtonSizes} from '../button';
 import Textarea from '../textarea';
 import Image, {ImageSizes} from '../image';
 import Avatar from '../avatar';
-import Registration from '../registration';
 import Header from '../header';
 
 export default class Showroom extends Component {
@@ -90,8 +89,7 @@ export default class Showroom extends Component {
                     <Avatar
                         src="http://www.pnas.org/site/misc/images/16-01910.500.jpg"
                     />
-                    <Avatar
-                    />
+                    <Avatar/>
                     <Header
                         type="primary"
                         value="Primary header"
@@ -103,7 +101,6 @@ export default class Showroom extends Component {
                     <Header
                         value="Default header"
                     />
-                <Registration/>
             </div>
         );
     }
