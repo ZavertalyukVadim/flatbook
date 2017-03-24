@@ -8,7 +8,7 @@ $btn-border-radius: 6px;
   border: none;
   border-radius: $btn-border-radius;
   color: $btn-text-color;
-  margin: map-get($indentSizes, s) 0;
+  margin: map-get($indentSizes, s);
 
   &:hover {
     opacity: .75;
@@ -63,4 +63,5 @@ $btn-border-radius: 6px;
 .btn-block {
   width: 100%;
   padding: map-get($indentSizes, l) map-get($indentSizes, xl);
+  font-size: 18px;
 }

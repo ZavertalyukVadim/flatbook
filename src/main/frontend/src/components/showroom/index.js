@@ -6,7 +6,11 @@ import Button, {ButtonTypes, ButtonSizes} from '../button';
 import Textarea from '../textarea';
 import Image, {ImageSizes} from '../image';
 import Avatar from '../avatar';
+
 import './showroom.scss';
+
+import Header from '../header';
+
 
 export default class Showroom extends Component {
     constructor(props) {
@@ -58,7 +62,7 @@ export default class Showroom extends Component {
                 </div>
             </div>
           </div>
-          <div className="col-6">
+          <div className="col-7">
             <div className="panel">
               <div className="panel-heading">Button types</div>
                 <div className="panel-body">
@@ -113,7 +117,7 @@ export default class Showroom extends Component {
                 </div>
               </div>
           </div>
-          <div className="col-3">          
+          <div className="col-2">          
                 <div className="panel">
                   <div className="panel-heading">Checkbox</div>
                     <div className="panel-body">
@@ -151,8 +155,11 @@ export default class Showroom extends Component {
                     <Avatar
                         src="http://www.pnas.org/site/misc/images/16-01910.500.jpg"
                     />
-                    <Avatar/>
+                     <Avatar/>
+
                 </div>
+
+
             </div>
           </div>       
         </div>

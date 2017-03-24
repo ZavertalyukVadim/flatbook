@@ -22,7 +22,13 @@
 	margin-bottom: 10px;
 }
 
+.grid-example { 
+  overflow: hidden;
+  clear:both;
+  display: block;
+}
+
 .grid-example div {
-  border: 1px solid #337ab7;
+	border: 1px solid #337ab7;
   background-color: rgba(52, 126, 183, 0.19);
 }
