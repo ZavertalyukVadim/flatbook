@@ -1,41 +1,52 @@
 @import "../../style/color-theme.scss";
 @import "../../style/font.scss";
 
+$input-range-border-radius: 20px;
+
 .input-range {
 
   display: flex;
   flex-direction: row;
   justify-content: center;
-  border: 2px solid $primary;
-  border-radius: 6px;
-  height: 42px;
-  width: 130px;
+  height: 34px;
+  width: 110px;
 
   input {
     width: 40%;
     outline: none;
-    border: none;
     text-align: center;
-    font-size: 24px;
+    font-size: 20px;
+    border: 2px solid $primary;
   }
 
   .arrow {
-    border: 1px solid $primary;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
     background-color: $primary;
-    color: #34495E;
-    opacity: .75;
-    margin: 2px;
+    color: $text-field-default-text-color;
     width: 30%;
     text-align: center;
-    border-radius: 4px;
-    font-size: 30px;
+    font-size: 20px;
 
     &:hover {
       opacity: .65;
     }
   }
 
+  .arrow-left {
+    border-radius: $input-range-border-radius 0 0 $input-range-border-radius;
+  }
+
+  .arrow-right {
+    border-radius: 0 $input-range-border-radius $input-range-border-radius 0;
+  }
+
   .arrow-disabled {
-    background-color: black !important;
+    background-color: $btn-disabled-color;
+    &:hover {
+      opacity: 1;
+    }
   }
 }

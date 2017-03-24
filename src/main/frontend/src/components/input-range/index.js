@@ -1,45 +1,71 @@
-import React, {PropTypes} from 'react';
-import {noop} from 'lodash';
+import React, {Component, PropTypes} from 'react';
+import {noop, isNaN} from 'lodash';
 import classNames from 'classnames';
 import './input-range.scss';
 
-const InputRange = props => {
-    const {
-        value,
-        onChangeValue,
-        maxValue
-    } = props;
+class InputRange extends Component {
 
-    const isLeftArrowDisabled = value === 1;
-    const isRightArrowDisabled = value === maxValue;
-    const onLeftArrowClick = () => onChangeValue(value - 1);
-    const onRightArrowClick = () => onChangeValue(value + 1);
-    const leftArrowClassName = classNames('arrow', {'arrow-disabled': isLeftArrowDisabled});
-    const rightArrowClassName = classNames('arrow', {'arrow-disabled': isRightArrowDisabled});
-    const onChangeInput = e => +e.target.value < 0 || +e.target.value > maxValue ? false : onChangeValue(+e.target.value);
+    constructor(props) {
+        super(props);
 
+        this.state = {
+            value: props.value,
+            isLeftArrowDisabled: props.value === 1,
+            isRightArrowDisabled: props.value === props.maxValue
+        };
+    }
 
-    return (
-        <div className="input-range">
-            <span onClick={isLeftArrowDisabled ? noop : onLeftArrowClick} className={leftArrowClassName} >
-                &#60;
-            </span>
-            <input value={value} onChange={onChangeInput}/>
-            <span onClick={isRightArrowDisabled ? noop : onRightArrowClick} className={rightArrowClassName}>
-                &#62;
-            </span>
-        </div>
-    );
-};
+    componentWillReceiveProps(nextProps) {
+        if (this.props.value !== nextProps.value) {
+            this.setState({
+                value: nextProps.value,
+                isLeftArrowDisabled: nextProps.value === 1,
+                isRightArrowDisabled: nextProps.value === nextProps.maxValue
+            });
+        }
+    }
+
+    onLeftArrowClick = () => this.props.onChangeValue(this.state.value - 1);
+    onRightArrowClick = () => this.props.onChangeValue(this.state.value + 1);
+    onInputChange = ({target: {value}}) =>
+        !isNaN(+value) && value !== ' ' && +value <= this.props.maxValue ? this.setState({value: value}) : false;
+    onInputFocus = () => this.setState({value: ''});
+    onInputBlur = () =>
+        this.state.value ? this.props.onChangeValue(+this.state.value) : this.setState({value: this.props.value});
+
+    render() {
+        const {
+            value,
+            isLeftArrowDisabled,
+            isRightArrowDisabled
+        } = this.state;
+
+        const leftArrowClassName = classNames('arrow arrow-left', {'arrow-disabled': isLeftArrowDisabled});
+        const rightArrowClassName = classNames('arrow arrow-right', {'arrow-disabled': isRightArrowDisabled});
+
+        return (
+            <div className="input-range">
+                <span onClick={isLeftArrowDisabled ? noop : this.onLeftArrowClick} className={leftArrowClassName}>
+                    <i className="fa fa-angle-left"/>
+                </span>
+                <input
+                    value={value}
+                    onChange={this.onInputChange}
+                    onFocus={this.onInputFocus}
+                    onBlur={this.onInputBlur}
+                />
+                <span onClick={isRightArrowDisabled ? noop : this.onRightArrowClick} className={rightArrowClassName}>
+                    <i className="fa fa-angle-right"/>
+                </span>
+            </div>
+        );
+    }
+}
 
 InputRange.propTypes = {
-    value: PropTypes.number,
+    value: PropTypes.number.isRequired,
     maxValue: PropTypes.number.isRequired,
     onChangeValue: PropTypes.func.isRequired
-};
-
-InputRange.defaultProps = {
-    value: 100
 };
 
 export default InputRange;

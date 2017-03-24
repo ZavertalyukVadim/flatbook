@@ -8,23 +8,35 @@ import Image, {ImageSizes} from '../image';
 import Avatar from '../avatar';
 import {noop} from 'lodash';
 import './showroom.scss';
-
+import InputRange from '../input-range';
 
 export default class Showroom extends Component {
     constructor(props) {
         super(props);
         this.state = {
             value: 'text',
-            checked: false
+            checked: false,
+            inputRange: 4
         };
     }
 
     onInputChange = e => this.setState({value: e.target.value});
+    onInputRangeChange = value => this.setState({inputRange: value});
     onCheckboxClick = () => this.setState({checked: !this.state.checked});
 
     render() {
         return (
             <div>
+                <div className="col-12">
+                    <div className="panel">
+                        <div className="panel-heading">Input Range</div>
+                        <div className="panel-body">
+                            <InputRange value={this.state.inputRange} maxValue={10}
+                                        onChangeValue={this.onInputRangeChange}
+                            />
+                        </div>
+                    </div>
+                </div>
                 <div className="col-6">
                     <div className="panel">
                         <div className="panel-heading">Default input</div>
