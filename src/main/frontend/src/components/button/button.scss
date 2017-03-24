@@ -41,6 +41,9 @@ $btn-border-radius: 6px;
   box-shadow: none;
   opacity: .65;
   background-color: $btn-disabled-color;
+  &:hover {
+    opacity: .65;
+  }
 }
 
 /*Size*/
@@ -64,4 +67,6 @@ $btn-border-radius: 6px;
   width: 100%;
   padding: map-get($indentSizes, l) map-get($indentSizes, xl);
   font-size: 18px;
+  margin-left: 0;
+  margin-right: 0;
 }
