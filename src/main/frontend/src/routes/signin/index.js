@@ -1,8 +1,11 @@
 import React, {Component} from 'react';
+import {connect} from 'react-redux';
+import {noop} from 'lodash';
 import Input from '../../components/input';
 import Button, {ButtonTypes, ButtonSizes} from '../../components/button';
 import Header from '../../components/header';
 import './signin.scss';
+import {signin} from '../../actions/signin-actions';
 
 class SignIn extends Component {
 
@@ -15,13 +18,23 @@ class SignIn extends Component {
     }
 
     onInputChange = val => e => this.setState({[val]: e.target.value});
+    onSubmit = () => this.props.signin({email: this.state.email, password: this.state.password});
 
     render() {
-
         const {
             email,
             password
         } = this.state;
+
+        const {
+            user: {
+                logged
+            }
+        } = this.props;
+
+        if (logged) {
+            return <div className="col-12" style={{textAlign: 'center'}}><Header type="primary" value="You are logged"/></div>;
+        }
 
         return (
             <div className="col-4 offset-4 signin-form">
@@ -46,11 +59,13 @@ class SignIn extends Component {
                     type={ButtonTypes.info}
                     size={ButtonSizes.block}
                     caption={[<i className="fa fa-facebook signin-icon"/>, 'Sign in with Facebook']}
+                    onClick={noop}
                 />
                 <Button
                     type={ButtonTypes.danger}
                     size={ButtonSizes.block}
                     caption={[<i className="fa fa-google signin-icon"/>, 'Sign in with Google']}
+                    onClick={noop}
                 />
                 <Button
                     type={ButtonTypes.primary}
@@ -67,6 +82,7 @@ class SignIn extends Component {
                             type={ButtonTypes.info}
                             size={ButtonSizes.block}
                             caption="Sign Up"
+                            onClick={noop}
                         />
                     </div>
                 </div>
@@ -74,5 +90,7 @@ class SignIn extends Component {
         );
     }
 }
+
+SignIn = connect(({signin}) => ({user: {...signin}}), {signin})(SignIn);
 
 export default SignIn;

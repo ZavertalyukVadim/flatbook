@@ -30,7 +30,8 @@ export default class Showroom extends Component {
                         <div className="panel-heading">Default input</div>
                         <div className="panel-body">
                             <Input placeholder="input" type="text" value={this.state.value}
-                                   onChange={this.onInputChange}/>
+                                   onChange={this.onInputChange}
+                            />
                         </div>
                     </div>
                     <div className="panel">
@@ -46,13 +47,16 @@ export default class Showroom extends Component {
                         <div className="panel-body">
                             <Input placeholder="success" type="text" value={this.state.value}
                                    onChange={this.onInputChange}
-                                   validationState={inputValidationStateTypes.success}/>
+                                   validationState={inputValidationStateTypes.success}
+                            />
                             <Input placeholder="disabled" type="text" value={this.state.value}
                                    onChange={this.onInputChange}
-                                   disabled={true}/>
+                                   disabled={true}
+                            />
                             <Input placeholder="error" type="text" value={this.state.value}
                                    onChange={this.onInputChange}
-                                   validationState={inputValidationStateTypes.error} errorMessage="Error message..."/>
+                                   validationState={inputValidationStateTypes.error} errorMessage="Error message..."
+                            />
                         </div>
                     </div>
                 </div>
@@ -137,13 +141,16 @@ export default class Showroom extends Component {
                         <div className="panel-heading">Checkbox</div>
                         <div className="panel-body">
                             <Checkbox onClick={this.onCheckboxClick} className="checkbox" checked={true}
-                                      disabled={false}>
+                                      disabled={false}
+                            >
                                 Checked </Checkbox>
                             <Checkbox onClick={this.onCheckboxClick} className="checkbox" checked={this.state.checked}
-                                      disabled={false}>
+                                      disabled={false}
+                            >
                                 Unchecked </Checkbox>
                             <Checkbox onClick={this.onCheckboxClick} className="checkbox" checked={this.state.checked}
-                                      disabled={true}>
+                                      disabled={true}
+                            >
                                 Disabled </Checkbox>
                         </div>
                     </div>
