@@ -7,10 +7,11 @@ import Textarea from '../textarea';
 import Image, {ImageSizes} from '../image';
 import Avatar from '../avatar';
 import Dropdown from '../dropdown';
-import {noop} from 'lodash';
-import './showroom.scss';
 import InputRange from '../input-range';
 import SocialIcons from '../social-icons';
+import Modal from '../modal';
+import {noop} from 'lodash';
+import './showroom.scss';
 
 export default class Showroom extends Component {
     constructor(props) {
@@ -19,7 +20,8 @@ export default class Showroom extends Component {
             value: 'text',
             checked: false,
             inputRange: 4,
-            selectedOptionID: 2
+            selectedOptionID: 2,
+            isModalOpen: false
         };
     }
 
@@ -27,52 +29,84 @@ export default class Showroom extends Component {
     onInputRangeChange = value => this.setState({inputRange: value});
     onCheckboxClick = () => this.setState({checked: !this.state.checked});
     onOptionChange = id => this.setState({selectedOptionID: id});
+    openModal = () => this.setState({isModalOpen: true});
+    closeModal = () => this.setState({isModalOpen: false});
 
     render() {
         return (
             <div>
                 <div className="row">
-                    <div className="col-2">
-                        <div className="panel">
-                            <div className="panel-heading">
-                                Dropdown
-                            </div>
-                            <div className="panel-body">
-                                <Dropdown
-                                    selectedID={this.state.selectedOptionID}
-                                    options={[
-                                        {
-                                            id: 0,
-                                            value: 'option 1'
-                                        }, {
-                                            id: 1,
-                                            value: 'option 2'
-                                        }, {
-                                            id: 2,
-                                            value: 'option 3'
-                                        }
-                                    ]}
-                                    onOptionChange={this.onOptionChange}
-                                />
-                            </div>
-                        </div>
-                    </div>
-                    <div className="col-6">
-                        <div className="panel">
-                            <div className="panel-heading">Input Range</div>
-                            <div className="panel-body">
-                                <InputRange value={this.state.inputRange} maxValue={10}
-                                            onChangeValue={this.onInputRangeChange}
-                                />
+                    <div className="row">
+                        <div className="col-4">
+                            <div className="panel">
+                                <div className="panel-heading">
+                                    Modal
+                                </div>
+                                <div className="panel-body">
+                                    <Modal
+                                        isOpen={this.state.isModalOpen}
+                                        close={this.closeModal}
+                                    >
+                                        I am awesome modal!<br/>
+                                        I am awesome modal!<br/>
+                                        I am awesome modal!<br/>
+                                        I am awesome modal!<br/>
+                                        I am awesome modal!<br/>
+                                        I am awesome modal!<br/>
+                                        I am awesome modal!<br/>
+                                        I am awesome modal!<br/>
+                                    </Modal>
+                                    <Button
+                                        type={ButtonTypes.primary}
+                                        size={ButtonSizes.large}
+                                        onClick={this.openModal}
+                                        caption="Open modal"
+                                    />
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </div>
-                <div className="col-2">
-                    <div className="panel">
-                        <div className="panel-heading">Social Icons</div>
-                        <div className="panel-body">
-                            <SocialIcons/>
+                        <div className="col-2">
+                            <div className="panel">
+                                <div className="panel-heading">
+                                    Dropdown
+                                </div>
+                                <div className="panel-body">
+                                    <Dropdown
+                                        selectedID={this.state.selectedOptionID}
+                                        options={[
+                                            {
+                                                id: 0,
+                                                value: 'option 1'
+                                            }, {
+                                                id: 1,
+                                                value: 'option 2'
+                                            }, {
+                                                id: 2,
+                                                value: 'option 3'
+                                            }
+                                        ]}
+                                        onOptionChange={this.onOptionChange}
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                        <div className="col-2">
+                            <div className="panel">
+                                <div className="panel-heading">Input Range</div>
+                                <div className="panel-body">
+                                    <InputRange value={this.state.inputRange} maxValue={10}
+                                                onChangeValue={this.onInputRangeChange}
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                        <div className="col-2">
+                            <div className="panel">
+                                <div className="panel-heading">Social Icons</div>
+                                <div className="panel-body">
+                                    <SocialIcons/>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
