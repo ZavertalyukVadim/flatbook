@@ -1,0 +1,66 @@
+@import "../../style/color-theme.scss";
+@import "../../style/font.scss";
+@import "../../style/sizes.scss";
+
+.dropdown {
+
+  .dropdown-selected,
+  .dropdown-options-open {
+    font-size: $text-field-font-size;
+    border: 2px solid $primary;
+    border-radius: 4px;
+  }
+
+  .dropdown-selected {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: map-get($indentSizes, s) map-get($indentSizes, m);
+    background-color: $primary;
+  }
+
+  .dropdown-arrow {
+    height: 100%;
+    float: right;
+    position: relative;
+    padding: 0 map-get($indentSizes, m);
+    font-size: 14px;
+    text-align: center;
+    cursor: pointer;
+  }
+
+  .dropdown-options {
+    display: none;
+  }
+
+  .dropdown-options-open {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    list-style: none;
+    background-color: $dropdown-background-color;
+    margin-top: map-get($indentSizes, xxs);
+  }
+
+  .dropdown-option {
+    cursor: pointer;
+    padding: map-get($indentSizes, m) map-get($indentSizes, l);
+
+    &:hover {
+      background-color: $dropdown-hover-background-color;
+      font-weight: 900;
+      transition: 0.8s;
+    }
+  }
+
+  .dropdown-option-selected {
+    cursor: default;
+    background-color: $primary !important;
+    font-weight: 600;
+
+    &:hover {
+      opacity: 0.6;
+    }
+  }
+}

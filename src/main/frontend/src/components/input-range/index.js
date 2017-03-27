@@ -28,7 +28,8 @@ class InputRange extends Component {
     onLeftArrowClick = () => this.props.onChangeValue(this.state.value - 1);
     onRightArrowClick = () => this.props.onChangeValue(this.state.value + 1);
     onInputChange = ({target: {value}}) =>
-        !isNaN(+value) && value !== ' ' && +value <= this.props.maxValue ? this.setState({value: value}) : false;
+        !isNaN(+value) && value !== ' ' && +value <= this.props.maxValue && value !== '0' ?
+            this.setState({value: value}) : false;
     onInputFocus = () => this.setState({value: ''});
     onInputBlur = () =>
         this.state.value ? this.props.onChangeValue(+this.state.value) : this.setState({value: this.props.value});
