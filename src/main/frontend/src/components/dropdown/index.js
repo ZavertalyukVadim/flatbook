@@ -13,7 +13,12 @@ class Dropdown extends Component {
     }
 
     onDropdownClick = () => this.setState({isOpen: !this.state.isOpen});
-    onOptionClick = id => () => this.props.onOptionChange(id);
+    onOptionClick = id => () => {
+        this.props.onOptionChange(id);
+        this.setState({
+            isOpen: false
+        })
+    };
     optionClassName = id => classNames('dropdown-option', {
         ['dropdown-option-selected']: id === this.props.selectedID
     });

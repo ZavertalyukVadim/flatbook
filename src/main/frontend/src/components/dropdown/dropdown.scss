@@ -27,6 +27,7 @@
     padding: 0 map-get($indentSizes, m);
     font-size: 14px;
     text-align: center;
+    cursor: pointer;
   }
 
   .dropdown-options {
@@ -43,7 +44,7 @@
   }
 
   .dropdown-option {
-
+    cursor: pointer;
     padding: map-get($indentSizes, m) map-get($indentSizes, l);
 
     &:hover {
@@ -54,6 +55,7 @@
   }
 
   .dropdown-option-selected {
+    cursor: default;
     background-color: $primary !important;
     font-weight: 600;
 
