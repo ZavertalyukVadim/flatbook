@@ -29,7 +29,6 @@ public class ProfileService {
     private final EmailDao emailDao;
     private final PhoneDao phoneDao;
 
-
     @Autowired
     public ProfileService(UserDao userDao, EmailDao emailDao, PhoneDao phoneDao) {
         this.userDao = userDao;
@@ -209,7 +208,6 @@ public class ProfileService {
         return user.getEmails().stream().anyMatch(email ->
             emailDao.findOneByAddress(email.getAddress()) != null);
     }
-
 
     public void test() {
         Email email = new Email();
