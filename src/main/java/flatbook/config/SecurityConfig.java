@@ -21,17 +21,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .csrf().disable()
-                    .authorizeRequests()
-                    .antMatchers(HttpMethod.GET,"/**").authenticated()
-                    .antMatchers(HttpMethod.POST,"/**").authenticated()
-                    .antMatchers(HttpMethod.PUT,"/**").authenticated()
-                    .antMatchers(HttpMethod.DELETE,"/**").authenticated()
-                .and().formLogin()
-                .and().exceptionHandling().accessDeniedPage("/Access_Denied");
-//                .and()
-//                .httpBasic()
-//                .and()
-//                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-
+                .authorizeRequests()
+                    .antMatchers(HttpMethod.GET, "/api/**").permitAll()
+                    .antMatchers("/api/**").authenticated()
+                    .antMatchers("/**").permitAll();
     }
 }
