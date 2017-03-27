@@ -14,25 +14,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-//        auth.inMemoryAuthentication().withUser("example@gmail.com").password("root").roles("USER");
+        auth.inMemoryAuthentication().withUser("example@gmail.com").password("root").roles("USER");
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .csrf().disable()
-                    .authorizeRequests()
-                    .antMatchers(HttpMethod.POST, "/api/profile/login/").permitAll()
-                    .antMatchers(HttpMethod.GET,"/**").authenticated()
-                    .antMatchers(HttpMethod.POST,"/**").authenticated()
-                    .antMatchers(HttpMethod.PUT,"/**").authenticated()
-                    .antMatchers(HttpMethod.DELETE,"/**").authenticated()
-                .and().formLogin()
-                .and().exceptionHandling().accessDeniedPage("/Access_Denied");
-//                .and()
-//                .httpBasic()
-//                .and()
-//                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-
+                .authorizeRequests()
+                    .antMatchers(HttpMethod.GET, "/api/**").permitAll()
+                    .antMatchers("/api/**").authenticated()
+                    .antMatchers("/**").permitAll();
     }
 }

@@ -10,6 +10,7 @@ import Dropdown from '../dropdown';
 import {noop} from 'lodash';
 import './showroom.scss';
 import InputRange from '../input-range';
+import SocialIcons from '../social-icons';
 
 export default class Showroom extends Component {
     constructor(props) {
@@ -64,6 +65,14 @@ export default class Showroom extends Component {
                                             onChangeValue={this.onInputRangeChange}
                                 />
                             </div>
+                        </div>
+                    </div>
+                </div>
+                <div className="col-2">
+                    <div className="panel">
+                        <div className="panel-heading">Social Icons</div>
+                        <div className="panel-body">
+                            <SocialIcons/>
                         </div>
                     </div>
                 </div>
