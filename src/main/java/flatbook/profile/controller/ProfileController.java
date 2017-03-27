@@ -28,7 +28,7 @@ public class ProfileController {
         return profileService.delete(user);
     }
 
-    @RequestMapping("/{id}")
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public User getUserById(@PathVariable Integer id) {
         return profileService.getUserById(id);
     }
