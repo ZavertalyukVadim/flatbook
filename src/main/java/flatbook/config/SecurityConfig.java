@@ -14,7 +14,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-        auth.inMemoryAuthentication().withUser("example@gmail.com").password("root").roles("USER");
+//        auth.inMemoryAuthentication().withUser("example@gmail.com").password("root").roles("USER");
     }
 
     @Override
@@ -22,6 +22,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .csrf().disable()
                     .authorizeRequests()
+                    .antMatchers(HttpMethod.POST, "/api/profile/login/").permitAll()
                     .antMatchers(HttpMethod.GET,"/**").authenticated()
                     .antMatchers(HttpMethod.POST,"/**").authenticated()
                     .antMatchers(HttpMethod.PUT,"/**").authenticated()

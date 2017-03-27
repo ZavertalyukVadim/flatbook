@@ -19,6 +19,7 @@ public class Email {
     @ManyToOne(fetch = FetchType.LAZY)
     private User user;
 
+
     public Integer getId() {
         return id;
     }
@@ -41,5 +42,13 @@ public class Email {
 
     public void setPrimary(Boolean primary) {
         this.isPrimary = primary;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }

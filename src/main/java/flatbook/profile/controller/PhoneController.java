@@ -21,7 +21,7 @@ public class PhoneController {
         return null;
     }
 
-    @RequestMapping
+//    @RequestMapping
     public Phone setPhoneAsPrimary(@RequestBody Phone phone) {
         return null;
     }

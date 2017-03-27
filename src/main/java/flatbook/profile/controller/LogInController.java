@@ -1,22 +1,27 @@
 package flatbook.profile.controller;
 
+import flatbook.profile.entity.Email;
 import flatbook.profile.entity.User;
+import flatbook.profile.service.LoggingService;
 import flatbook.profile.service.ProfileService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping(value = "profile/login")
+@RequestMapping(value = "/api/profile/login")
 public class LogInController {
 
     @Autowired
-    private ProfileService profileService;
+    private LoggingService loggingService;
 
     @RequestMapping(method = RequestMethod.POST)
-    public User user(@RequestBody User user) throws Exception {
-        return profileService.logIn(user);
+    public User user(@RequestParam String email, @RequestParam String password) throws Exception {
+        return loggingService.logIn(email, password);
+    }
+
+
+    @RequestMapping(method = RequestMethod.PUT)
+    public void test() {
+
     }
 }
