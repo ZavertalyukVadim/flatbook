@@ -1,35 +1,45 @@
+@import "../../style/sizes.scss";
+
 .carousel-wrapper {
-	position: relative;
-	padding: 15px;
+  position: relative;
+  clear: both;
+  width: $img-medium-width;
+  height: 250px;
+  overflow: hidden;
 }
 
-.carousel__slide {
-	position: absolute;
-	top: 0;
-	left: 0;
-	right: 0;
-	bottom: 0;
-	visibility: hidden;
-	 &--shown {
-      visibility: visible;
-      opacity: 1;
-    }
+.carousel-slide {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  visibility: hidden;
+  opacity: 0;
+
+  &-shown {
+    visibility: visible;
+    opacity: 1;
+    transition: all 0.5s ease-in-out;
+  }
 }
 
-.carousel__prev {
-	color: white;
-	position: absolute;
-	top: 0;
-	left: 0;
-	z-index: 99;
-	cursor: pointer;
+.carousel-prev {
+  color: white;
+  position: absolute;
+  left: 5px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 99;
+  cursor: pointer;
 }
 
-.carousel__next {
-	color: white;
-	position: absolute;
-	top: 0;
-	right: 0;
-	z-index: 99;
-	cursor: pointer;
+.carousel-next {
+  color: white;
+  position: absolute;
+  right: 5px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 99;
+  cursor: pointer;
 }

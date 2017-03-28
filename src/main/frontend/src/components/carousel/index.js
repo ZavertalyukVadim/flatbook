@@ -11,41 +11,38 @@ class Carousel extends Component {
         };
     }
 
-  prevSlide = () => {
-    let prevSlide = this.state.counter - 1 < 0 ? this.props.slides.length - 1 : this.state.counter - 1;
-    this.setState({
-      counter: prevSlide
-    })    
-  }
-  
-  nextSlide = () => {
-    let nextSlide = this.state.counter + 1 < this.props.slides.length ? this.state.counter + 1 : 0;
-    this.setState({
-      counter: nextSlide
-    })
-  }
+    prevSlide = () => this.setState({
+        counter: this.state.counter - 1 < 0 ? this.props.slides.length - 1 : this.state.counter - 1
+    });
 
-  renderSlides () {
-    return this.props.slides.map((image, index) => {     
-      let ClassNames = classNames('carousel__slide', {
-        'carousel__slide--shown': index === this.state.counter,
-      })      
-      return (
-      	<div className={ClassNames}>
-        	<Image key={index}  src={image}/> 
-        </div> 
-      )
-    })
-  }
-    render() {   	
+    nextSlide = () => this.setState({
+        counter: this.state.counter + 1 < this.props.slides.length ? this.state.counter + 1 : 0
+    });
+
+    renderSlides = () => this.props.slides.map((image, index) => {
+        const imageClassNames = classNames('carousel-slide', {
+            'carousel-slide-shown': index === this.state.counter
+        });
+        return (
+            <div className={imageClassNames}>
+                <Image key={index} src={image}/>
+            </div>
+        );
+    });
+
+    render() {
         return (
             <div className="carousel-wrapper">
-            		<div>{this.renderSlides()}</div>
-                <div className="carousel__prev" onClick={this.prevSlide}>◀︎</div>
-        				<div className="carousel__next" onClick={this.nextSlide}>▶︎</div>
+                {this.renderSlides()}
+                <div className="carousel-prev" onClick={this.prevSlide}><i className="fa fa-chevron-left"/></div>
+                <div className="carousel-next" onClick={this.nextSlide}><i className="fa fa-chevron-right"/></div>
             </div>
         );
     }
 }
+
+Carousel.propTypes = {
+    slides: PropTypes.array
+};
 
 export default Carousel;

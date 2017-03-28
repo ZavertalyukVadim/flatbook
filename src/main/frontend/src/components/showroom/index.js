@@ -285,6 +285,13 @@ export default class Showroom extends Component {
                                 src="http://www.pnas.org/site/misc/images/16-01910.500.jpg"
                             />
                             <Avatar/>
+                        </div>
+                    </div>
+                </div>
+                <div className="col-4">
+                    <div className="panel">
+                        <div className="panel-heading">Slider</div>
+                        <div className="panel-body">
                             <Carousel slides={slides}/>
                         </div>
                     </div>
