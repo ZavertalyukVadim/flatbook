@@ -14,6 +14,7 @@ import {noop} from 'lodash';
 import './showroom.scss';
 import Carousel from '../carousel';
 import Toggle from '../toggle';
+import Comment from "../comment";
 
 let slides = [
     'https://images.unsplash.com/photo-1444703686981-a3abbc4d4fe3?fit=crop&fm=jpg&h=825&q=80&w=1325',
@@ -290,9 +291,17 @@ export default class Showroom extends Component {
                 </div>
                 <div className="col-4">
                     <div className="panel">
-                        <div className="panel-heading">Slider</div>
+                        <div className="panel-heading">Carousel</div>
                         <div className="panel-body">
                             <Carousel slides={slides}/>
+                        </div>
+                    </div>
+                </div>
+                <div className="col-4">
+                    <div className="panel">
+                        <div className="panel-heading">Comment</div>
+                        <div className="panel-body">
+                            <Comment/>
                         </div>
                     </div>
                 </div>
