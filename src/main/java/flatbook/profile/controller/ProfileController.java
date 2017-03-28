@@ -1,16 +1,13 @@
 package flatbook.profile.controller;
 
 import flatbook.profile.entity.Email;
-import flatbook.profile.entity.Phone;
 import flatbook.profile.entity.User;
 import flatbook.profile.service.ProfileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.Collection;
 import java.util.Collections;
 
 @RestController
