@@ -1,0 +1,35 @@
+.carousel-wrapper {
+	position: relative;
+	padding: 15px;
+}
+
+.carousel__slide {
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	visibility: hidden;
+	 &--shown {
+      visibility: visible;
+      opacity: 1;
+    }
+}
+
+.carousel__prev {
+	color: white;
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: 99;
+	cursor: pointer;
+}
+
+.carousel__next {
+	color: white;
+	position: absolute;
+	top: 0;
+	right: 0;
+	z-index: 99;
+	cursor: pointer;
+}

@@ -12,6 +12,14 @@ import SocialIcons from '../social-icons';
 import Modal from '../modal';
 import {noop} from 'lodash';
 import './showroom.scss';
+import Carousel from '../carousel';
+
+let slides = [
+  'https://images.unsplash.com/photo-1444703686981-a3abbc4d4fe3?fit=crop&fm=jpg&h=825&q=80&w=1325',
+  'https://images.unsplash.com/photo-1445251836269-d158eaa028a6?fit=crop&fm=jpg&h=825&q=80&w=1325',
+  'https://images.unsplash.com/photo-1443926818681-717d074a57af?fit=crop&fm=jpg&h=825&q=80&w=1325'
+];
+
 
 export default class Showroom extends Component {
     constructor(props) {
@@ -266,6 +274,7 @@ export default class Showroom extends Component {
                                 src="http://www.pnas.org/site/misc/images/16-01910.500.jpg"
                             />
                             <Avatar/>
+                            <Carousel slides={slides}/>
                         </div>
                     </div>
                 </div>

@@ -19,13 +19,13 @@ class Image extends Component {
     handleClick = () => this.setState({liked: !this.state.liked});
 
     render() {
-        const {size, src} = this.props;
+        const {size, src, active} = this.props;
         const likeClassName = classNames('like', {
             liked: this.state.liked
         });
 
         return (
-            <div className="image-wrapper">
+            <div className='image-wrapper'>
                 <img
                     className={`img-rectangle ${size}`}
                     src={src}
