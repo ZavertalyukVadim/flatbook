@@ -13,11 +13,12 @@ import Modal from '../modal';
 import {noop} from 'lodash';
 import './showroom.scss';
 import Carousel from '../carousel';
+import Toggle from '../toggle';
 
 let slides = [
-  'https://images.unsplash.com/photo-1444703686981-a3abbc4d4fe3?fit=crop&fm=jpg&h=825&q=80&w=1325',
-  'https://images.unsplash.com/photo-1445251836269-d158eaa028a6?fit=crop&fm=jpg&h=825&q=80&w=1325',
-  'https://images.unsplash.com/photo-1443926818681-717d074a57af?fit=crop&fm=jpg&h=825&q=80&w=1325'
+    'https://images.unsplash.com/photo-1444703686981-a3abbc4d4fe3?fit=crop&fm=jpg&h=825&q=80&w=1325',
+    'https://images.unsplash.com/photo-1445251836269-d158eaa028a6?fit=crop&fm=jpg&h=825&q=80&w=1325',
+    'https://images.unsplash.com/photo-1443926818681-717d074a57af?fit=crop&fm=jpg&h=825&q=80&w=1325'
 ];
 
 
@@ -45,7 +46,17 @@ export default class Showroom extends Component {
             <div>
                 <div className="row">
                     <div className="row">
-                        <div className="col-4">
+                        <div className="col-2">
+                            <div className="panel">
+                                <div className="panel-heading">
+                                    Toggle
+                                </div>
+                                <div className="panel-body">
+                                    <Toggle isToggled={this.state.checked} changeToggle={this.onCheckboxClick}/>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="col-2">
                             <div className="panel">
                                 <div className="panel-heading">
                                     Modal
