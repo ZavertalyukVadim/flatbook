@@ -1,7 +1,15 @@
 package flatbook.profile.entity;
 
-/**
- * Created by USER on 3/28/2017.
- */
+import javax.persistence.*;
+
+@Entity
+@Table(name = "image")
 public class Image {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "photo_id", nullable = false)
+    private Integer id;
+
+    @Column(name = "photo")
+    private byte[] image;
 }
