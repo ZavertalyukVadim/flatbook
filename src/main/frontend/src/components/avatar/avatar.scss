@@ -2,6 +2,7 @@
 @import "../../style/sizes";
 
 .img-circled {
+  max-width: 100%;
   width: $img-small-width;
   border: 1px solid $img-border-color;
   padding: map-get($indentSizes, xxs);
