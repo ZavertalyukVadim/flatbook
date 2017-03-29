@@ -36,14 +36,14 @@ public class PhotoService {
     }
 
     public Photo createPhoto(FileBucket fileBucket) {
-        MultipartFile multipartFile = fileBucket.getFile();
+//        MultipartFile multipartFile = fileBucket.getFile();
         Photo photo = new Photo();
-        photo.setTitle(fileBucket.getDescription());
-        try {
-            photo.setImage(multipartFile.getBytes());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+//        photo.setTitle(fileBucket.getDescription());
+//        try {
+//            photo.setImage(multipartFile.getBytes());
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
         return photoDao.save(photo);
     }
 
