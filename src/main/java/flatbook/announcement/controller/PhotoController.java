@@ -4,6 +4,7 @@ import flatbook.announcement.entity.FileBucket;
 import flatbook.announcement.entity.Photo;
 import flatbook.announcement.service.PhotoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -29,8 +30,8 @@ public class PhotoController {
         return photoService.getPhotoById(id);
     }
 
-    @RequestMapping(value = "", method = RequestMethod.POST)
-    public Photo createPhoto(@RequestBody(required = false) FileBucket photo) {
+    @RequestMapping(value = "", method = RequestMethod.POST,headers = "content-type=multipart/form-data")
+    public Photo createPhoto(@RequestBody FileBucket photo) {
         return photoService.createPhoto(photo);
     }
 

@@ -20,7 +20,6 @@ public class LogInController {
         return loggingService.logIn(email, password);
     }
 
-
     @RequestMapping(method = RequestMethod.PUT)
     public void test() {
 
