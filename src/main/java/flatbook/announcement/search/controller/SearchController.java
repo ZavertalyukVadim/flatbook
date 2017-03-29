@@ -30,6 +30,11 @@ public class SearchController {
         this.cityService = cityService;
     }
 
+    @RequestMapping(value = "/test", method = RequestMethod.GET)
+    public void test() {
+        countryService.test();
+    }
+
     @RequestMapping(value = "/countries", method = RequestMethod.GET)
     List<Country> getAllCountries() {
         return countryService.getAll();
