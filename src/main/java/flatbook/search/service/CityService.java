@@ -1,4 +1,4 @@
-package flatbook.announcement.search.service;
+package flatbook.search.service;
 
 import flatbook.announcement.dao.CityDao;
 import flatbook.announcement.dao.RegionDao;
