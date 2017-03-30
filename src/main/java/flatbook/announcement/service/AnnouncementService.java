@@ -198,4 +198,11 @@ public class AnnouncementService {
         City city = cityDao.findOne(cityId);
         return announcementDao.getAnnouncementByCityAndRoomsAndLivingPlacesAndPricePerDayBetween(city, rooms, livingPlaces,startingPrice,finalPrice);
     }
+
+    @Transactional
+    public List<Announcement> getAnnouncementByCityAndRoomsAndLivingPlacesAndPricePerMonth(Integer cityId, Integer startingPrice, Integer finalPrice, Integer rooms, Integer livingPlaces) {
+        City city = cityDao.findOne(cityId);
+        return announcementDao.getAnnouncementByCityAndRoomsAndLivingPlacesAndPricePerMonthBetween(city, rooms, livingPlaces,startingPrice,finalPrice);
+    }
+
 }
