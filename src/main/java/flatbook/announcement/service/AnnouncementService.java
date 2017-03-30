@@ -117,11 +117,13 @@ public class AnnouncementService {
         announcement.setAmenities(amenityList);
         announcementDao.save(announcement);
         Announcement announcement1 = new Announcement(122, "ololo1", true, new Date());
+//        !!!
         announcement1.setPricePerMonth(100);
         announcement1.setLivingPlaces(3);
         announcement1.setLastUpdated(new Date());
         announcement1.setTitle("title2");
         announcement1.setRooms(2);
+        announcement1.setPricePerDay(100);
         announcement1.setLivingPlaces(100);
         announcement1.setCity(city);
         Announcement announcement2 = new Announcement(121, "ololo2", true, new Date());
@@ -131,12 +133,14 @@ public class AnnouncementService {
         announcement2.setRooms(2);
         announcement2.setLivingPlaces(150);
         announcement2.setCity(city);
+        announcement2.setPricePerDay(150);
         Announcement announcement3 = new Announcement(120, "ololo3", true, new Date());
         announcement3.setPricePerMonth(100);
         announcement3.setLastUpdated(new Date());
         announcement3.setTitle("title4");
         announcement3.setRooms(2);
         announcement3.setLivingPlaces(100);
+        announcement3.setPricePerDay(200);
         announcement3.setCity(city);
         announcementDao.save(announcement1);
         announcementDao.save(announcement2);
@@ -192,6 +196,6 @@ public class AnnouncementService {
     @Transactional
     public List<Announcement> getAllAnnouncementByCityAndPriceAndRoomsAndLivingPlaces(Integer cityId, Integer startingPrice, Integer finalPrice, Integer rooms, Integer livingPlaces) {
         City city = cityDao.findOne(cityId);
-        return announcementDao.getAnnouncementByCityAndRoomsAndLivingPlaces(city, rooms, livingPlaces);
+        return announcementDao.getAnnouncementByCityAndRoomsAndLivingPlacesAndPricePerDayBetween(city, rooms, livingPlaces,startingPrice,finalPrice);
     }
 }
