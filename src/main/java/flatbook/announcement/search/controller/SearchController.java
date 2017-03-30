@@ -61,7 +61,7 @@ public class SearchController {
                               @RequestParam("final_price") Integer finalPrice,
                               @RequestParam("rooms") Integer rooms,
                               @RequestParam("living_places") Integer livingPlaces) {
-        return announcementService.getAllAnnouncementByCityAndPriceAndRoomsAndLivingPlaces(cityId,startingPrice,finalPrice,rooms,livingPlaces);
+        return announcementService.getAnnouncementByCityAndRoomsAndLivingPlacesAndPricePerDay(cityId,startingPrice,finalPrice,rooms,livingPlaces);
     }
 
 }
