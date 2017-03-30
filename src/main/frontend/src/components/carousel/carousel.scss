@@ -2,7 +2,6 @@
 
 .carousel-wrapper {
   position: relative;
-  clear: both;
   width: $img-medium-width;
   height: 250px;
   overflow: hidden;
@@ -18,6 +17,7 @@
   opacity: 0;
 
   &-shown {
+
     visibility: visible;
     opacity: 1;
     transition: all 0.5s ease-in-out;
