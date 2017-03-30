@@ -6,10 +6,7 @@ import flatbook.search.service.CityService;
 import flatbook.search.service.CountryService;
 import flatbook.search.service.RegionService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -42,24 +39,26 @@ public class SearchController {
         return countryService.getAll();
     }
 
-    @RequestMapping(value = "/regions", method = RequestMethod.GET)
-    List<Region> getAllRegions(@RequestParam("country_id") Integer id) {
+    @RequestMapping(value = "/regions/{id}", method = RequestMethod.GET)
+    List<Region> getAllRegions(@PathVariable("id") Integer id) {
         return regionService.getAllRegionsByCountry(id);
     }
 
-    @RequestMapping(value = "/cities", method = RequestMethod.GET)
-    List<City> getAllCities(@RequestParam("region_id") Integer id) {
+    @RequestMapping(value = "/cities/{id}", method = RequestMethod.GET)
+    List<City> getAllCities(@PathVariable("id") Integer id) {
         return cityService.getAllCitiesByRegion(id);
     }
 
-    @RequestMapping(value = "", method = RequestMethod.GET)
-    List<Announcement> global(@RequestParam("city_id") Integer cityId,
-                              @RequestParam("starting_price") Integer startingPrice,
-                              @RequestParam("final_price") Integer finalPrice,
-                              @RequestParam("price_type") Price price,
-                              @RequestParam("rooms") Integer rooms,
-                              @RequestParam("living_places") Integer livingPlaces) {
-        return announcementService.getAnnouncementByCityAndRoomsAndLivingPlacesAndPricePerDay(cityId,startingPrice,finalPrice,price,rooms,livingPlaces);
+    @RequestMapping(value = "/small", method = RequestMethod.POST)
+    List<Announcement> smallSearch(@RequestBody Search search) {
+        return announcementService.getAnnouncementByCityAndRoomsAndLivingPlacesAndPricePerDay(search);
     }
+
+    @RequestMapping(value = "/big", method = RequestMethod.GET)
+    List<Announcement> bigSearch(@RequestBody Search search,
+                                 @RequestBody List<Amenity> amenities) {
+        return announcementService.getAnnouncementByCityAndRoomsAndLivingPlacesAndPricePerDayAndAmenities(search,amenities);
+    }
+
 
 }

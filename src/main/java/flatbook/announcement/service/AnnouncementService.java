@@ -102,6 +102,9 @@ public class AnnouncementService {
         amenityList.add(amenity);
         amenityList.add(amenity1);
         amenityList.add(amenity2);
+        List<Amenity> amenityList2 = new ArrayList<>();
+        amenityList2.add(amenity);
+        amenityList2.add(amenity1);
         Announcement announcement = new Announcement(123, "ololo", true, new Date());
         announcement.setPricePerMonth(1000);
         announcement.setLastUpdated(new Date());
@@ -123,14 +126,15 @@ public class AnnouncementService {
         announcement1.setTitle("title2");
         announcement1.setRooms(2);
         announcement1.setPricePerDay(100);
-        announcement1.setLivingPlaces(100);
+        announcement1.setLivingPlaces(2);
         announcement1.setCity(city);
+        announcement1.setAmenities(amenityList2);
         Announcement announcement2 = new Announcement(121, "ololo2", true, new Date());
         announcement2.setPricePerMonth(1300);
         announcement2.setLastUpdated(new Date());
         announcement2.setTitle("title3");
         announcement2.setRooms(2);
-        announcement2.setLivingPlaces(150);
+        announcement2.setLivingPlaces(3);
         announcement2.setCity(city);
         announcement2.setPricePerDay(150);
         Announcement announcement3 = new Announcement(120, "ololo3", true, new Date());
@@ -138,7 +142,7 @@ public class AnnouncementService {
         announcement3.setLastUpdated(new Date());
         announcement3.setTitle("title4");
         announcement3.setRooms(2);
-        announcement3.setLivingPlaces(100);
+        announcement3.setLivingPlaces(2);
         announcement3.setPricePerDay(200);
         announcement3.setCity(city);
         announcementDao.save(announcement1);
@@ -193,12 +197,18 @@ public class AnnouncementService {
     }
 
     @Transactional
-    public List<Announcement> getAnnouncementByCityAndRoomsAndLivingPlacesAndPricePerDay(Integer cityId, Integer startingPrice, Integer finalPrice, Price price, Integer rooms, Integer livingPlaces) {
-        City city = cityDao.findOne(cityId);
-        if (price == Price.PRICE_PER_DAY) {
-            return announcementDao.getAnnouncementByCityAndRoomsAndLivingPlacesAndPricePerDayBetween(city, rooms, livingPlaces, startingPrice, finalPrice);
-        } else {
-            return announcementDao.getAnnouncementByCityAndRoomsAndLivingPlacesAndPricePerMonthBetween(city, rooms, livingPlaces, startingPrice, finalPrice);
-        }
+    public List<Announcement> getAnnouncementByCityAndRoomsAndLivingPlacesAndPricePerDay(Search search) {
+        City city = cityDao.findOne(search.getCityId());
+        return (search.getPrice() == Price.PRICE_PER_DAY)
+                ? announcementDao.getAnnouncementByCityAndRoomsAndLivingPlacesAndPricePerDayBetween(city, search.getRooms(),search.getLivingPlaces(),search.getStartingPrice(), search.getFinalPrice())
+                : announcementDao.getAnnouncementByCityAndRoomsAndLivingPlacesAndPricePerMonthBetween(city, search.getRooms(),search.getLivingPlaces(),search.getStartingPrice(), search.getFinalPrice());
+    }
+
+    public List<Announcement> getAnnouncementByCityAndRoomsAndLivingPlacesAndPricePerDayAndAmenities(Search search, List<Amenity> amenities) {
+        City city = cityDao.findOne(search.getCityId());
+        return (search.getPrice()  == Price.PRICE_PER_DAY)
+                ? announcementDao.getAnnouncementByCityAndRoomsAndLivingPlacesAndPricePerDayBetweenAndAmenities(city, search.getRooms(),search.getLivingPlaces(),search.getStartingPrice(), search.getFinalPrice(), amenities)
+                : announcementDao.getAnnouncementByCityAndRoomsAndLivingPlacesAndPricePerMonthBetweenAndAmenities(city, search.getRooms(),search.getLivingPlaces(),search.getStartingPrice(), search.getFinalPrice(), amenities);
+
     }
 }
