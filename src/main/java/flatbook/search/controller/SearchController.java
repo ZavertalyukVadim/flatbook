@@ -1,9 +1,6 @@
 package flatbook.search.controller;
 
-import flatbook.announcement.entity.Announcement;
-import flatbook.announcement.entity.City;
-import flatbook.announcement.entity.Country;
-import flatbook.announcement.entity.Region;
+import flatbook.announcement.entity.*;
 import flatbook.announcement.service.AnnouncementService;
 import flatbook.search.service.CityService;
 import flatbook.search.service.CountryService;
@@ -59,9 +56,10 @@ public class SearchController {
     List<Announcement> global(@RequestParam("city_id") Integer cityId,
                               @RequestParam("starting_price") Integer startingPrice,
                               @RequestParam("final_price") Integer finalPrice,
+                              @RequestParam("price_type") Price price,
                               @RequestParam("rooms") Integer rooms,
                               @RequestParam("living_places") Integer livingPlaces) {
-        return announcementService.getAnnouncementByCityAndRoomsAndLivingPlacesAndPricePerDay(cityId,startingPrice,finalPrice,rooms,livingPlaces);
+        return announcementService.getAnnouncementByCityAndRoomsAndLivingPlacesAndPricePerDay(cityId,startingPrice,finalPrice,price,rooms,livingPlaces);
     }
 
 }
