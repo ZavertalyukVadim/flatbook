@@ -8,8 +8,7 @@ import java.util.List;
 
 public interface AnnouncementDao extends JpaRepository<Announcement, Integer> {
 
-        List<Announcement> getAnnouncementByCityAndRoomsAndLivingPlacesAndPricePerDayBetween(City city, Integer rooms, Integer livingPlaces,Integer startingPrice,Integer finalPrice);
-    List<Announcement> getAnnouncementByCity(City city);
+    List<Announcement> getAnnouncementByCityAndRoomsAndLivingPlacesAndPricePerDayBetween(City city, Integer rooms, Integer livingPlaces, Integer startingPrice, Integer finalPrice);
 
     List<Announcement> getAnnouncementByCityAndRoomsAndLivingPlacesAndPricePerMonthBetween(City city, Integer rooms, Integer livingPlaces, Integer startingPrice, Integer finalPrice);
 }
