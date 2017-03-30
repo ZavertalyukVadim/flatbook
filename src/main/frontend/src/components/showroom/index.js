@@ -14,6 +14,7 @@ import {noop} from 'lodash';
 import './showroom.scss';
 import Carousel from '../carousel';
 import Toggle from '../toggle';
+import Slider from '../slider';
 import Comment from "../comment";
 
 let slides = [
@@ -31,7 +32,8 @@ export default class Showroom extends Component {
             checked: false,
             inputRange: 4,
             selectedOptionID: 2,
-            isModalOpen: false
+            isModalOpen: false,
+            sliderValue: [121, 194]
         };
     }
 
@@ -41,12 +43,22 @@ export default class Showroom extends Component {
     onOptionChange = id => this.setState({selectedOptionID: id});
     openModal = () => this.setState({isModalOpen: true});
     closeModal = () => this.setState({isModalOpen: false});
+    saveSliderValue = v => this.setState({sliderValue: v});
 
     render() {
         return (
             <div>
                 <div className="row">
                     <div className="row">
+                        <div className="col-4">
+                            <div className="panel-heading">
+                                Slider
+                            </div>
+                            <div className="panel-body">
+                                <Slider from={100} to={200}
+                                        value={this.state.sliderValue} onSave={this.saveSliderValue}/>
+                            </div>
+                        </div>
                         <div className="col-2">
                             <div className="panel">
                                 <div className="panel-heading">

@@ -1,0 +1,64 @@
+@import "../../style/color-theme.scss";
+
+.slider-values {
+
+  padding: 20px;
+  margin: 10px;
+
+  .slider-container {
+
+    display: block;
+
+    .slider-value {
+      position: relative;
+      top: 2px;
+    }
+
+    .slider-value-from {
+      float: left;
+      right: 30px;
+      text-align: right;
+    }
+
+    .slider-value-to {
+      float: right;
+      left: 30px;
+      text-align: left;
+    }
+
+    .slider {
+      width: 100%;
+      max-width: 100%;
+
+      .slider-handle {
+        position: relative;
+        background-color: $primary;
+        cursor: pointer;
+        border-radius: 50%;
+        width: 20px;
+        height: 20px;
+      }
+
+      .bar {
+        position: relative;
+        top: 4px;
+        height: 12px;
+      }
+
+      .bar-0 {
+        background: $btn-disabled-color;
+        border-radius: 32px;
+      }
+
+      .bar-1 {
+        background: $primary;
+        border-radius: 32px;
+      }
+
+      .bar-2 {
+        background: $btn-disabled-color;
+        border-radius: 32px;
+      }
+    }
+  }
+}
