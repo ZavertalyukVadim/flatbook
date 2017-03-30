@@ -1,11 +1,13 @@
 package flatbook.announcement.search.controller;
 
+import flatbook.announcement.entity.Announcement;
 import flatbook.announcement.entity.City;
 import flatbook.announcement.entity.Country;
 import flatbook.announcement.entity.Region;
 import flatbook.announcement.search.service.CityService;
 import flatbook.announcement.search.service.CountryService;
 import flatbook.announcement.search.service.RegionService;
+import flatbook.announcement.service.AnnouncementService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -23,11 +25,14 @@ public class SearchController {
 
     private final CityService cityService;
 
+    private final AnnouncementService announcementService;
+
     @Autowired
-    public SearchController(CountryService countryService, RegionService regionService, CityService cityService) {
+    public SearchController(CountryService countryService, RegionService regionService, CityService cityService, AnnouncementService announcementService) {
         this.countryService = countryService;
         this.regionService = regionService;
         this.cityService = cityService;
+        this.announcementService = announcementService;
     }
 
     @RequestMapping(value = "/test", method = RequestMethod.GET)
@@ -49,4 +54,14 @@ public class SearchController {
     List<City> getAllCities(@RequestParam("region_id") Integer id) {
         return cityService.getAllCitiesByRegion(id);
     }
+
+    @RequestMapping(value = "", method = RequestMethod.GET)
+    List<Announcement> global(@RequestParam("city_id") Integer cityId,
+                              @RequestParam("starting_price") Integer startingPrice,
+                              @RequestParam("final_price") Integer finalPrice,
+                              @RequestParam("rooms") Integer rooms,
+                              @RequestParam("living_places") Integer livingPlaces) {
+        return announcementService.getAllAnnouncementByCityAndPriceAndRoomsAndLivingPlaces(cityId,startingPrice,finalPrice,rooms,livingPlaces);
+    }
+
 }
