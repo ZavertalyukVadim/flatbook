@@ -21,7 +21,7 @@ public class ProfileController {
         this.profileService = profileService;
     }
 
-    @RequestMapping(value = "", method = RequestMethod.POST)
+    @PostMapping
     public User createUser(@RequestBody User user) throws Exception {
         return profileService.createUser(user);
     }
@@ -31,9 +31,12 @@ public class ProfileController {
         return profileService.delete(user);
     }
 
+//    @GetMapping(value = "/{id}")
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public User getUserById(@PathVariable Integer id) {
-        return profileService.getUserById(id);
+        User user = profileService.getUserById(id);
+
+        return user;
     }
 
     @RequestMapping(value = "/primaryemail", method = RequestMethod.POST)

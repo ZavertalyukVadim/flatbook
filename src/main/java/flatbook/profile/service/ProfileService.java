@@ -186,7 +186,9 @@ public class ProfileService {
     private boolean isUserEqualsToSecurityUser(User user) {
         String securityPrimaryEmail = getCurrentUserPrimaryEmail();
 
-        return user.getPrimaryEmail().equals(securityPrimaryEmail);
+//        return user.getPrimaryEmail().equals(securityPrimaryEmail);
+//
+        return false;
     }
 
     private boolean isEmailUsed(Email email) {

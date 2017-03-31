@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import java.util.List;
 
 @Entity
@@ -22,33 +21,13 @@ public class User {
     @Column(name = "last_name")
     private String lastName;
 
-//    @Column(name = "user_name", unique = true)
-//    private String userName;
-
-    @Column(name = "password")
+    @Column(name = "pass")
     @NotNull
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "email_id", nullable = false, unique = true)
-    @Size(min = 1)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
     private List<Email> emails;
-
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "phone_id", nullable = false, unique = true)
-    @Size(min = 1)
-    private List<Phone> phones;
-
-    public Email getPrimaryEmail() {
-        List<Email> emailes = getEmails();
-        return emailes.stream().filter(email -> email.getPrimary()).findFirst().get();
-    }
-
-    public Phone getPrimaryPhone() {
-        List<Phone> phones = getPhones();
-        return phones.stream().filter(phone -> phone.getPrimary()).findFirst().get();
-    }
 
     public Integer getId() {
         return id;
@@ -74,14 +53,6 @@ public class User {
         this.lastName = lastName;
     }
 
-//    public String getUserName() {
-//        return userName;
-//    }
-//
-//    public void setUserName(String userName) {
-//        this.userName = userName;
-//    }
-
     public String getPassword() {
         return password;
     }
@@ -98,11 +69,18 @@ public class User {
         this.emails = emails;
     }
 
-    public List<Phone> getPhones() {
-        return phones;
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", password='" + password + '\'' +
+                ", emails=" + emails +
+                '}';
     }
 
-    public void setPhones(List<Phone> phones) {
-        this.phones = phones;
-    }
+//    public void setEmail_id(Integer email_id) {
+//        this.email_id = email_id;
+//    }
 }
