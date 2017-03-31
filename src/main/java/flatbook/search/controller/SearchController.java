@@ -49,13 +49,13 @@ public class SearchController {
         return cityService.getAllCitiesByRegion(id);
     }
 
-    @RequestMapping(value = "", method = RequestMethod.GET)
-    List<Announcement> search(@RequestBody Search search) {
+    @PostMapping
+    public List<Announcement> search(@RequestBody Search search) {
         return announcementService.getAnnouncementByCityAndRoomsAndLivingPlacesAndPricePerDay(search);
     }
 
-    @RequestMapping(value = "/extended", method = RequestMethod.GET)
-    List<Announcement> extendedSearch(@RequestBody Search search,
+    @PostMapping(value = "/extended")
+    public List<Announcement> extendedSearch(@RequestBody Search search,
                                  @RequestBody List<Amenity> amenities) {
         return announcementService.getAnnouncementByCityAndRoomsAndLivingPlacesAndPricePerDayAndAmenities(search,amenities);
     }
