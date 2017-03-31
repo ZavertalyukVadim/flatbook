@@ -55,7 +55,7 @@ public class SearchController {
     }
 
     @RequestMapping(value = "/extended", method = RequestMethod.GET)
-    List<Announcement> extended(@RequestBody Search search,
+    List<Announcement> extendedSearch(@RequestBody Search search,
                                  @RequestBody List<Amenity> amenities) {
         return announcementService.getAnnouncementByCityAndRoomsAndLivingPlacesAndPricePerDayAndAmenities(search,amenities);
     }
