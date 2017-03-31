@@ -33,12 +33,13 @@ public class LoggingService {
 
     public User logIn(String address, String password) throws Exception {
         Email email = emailDao.findOneByAddress(address);
-        User user = email.getUser();
-        Email primaryEmail = user.getPrimaryEmail();
-
-        if (!isCorrectCredentials(user, email, password)) throw new Exception("uncorrected credentials");
-
-        return authenticate(user);
+//        User user = email.getUser();
+//        Email primaryEmail = user.getPrimaryEmail();
+//
+//        if (!isCorrectCredentials(user, email, password)) throw new Exception("uncorrected credentials");
+//
+//        return authenticate(user);
+        return null;
     }
 
     public void signUp(User user) {
@@ -66,7 +67,8 @@ public class LoggingService {
 
             @Override
             public String getUsername() {
-                return user.getPrimaryEmail().getAddress();
+//                return user.getPrimaryEmail().getAddress();
+                return "daskflja";
             }
 
             @Override

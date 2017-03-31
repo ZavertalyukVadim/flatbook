@@ -1,5 +1,7 @@
 package flatbook.profile.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 
 @Entity
@@ -16,9 +18,10 @@ public class Email {
     @Column(name = "is_primary")
     private Boolean isPrimary;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnore
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "user_id", nullable = false)
     private User user;
-
 
     public Integer getId() {
         return id;

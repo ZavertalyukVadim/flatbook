@@ -1,0 +1,2 @@
+insert into users (first_name, last_name, pass) values ('Andrey', 'backend', '$2a$10$OBMisadBt/txTOni1p7UXunor.PIVS.K8umzsuAgBhlzbhPDnf8XW');
+insert into emails (address, is_primary, user_id) values ('example@gmail.com', true, 1)
