@@ -55,9 +55,8 @@ public class SearchController {
     }
 
     @PostMapping(value = "/extended")
-    public List<Announcement> extendedSearch(@RequestBody Search search,
-                                 @RequestBody List<Amenity> amenities) {
-        return announcementService.getAnnouncementByCityAndRoomsAndLivingPlacesAndPricePerDayAndAmenities(search,amenities);
+    public List<Announcement> extendedSearch(@RequestBody ExtendSearch amenities) {
+        return announcementService.getAnnouncementByCityAndRoomsAndLivingPlacesAndPricePerDayAndAmenities(amenities);
     }
 
 

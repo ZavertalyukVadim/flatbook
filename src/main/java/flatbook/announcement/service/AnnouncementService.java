@@ -204,11 +204,12 @@ public class AnnouncementService {
                 : announcementDao.getAnnouncementByCityAndRoomsAndLivingPlacesAndPricePerMonthBetween(city, search.getRooms(),search.getLivingPlaces(),search.getStartingPrice(), search.getFinalPrice());
     }
 
-    public List<Announcement> getAnnouncementByCityAndRoomsAndLivingPlacesAndPricePerDayAndAmenities(Search search, List<Amenity> amenities) {
-        City city = cityDao.findOne(search.getCityId());
-        return (search.getPrice()  == Price.PRICE_PER_DAY)
-                ? announcementDao.getAnnouncementByCityAndRoomsAndLivingPlacesAndPricePerDayBetweenAndAmenities(city, search.getRooms(),search.getLivingPlaces(),search.getStartingPrice(), search.getFinalPrice(), amenities)
-                : announcementDao.getAnnouncementByCityAndRoomsAndLivingPlacesAndPricePerMonthBetweenAndAmenities(city, search.getRooms(),search.getLivingPlaces(),search.getStartingPrice(), search.getFinalPrice(), amenities);
+    @Transactional
+    public List<Announcement> getAnnouncementByCityAndRoomsAndLivingPlacesAndPricePerDayAndAmenities(ExtendSearch extendSearch) {
+        City city = cityDao.findOne(extendSearch.getCityId());
+        return (extendSearch.getPrice()  == Price.PRICE_PER_DAY)
+                ? announcementDao.getAnnouncementByCityAndRoomsAndLivingPlacesAndPricePerDayBetweenAndAmenities(city, extendSearch.getRooms(),extendSearch.getLivingPlaces(),extendSearch.getStartingPrice(), extendSearch.getFinalPrice(), extendSearch.getAmenities())
+                : announcementDao.getAnnouncementByCityAndRoomsAndLivingPlacesAndPricePerMonthBetweenAndAmenities(city, extendSearch.getRooms(),extendSearch.getLivingPlaces(),extendSearch.getStartingPrice(), extendSearch.getFinalPrice(), extendSearch.getAmenities());
 
     }
 }
