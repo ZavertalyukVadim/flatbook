@@ -66,7 +66,7 @@ public class Announcement {
     @Column(name = "living_places")
     private Integer livingPlaces;
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "announcements_amenities", joinColumns = {
             @JoinColumn(name = "announcement_id", nullable = false)},
             inverseJoinColumns = {@JoinColumn(name = "amenity_id",
