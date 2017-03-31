@@ -1,5 +1,7 @@
 package flatbook.announcement.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 
 @Entity
@@ -13,6 +15,7 @@ public class Region {
     @Column(name = "name")
     private String name;
 
+    @JsonIgnore
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "country_id")
     private Country country;

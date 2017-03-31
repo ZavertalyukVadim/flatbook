@@ -24,8 +24,8 @@ class Carousel extends Component {
             'carousel-slide-shown': index === this.state.counter
         });
         return (
-            <div className={imageClassNames}>
-                <Image key={index} src={image}/>
+            <div  key={index} className={imageClassNames}>
+                <Image src={image}/>
             </div>
         );
     });

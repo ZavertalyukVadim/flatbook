@@ -1,0 +1,16 @@
+.main-container {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-content: stretch;
+  align-items: flex-start;
+}
+
+.sidebar-wrapper, .content-wrapper {
+  order: 0;
+  flex: 0 1 auto;
+  align-self: stretch;
+  padding: 15px;
+}
