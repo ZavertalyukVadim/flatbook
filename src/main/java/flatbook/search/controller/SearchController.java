@@ -49,7 +49,7 @@ public class SearchController {
         return cityService.getAllCitiesByRegion(id);
     }
 
-    @RequestMapping(value = "/small", method = RequestMethod.POST)
+    @RequestMapping(value = "/small", method = RequestMethod.GET)
     List<Announcement> smallSearch(@RequestBody Search search) {
         return announcementService.getAnnouncementByCityAndRoomsAndLivingPlacesAndPricePerDay(search);
     }
