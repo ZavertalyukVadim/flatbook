@@ -11,7 +11,6 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.AuthenticationEntryPoint;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -22,7 +21,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userDetailsService()).passwordEncoder(new BCryptPasswordEncoder());
-//        auth.inMemoryAuthentication().withUser("example@gmail.com").password("root").roles("USER");
     }
 
     @Override
@@ -32,16 +30,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.formLogin()
                 .usernameParameter("Username")
                 .passwordParameter("Password");
-        http.logout().invalidateHttpSession(false).logoutSuccessUrl("/");
-//                .logoutUrl()
-//                .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-
+        http.logout().invalidateHttpSession(true).logoutSuccessUrl("/");
         http.authorizeRequests()
                 .antMatchers("/announcement").authenticated()
                 .antMatchers("/**").permitAll();
         http.exceptionHandling()
                 .authenticationEntryPoint(unauthorizedEntryPoint());
-
     }
 
     @Bean

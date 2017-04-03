@@ -4,10 +4,15 @@ import flatbook.profile.entity.Email;
 import flatbook.profile.entity.User;
 import flatbook.profile.service.ProfileService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.Collections;
 
 @RestController
@@ -26,17 +31,22 @@ public class ProfileController {
         return profileService.createUser(user);
     }
 
-    @RequestMapping(value = "", method = RequestMethod.DELETE)
-    public User deleteUser(@RequestBody User user) throws Exception {
-        return profileService.delete(user);
+    @Secured("ROLE_USER")
+    @DeleteMapping
+    public void deleteCurrentUser(@RequestBody String password, HttpServletRequest request, HttpServletResponse response) throws Exception {
+        profileService.deleteUser(password);
+        request.logout();
     }
 
-//    @GetMapping(value = "/{id}")
-    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    public User getUserById(@PathVariable Integer id) {
-        User user = profileService.getUserById(id);
+    @Secured("ROLE_USER")
+    @GetMapping
+    public User getCurrentUser() {
+        return profileService.getCurrentUser();
+    }
 
-        return user;
+    @GetMapping(value = "/{id}")
+    public User getUserById(@PathVariable Integer id) {
+        return profileService.getUserById(id);
     }
 
     @RequestMapping(value = "/primaryemail", method = RequestMethod.POST)
@@ -64,7 +74,7 @@ public class ProfileController {
     }
 
     @PostMapping(value = "/photo1")
-    public void addPhoto(@RequestParam("file") MultipartFile[] submissions) {
+    public void addPhoto(@RequestParam("password") String password) {
         System.out.println("photo 1  works");
         System.out.println("photo 1 works");
     }

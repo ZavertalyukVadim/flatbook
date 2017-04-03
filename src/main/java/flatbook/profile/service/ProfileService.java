@@ -9,9 +9,11 @@ import flatbook.profile.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 import java.util.List;
 
@@ -22,30 +24,44 @@ public class ProfileService {
     private final EmailDao emailDao;
     private final PhoneDao phoneDao;
 
+    private final EntityManager entityManager;
+
     @Autowired
-    public ProfileService(UserDao userDao, EmailDao emailDao, PhoneDao phoneDao) {
+    public ProfileService(UserDao userDao, EmailDao emailDao, PhoneDao phoneDao, EntityManager entityManager) {
         this.userDao = userDao;
         this.emailDao = emailDao;
         this.phoneDao = phoneDao;
+        this.entityManager = entityManager;
     }
 
     @Transactional
     public User createUser(User user) throws Exception {
-        if ( isUserExist(user) ) throw new Exception("User has been already exist");
-
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         String hashedPassword = passwordEncoder.encode(user.getPassword());
         user.setPassword(hashedPassword);
 
-        userDao.save(user);
+        List<Email> emails = user.getEmails();
+        if (emails.size() != 1) throw new Exception("Allowed only one primary email");
 
-        return user;
+        Email primary = emailDao.findOneByAddress(emails.get(0).getAddress());
+        if (primary != null) throw new Exception("email is exist");
+
+        user.setEmails(null);
+        User savingUser = userDao.save(user);
+
+        Email newPrimary = emails.get(0);
+        newPrimary.setUser(savingUser);
+        Email savedEmail = emailDao.save(newPrimary);
+
+        return getUserById(savingUser.getId());
     }
 
-    public User delete(User user) throws Exception {
-        if (!isUserEqualsToSecurityUser(user)) return user;
+    public User deleteUser(String password) throws Exception {
+        if (!isCorrectPassword(password)) throw new Exception("Uncorrect password");
 
-        userDao.delete(user);
+        User currentUser = getCurrentUser();
+        userDao.delete(currentUser);
+
         return null;
     }
 
@@ -58,6 +74,12 @@ public class ProfileService {
         return userDao.save(oldUser);
     }
 
+    public User getCurrentUser() {
+        Email email = emailDao.findOneByAddress(getUserEmail());
+
+        return email.getUser();
+    }
+
     public User getUserById(Integer id) {
         return userDao.findOne(id);
     }
@@ -67,52 +89,42 @@ public class ProfileService {
     }
 
     @Transactional
-    public Email addEmail(Integer userId, Email email) throws Exception {
+    public Email addEmail(Email email) throws Exception {
 
         String userEmail = getCurrentUserPrimaryEmail();
         if (!isUserNameExist(userEmail)) throw new Exception("Unknown user");
 
-        User user = userDao.findOne(userId);
-        if (!userDao.exists(userId)) throw new Exception("Unknown user");
-
-        if (!isUserEmailOwner(user, email)) throw new Exception("User is not email owner");
+        User user = emailDao.findOneByAddress(userEmail).getUser();
+        if (user == null) throw new Exception("Unknown user");
 
         if (isUserContainsEmail(user, email)) return email;
 
         Email existingEmail = emailDao.findOneByAddress(email.getAddress());
-        if (existingEmail == null) throw new Exception("Email is used by another user");
+        if (existingEmail != null) throw new Exception("Email is used");
 
-        if (isEmailUsed(email)) throw new Exception("Email is used");
-
+        email.setPrimary(false);
+        email.setUser(user);
         emailDao.save(email);
-
-        List<Email> emails = user.getEmails();
-        emails.add(email);
-        user.setEmails(emails);
-
-        userDao.save(user);
 
         return email;
     }
 
-    public Email setEmailAsPrimary(Integer userId, Email email) throws Exception {
-        if (!userDao.exists(userId)) throw new Exception("Unknown user");
+    @Transactional
+    public Email setEmailAsPrimary(Email email) throws Exception {
+        User user = getCurrentUser();
+        if (!user.getEmails().contains(email)) throw new Exception("User contains no email");
 
-        User user = userDao.findOne(userId);
-        List<Email> emails = user.getEmails();
+        Email oldPrimaryEmail = emailDao.findOneByAddress(getUserEmail());
+        if (oldPrimaryEmail.equals(email)) return email;
 
-        if (!emails.contains(email)) throw new Exception("User is not the owner of email");
+        oldPrimaryEmail.setPrimary(false);
+        emailDao.save(oldPrimaryEmail);
 
-        Email primary = emails.stream().filter(email1 -> email1.getPrimary()).findFirst().get();
-        if (primary.getAddress().equals(email.getAddress())) return email;
+        Email newPrimary = emailDao.findOneByAddress(email.getAddress());
+        newPrimary.setPrimary(true);
+        emailDao.save(newPrimary);
 
-        primary.setPrimary(false);
-        Email newPrimaryEmail = emails.stream().filter(email12 -> email12.equals(email12)).findFirst().get();
-        newPrimaryEmail.setPrimary(true);
-
-        userDao.save(user);
-
-        return newPrimaryEmail;
+        return newPrimary;
     }
 
     public Email getEmailById(Integer id) {
@@ -120,15 +132,14 @@ public class ProfileService {
     }
 
     public Email getPrimaryEmail() throws Exception {
-        String currentUserPrimaryEmai = getCurrentUserPrimaryEmail();
-        Email email = emailDao.findOneByAddress(getCurrentUserPrimaryEmail());
-        if (email == null) throw new Exception("There is no primary email");
+        Email primary = getCurrentUser().getEmails().stream().filter(email -> email.getPrimary()).findFirst().get();
+        if (primary == null) throw new Exception("There is no primary email");
 
-        return email;
+        return primary;
     }
 
-    public List<Email> getAllEmails(User user) {
-        return null;
+    public List<Email> getAllEmails() {
+        return getCurrentUser().getEmails();
     }
 
     public void setPhoneAsPrimary(User user, Phone phone) {
@@ -154,6 +165,10 @@ public class ProfileService {
 
     private void makeEmailPrimary(Email email) {
         if (!isEmailPrimary(email)) email.setPrimary(true);
+    }
+
+    private void getUser() {
+
     }
 
     private boolean isEmailExists(Email email) {
@@ -200,13 +215,50 @@ public class ProfileService {
         if (user == null) return false;
         if (user.getEmails() == null) return false;
 
-        return user.getEmails().stream().anyMatch(email ->
-            emailDao.findOneByAddress(email.getAddress()) != null);
+        return false;
+    }
+
+    private boolean isCorrectPassword(String password) throws Exception {
+
+        String userName = getUserDetails().getName();
+        String hashedPassword = emailDao.findOneByAddress(userName).getUser().getPassword();
+
+        return BCrypt.checkpw(password, hashedPassword);
+    }
+
+    private String getUserEmail() {
+        return getUserDetails().getName();
+    }
+
+    private Authentication getUserDetails() {
+        return SecurityContextHolder.getContext().getAuthentication();
     }
 
     public void test() {
         Email email = new Email();
         email.setPrimary(true);
         User user = new User();
+    }
+
+    @Transactional
+    public Email deleteEmail(Email email) throws Exception {
+        if (!isUserContainsEmail(getCurrentUser(), email)) throw new Exception("User contains no email");
+
+        Email dbEmail = emailDao.findOneByAddress(email.getAddress());
+        if (dbEmail.getPrimary()) throw new Exception("Cannot delete primary email");
+
+        User currentUser = getCurrentUser();
+
+        List<Email> emails = getCurrentUser().getEmails();
+        int index = emails.lastIndexOf(email);
+        emails.remove(index);
+        userDao.save(currentUser);
+
+        dbEmail.setUser(null);
+//        emailDao.delete(dbEmail.getId());
+
+        entityManager.remove(dbEmail);
+        Email deleted = emailDao.findOneByAddress(dbEmail.getAddress());
+        return null;
     }
 }

@@ -1,6 +1,5 @@
 package flatbook.profile.service;
 
-
 import flatbook.profile.dao.EmailDao;
 import flatbook.profile.dao.UserDao;
 import flatbook.profile.entity.Email;

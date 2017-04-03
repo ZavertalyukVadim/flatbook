@@ -5,6 +5,8 @@ import flatbook.profile.entity.Email;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class EmailService {
     @Autowired
