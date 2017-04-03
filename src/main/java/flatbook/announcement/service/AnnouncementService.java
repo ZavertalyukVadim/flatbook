@@ -83,7 +83,7 @@ public class AnnouncementService {
         cityDao.save(city2);
         City city3 = new City();
         city3.setName("Borispol");
-        city.setRegion(region1);
+        city3.setRegion(region1);
         cityDao.save(city3);
 
         City city4 = new City();
