@@ -1,20 +1,42 @@
 package flatbook.announcement.dao;
 
-import flatbook.announcement.entity.Amenity;
-import flatbook.announcement.entity.Announcement;
-import flatbook.announcement.entity.City;
+import flatbook.announcement.entity.*;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
 public interface AnnouncementDao extends JpaRepository<Announcement, Integer> {
 
-    List<Announcement> getAnnouncementByCityAndRoomsAndLivingPlacesAndPricePerDayBetween(City city, Integer rooms, Integer livingPlaces, Integer startingPrice, Integer finalPrice);
+    @Query("SELECT a FROM Announcement a where a.city = :#{#city} " +
+            "and  a.rooms=:#{#search.rooms} " +
+            "and a.livingPlaces=:#{#search.livingPlaces} " +
+            "and a.pricePerDay between :#{#search.startingPrice} " +
+            "and :#{#search.finalPrice}")
+    List<Announcement> getAnnouncementPerDay(@Param("city") City city,@Param("search") Search search);
 
-    List<Announcement> getAnnouncementByCityAndRoomsAndLivingPlacesAndPricePerMonthBetween(City city, Integer rooms, Integer livingPlaces, Integer startingPrice, Integer finalPrice);
+    @Query("SELECT a FROM Announcement a where a.city = :#{#city} " +
+            "and  a.rooms=:#{#search.rooms} " +
+            "and a.livingPlaces=:#{#search.livingPlaces} " +
+            "and a.pricePerMonth between :#{#search.startingPrice} " +
+            "and :#{#search.finalPrice}")
+    List<Announcement> getAnnouncementPerMonth(@Param("city") City city,@Param("search") Search search);
 
-    List<Announcement> getAnnouncementByCityAndRoomsAndLivingPlacesAndPricePerDayBetweenAndAmenities(City city, Integer rooms, Integer livingPlaces, Integer startingPrice, Integer finalPrice, List<Amenity> amenity);
+    @Query("SELECT a FROM Announcement a where a.city = :#{#city} " +
+            "and  a.rooms=:#{#search.rooms} " +
+            "and a.livingPlaces=:#{#search.livingPlaces} " +
+            "and a.pricePerDay between :#{#search.startingPrice} " +
+            "and :#{#search.finalPrice} " +
+            "and a.amenities  = :#{#search.amenities}")
+    List<Announcement> getAnnouncementPerDayWithAmenities(@Param("city") City city,@Param("search") ExtendSearch search);
 
-    List<Announcement> getAnnouncementByCityAndRoomsAndLivingPlacesAndPricePerMonthBetweenAndAmenities(City city, Integer rooms, Integer livingPlaces, Integer startingPrice, Integer finalPrice, List<Amenity> amenity);
+    @Query("SELECT a FROM Announcement a where a.city = :#{#city} " +
+            "and  a.rooms=:#{#search.rooms} " +
+            "and a.livingPlaces=:#{#search.livingPlaces} " +
+            "and a.pricePerMonth between :#{#search.startingPrice} " +
+            "and :#{#search.finalPrice} " +
+            "and  a.amenities  = :#{#search.amenities}")
+    List<Announcement> getAnnouncementPerMonthWithAmenities(@Param("city") City city,@Param("search") ExtendSearch search);
 
 }

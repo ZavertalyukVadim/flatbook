@@ -396,16 +396,16 @@ public class AnnouncementService {
     public List<Announcement> getAnnouncementBySmallSearch(Search search) {
         City city = cityDao.findOne(search.getCityId());
         return (search.getPrice() == Price.PRICE_PER_DAY)
-                ? announcementDao.getAnnouncementByCityAndRoomsAndLivingPlacesAndPricePerDayBetween(city,  search.getRooms(),search.getLivingPlaces(),search.getStartingPrice(), search.getFinalPrice())
-                : announcementDao.getAnnouncementByCityAndRoomsAndLivingPlacesAndPricePerMonthBetween(city, search.getRooms(),search.getLivingPlaces(),search.getStartingPrice(), search.getFinalPrice());
+                ? announcementDao.getAnnouncementPerDay(city, search)
+                : announcementDao.getAnnouncementPerMonth(city, search);
     }
 
     @Transactional
     public List<Announcement> getAnnouncementByExtendedSearch(ExtendSearch extendSearch) {
         City city = cityDao.findOne(extendSearch.getCityId());
         return (extendSearch.getPrice()  == Price.PRICE_PER_DAY)
-                ? announcementDao.getAnnouncementByCityAndRoomsAndLivingPlacesAndPricePerDayBetweenAndAmenities(city, extendSearch.getRooms(),extendSearch.getLivingPlaces(),extendSearch.getStartingPrice(), extendSearch.getFinalPrice(), extendSearch.getAmenities())
-                : announcementDao.getAnnouncementByCityAndRoomsAndLivingPlacesAndPricePerMonthBetweenAndAmenities(city, extendSearch.getRooms(),extendSearch.getLivingPlaces(),extendSearch.getStartingPrice(), extendSearch.getFinalPrice(), extendSearch.getAmenities());
+                ? announcementDao.getAnnouncementPerDayWithAmenities(city, extendSearch)
+                : announcementDao.getAnnouncementPerMonthWithAmenities(city, extendSearch);
 
     }
 }
