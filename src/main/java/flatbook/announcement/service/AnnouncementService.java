@@ -133,7 +133,7 @@ public class AnnouncementService {
         announcement.setPricePerDay(100);
         announcement.setTitle("title1");
         announcement.setRooms(1);
-        announcement.setLivingPlaces(2);
+        announcement.setLivingPlaces(1);
         announcement.setStreet("Shevchenko");
         announcement.setHouseNumber("450");
         announcement.setCountry(country);
@@ -144,13 +144,12 @@ public class AnnouncementService {
 
         Announcement announcement1 = new Announcement(122, "ololo1", true, new Date());
         announcement1.setPricePerMonth(1200);
-        announcement1.setLivingPlaces(3);
+        announcement1.setLivingPlaces(1);
         announcement1.setLastUpdated(new Date());
         announcement1.setTitle("title2");
         announcement1.setRooms(1);
         announcement1.setCountry(country);
         announcement1.setPricePerDay(100);
-        announcement1.setLivingPlaces(2);
         announcement1.setCity(city);
         announcement1.setAmenities(amenityList2);
         announcement1.setRegion(region);
@@ -161,7 +160,7 @@ public class AnnouncementService {
         announcement2.setLastUpdated(new Date());
         announcement2.setTitle("title3");
         announcement2.setRooms(1);
-        announcement2.setLivingPlaces(3);
+        announcement2.setLivingPlaces(1);
         announcement2.setCity(city1);
         announcement2.setPricePerDay(150);
         announcement2.setCountry(country);
@@ -171,7 +170,7 @@ public class AnnouncementService {
         announcement3.setLastUpdated(new Date());
         announcement3.setTitle("title4");
         announcement3.setRooms(1);
-        announcement3.setLivingPlaces(2);
+        announcement3.setLivingPlaces(1);
         announcement3.setPricePerDay(200);
         announcement3.setCity(city1);
         announcement3.setCountry(country);
@@ -182,7 +181,7 @@ public class AnnouncementService {
         announcement4.setLastUpdated(new Date());
         announcement4.setTitle("title1");
         announcement4.setRooms(1);
-        announcement4.setLivingPlaces(3);
+        announcement4.setLivingPlaces(1);
         announcement4.setStreet("Shevchenko");
         announcement4.setHouseNumber("450");
         announcement4.setCountry(country);
@@ -194,12 +193,11 @@ public class AnnouncementService {
 
         Announcement announcement5 = new Announcement(122, "ololo1", true, new Date());
         announcement5.setPricePerMonth(1200);
-        announcement5.setLivingPlaces(3);
+        announcement5.setLivingPlaces(1);
         announcement5.setLastUpdated(new Date());
         announcement5.setTitle("title2");
         announcement5.setRooms(1);
         announcement5.setPricePerDay(100);
-        announcement5.setLivingPlaces(2);
         announcement5.setCity(city2);
         announcement5.setCountry(country);
         announcement5.setAmenities(amenityList2);
@@ -210,7 +208,7 @@ public class AnnouncementService {
         announcement6.setLastUpdated(new Date());
         announcement6.setTitle("title3");
         announcement6.setRooms(1);
-        announcement6.setLivingPlaces(3);
+        announcement6.setLivingPlaces(1);
         announcement6.setCity(city3);
         announcement6.setPricePerDay(150);
         announcement6.setCountry(country);
@@ -221,7 +219,7 @@ public class AnnouncementService {
         announcement7.setLastUpdated(new Date());
         announcement7.setTitle("title4");
         announcement7.setRooms(1);
-        announcement7.setLivingPlaces(2);
+        announcement7.setLivingPlaces(1);
         announcement7.setPricePerDay(200);
         announcement7.setCity(city3);
         announcement7.setCountry(country);
@@ -236,9 +234,9 @@ public class AnnouncementService {
         announcement8.setPricePerMonth(1000);
         announcement8.setLastUpdated(new Date());
         announcement8.setTitle("title1");
-        announcement8.setRooms(2);
+        announcement8.setRooms(1);
         announcement8.setPricePerDay(100);
-        announcement8.setLivingPlaces(2);
+        announcement8.setLivingPlaces(1);
         announcement8.setStreet("Shevchenko");
         announcement8.setHouseNumber("450");
         announcement8.setCountry(country1);
@@ -249,12 +247,11 @@ public class AnnouncementService {
 
         Announcement announcement9 = new Announcement(122, "ololo1", true, new Date());
         announcement9.setPricePerMonth(1200);
-        announcement9.setLivingPlaces(3);
         announcement9.setLastUpdated(new Date());
         announcement9.setTitle("title2");
-        announcement9.setRooms(2);
+        announcement9.setRooms(1);
         announcement9.setPricePerDay(100);
-        announcement9.setLivingPlaces(2);
+        announcement9.setLivingPlaces(1);
         announcement9.setCity(city4);
         announcement9.setAmenities(amenityList2);
         announcement9.setCountry(country1);
@@ -264,8 +261,8 @@ public class AnnouncementService {
         announcement10.setPricePerMonth(1300);
         announcement10.setLastUpdated(new Date());
         announcement10.setTitle("title3");
-        announcement10.setRooms(2);
-        announcement10.setLivingPlaces(2);
+        announcement10.setRooms(1);
+        announcement10.setLivingPlaces(1);
         announcement10.setCity(city5);
         announcement10.setPricePerDay(150);
         announcement10.setCountry(country1);
@@ -275,8 +272,8 @@ public class AnnouncementService {
         announcement11.setPricePerMonth(1400);
         announcement11.setLastUpdated(new Date());
         announcement11.setTitle("title4");
-        announcement11.setRooms(2);
-        announcement11.setLivingPlaces(2);
+        announcement11.setRooms(1);
+        announcement11.setLivingPlaces(1);
         announcement11.setPricePerDay(200);
         announcement11.setCity(city5);
         announcement11.setCountry(country1);
@@ -286,8 +283,8 @@ public class AnnouncementService {
         announcement12.setPricePerMonth(1000);
         announcement12.setLastUpdated(new Date());
         announcement12.setTitle("title1");
-        announcement12.setRooms(2);
-        announcement12.setLivingPlaces(2);
+        announcement12.setRooms(1);
+        announcement12.setLivingPlaces(1);
         announcement12.setStreet("Shevchenko");
         announcement12.setHouseNumber("450");
         announcement12.setCountry(country1);
@@ -299,12 +296,11 @@ public class AnnouncementService {
 
         Announcement announcement13 = new Announcement(122, "ololo1", true, new Date());
         announcement13.setPricePerMonth(1200);
-        announcement13.setLivingPlaces(3);
         announcement13.setLastUpdated(new Date());
         announcement13.setTitle("title2");
-        announcement13.setRooms(2);
+        announcement13.setRooms(1);
         announcement13.setPricePerDay(100);
-        announcement13.setLivingPlaces(2);
+        announcement13.setLivingPlaces(1);
         announcement13.setCity(city6);
         announcement13.setAmenities(amenityList2);
         announcement13.setCountry(country1);
@@ -314,8 +310,8 @@ public class AnnouncementService {
         announcement14.setPricePerMonth(1300);
         announcement14.setLastUpdated(new Date());
         announcement14.setTitle("title3");
-        announcement14.setRooms(2);
-        announcement14.setLivingPlaces(2);
+        announcement14.setRooms(1);
+        announcement14.setLivingPlaces(1);
         announcement14.setCity(city7);
         announcement14.setPricePerDay(150);
         announcement14.setCountry(country1);
@@ -325,8 +321,8 @@ public class AnnouncementService {
         announcement15.setPricePerMonth(1400);
         announcement15.setLastUpdated(new Date());
         announcement15.setTitle("title4");
-        announcement15.setRooms(2);
-        announcement15.setLivingPlaces(2);
+        announcement15.setRooms(1);
+        announcement15.setLivingPlaces(1);
         announcement15.setPricePerDay(200);
         announcement15.setCity(city7);
         announcement15.setCountry(country1);
