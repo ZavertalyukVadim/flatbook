@@ -48,48 +48,69 @@ public class AnnouncementService {
         country.setName("Ukraine");
         countryDao.save(country);
         Country country1 = new Country();
-        country1.setName("Ukraine1");
+        country1.setName("Russia");
         countryDao.save(country1);
-        Country country2 = new Country();
-        country2.setName("Ukraine2");
-        countryDao.save(country2);
-        Country country3 = new Country();
-        country3.setName("Ukraine3");
-        countryDao.save(country3);
+
         Region region = new Region();
-        region.setName("region");
+        region.setName("Cherkasy");
         region.setCountry(country);
         regionDao.save(region);
         Region region1 = new Region();
-        region1.setName("region1");
+        region1.setName("Kiev");
         region1.setCountry(country);
         regionDao.save(region1);
         Region region2 = new Region();
-        region2.setName("region2");
+        region2.setName("Moscow");
         region2.setCountry(country1);
         regionDao.save(region2);
         Region region3 = new Region();
-        region3.setName("region3");
+        region3.setName("St. Petersburg");
+        region3.setCountry(country1);
         regionDao.save(region3);
+
         City city = new City();
-        city.setName("city");
+        city.setName("Shpola");
         city.setRegion(region);
         cityDao.save(city);
         City city1 = new City();
-        city1.setName("city1");
+        city1.setName("Smila");
         city1.setRegion(region);
         cityDao.save(city1);
+
         City city2 = new City();
-        city2.setName("city2");
+        city2.setName("Brovary");
         city2.setRegion(region1);
         cityDao.save(city2);
         City city3 = new City();
-        city3.setName("city3");
+        city3.setName("Borispol");
+        city.setRegion(region1);
         cityDao.save(city3);
+
+        City city4 = new City();
+        city4.setName("Klin");
+        city4.setRegion(region2);
+        cityDao.save(city4);
+        City city5 = new City();
+        city5.setName("Mytischi");
+        city5.setRegion(region2);
+        cityDao.save(city5);
+
+        City city6 = new City();
+        city6.setName("Petergof");
+        city6.setRegion(region3);
+        cityDao.save(city6);
+        City city7 = new City();
+        city7.setName("Gatchina");
+        city7.setRegion(region3);
+        cityDao.save(city7);
+
+
         District district = new District();
         district.setName("district");
         district.setCity(city);
         districtDao.save(district);
+
+
         Amenity amenity = new Amenity();
         amenity.setName("amenity");
         amenityDao.save(amenity);
@@ -105,6 +126,7 @@ public class AnnouncementService {
         List<Amenity> amenityList2 = new ArrayList<>();
         amenityList2.add(amenity);
         amenityList2.add(amenity1);
+
         Announcement announcement = new Announcement(123, "ololo", true, new Date());
         announcement.setPricePerMonth(1000);
         announcement.setLastUpdated(new Date());
@@ -118,25 +140,31 @@ public class AnnouncementService {
         announcement.setCity(city);
         announcement.setDistrict(district);
         announcement.setAmenities(amenityList);
-        announcementDao.save(announcement);
+
         Announcement announcement1 = new Announcement(122, "ololo1", true, new Date());
         announcement1.setPricePerMonth(1200);
         announcement1.setLivingPlaces(3);
         announcement1.setLastUpdated(new Date());
         announcement1.setTitle("title2");
         announcement1.setRooms(2);
+        announcement1.setCountry(country);
         announcement1.setPricePerDay(100);
         announcement1.setLivingPlaces(2);
         announcement1.setCity(city);
         announcement1.setAmenities(amenityList2);
+        announcement1.setRegion(region);
+
         Announcement announcement2 = new Announcement(121, "ololo2", true, new Date());
         announcement2.setPricePerMonth(1300);
+        announcement2.setRegion(region);
         announcement2.setLastUpdated(new Date());
         announcement2.setTitle("title3");
         announcement2.setRooms(2);
         announcement2.setLivingPlaces(3);
-        announcement2.setCity(city);
+        announcement2.setCity(city1);
         announcement2.setPricePerDay(150);
+        announcement2.setCountry(country);
+
         Announcement announcement3 = new Announcement(120, "ololo3", true, new Date());
         announcement3.setPricePerMonth(1400);
         announcement3.setLastUpdated(new Date());
@@ -144,10 +172,178 @@ public class AnnouncementService {
         announcement3.setRooms(2);
         announcement3.setLivingPlaces(2);
         announcement3.setPricePerDay(200);
-        announcement3.setCity(city);
+        announcement3.setCity(city1);
+        announcement3.setCountry(country);
+        announcement3.setRegion(region);
+
+        Announcement announcement4 = new Announcement(123, "ololo", true, new Date());
+        announcement4.setPricePerMonth(1000);
+        announcement4.setLastUpdated(new Date());
+        announcement4.setTitle("title1");
+        announcement4.setRooms(2);
+        announcement4.setLivingPlaces(3);
+        announcement4.setStreet("Shevchenko");
+        announcement4.setHouseNumber("450");
+        announcement4.setCountry(country);
+        announcement4.setRegion(region1);
+        announcement4.setCity(city2);
+        announcement4.setDistrict(district);
+        announcement4.setAmenities(amenityList);
+
+        Announcement announcement5 = new Announcement(122, "ololo1", true, new Date());
+        announcement5.setPricePerMonth(1200);
+        announcement5.setLivingPlaces(3);
+        announcement5.setLastUpdated(new Date());
+        announcement5.setTitle("title2");
+        announcement5.setRooms(2);
+        announcement5.setPricePerDay(100);
+        announcement5.setLivingPlaces(2);
+        announcement5.setCity(city2);
+        announcement5.setCountry(country);
+        announcement5.setAmenities(amenityList2);
+        announcement5.setRegion(region1);
+
+        Announcement announcement6 = new Announcement(121, "ololo2", true, new Date());
+        announcement6.setPricePerMonth(1300);
+        announcement6.setLastUpdated(new Date());
+        announcement6.setTitle("title3");
+        announcement6.setRooms(2);
+        announcement6.setLivingPlaces(3);
+        announcement6.setCity(city3);
+        announcement6.setPricePerDay(150);
+        announcement6.setCountry(country);
+        announcement6.setRegion(region1);
+
+        Announcement announcement7 = new Announcement(120, "ololo3", true, new Date());
+        announcement7.setPricePerMonth(1400);
+        announcement7.setLastUpdated(new Date());
+        announcement7.setTitle("title4");
+        announcement7.setRooms(2);
+        announcement7.setLivingPlaces(2);
+        announcement7.setPricePerDay(200);
+        announcement7.setCity(city3);
+        announcement7.setCountry(country);
+        announcement7.setRegion(region1);
+
+
+
+
+
+
+        Announcement announcement8 = new Announcement(123, "ololo", true, new Date());
+        announcement8.setPricePerMonth(1000);
+        announcement8.setLastUpdated(new Date());
+        announcement8.setTitle("title1");
+        announcement8.setRooms(2);
+        announcement8.setLivingPlaces(3);
+        announcement8.setStreet("Shevchenko");
+        announcement8.setHouseNumber("450");
+        announcement8.setCountry(country1);
+        announcement8.setRegion(region2);
+        announcement8.setCity(city4);
+        announcement8.setDistrict(district);
+        announcement8.setAmenities(amenityList);
+
+        Announcement announcement9 = new Announcement(122, "ololo1", true, new Date());
+        announcement9.setPricePerMonth(1200);
+        announcement9.setLivingPlaces(3);
+        announcement9.setLastUpdated(new Date());
+        announcement9.setTitle("title2");
+        announcement9.setRooms(2);
+        announcement9.setPricePerDay(100);
+        announcement9.setLivingPlaces(2);
+        announcement9.setCity(city4);
+        announcement9.setAmenities(amenityList2);
+        announcement9.setCountry(country1);
+        announcement9.setRegion(region2);
+
+        Announcement announcement10 = new Announcement(121, "ololo2", true, new Date());
+        announcement10.setPricePerMonth(1300);
+        announcement10.setLastUpdated(new Date());
+        announcement10.setTitle("title3");
+        announcement10.setRooms(2);
+        announcement10.setLivingPlaces(3);
+        announcement10.setCity(city5);
+        announcement10.setPricePerDay(150);
+        announcement10.setCountry(country1);
+        announcement10.setRegion(region2);
+
+        Announcement announcement11 = new Announcement(120, "ololo3", true, new Date());
+        announcement11.setPricePerMonth(1400);
+        announcement11.setLastUpdated(new Date());
+        announcement11.setTitle("title4");
+        announcement11.setRooms(2);
+        announcement11.setLivingPlaces(2);
+        announcement11.setPricePerDay(200);
+        announcement11.setCity(city5);
+        announcement11.setCountry(country1);
+        announcement11.setRegion(region2);
+
+        Announcement announcement12 = new Announcement(123, "ololo", true, new Date());
+        announcement12.setPricePerMonth(1000);
+        announcement12.setLastUpdated(new Date());
+        announcement12.setTitle("title1");
+        announcement12.setRooms(2);
+        announcement12.setLivingPlaces(3);
+        announcement12.setStreet("Shevchenko");
+        announcement12.setHouseNumber("450");
+        announcement12.setCountry(country1);
+        announcement12.setRegion(region3);
+        announcement12.setCity(city6);
+        announcement12.setDistrict(district);
+        announcement12.setAmenities(amenityList);
+
+        Announcement announcement13 = new Announcement(122, "ololo1", true, new Date());
+        announcement13.setPricePerMonth(1200);
+        announcement13.setLivingPlaces(3);
+        announcement13.setLastUpdated(new Date());
+        announcement13.setTitle("title2");
+        announcement13.setRooms(2);
+        announcement13.setPricePerDay(100);
+        announcement13.setLivingPlaces(2);
+        announcement13.setCity(city6);
+        announcement13.setAmenities(amenityList2);
+        announcement13.setCountry(country1);
+        announcement13.setRegion(region3);
+
+        Announcement announcement14 = new Announcement(121, "ololo2", true, new Date());
+        announcement14.setPricePerMonth(1300);
+        announcement14.setLastUpdated(new Date());
+        announcement14.setTitle("title3");
+        announcement14.setRooms(2);
+        announcement14.setLivingPlaces(3);
+        announcement14.setCity(city7);
+        announcement14.setPricePerDay(150);
+        announcement14.setCountry(country1);
+        announcement14.setRegion(region3);
+
+        Announcement announcement15 = new Announcement(120, "ololo3", true, new Date());
+        announcement15.setPricePerMonth(1400);
+        announcement15.setLastUpdated(new Date());
+        announcement15.setTitle("title4");
+        announcement15.setRooms(2);
+        announcement15.setLivingPlaces(2);
+        announcement15.setPricePerDay(200);
+        announcement15.setCity(city7);
+        announcement15.setCountry(country1);
+        announcement15.setRegion(region3);
+
+        announcementDao.save(announcement);
         announcementDao.save(announcement1);
         announcementDao.save(announcement2);
         announcementDao.save(announcement3);
+        announcementDao.save(announcement4);
+        announcementDao.save(announcement5);
+        announcementDao.save(announcement6);
+        announcementDao.save(announcement7);
+        announcementDao.save(announcement8);
+        announcementDao.save(announcement9);
+        announcementDao.save(announcement10);
+        announcementDao.save(announcement11);
+        announcementDao.save(announcement12);
+        announcementDao.save(announcement13);
+        announcementDao.save(announcement14);
+        announcementDao.save(announcement15);
     }
 
     public Announcement getAnnouncementById(Integer id) {
@@ -197,15 +393,15 @@ public class AnnouncementService {
     }
 
     @Transactional
-    public List<Announcement> getAnnouncementByCityAndRoomsAndLivingPlacesAndPricePerDay(Search search) {
+    public List<Announcement> getAnnouncementBySmallSearch(Search search) {
         City city = cityDao.findOne(search.getCityId());
         return (search.getPrice() == Price.PRICE_PER_DAY)
-                ? announcementDao.getAnnouncementByCityAndRoomsAndLivingPlacesAndPricePerDayBetween(city, search.getRooms(),search.getLivingPlaces(),search.getStartingPrice(), search.getFinalPrice())
+                ? announcementDao.getAnnouncementByCityAndRoomsAndLivingPlacesAndPricePerDayBetween(city,  search.getRooms(),search.getLivingPlaces(),search.getStartingPrice(), search.getFinalPrice())
                 : announcementDao.getAnnouncementByCityAndRoomsAndLivingPlacesAndPricePerMonthBetween(city, search.getRooms(),search.getLivingPlaces(),search.getStartingPrice(), search.getFinalPrice());
     }
 
     @Transactional
-    public List<Announcement> getAnnouncementByCityAndRoomsAndLivingPlacesAndPricePerDayAndAmenities(ExtendSearch extendSearch) {
+    public List<Announcement> getAnnouncementByExtendedSearch(ExtendSearch extendSearch) {
         City city = cityDao.findOne(extendSearch.getCityId());
         return (extendSearch.getPrice()  == Price.PRICE_PER_DAY)
                 ? announcementDao.getAnnouncementByCityAndRoomsAndLivingPlacesAndPricePerDayBetweenAndAmenities(city, extendSearch.getRooms(),extendSearch.getLivingPlaces(),extendSearch.getStartingPrice(), extendSearch.getFinalPrice(), extendSearch.getAmenities())
