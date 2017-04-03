@@ -1,0 +1,23 @@
+@import "../../style/color-theme.scss";
+@import "../../style/sizes.scss";
+
+.radio {
+  display: flex;
+  align-items: center;
+
+  .radio-icon {
+    transition: 0.2s linear;
+    font-size: 20px;
+    color: $checkbox-background;
+    cursor: pointer;
+    margin-right: map-get($indentSizes, xs);
+  }
+
+  .radio-checked{
+    color: $primary;
+  }
+
+  .radio-disabled {
+    color: $checkbox-disabled;
+  }
+}

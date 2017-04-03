@@ -1,64 +1,54 @@
 @import "../../style/color-theme.scss";
+@import "../../style/font.scss";
 
-.slider-values {
+.slider-container {
 
-  padding: 20px;
-  margin: 10px;
+  .slider {
+    width: 100%;
+    max-width: 100%;
 
-  .slider-container {
+    .slider-handle {
+      position: relative;
+      background-color: $primary;
+      cursor: pointer;
+      border-radius: 50%;
+      width: 20px;
+      height: 20px;
+    }
 
-    display: block;
+    .bar {
+      position: relative;
+      top: 4px;
+      height: 12px;
+    }
+
+    .bar-0 {
+      background: $btn-disabled-color;
+      border-radius: 32px;
+    }
+
+    .bar-1 {
+      background: $primary;
+      border-radius: 32px;
+    }
+
+    .bar-2 {
+      background: $btn-disabled-color;
+      border-radius: 32px;
+    }
+  }
+
+  .slider-values {
+
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    position: relative;
 
     .slider-value {
-      position: relative;
-      top: 2px;
+      margin: 0 5px;
+      font-size: $text-field-font-size;
     }
 
-    .slider-value-from {
-      float: left;
-      right: 30px;
-      text-align: right;
-    }
-
-    .slider-value-to {
-      float: right;
-      left: 30px;
-      text-align: left;
-    }
-
-    .slider {
-      width: 100%;
-      max-width: 100%;
-
-      .slider-handle {
-        position: relative;
-        background-color: $primary;
-        cursor: pointer;
-        border-radius: 50%;
-        width: 20px;
-        height: 20px;
-      }
-
-      .bar {
-        position: relative;
-        top: 4px;
-        height: 12px;
-      }
-
-      .bar-0 {
-        background: $btn-disabled-color;
-        border-radius: 32px;
-      }
-
-      .bar-1 {
-        background: $primary;
-        border-radius: 32px;
-      }
-
-      .bar-2 {
-        background: $btn-disabled-color;
-        border-radius: 32px;
-      }
-    }
   }
 }
