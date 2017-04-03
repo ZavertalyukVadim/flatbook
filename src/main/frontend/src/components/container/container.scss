@@ -14,3 +14,17 @@
   align-self: stretch;
   padding: 15px;
 }
+
+.content-wrapper {
+  display: flex;
+  justify-content: center;
+  width: 85%;
+  text-align: center;
+}
+
+.sidebar-wrapper {
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+  width: 15%;
+}
