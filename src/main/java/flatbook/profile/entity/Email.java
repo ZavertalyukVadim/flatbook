@@ -1,7 +1,6 @@
 package flatbook.profile.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 
@@ -18,9 +17,6 @@ public class Email {
 
     @Column(name = "is_primary")
     private Boolean isPrimary;
-
-//    @Column(name = "user_id", insertable = false, updatable = false)
-//    private Integer userId;
 
     @JsonBackReference
     @ManyToOne(fetch = FetchType.EAGER)
@@ -64,12 +60,4 @@ public class Email {
         Email email = (Email)(o);
         return this.address.equals(email.address);
     }
-
-//    public Integer getUserId() {
-//        return userId;
-//    }
-//
-//    public void setUserId(Integer userId) {
-//        this.userId = userId;
-//    }
 }

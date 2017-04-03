@@ -1,9 +1,11 @@
 package flatbook.profile.service;
 
+import flatbook.announcement.entity.FileBucket;
 import flatbook.profile.dao.EmailDao;
 import flatbook.profile.dao.PhoneDao;
 import flatbook.profile.dao.UserDao;
 import flatbook.profile.entity.Email;
+import flatbook.profile.entity.Image;
 import flatbook.profile.entity.Phone;
 import flatbook.profile.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +17,10 @@ import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
+import java.io.IOException;
 import java.util.List;
+import java.util.Set;
+import java.util.function.Predicate;
 
 @Service
 public class ProfileService {
@@ -46,12 +51,24 @@ public class ProfileService {
         Email primary = emailDao.findOneByAddress(emails.get(0).getAddress());
         if (primary != null) throw new Exception("email is exist");
 
+        Set<Phone> phones = user.getPhones();
+        if (phones.size() != 1) throw new Exception("Allowed only one primary phone");
+
+        Phone primaryPhone = phoneDao.findOneByNumber(phones.iterator().next().getNumber());
+        if (primaryPhone != null) throw new Exception("email is exist");
+
         user.setEmails(null);
+        user.setPhones(null);
+
         User savingUser = userDao.save(user);
 
         Email newPrimary = emails.get(0);
         newPrimary.setUser(savingUser);
-        Email savedEmail = emailDao.save(newPrimary);
+        emailDao.save(newPrimary);
+
+        Phone newPrimaryPhone = phones.iterator().next();
+        newPrimaryPhone.setPhonesUser(savingUser);
+        phoneDao.save(newPrimaryPhone);
 
         return getUserById(savingUser.getId());
     }
@@ -110,6 +127,27 @@ public class ProfileService {
     }
 
     @Transactional
+    public Phone addPhone(Phone phone) throws Exception {
+
+        String userEmail = getCurrentUserPrimaryEmail();
+        if (!isUserNameExist(userEmail)) throw new Exception("Unknown user");
+
+        User user = emailDao.findOneByAddress(userEmail).getUser();
+        if (user == null) throw new Exception("Unknown user");
+
+        if (isUserContainsPhone(user, phone)) return phone;
+
+        Phone existingPhone = phoneDao.findOneByNumber(phone.getNumber());
+        if (existingPhone != null) throw new Exception("Phone is used");
+
+        phone.setPrimary(false);
+        phone.setPhonesUser(user);
+        phoneDao.save(phone);
+
+        return phone;
+    }
+
+    @Transactional
     public Email setEmailAsPrimary(Email email) throws Exception {
         User user = getCurrentUser();
         if (!user.getEmails().contains(email)) throw new Exception("User contains no email");
@@ -142,16 +180,34 @@ public class ProfileService {
         return getCurrentUser().getEmails();
     }
 
-    public void setPhoneAsPrimary(User user, Phone phone) {
+    public Phone setPhoneAsPrimary(Phone phone) throws Exception {
+        User user = getCurrentUser();
+        if (!user.getPhones().stream().anyMatch(currentPhone -> phone.equals(currentPhone))) throw new Exception("User contains no phone");
 
+//        if (!user.getPhones().contains(phone))
+
+        Phone oldPrimaryPhone = phoneDao.findOneByNumber(getPrimaryPhone().getNumber());
+        if (oldPrimaryPhone.equals(phone)) return phone;
+
+        oldPrimaryPhone.setPrimary(false);
+        phoneDao.save(oldPrimaryPhone);
+
+        Phone newPrimary = phoneDao.findOneByNumber(phone.getNumber());
+        newPrimary.setPrimary(true);
+        phoneDao.save(newPrimary);
+
+        return newPrimary;
     }
 
-    public Phone getPrimaryPhone(User user) {
-        return null;
+    public Phone getPrimaryPhone() throws Exception {
+        Phone primary = getCurrentUser().getPhones().stream().filter(phone -> phone.getPrimary()).findFirst().get();
+        if (primary == null) throw new Exception("There is no primary phone");
+
+        return primary;
     }
 
-    public Phone getAllPhones(User user) {
-        return null;
+    public Set<Phone> getAllPhones() {
+        return getCurrentUser().getPhones();
     }
 
     private void setOwnersPrimaryEmail(User user, Email email) {
@@ -195,6 +251,17 @@ public class ProfileService {
             String newAddress = email.getAddress();
 
             return currentAddress.equals(newAddress);
+        });
+    }
+
+    private boolean isUserContainsPhone(User user, Phone phone) {
+        Set<Phone> phones = user.getPhones();
+
+        return phones.stream().anyMatch(currenttPhone -> {
+            String currentNumber = currenttPhone.getNumber();
+            String newNumber = phone.getNumber();
+
+            return currentNumber.equals(newNumber);
         });
     }
 
@@ -260,5 +327,36 @@ public class ProfileService {
         entityManager.remove(dbEmail);
         Email deleted = emailDao.findOneByAddress(dbEmail.getAddress());
         return null;
+    }
+
+    @Transactional
+    public Phone deletePhone(Phone phone) throws Exception {
+        if (!isUserContainsPhone(getCurrentUser(), phone)) throw new Exception("User contains no email");
+
+        Phone dbPhone = phoneDao.findOneByNumber(phone.getNumber());
+        if (dbPhone.getPrimary()) throw new Exception("Cannot delete primary phone");
+
+        User currentUser = getCurrentUser();
+
+        Set<Phone> phones = getCurrentUser().getPhones();
+        Phone foundedPhone = phones.stream().filter(currentPhone -> currentPhone.equals(phone)).findFirst().get();
+
+        phones.remove(foundedPhone);
+        userDao.save(currentUser);
+
+        dbPhone.setPhonesUser(null);
+
+        entityManager.remove(dbPhone);
+        return null;
+    }
+
+    public void addImage(FileBucket imageFile) throws IOException {
+        Image image = new Image();
+        byte[] imageBytes = imageFile.getFile()[0].getBytes();
+        image.setPhoto(imageBytes);
+    }
+
+    private boolean isAllowedImageExtension() {
+        return true;
     }
 }

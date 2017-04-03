@@ -3,11 +3,14 @@ package flatbook.profile.controller;
 import flatbook.profile.entity.Phone;
 import flatbook.profile.service.ProfileService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.web.bind.annotation.*;
 
-@RestController(value = "profile/phone")
+import java.util.List;
+import java.util.Set;
+
+@RestController
+@RequestMapping(value = "/profile/phone")
 public class PhoneController {
     private final ProfileService profileService;
 
@@ -16,13 +19,29 @@ public class PhoneController {
         this.profileService = profileService;
     }
 
-    @RequestMapping("/add")
-    public Phone addPhone(@RequestBody Phone phone) {
-        return null;
+    @PostMapping(value = "/add")
+    public Phone addPhone(@RequestBody Phone phone) throws Exception {
+        return profileService.addPhone(phone);
     }
 
-//    @RequestMapping
-    public Phone setPhoneAsPrimary(@RequestBody Phone phone) {
-        return null;
+    @DeleteMapping(value = "")
+    public Phone deletePhone(@RequestBody Phone phone) throws Exception {
+        return profileService.deletePhone(phone);
+    }
+
+    @GetMapping(value = "/primary")
+    public Phone getPrimaryPhone() throws Exception {
+        return profileService.getPrimaryPhone();
+    }
+
+    @Secured("ROLE_USER")
+    @PutMapping(value = "/primary")
+    public Phone setPhoneAsPrimary(@RequestBody Phone phone) throws Exception {
+       return profileService.setPhoneAsPrimary(phone);
+    }
+
+    @GetMapping(value = "")
+    public Set<Phone> getPhones() {
+        return profileService.getAllPhones();
     }
 }

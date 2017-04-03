@@ -1,5 +1,7 @@
 package flatbook.profile.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 import javax.validation.constraints.Pattern;
 
@@ -18,8 +20,10 @@ public class Phone {
     @Column(name = "is_primary", nullable = false)
     private Boolean isPrimary;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    private User user;
+    @JsonBackReference
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "user_id")
+    private User phonesUser;
 
     public Integer getId() {
         return id;
@@ -45,11 +49,21 @@ public class Phone {
         isPrimary = primary;
     }
 
-    public User getUser() {
-        return user;
+    @Override
+    public boolean equals(Object o) {
+        Phone phone = (Phone) o;
+        if (this.number.equals(phone.getNumber())) {
+            return true;
+        }
+
+        return false;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public User getPhonesUser() {
+        return phonesUser;
+    }
+
+    public void setPhonesUser(User phonesUser) {
+        this.phonesUser = phonesUser;
     }
 }

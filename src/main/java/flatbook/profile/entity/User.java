@@ -1,10 +1,12 @@
 package flatbook.profile.entity;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.hibernate.annotations.FilterJoinTable;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "users")
@@ -28,6 +30,12 @@ public class User {
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user", fetch = FetchType.EAGER)
     private List<Email> emails;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "phonesUser", fetch = FetchType.EAGER)
+    private Set<Phone> phones;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    private Image image;
 
     public Integer getId() {
         return id;
@@ -80,7 +88,21 @@ public class User {
                 '}';
     }
 
-//    public void setEmail_id(Integer email_id) {
-//        this.email_id = email_id;
-//    }
+    public Set<Phone> getPhones() {
+        return phones;
+    }
+
+    public void setPhones(Set<Phone> phones) {
+        this.phones = phones;
+    }
+
+    public Byte[] getImage() {
+        return null;
+//        return image;
+    }
+
+    public void setImage(Byte[] image) {
+
+//        this.image = image;
+    }
 }

@@ -116,12 +116,13 @@
             <version>2.2.2</version>
         </dependency>
 
+
         <!--&lt;!&ndash; Apache Commons IO &ndash;&gt;-->
-        <!--<dependency>-->
-            <!--<groupId>commons-io</groupId>-->
-            <!--<artifactId>commons-io</artifactId>-->
-            <!--<version>2.4</version>-->
-        <!--</dependency>-->
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>2.4</version>
+        </dependency>
 
     </dependencies>
     <repositories>
