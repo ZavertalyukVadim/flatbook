@@ -8,6 +8,7 @@ import flatbook.profile.entity.Email;
 import flatbook.profile.entity.Image;
 import flatbook.profile.entity.Phone;
 import flatbook.profile.entity.User;
+import flatbook.profile.util.FileValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -17,6 +18,7 @@ import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
+import java.io.File;
 import java.io.IOException;
 import java.util.List;
 import java.util.Set;
@@ -351,12 +353,11 @@ public class ProfileService {
     }
 
     public void addImage(FileBucket imageFile) throws IOException {
-        Image image = new Image();
-        byte[] imageBytes = imageFile.getFile()[0].getBytes();
-        image.setPhoto(imageBytes);
+//        File image = addImage();
+//        if (FileValidator.isImage(imageFile.))
+//        Image image = new Image();
+//        byte[] imageBytes = imageFile.getFile()[0].getBytes();
+//        image.setPhoto(imageBytes);
     }
 
-    private boolean isAllowedImageExtension() {
-        return true;
-    }
 }
