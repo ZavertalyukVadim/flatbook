@@ -13,6 +13,7 @@
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    align-items: center;
 
     .search-form-address {
       width: 100%;
@@ -23,9 +24,18 @@
     }
 
     .search-form-price {
-      position: relative;
-      margin: map-get($indentSizes, l);
-      min-width: 100%;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-around;
+      align-items: center;
+
+      .search-form-price-slider {
+        min-width: 100%;
+
+      }
+      .search-form-price-radio {
+        min-width: 100%;
+      }
     }
 
     .search-form-options {
@@ -35,10 +45,18 @@
       flex-direction: column;
       justify-content: center;
       align-items: center;
-
       margin: map-get($indentSizes, l);
-      .search-form-options-label {
 
+      .search-form-options-label {
+        display: flex;
+        flex-direction: column;
+        margin: map-get($indentSizes, m) map-get($indentSizes, l);
+      }
+
+      .search-form-options-ranges {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
       }
     }
   }
@@ -46,4 +64,9 @@
   .search-form-button {
     width: 60%;
   }
+}
+
+.search-vertical {
+  min-width: 35%;
+  flex-direction: column !important;
 }

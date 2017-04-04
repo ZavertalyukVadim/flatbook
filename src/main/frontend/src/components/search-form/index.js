@@ -1,6 +1,7 @@
-import React, {Component} from 'react';
+import React, {Component, PropTypes} from 'react';
 import {connect} from 'react-redux';
-import {isNull} from 'lodash';
+import {isNull, noop} from 'lodash';
+import classNames from 'classnames';
 import Dropdown from '../dropdown';
 import Slider from '../slider';
 import Radio from '../radio';
@@ -31,8 +32,6 @@ class SearchForm extends Component {
 
     componentDidMount() {
         this.props.getCountries();
-        console.log(this.props);
-        console.log(this.props.history);
     }
 
     changeCountry = id => {
@@ -55,20 +54,24 @@ class SearchForm extends Component {
     changePriceType = type => () => this.setState({priceType: type});
     changeRooms = v => this.setState({rooms: v});
     changeLeavingPlaces = v => this.setState({livingPlaces: v});
-    search = () => this.props.search({
-        cityId: this.state.chosenCityID,
-        finalPrice: this.state.priceValue[1],
-        livingPlaces: this.state.livingPlaces,
-        price: this.state.priceType,
-        rooms: this.state.rooms,
-        startingPrice: this.state.priceValue[0]
-    });
+    search = () => {
+        this.props.search({
+            cityId: this.state.chosenCityID,
+            finalPrice: this.state.priceValue[1],
+            livingPlaces: this.state.livingPlaces,
+            price: this.state.priceType,
+            rooms: this.state.rooms,
+            startingPrice: this.state.priceValue[0]
+        });
+        this.props.redirect('/search');
+    };
 
     render() {
         const {
             countries,
             regions,
-            cities
+            cities,
+            type
         } = this.props;
         const {
             chosenCountryID,
@@ -80,9 +83,12 @@ class SearchForm extends Component {
             livingPlaces
         } = this.state;
 
+        const formClassName = classNames('search-form', {['search-vertical']: type === 'vertical'});
+        const containerClassName = classNames('search-form-options-container', {['search-vertical']: type === 'vertical'});
+
         return (
-            <div className="search-form">
-                <div className="search-form-options-container">
+            <div className={formClassName}>
+                <div className={containerClassName}>
                     <div className="search-form-address">
                         <Dropdown
                             options={countries.data.map(c => ({value: c.name, id: c.id}))}
@@ -112,9 +118,9 @@ class SearchForm extends Component {
                         />
                     </div>
                     <div className="search-form-options">
+                        Price
                         <div className="search-form-price">
-                            <span className="search-form-options-label">Price</span>
-                            <div>
+                            <div className="search-form-price-radio">
                                 <Radio
                                     value={priceType === 'PRICE_PER_DAY'}
                                     onCheck={this.changePriceType('PRICE_PER_DAY')}
@@ -126,17 +132,32 @@ class SearchForm extends Component {
                                     label="Per Month"
                                 />
                             </div>
-                            <Slider
-                                from={priceValue[0]}
-                                to={priceValue[1]}
-                                value={[100, 900]}
-                                onSave={this.savePriceValue}
-                            />
+                            <div className="search-form-price-slider">
+                                <Slider
+                                    from={priceValue[0]}
+                                    to={priceValue[1]}
+                                    value={[100, 900]}
+                                    onSave={this.savePriceValue}
+                                />
+                            </div>
                         </div>
-                        <span className="search-form-options-label">Rooms</span>
-                        <InputRange value={rooms} maxValue={30} onChangeValue={this.changeRooms}/>
-                        <span className="search-form-options-label">Leaving Places</span>
-                        <InputRange value={livingPlaces} maxValue={50} onChangeValue={this.changeLeavingPlaces}/>
+                        <div className="search-form-options-ranges">
+                            <div className="search-form-options-label">
+                                Rooms
+                                <InputRange
+                                    value={rooms}
+                                    maxValue={30}
+                                    onChangeValue={this.changeRooms}/>
+                            </div>
+                            <div className="search-form-options-label">
+                                Leaving Places
+                                <InputRange
+                                    value={livingPlaces}
+                                    maxValue={50}
+                                    onChangeValue={this.changeLeavingPlaces}
+                                />
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <Button
@@ -151,6 +172,16 @@ class SearchForm extends Component {
         )
     }
 }
+
+SearchForm.defaultProps = {
+    type: 'horizontal',
+    redirect: noop
+};
+
+SearchForm.propTypes = {
+    type: PropTypes.string,
+    redirect: PropTypes.func
+};
 
 export default connect(
     ({
