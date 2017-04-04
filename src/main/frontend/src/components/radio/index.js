@@ -33,9 +33,10 @@ class Radio extends Component {
 
         return (
             <div className="radio" onClick={disabled ? noop : onCheck}>
-                <i className={className}
-                   onMouseEnter={this.radioHoverStart}
-                   onMouseLeave={this.radioHoverEnd}
+                <i
+                    className={className}
+                    onMouseEnter={disabled ? noop : this.radioHoverStart}
+                    onMouseLeave={disabled ? noop : this.radioHoverEnd}
                 />
                 <label className="radio-label">{label}</label>
             </div>
