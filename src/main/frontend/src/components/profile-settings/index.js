@@ -38,7 +38,7 @@ class ProfileSettings extends Component {
     renderInputs = name =>
         <div>
             {this.state[name].map((item, index) =>
-                <div key={index}>
+                <div key={index} className="contact-info-field">
                     <Input
                         placeholder={name}
                         value={item.value}
@@ -46,7 +46,7 @@ class ProfileSettings extends Component {
                     />
                     <Button
                         type={ButtonTypes.info}
-                        size={ButtonSizes.small}
+                        size={ButtonSizes.medium}
                         caption="Delete"
                         onClick={this.handleRemoveInput(name, index)}
                     />
@@ -54,7 +54,7 @@ class ProfileSettings extends Component {
             )}
             <Button
                 type={ButtonTypes.info}
-                size={ButtonSizes.small}
+                size={ButtonSizes.medium}
                 caption="Add more"
                 onClick={this.addNewInput(name)}
             />
@@ -63,36 +63,39 @@ class ProfileSettings extends Component {
 
     render() {
         return (
-            <div className="profile-settings">
-                <Header
-                    type={HeaderTypes.primary}
-                    value="Profile Settings"
-                />
-                <Input
-                    type="text"
-                    placeholder="Email"
-                    value={this.state.email}
-                    onChange={this.onInputChange('email')}
-                />
-                <Input
-                    type="text"
-                    placeholder="First name"
-                    value={this.state.firstName}
-                    onChange={this.onInputChange('firstName')}
-                />
-                <Input
-                    type="text"
-                    placeholder="Last name"
-                    value={this.state.lastName}
-                    onChange={this.onInputChange('lastName')}
-                />
+            <div className="profile-settings-field">
+                <div className="profile-settings">
+                    <Header
+                        type={HeaderTypes.primary}
+                        value="Profile Settings"
+                    />
+                    <Input
+                        type="text"
+                        placeholder="Email"
+                        value={this.state.email}
+                        onChange={this.onInputChange('email')}
+                    />
+                    <Input
+                        type="text"
+                        placeholder="First name"
+                        value={this.state.firstName}
+                        onChange={this.onInputChange('firstName')}
+                    />
+                    <Input
+                        type="text"
+                        placeholder="Last name"
+                        value={this.state.lastName}
+                        onChange={this.onInputChange('lastName')}
+                    />
 
-                <Button
-                    onClick={this.onChangePassword}
-                    type={ButtonTypes.info}
-                    size={ButtonSizes.block}
-                    caption="Change Password"
-                />
+                    <Button
+                        onClick={this.onChangePassword}
+                        type={ButtonTypes.info}
+                        size={ButtonSizes.block}
+                        caption="Change Password"
+                    />
+
+                </div>
                 <div className="contact-info">
                     <Header
                         type={HeaderTypes.primary}

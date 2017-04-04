@@ -6,13 +6,15 @@
   justify-content: center;
   align-content: stretch;
   align-items: flex-start;
+  padding: 0 15%;
+  background: #dee6ed;
+  box-sizing: border-box;
 }
 
 .sidebar-wrapper, .content-wrapper {
   order: 0;
   flex: 0 1 auto;
   align-self: stretch;
-  padding: 15px;
 }
 
 .content-wrapper {
@@ -20,6 +22,8 @@
   justify-content: center;
   width: 75%;
   text-align: center;
+  padding: 28px;
+  background-color: white;
 }
 
 .sidebar-wrapper {
