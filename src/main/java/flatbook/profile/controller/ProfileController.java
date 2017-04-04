@@ -5,6 +5,7 @@ import flatbook.profile.entity.Email;
 import flatbook.profile.entity.User;
 import flatbook.profile.service.ProfileService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Role;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -61,9 +62,17 @@ public class ProfileController {
     }
 
     @PostMapping(value = "/photo")
-    public void addPhoto(@RequestParam("image") FileBucket image) {
-//        profileService.addImage(image);
+    @Secured("ROLE_USER")
+    public void addPhoto(@RequestParam("image") MultipartFile image) throws Exception {
+        profileService.addImage(image);
     }
 
-
+    @GetMapping(value = "/photo")
+    @Secured("ROLE_USER")
+    public void getPhoto(HttpServletResponse response) throws Exception {
+        response.setContentType("image/jpeg");
+        response.setHeader("Content-Disposition", "attachment; filename=\"somefile.pdf\"");
+        response.getOutputStream().write(profileService.getImage());
+        response.getOutputStream().flush();
+    }
 }

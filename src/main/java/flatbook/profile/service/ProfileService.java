@@ -1,28 +1,26 @@
 package flatbook.profile.service;
 
-import flatbook.announcement.entity.FileBucket;
 import flatbook.profile.dao.EmailDao;
+import flatbook.profile.dao.ImageDao;
 import flatbook.profile.dao.PhoneDao;
 import flatbook.profile.dao.UserDao;
 import flatbook.profile.entity.Email;
 import flatbook.profile.entity.Image;
 import flatbook.profile.entity.Phone;
 import flatbook.profile.entity.User;
-import flatbook.profile.util.FileValidator;
+import flatbook.profile.util.FileUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
-import java.io.File;
-import java.io.IOException;
 import java.util.List;
 import java.util.Set;
-import java.util.function.Predicate;
 
 @Service
 public class ProfileService {
@@ -30,15 +28,17 @@ public class ProfileService {
     private final UserDao userDao;
     private final EmailDao emailDao;
     private final PhoneDao phoneDao;
+    private final ImageDao imageDao;
 
     private final EntityManager entityManager;
 
     @Autowired
-    public ProfileService(UserDao userDao, EmailDao emailDao, PhoneDao phoneDao, EntityManager entityManager) {
+    public ProfileService(UserDao userDao, EmailDao emailDao, PhoneDao phoneDao, EntityManager entityManager, ImageDao imageDao) {
         this.userDao = userDao;
         this.emailDao = emailDao;
         this.phoneDao = phoneDao;
         this.entityManager = entityManager;
+        this.imageDao = imageDao;
     }
 
     @Transactional
@@ -324,7 +324,6 @@ public class ProfileService {
         userDao.save(currentUser);
 
         dbEmail.setUser(null);
-//        emailDao.delete(dbEmail.getId());
 
         entityManager.remove(dbEmail);
         Email deleted = emailDao.findOneByAddress(dbEmail.getAddress());
@@ -352,12 +351,25 @@ public class ProfileService {
         return null;
     }
 
-    public void addImage(FileBucket imageFile) throws IOException {
-//        File image = addImage();
-//        if (FileValidator.isImage(imageFile.))
-//        Image image = new Image();
-//        byte[] imageBytes = imageFile.getFile()[0].getBytes();
-//        image.setPhoto(imageBytes);
+    @Transactional
+    public void addImage(MultipartFile multipartFile) throws Exception {
+        String fileName = multipartFile.getOriginalFilename();
+        if (!FileUtil.isImage(fileName)) throw new Exception("File is not image file");
+
+        byte[] imageBytes = FileUtil.multipartToBytes(multipartFile);
+        Image imageEntity = new Image();
+
+        User currentUser = getCurrentUser();
+
+        imageEntity.setUser(currentUser);
+        imageEntity.setPhoto(imageBytes);
+        imageDao.save(imageEntity);
+
+        currentUser.setImage(imageEntity);
+        userDao.save(currentUser);
     }
 
+    public byte[] getImage() throws Exception {
+        return getCurrentUser().getImage().getPhoto();
+    }
 }

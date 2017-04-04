@@ -1,5 +1,7 @@
 package flatbook.profile.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 
 @Entity
@@ -10,7 +12,8 @@ public class Image {
     @Column(name = "photo_id", nullable = false)
     private Integer id;
 
-    @Column(name = "photo")
+    @JsonIgnore
+    @Column(name = "photo", columnDefinition = "varbinary(999999)")
     private byte[] photo;
 
     @OneToOne(fetch = FetchType.LAZY)
