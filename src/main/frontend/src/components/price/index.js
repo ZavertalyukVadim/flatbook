@@ -10,10 +10,7 @@ const Price = props => {
     const {value, payment} = props;
 
     return (
-        <p>Price:
-            <span> {value}<i className="fa fa-usd"/> </span>
-            {payment}
-        </p>
+        <p className="price">Price {payment}: <span> {value}<i className="fa fa-usd"/> </span></p>
     );
 };
 
