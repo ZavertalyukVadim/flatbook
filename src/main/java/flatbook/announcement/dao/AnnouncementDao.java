@@ -24,18 +24,17 @@ public interface AnnouncementDao extends JpaRepository<Announcement, Integer> {
             "and a.pricePerMonth between :#{#search.startingPrice} and :#{#search.finalPrice}")
     List<Announcement> getAnnouncementPerMonth(@Param("city") City city,@Param("search") Search search);
 
-    @Query("SELECT a FROM Announcement a where a.city = :#{#city} " +
+    @Query("SELECT a FROM Announcement a  left outer join a.amenities amenities where a.city = :#{#city} " +
             "and a.rooms=:#{#search.rooms} " +
             "and a.livingPlaces=:#{#search.livingPlaces} " +
-            "and a.pricePerDay between :#{#search.startingPrice} and :#{#search.finalPrice} " +
-            "and a.amenities  like :#{#search.amenities} ")
+            "and amenities  like :#{#search.amenities} "+
+            "and a.pricePerDay between :#{#search.startingPrice} and :#{#search.finalPrice}     ")
     List<Announcement> getAnnouncementPerDayWithAmenities(@Param("city") City city,@Param("search") ExtendSearch search);
 
-    @Query("SELECT a FROM Announcement a where a.city = :#{#city} " +
-            "and  a.rooms=:#{#search.rooms} " +
-            "and a.livingPlaces=:#{#search.livingPlaces} " +
-            "and a.pricePerMonth between :#{#search.startingPrice} and :#{#search.finalPrice} " +
-            "and  a.amenities  like :#{#search.amenities} ")
+    @Query("SELECT a FROM Announcement a left outer join a.amenities amenities where a.city = :#{#city} " +
+            "and a.rooms = :#{#search.rooms} " +
+            "and a.livingPlaces = :#{#search.livingPlaces} " +
+            "and amenities LIKE  :#{#search.amenities} "+
+            "and a.pricePerMonth between :#{#search.startingPrice} and :#{#search.finalPrice} ")
     List<Announcement> getAnnouncementPerMonthWithAmenities(@Param("city") City city,@Param("search") ExtendSearch search);
-
 }

@@ -404,8 +404,8 @@ public class AnnouncementService {
     public List<Announcement> getAnnouncementByExtendedSearch(ExtendSearch extendSearch) {
         City city = cityDao.findOne(extendSearch.getCityId());
         return (extendSearch.getPrice()  == Price.PRICE_PER_DAY)
-                ? announcementDao.getAnnouncementPerDayWithAmenities(city, extendSearch)
-                : announcementDao.getAnnouncementPerMonthWithAmenities(city, extendSearch);
+                ? announcementDao.getAnnouncementPerDayWithAmenities(city,extendSearch)
+                : announcementDao.getAnnouncementPerMonthWithAmenities(city,extendSearch);
 
     }
 }
