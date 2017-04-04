@@ -27,14 +27,14 @@ public interface AnnouncementDao extends JpaRepository<Announcement, Integer> {
     @Query("SELECT a FROM Announcement a  left outer join a.amenities amenities where a.city = :#{#city} " +
             "and a.rooms=:#{#search.rooms} " +
             "and a.livingPlaces=:#{#search.livingPlaces} " +
-            "and amenities  like :#{#search.amenities} "+
+            "and amenities in :#{#search.amenities} "+
             "and a.pricePerDay between :#{#search.startingPrice} and :#{#search.finalPrice}     ")
     List<Announcement> getAnnouncementPerDayWithAmenities(@Param("city") City city,@Param("search") ExtendSearch search);
 
     @Query("SELECT a FROM Announcement a left outer join a.amenities amenities where a.city = :#{#city} " +
             "and a.rooms = :#{#search.rooms} " +
             "and a.livingPlaces = :#{#search.livingPlaces} " +
-            "and amenities LIKE  :#{#search.amenities} "+
+            "and amenities in  :#{#search.amenities} "+
             "and a.pricePerMonth between :#{#search.startingPrice} and :#{#search.finalPrice} ")
     List<Announcement> getAnnouncementPerMonthWithAmenities(@Param("city") City city,@Param("search") ExtendSearch search);
 }
