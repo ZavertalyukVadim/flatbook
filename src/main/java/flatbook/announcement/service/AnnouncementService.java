@@ -414,19 +414,31 @@ public class AnnouncementService {
 
     public MaxPrice getMaxPriceOnCountry(Integer id) {
         Country country = countryDao.findOne(id);
-//        Announcement announcementForPerDay = announcementDao.findTopByCountryAndOrderByPricePerDayAsc(country);
-//        Announcement announcementForPerMonth = announcementDao.findTopByCountryAndOrderByPricePerMonthAsc(country);
-//        return  new MaxPrice(announcementForPerDay.getPricePerDay(), announcementForPerMonth.getPricePerMonth());
-        return null;
+        List<Announcement> announcementForPerDay = announcementDao.getAnnouncementByCountry(country);
+        announcementForPerDay.sort(Comparator.comparing(Announcement::getPricePerDay));
+        int topPricePerDay = announcementForPerDay.get(0).getPricePerDay();
+        announcementForPerDay.sort(Comparator.comparing(Announcement::getPricePerMonth));
+        int topPricePerMonth = announcementForPerDay.get(0).getPricePerMonth();
+        return  new MaxPrice(topPricePerDay, topPricePerMonth);
     }
 
     public MaxPrice getMaxPriceOnRegion(Integer id) {
         Region region = regionDao.findOne(id);
-        return null;
+        List<Announcement> announcementForPerDay = announcementDao.getAnnouncementByRegion(region);
+        announcementForPerDay.sort(Comparator.comparing(Announcement::getPricePerDay));
+        int topPricePerDay = announcementForPerDay.get(0).getPricePerDay();
+        announcementForPerDay.sort(Comparator.comparing(Announcement::getPricePerMonth));
+        int topPricePerMonth = announcementForPerDay.get(0).getPricePerMonth();
+        return  new MaxPrice(topPricePerDay, topPricePerMonth);
     }
 
     public MaxPrice getMaxPriceOnCity(Integer id) {
         City city = cityDao.findOne(id);
-        return null;
+        List<Announcement> announcementForPerDay = announcementDao.getAnnouncementByCity(city);
+        announcementForPerDay.sort(Comparator.comparing(Announcement::getPricePerDay));
+        int topPricePerDay = announcementForPerDay.get(0).getPricePerDay();
+        announcementForPerDay.sort(Comparator.comparing(Announcement::getPricePerMonth));
+        int topPricePerMonth = announcementForPerDay.get(0).getPricePerMonth();
+        return  new MaxPrice(topPricePerDay, topPricePerMonth);
     }
 }

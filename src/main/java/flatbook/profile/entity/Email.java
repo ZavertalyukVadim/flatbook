@@ -9,6 +9,7 @@ import javax.persistence.*;
 public class Email {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", unique = true)
     private Integer id;
 
     @Column(name = "address", unique = true, nullable = false)
