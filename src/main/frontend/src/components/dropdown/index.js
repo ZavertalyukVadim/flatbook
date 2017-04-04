@@ -14,7 +14,10 @@ class Dropdown extends Component {
         };
     }
 
-    onDropdownClick = () => this.setState({isOpen: !this.state.isOpen});
+    onDropdownClick = () => {
+        this.setState({isOpen: !this.state.isOpen});
+        document.body.addEventListener('click', () => this.setState({isOpen: false}))
+    };
     onOptionClick = id => () => {
         this.props.onOptionChange(id);
         this.setState({
