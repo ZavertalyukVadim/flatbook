@@ -7,6 +7,7 @@ import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequestMapping(value = "/profile/email")
@@ -45,7 +46,7 @@ public class EmailController {
 
     @Secured("ROLE_USER")
     @GetMapping
-    public List<Email> getEmails() {
+    public Set<Email> getEmails() {
         return profileService.getAllEmails();
     }
 }

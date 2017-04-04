@@ -47,10 +47,10 @@ public class ProfileService {
         String hashedPassword = passwordEncoder.encode(user.getPassword());
         user.setPassword(hashedPassword);
 
-        List<Email> emails = user.getEmails();
+        Set<Email> emails = user.getEmails();
         if (emails.size() != 1) throw new Exception("Allowed only one primary email");
 
-        Email primary = emailDao.findOneByAddress(emails.get(0).getAddress());
+        Email primary = emailDao.findOneByAddress(emails.iterator().next().getAddress());
         if (primary != null) throw new Exception("email is exist");
 
         Set<Phone> phones = user.getPhones();
@@ -64,7 +64,7 @@ public class ProfileService {
 
         User savingUser = userDao.save(user);
 
-        Email newPrimary = emails.get(0);
+        Email newPrimary = emails.iterator().next();
         newPrimary.setUser(savingUser);
         emailDao.save(newPrimary);
 
@@ -96,7 +96,8 @@ public class ProfileService {
     public User getCurrentUser() {
         Email email = emailDao.findOneByAddress(getUserEmail());
 
-        return email.getUser();
+        User user = userDao.getUserByEmails(email);
+        return userDao.getUserByEmails(email);
     }
 
     public User getUserById(Integer id) {
@@ -112,9 +113,8 @@ public class ProfileService {
 
         User currentUser = getCurrentUser();
 
-        List<Email> emails = getCurrentUser().getEmails();
-        int index = emails.lastIndexOf(email);
-        emails.remove(index);
+        Set<Email> emails = getCurrentUser().getEmails();
+        emails.remove(email);
         userDao.save(currentUser);
 
         dbEmail.setUser(null);
@@ -234,7 +234,7 @@ public class ProfileService {
         return primary;
     }
 
-    public List<Email> getAllEmails() {
+    public Set<Email> getAllEmails() {
         return getCurrentUser().getEmails();
     }
 
@@ -297,7 +297,7 @@ public class ProfileService {
     }
 
     private boolean isUserContainsEmail(User user, Email email) {
-        List<Email> emails = user.getEmails();
+        Set<Email> emails = user.getEmails();
 
         return emails.stream().anyMatch(currentEmail -> {
             String currentAddress = currentEmail.getAddress();
