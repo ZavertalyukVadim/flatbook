@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import moment from 'moment';
 import GridExample from './grid-example';
 import Input, {inputValidationStateTypes} from '../input';
 import Checkbox from '../checkbox';
@@ -18,6 +19,7 @@ import Slider from '../slider';
 import Comment from "../comment";
 import Loader from '../loader';
 import Radio from '../radio';
+import DatePickerRange from '../datepicker-range';
 
 let slides = [
     'https://images.unsplash.com/photo-1444703686981-a3abbc4d4fe3?fit=crop&fm=jpg&h=825&q=80&w=1325',
@@ -35,7 +37,9 @@ export default class Showroom extends Component {
             inputRange: 4,
             selectedOptionID: 2,
             isModalOpen: false,
-            sliderValue: [121, 194]
+            sliderValue: [121, 194],
+            startDate: moment(),
+            endDate: moment().add(5, 'days')
         };
     }
 
@@ -46,11 +50,26 @@ export default class Showroom extends Component {
     openModal = () => this.setState({isModalOpen: true});
     closeModal = () => this.setState({isModalOpen: false});
     saveSliderValue = v => this.setState({sliderValue: v});
+    saveStartDate = d => this.setState({startDate: d});
+    saveEndDate = d => this.setState({endDate: d});
 
     render() {
         return (
             <div>
                 <div className="row">
+                    <div className="col-4">
+                        <div className="panel-heading">
+                            Date Picker Range
+                        </div>
+                        <div className="panel-body">
+                            <DatePickerRange
+                                startDate={this.state.startDate}
+                                endDate={this.state.endDate}
+                                handleChangeStart={this.saveStartDate}
+                                handleChangeEnd={this.saveEndDate}
+                            />
+                        </div>
+                    </div>
                     <div className="col-2">
                         <div className="panel-heading">
                             Loader

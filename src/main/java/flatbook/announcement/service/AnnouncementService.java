@@ -12,6 +12,7 @@ import java.util.Date;
 import java.util.List;
 
 @Service
+@Transactional
 public class AnnouncementService {
     private final AnnouncementDao announcementDao;
 
@@ -226,10 +227,6 @@ public class AnnouncementService {
         announcement7.setRegion(region1);
 
 
-
-
-
-
         Announcement announcement8 = new Announcement(123, "ololo", true, new Date());
         announcement8.setPricePerMonth(1000);
         announcement8.setLastUpdated(new Date());
@@ -403,9 +400,33 @@ public class AnnouncementService {
     @Transactional
     public List<Announcement> getAnnouncementByExtendedSearch(ExtendSearch extendSearch) {
         City city = cityDao.findOne(extendSearch.getCityId());
-        return (extendSearch.getPrice()  == Price.PRICE_PER_DAY)
-                ? announcementDao.getAnnouncementPerDayWithAmenities(city,extendSearch)
-                : announcementDao.getAnnouncementPerMonthWithAmenities(city,extendSearch);
+        return (extendSearch.getPrice() == Price.PRICE_PER_DAY)
+                ? announcementDao.getAnnouncementPerDayWithAmenities(city, extendSearch)
+                : announcementDao.getAnnouncementPerMonthWithAmenities(city, extendSearch);
 
+    }
+
+    public MaxPrice getMaxPriceOnWorldPerDay() {
+        Announcement announcementForPerDay = announcementDao.findTopByOrderByPricePerDayAsc();
+        Announcement announcementForPerMonth = announcementDao.findTopByOrderByPricePerMonthAsc();
+        return new MaxPrice(announcementForPerDay.getPricePerDay(), announcementForPerMonth.getPricePerMonth());
+    }
+
+    public MaxPrice getMaxPriceOnCountry(Integer id) {
+        Country country = countryDao.findOne(id);
+//        Announcement announcementForPerDay = announcementDao.findTopByCountryAndOrderByPricePerDayAsc(country);
+//        Announcement announcementForPerMonth = announcementDao.findTopByCountryAndOrderByPricePerMonthAsc(country);
+//        return  new MaxPrice(announcementForPerDay.getPricePerDay(), announcementForPerMonth.getPricePerMonth());
+        return null;
+    }
+
+    public MaxPrice getMaxPriceOnRegion(Integer id) {
+        Region region = regionDao.findOne(id);
+        return null;
+    }
+
+    public MaxPrice getMaxPriceOnCity(Integer id) {
+        City city = cityDao.findOne(id);
+        return null;
     }
 }
