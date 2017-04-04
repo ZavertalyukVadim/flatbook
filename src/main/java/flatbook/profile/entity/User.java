@@ -1,5 +1,6 @@
 package flatbook.profile.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.hibernate.annotations.FilterJoinTable;
 
@@ -34,7 +35,9 @@ public class User {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "phonesUser", fetch = FetchType.EAGER)
     private Set<Phone> phones;
 
+    @JsonIgnore
     @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "image_id")
     private Image image;
 
     public Integer getId() {
@@ -96,13 +99,11 @@ public class User {
         this.phones = phones;
     }
 
-    public Byte[] getImage() {
-        return null;
-//        return image;
+    public Image getImage() {
+        return image;
     }
 
-    public void setImage(Byte[] image) {
-
-//        this.image = image;
+    public void setImage(Image image) {
+        this.image = image;
     }
 }
