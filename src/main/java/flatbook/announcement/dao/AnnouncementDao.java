@@ -39,9 +39,9 @@ public interface AnnouncementDao extends JpaRepository<Announcement, Integer> {
 
     Announcement findTopByOrderByPricePerMonthAsc();
 
-    //    Announcement findTopInCountryByOrderByPricePerMonthAsc(Integer id);
-//
     List<Announcement> getAnnouncementByCountry(Country country);
-//
-//    Announcement findTopInCountryByOrderByPricePerDayAsc(Country country);
+
+    List<Announcement> getAnnouncementByRegion(Region region);
+
+    List<Announcement> getAnnouncementByCity(City city);
 }
