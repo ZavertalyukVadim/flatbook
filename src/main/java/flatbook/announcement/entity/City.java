@@ -1,6 +1,6 @@
 package flatbook.announcement.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import javax.persistence.*;
 
@@ -15,7 +15,7 @@ public class City {
     @Column(name = "name")
     private String name;
 
-    @JsonIgnore
+    @JsonBackReference
     @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     @JoinColumn(name = "region_id")
     private Region region;
