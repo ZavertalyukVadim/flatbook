@@ -19,5 +19,6 @@
 
   .radio-disabled {
     color: $checkbox-disabled;
+    cursor: default;
   }
 }

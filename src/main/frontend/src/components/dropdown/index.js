@@ -1,5 +1,7 @@
 import React, {PropTypes, Component} from 'react';
 import classNames from 'classnames';
+import {isNull, noop} from 'lodash';
+import Loader from '../loader';
 import './dropdown.scss';
 
 class Dropdown extends Component {
@@ -29,31 +31,42 @@ class Dropdown extends Component {
         } = this.state;
         const {
             options,
-            selectedID
+            selectedID,
+            loader,
+            defaultMassage,
+            disabled,
+            className
         } = this.props;
 
-        const optionsClassNames = classNames('dropdown-options', {
+        const optionsClassName = classNames('dropdown-options', {
             ['dropdown-options-open']: isOpen
         });
 
+        const dropdownClassName = classNames('dropdown-selected', {
+            ['dropdown-disabled']: disabled
+        });
+
         return (
-            <div className="dropdown">
-                <div className="dropdown-selected" onClick={this.onDropdownClick}>
+            <div className={`dropdown ${className}`}>
+                <div className={dropdownClassName} onClick={disabled ? noop : this.onDropdownClick}>
                     {
-                        options.find(o => o.id === selectedID).value
+                        isNull(selectedID) ? defaultMassage : options.find(o => o.id === selectedID).value
                     }
                     <span className="dropdown-arrow">
                         <i className={`fa ${isOpen ? 'fa-angle-up' : 'fa-angle-down'}`}/>
                     </span>
                 </div>
-                <ul className={optionsClassNames}>
+                <ul className={optionsClassName} onAbort={this.onOptionClick(selectedID)}>
                     {
-                        options.map(
-                            (o, i) =>
-                                <li key={i} className={this.optionClassName(o.id)} onClick={this.onOptionClick(o.id)}>
-                                    {o.value}
-                                </li>
-                        )
+                        loader ? <Loader/> :
+                            options.map(
+                                (o, i) =>
+                                    <li key={i}
+                                        className={this.optionClassName(o.id)}
+                                        onClick={this.onOptionClick(o.id)}>
+                                        {o.value}
+                                    </li>
+                            )
                     }
                 </ul>
             </div>
@@ -68,8 +81,19 @@ Dropdown.propTypes = {
             id: PropTypes.number
         })
     ).isRequired,
-    selectedID: PropTypes.number.isRequired,
-    onOptionChange: PropTypes.func.isRequired
+    selectedID: PropTypes.oneOfType([PropTypes.number, PropTypes.object]),
+    onOptionChange: PropTypes.func.isRequired,
+    defaultMassage: PropTypes.string,
+    disabled: PropTypes.bool,
+    loader: PropTypes.bool,
+    className: PropTypes.string
+};
+
+Dropdown.defaultProps = {
+    className: '',
+    defaultMassage: '',
+    disabled: false,
+    loader: false
 };
 
 export default Dropdown;

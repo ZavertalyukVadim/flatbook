@@ -16,6 +16,8 @@ import Carousel from '../carousel';
 import Toggle from '../toggle';
 import Slider from '../slider';
 import Comment from "../comment";
+import Loader from '../loader';
+import Radio from '../radio';
 
 let slides = [
     'https://images.unsplash.com/photo-1444703686981-a3abbc4d4fe3?fit=crop&fm=jpg&h=825&q=80&w=1325',
@@ -48,6 +50,39 @@ export default class Showroom extends Component {
     render() {
         return (
             <div>
+                <div className="row">
+                    <div className="col-2">
+                        <div className="panel-heading">
+                            Loader
+                        </div>
+                        <div className="panel-body">
+                            <Loader/>
+                        </div>
+                    </div>
+                    <div className="col-2">
+                        <div className="panel-heading">
+                            Radio
+                        </div>
+                        <div className="panel-body">
+                            <Radio
+                                value={this.state.checked}
+                                label="Awesome radio"
+                                onCheck={this.onCheckboxClick}
+                            />
+                            <Radio
+                                value={!this.state.checked}
+                                label="Awesome radio"
+                                onCheck={this.onCheckboxClick}
+                            />
+                            <Radio
+                                value={!this.state.checked}
+                                label="Awesome radio"
+                                onCheck={this.onCheckboxClick}
+                                disabled={true}
+                            />
+                        </div>
+                    </div>
+                </div>
                 <div className="row">
                     <div className="row">
                         <div className="col-4">
@@ -283,9 +318,6 @@ export default class Showroom extends Component {
                             <Image
                                 size={ImageSizes.small}
                                 src="http://www.hotel-r.net/im/hotel/rs/luxury-apartments-21.jpg"
-                            />
-                            <Image
-                                size={ImageSizes.small}
                             />
                         </div>
                     </div>

@@ -1,0 +1,49 @@
+@import "../../style/color-theme.scss";
+@import "../../style/font.scss";
+@import "../../style/sizes.scss";
+
+.search-form {
+  border: 2px solid $inverse;
+  border-radius: 6px;
+  background-color: $inverse;
+  color: $inverse;
+  min-width: 80%;
+
+  .search-form-options-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+    .search-form-address {
+      width: 100%;
+    }
+
+    .search-form-dropdown {
+      margin: map-get($indentSizes, l);
+    }
+
+    .search-form-price {
+      position: relative;
+      margin: map-get($indentSizes, l);
+      min-width: 100%;
+    }
+
+    .search-form-options {
+      color: $search-form-default-color;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+
+      margin: map-get($indentSizes, l);
+      .search-form-options-label {
+
+      }
+    }
+  }
+
+  .search-form-button {
+    width: 60%;
+  }
+}
