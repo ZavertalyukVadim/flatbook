@@ -37,4 +37,12 @@ public interface AnnouncementDao extends JpaRepository<Announcement, Integer> {
             "and amenities in  :#{#search.amenities} "+
             "and a.pricePerMonth between :#{#search.startingPrice} and :#{#search.finalPrice} ")
     List<Announcement> getAnnouncementPerMonthWithAmenities(@Param("city") City city,@Param("search") ExtendSearch search);
+
+    Announcement findTopByOrderByPricePerDayAsc();
+
+    Announcement findTopByOrderByPricePerMonthAsc();
+
+//    Announcement findTopByCountryAndOrderByPricePerMonthAsc(Country country);
+
+//    Announcement findTopByCountryAndOrderByPricePerDayAsc(Country country);
 }

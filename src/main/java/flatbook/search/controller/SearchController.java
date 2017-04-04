@@ -49,6 +49,29 @@ public class SearchController {
         return cityService.getAllCitiesByRegion(id);
     }
 
+    @GetMapping(value = "/world/maxPrice")
+    MaxPrice getMaxPriceOnWorldPerDay() {
+        return announcementService.getMaxPriceOnWorldPerDay();
+    }
+
+
+    @GetMapping(value = "/country/{id}/maxPrice")
+    MaxPrice getMaxPriceOnCountry(@PathVariable("id") Integer id) {
+        return announcementService.getMaxPriceOnCountry(id);
+    }
+
+    @GetMapping(value = "/region/{id}/maxPrice")
+    MaxPrice getMaxPriceOnRegionPerDay(@PathVariable("id") Integer id) {
+        return announcementService.getMaxPriceOnRegion(id);
+    }
+
+
+    @GetMapping(value = "/city/{id}/maxPrice")
+    MaxPrice getMaxPriceOnCityPerDay(@PathVariable("id") Integer id) {
+        return announcementService.getMaxPriceOnCity(id);
+    }
+
+
     @PostMapping
     public List<Announcement> search(@RequestBody Search search) {
         return announcementService.getAnnouncementBySmallSearch(search);
