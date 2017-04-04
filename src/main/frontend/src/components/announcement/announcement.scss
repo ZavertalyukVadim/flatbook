@@ -1,0 +1,23 @@
+.announcement-item {
+  display: flex;
+  align-self: flex-start;
+}
+
+.announcement-description {
+  text-align: left;
+  margin-left: 16px;
+  align-self: flex-start;
+}
+
+
+.description-field {
+  margin: 16px 0;
+}
+.announcement-buttons {
+  align-self: flex-end;
+
+}
+
+h2 {
+  margin: 0;
+}
