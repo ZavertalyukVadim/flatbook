@@ -1,20 +1,15 @@
 package flatbook.profile.controller;
 
-import flatbook.announcement.entity.FileBucket;
 import flatbook.profile.entity.Email;
 import flatbook.profile.entity.User;
 import flatbook.profile.service.ProfileService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Role;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.File;
-import java.io.InputStream;
 
 @RestController
 @RequestMapping(value = "/profile")
@@ -74,5 +69,10 @@ public class ProfileController {
         response.setHeader("Content-Disposition", "attachment; filename=\"somefile.pdf\"");
         response.getOutputStream().write(profileService.getImage());
         response.getOutputStream().flush();
+    }
+
+    @GetMapping(value = "/issigned")
+    @Secured("ROLE_USER")
+    public void isSignedIn() throws Exception {
     }
 }

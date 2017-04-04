@@ -103,8 +103,68 @@ public class ProfileService {
         return userDao.findOne(id);
     }
 
-    public void updatePrimaryEmail(User user, Email email) {
-        if (isEmailExists(email)) setOwnersPrimaryEmail(user, email);
+    @Transactional
+    public Email deleteEmail(Email email) throws Exception {
+        if (!isUserContainsEmail(getCurrentUser(), email)) throw new Exception("User contains no email");
+
+        Email dbEmail = emailDao.findOneByAddress(email.getAddress());
+        if (dbEmail.getPrimary()) throw new Exception("Cannot delete primary email");
+
+        User currentUser = getCurrentUser();
+
+        List<Email> emails = getCurrentUser().getEmails();
+        int index = emails.lastIndexOf(email);
+        emails.remove(index);
+        userDao.save(currentUser);
+
+        dbEmail.setUser(null);
+
+        entityManager.remove(dbEmail);
+        Email deleted = emailDao.findOneByAddress(dbEmail.getAddress());
+        return null;
+    }
+
+    @Transactional
+    public Phone deletePhone(Phone phone) throws Exception {
+        if (!isUserContainsPhone(getCurrentUser(), phone)) throw new Exception("User contains no email");
+
+        Phone dbPhone = phoneDao.findOneByNumber(phone.getNumber());
+        if (dbPhone.getPrimary()) throw new Exception("Cannot delete primary phone");
+
+        User currentUser = getCurrentUser();
+
+        Set<Phone> phones = getCurrentUser().getPhones();
+        Phone foundedPhone = phones.stream().filter(currentPhone -> currentPhone.equals(phone)).findFirst().get();
+
+        phones.remove(foundedPhone);
+        userDao.save(currentUser);
+
+        dbPhone.setPhonesUser(null);
+
+        entityManager.remove(dbPhone);
+        return null;
+    }
+
+    @Transactional
+    public void addImage(MultipartFile multipartFile) throws Exception {
+        String fileName = multipartFile.getOriginalFilename();
+        if (!FileUtil.isImage(fileName)) throw new Exception("File is not image file");
+
+        byte[] imageBytes = FileUtil.multipartToBytes(multipartFile);
+        Image imageEntity = new Image();
+
+        User currentUser = getCurrentUser();
+
+        imageEntity.setUser(currentUser);
+        imageEntity.setPhoto(imageBytes);
+        imageDao.save(imageEntity);
+
+        currentUser.setImage(imageEntity);
+        userDao.save(currentUser);
+    }
+
+    public byte[] getImage() throws Exception {
+        return getCurrentUser().getImage().getPhoto();
     }
 
     @Transactional
@@ -167,10 +227,6 @@ public class ProfileService {
         return newPrimary;
     }
 
-    public Email getEmailById(Integer id) {
-        return null;
-    }
-
     public Email getPrimaryEmail() throws Exception {
         Email primary = getCurrentUser().getEmails().stream().filter(email -> email.getPrimary()).findFirst().get();
         if (primary == null) throw new Exception("There is no primary email");
@@ -184,9 +240,8 @@ public class ProfileService {
 
     public Phone setPhoneAsPrimary(Phone phone) throws Exception {
         User user = getCurrentUser();
-        if (!user.getPhones().stream().anyMatch(currentPhone -> phone.equals(currentPhone))) throw new Exception("User contains no phone");
-
-//        if (!user.getPhones().contains(phone))
+        if (!user.getPhones().stream().anyMatch(currentPhone -> phone.equals(currentPhone)))
+            throw new Exception("User contains no phone");
 
         Phone oldPrimaryPhone = phoneDao.findOneByNumber(getPrimaryPhone().getNumber());
         if (oldPrimaryPhone.equals(phone)) return phone;
@@ -223,10 +278,6 @@ public class ProfileService {
 
     private void makeEmailPrimary(Email email) {
         if (!isEmailPrimary(email)) email.setPrimary(true);
-    }
-
-    private void getUser() {
-
     }
 
     private boolean isEmailExists(Email email) {
@@ -301,75 +352,5 @@ public class ProfileService {
 
     private Authentication getUserDetails() {
         return SecurityContextHolder.getContext().getAuthentication();
-    }
-
-    public void test() {
-        Email email = new Email();
-        email.setPrimary(true);
-        User user = new User();
-    }
-
-    @Transactional
-    public Email deleteEmail(Email email) throws Exception {
-        if (!isUserContainsEmail(getCurrentUser(), email)) throw new Exception("User contains no email");
-
-        Email dbEmail = emailDao.findOneByAddress(email.getAddress());
-        if (dbEmail.getPrimary()) throw new Exception("Cannot delete primary email");
-
-        User currentUser = getCurrentUser();
-
-        List<Email> emails = getCurrentUser().getEmails();
-        int index = emails.lastIndexOf(email);
-        emails.remove(index);
-        userDao.save(currentUser);
-
-        dbEmail.setUser(null);
-
-        entityManager.remove(dbEmail);
-        Email deleted = emailDao.findOneByAddress(dbEmail.getAddress());
-        return null;
-    }
-
-    @Transactional
-    public Phone deletePhone(Phone phone) throws Exception {
-        if (!isUserContainsPhone(getCurrentUser(), phone)) throw new Exception("User contains no email");
-
-        Phone dbPhone = phoneDao.findOneByNumber(phone.getNumber());
-        if (dbPhone.getPrimary()) throw new Exception("Cannot delete primary phone");
-
-        User currentUser = getCurrentUser();
-
-        Set<Phone> phones = getCurrentUser().getPhones();
-        Phone foundedPhone = phones.stream().filter(currentPhone -> currentPhone.equals(phone)).findFirst().get();
-
-        phones.remove(foundedPhone);
-        userDao.save(currentUser);
-
-        dbPhone.setPhonesUser(null);
-
-        entityManager.remove(dbPhone);
-        return null;
-    }
-
-    @Transactional
-    public void addImage(MultipartFile multipartFile) throws Exception {
-        String fileName = multipartFile.getOriginalFilename();
-        if (!FileUtil.isImage(fileName)) throw new Exception("File is not image file");
-
-        byte[] imageBytes = FileUtil.multipartToBytes(multipartFile);
-        Image imageEntity = new Image();
-
-        User currentUser = getCurrentUser();
-
-        imageEntity.setUser(currentUser);
-        imageEntity.setPhoto(imageBytes);
-        imageDao.save(imageEntity);
-
-        currentUser.setImage(imageEntity);
-        userDao.save(currentUser);
-    }
-
-    public byte[] getImage() throws Exception {
-        return getCurrentUser().getImage().getPhoto();
     }
 }
