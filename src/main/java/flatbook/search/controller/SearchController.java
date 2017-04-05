@@ -61,13 +61,13 @@ public class SearchController {
     }
 
     @GetMapping(value = "/region/{id}/maxPrice")
-    MaxPrice getMaxPriceOnRegionPerDay(@PathVariable("id") Integer id) {
+    MaxPrice getMaxPriceOnRegion(@PathVariable("id") Integer id) {
         return announcementService.getMaxPriceOnRegion(id);
     }
 
 
     @GetMapping(value = "/city/{id}/maxPrice")
-    MaxPrice getMaxPriceOnCityPerDay(@PathVariable("id") Integer id) {
+    MaxPrice getMaxPriceOnCity(@PathVariable("id") Integer id) {
         return announcementService.getMaxPriceOnCity(id);
     }
 
