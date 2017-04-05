@@ -2,11 +2,10 @@ package flatbook.profile.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import org.hibernate.annotations.FilterJoinTable;
+import flatbook.announcement.entity.Announcement;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -43,6 +42,9 @@ public class User {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "phonesUser", fetch = FetchType.EAGER)
     private Set<Phone> phones;
 
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user",targetEntity = Announcement.class, fetch = FetchType.LAZY)
+    private Set<Announcement> announcements;
+
     @JsonIgnore
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "image_id")
@@ -78,6 +80,14 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public Set<Announcement> getAnnouncements() {
+        return announcements;
+    }
+
+    public void setAnnouncements(Set<Announcement> announcements) {
+        this.announcements = announcements;
     }
 
     @Override

@@ -2,14 +2,17 @@ package flatbook.announcement.service;
 
 import flatbook.announcement.dao.*;
 import flatbook.announcement.entity.*;
+import flatbook.profile.dao.EmailDao;
+import flatbook.profile.dao.UserDao;
+import flatbook.profile.entity.Email;
+import flatbook.profile.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @Service
 @Transactional
@@ -26,14 +29,20 @@ public class AnnouncementService {
 
     private final DistrictDao districtDao;
 
+    private final EmailDao emailDao;
+
+    private final UserDao userDao;
+
     @Autowired
-    public AnnouncementService(AnnouncementDao announcementDao, CountryDao countryDao, RegionDao regionDao, CityDao cityDao, AmenityDao amenityDao, DistrictDao districtDao) {
+    public AnnouncementService(AnnouncementDao announcementDao, CountryDao countryDao, RegionDao regionDao, CityDao cityDao, AmenityDao amenityDao, DistrictDao districtDao, EmailDao emailDao, UserDao userDao) {
         this.announcementDao = announcementDao;
         this.countryDao = countryDao;
         this.regionDao = regionDao;
         this.cityDao = cityDao;
         this.amenityDao = amenityDao;
         this.districtDao = districtDao;
+        this.emailDao = emailDao;
+        this.userDao = userDao;
     }
 
     public List<Announcement> getAllAnnouncement() {
@@ -378,7 +387,18 @@ public class AnnouncementService {
 
     public Announcement createAnnouncement(Announcement announcement) {
         announcement.setLastUpdated(new Date());
-        announcementDao.save(announcement);
+        announcement.setUser(getCurrentUser());
+//        announcementDao.save(announcement);
+        User user = getCurrentUser();
+        Set<Announcement> announcements;
+        if (user.getAnnouncements().isEmpty()) {
+            announcements = new HashSet<>();
+        } else {
+            announcements = getCurrentUser().getAnnouncements();
+        }
+        announcements.add(announcement);
+        user.setAnnouncements(announcements);
+        userDao.save(user);
         return announcement;
     }
 
@@ -437,5 +457,18 @@ public class AnnouncementService {
         List<Announcement> announcementForPerMonth = announcementDao.getAnnouncementByCityOrderByPricePerMonthDesc(city);
         int topPricePerMonth = announcementForPerMonth.get(0).getPricePerMonth();
         return new MaxPrice(topPricePerDay, topPricePerMonth);
+    }
+
+    private User getCurrentUser() {
+        Email email = emailDao.findOneByAddress(getUserEmail());
+        return userDao.getUserByEmails(email);
+    }
+
+    private String getUserEmail() {
+        return getUserDetails().getName();
+    }
+
+    private Authentication getUserDetails() {
+        return SecurityContextHolder.getContext().getAuthentication();
     }
 }

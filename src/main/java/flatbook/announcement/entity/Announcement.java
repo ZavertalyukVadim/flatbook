@@ -1,5 +1,8 @@
 package flatbook.announcement.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import flatbook.profile.entity.User;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Date;
@@ -73,8 +76,14 @@ public class Announcement {
                     nullable = false)})
     private List<Amenity> amenities = new ArrayList<>();
 
+    @JsonIgnore
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "announcement", cascade = CascadeType.ALL)
     private List<Photo> photos = new ArrayList<>();
+
+
+    @JsonIgnore
+    @ManyToOne(fetch = FetchType.LAZY)
+    private User user;
 
     public Announcement() {
     }
@@ -236,5 +245,13 @@ public class Announcement {
 
     public void setDistrict(District district) {
         this.district = district;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }
