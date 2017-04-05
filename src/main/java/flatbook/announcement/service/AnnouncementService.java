@@ -407,38 +407,35 @@ public class AnnouncementService {
     }
 
     public MaxPrice getMaxPriceOnWorldPerDay() {
-        Announcement announcementForPerDay = announcementDao.findTopByOrderByPricePerDayAsc();
-        Announcement announcementForPerMonth = announcementDao.findTopByOrderByPricePerMonthAsc();
+        Announcement announcementForPerDay = announcementDao.findTopByOrderByPricePerDayDesc();
+        Announcement announcementForPerMonth = announcementDao.findTopByOrderByPricePerMonthDesc();
         return new MaxPrice(announcementForPerDay.getPricePerDay(), announcementForPerMonth.getPricePerMonth());
     }
 
     public MaxPrice getMaxPriceOnCountry(Integer id) {
         Country country = countryDao.findOne(id);
-        List<Announcement> announcementForPerDay = announcementDao.getAnnouncementByCountry(country);
-        announcementForPerDay.sort(Comparator.comparing(Announcement::getPricePerDay));
+        List<Announcement> announcementForPerDay = announcementDao.getAnnouncementByCountryOrderByPricePerDayDesc(country);
         int topPricePerDay = announcementForPerDay.get(0).getPricePerDay();
-        announcementForPerDay.sort(Comparator.comparing(Announcement::getPricePerMonth));
-        int topPricePerMonth = announcementForPerDay.get(0).getPricePerMonth();
-        return  new MaxPrice(topPricePerDay, topPricePerMonth);
+        List<Announcement> announcementForPerMoth = announcementDao.getAnnouncementByCountryOrderByPricePerMonthDesc(country);
+        int topPricePerMonth = announcementForPerMoth.get(0).getPricePerMonth();
+        return new MaxPrice(topPricePerDay, topPricePerMonth);
     }
 
     public MaxPrice getMaxPriceOnRegion(Integer id) {
         Region region = regionDao.findOne(id);
-        List<Announcement> announcementForPerDay = announcementDao.getAnnouncementByRegion(region);
-        announcementForPerDay.sort(Comparator.comparing(Announcement::getPricePerDay));
+        List<Announcement> announcementForPerDay = announcementDao.getAnnouncementByRegionOrderByPricePerDayDesc(region);
         int topPricePerDay = announcementForPerDay.get(0).getPricePerDay();
-        announcementForPerDay.sort(Comparator.comparing(Announcement::getPricePerMonth));
-        int topPricePerMonth = announcementForPerDay.get(0).getPricePerMonth();
-        return  new MaxPrice(topPricePerDay, topPricePerMonth);
+        List<Announcement> announcementForPerMonth = announcementDao.getAnnouncementByRegionOrderByPricePerMonthDesc(region);
+        int topPricePerMonth = announcementForPerMonth.get(0).getPricePerMonth();
+        return new MaxPrice(topPricePerDay, topPricePerMonth);
     }
 
     public MaxPrice getMaxPriceOnCity(Integer id) {
         City city = cityDao.findOne(id);
-        List<Announcement> announcementForPerDay = announcementDao.getAnnouncementByCity(city);
-        announcementForPerDay.sort(Comparator.comparing(Announcement::getPricePerDay));
+        List<Announcement> announcementForPerDay = announcementDao.getAnnouncementByCityOrderByPricePerDayDesc(city);
         int topPricePerDay = announcementForPerDay.get(0).getPricePerDay();
-        announcementForPerDay.sort(Comparator.comparing(Announcement::getPricePerMonth));
-        int topPricePerMonth = announcementForPerDay.get(0).getPricePerMonth();
-        return  new MaxPrice(topPricePerDay, topPricePerMonth);
+        List<Announcement> announcementForPerMonth = announcementDao.getAnnouncementByCityOrderByPricePerMonthDesc(city);
+        int topPricePerMonth = announcementForPerMonth.get(0).getPricePerMonth();
+        return new MaxPrice(topPricePerDay, topPricePerMonth);
     }
 }
