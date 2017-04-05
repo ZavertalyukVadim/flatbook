@@ -392,15 +392,18 @@ public class AnnouncementService {
     }
 
     public Announcement createAnnouncement(Announcement announcement) {
-        announcement.setLastUpdated(new Date());
-        announcementDao.save(announcement);
-
+        Announcement savedAnnouncement = saveAnnouncement(announcement);
         AnnouncementByUser announcementByUser = new AnnouncementByUser();
         announcementByUser.setUserId(getCurrentUser().getId());
-        announcementByUser.setAnnouncementId(announcement.getId());
+        announcementByUser.setAnnouncementId(savedAnnouncement.getId());
         announcementByUserDao.save(announcementByUser);
-
         return announcement;
+    }
+
+    private Announcement saveAnnouncement(Announcement announcement) {
+        announcement.setLastUpdated(new Date());
+
+        return announcementDao.save(announcement);
     }
 
     public Announcement updateVisibility(Integer id) {

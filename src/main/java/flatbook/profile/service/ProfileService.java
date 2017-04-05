@@ -367,9 +367,7 @@ public class ProfileService {
         List<AnnouncementByUser> announcementByUser = announcementByUserDao.getAnnouncementIdByUserId(getCurrentUser().getId());
         System.out.println(announcementByUser.size());
         for (AnnouncementByUser i : announcementByUser ) {
-            System.out.println("!!!!!!!!!!!!!!!!!!!!!!!"+i);
             announcements.add(announcementDao.getAnnouncementById(i.getAnnouncementId()));
-            System.out.println("!!!!!!!!!!!!!!!!!!!!!!!"+announcementDao.getAnnouncementById(i.getAnnouncementId()));
         }
         return announcements;
     }
