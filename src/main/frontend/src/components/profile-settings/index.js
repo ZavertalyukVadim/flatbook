@@ -54,7 +54,7 @@ class ProfileSettings extends Component {
             )}
             <Button
                 type={ButtonTypes.link}
-                
+
                 caption="Add more"
                 onClick={this.addNewInput(name)}
             />
@@ -95,28 +95,26 @@ class ProfileSettings extends Component {
                         caption="Change Password"
                     />
                     <div className="contact-info">
-                    <Header
-                        type={HeaderTypes.primary}
-                        value="Contact Info"
-                    />
-                    {this.renderInputs('phones')}
+                        <Header
+                            type={HeaderTypes.primary}
+                            value="Contact Info"
+                        />
+                        {this.renderInputs('phones')}
 
-                    {this.renderInputs('emails')}
-                    <Checkbox
-                        checked={this.state.notifications}
-                        onClick={this.onCheckboxClick}>
-                        Send me notifications from this site
-                    </Checkbox>
-                    <Button
-                        type={ButtonTypes.primary}
-                        size={ButtonSizes.block}
-                        caption="Save"
-                        onClick={this.onChangePassword}
-                    />
+                        {this.renderInputs('emails')}
+                        <Checkbox
+                            checked={this.state.notifications}
+                            onClick={this.onCheckboxClick}>
+                            Send me notifications from this site
+                        </Checkbox>
+                        <Button
+                            type={ButtonTypes.primary}
+                            size={ButtonSizes.block}
+                            caption="Save"
+                            onClick={this.onChangePassword}
+                        />
+                    </div>
                 </div>
-
-                </div>
-                
             </div>
         );
     }

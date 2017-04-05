@@ -12,6 +12,7 @@ import Profile from '../routes/profile';
 import Settings from '../routes/profile/settings';
 import Messages from '../routes/profile/messages';
 import Favourite from '../routes/profile/favourite';
+import AnnouncementCreation from '../routes/profile/create-announcement';
 import '../style/grid.scss';
 import './app.scss';
 import store from '../store';
@@ -20,6 +21,7 @@ export default () =>
     <Provider store={store}>
         <Router history={createBrowserHistory()}>
             <Switch>
+                <Route path="/profile/create-announcement" component={AnnouncementCreation}/>
                 <Route path="/profile/favourite" component={Favourite}/>
                 <Route path="/profile/messages" component={Messages}/>
                 <Route path="/profile/settings" component={Settings}/>

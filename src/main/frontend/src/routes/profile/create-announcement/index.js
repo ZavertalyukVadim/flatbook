@@ -1,21 +1,19 @@
 import React from 'react';
 import Container from '../../../components/container';
 import Sidebar from '../../../components/sidebar';
-import ProfileSettings from '../../../components/profile-settings';
+import AnnouncementForm from '../../../components/announcement-form';
 
-const Settings = () => {
+const AnnouncementCreation = () => {
     return (
         <Container
             sidebar={
                 <Sidebar/>
             }
         >
-            <div className="profile-settings-wrapper">
-                <ProfileSettings/>
-            </div>
+            <AnnouncementForm/>
 
         </Container>
     );
 };
 
-export default Settings;
+export default AnnouncementCreation;
