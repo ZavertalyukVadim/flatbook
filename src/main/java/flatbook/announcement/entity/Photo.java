@@ -13,7 +13,7 @@ public class Photo {
     @Column(name = "photo_id", nullable = false)
     private Integer id;
 
-    @Column(name = "image")
+    @Column(name = "image", columnDefinition = "varbinary(999999)")
     private byte[] image;
 
     @Column(name = "title")
@@ -22,7 +22,7 @@ public class Photo {
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinTable(name = "announcements_photos", joinColumns = {
-            @JoinColumn(name = "announcement_id", nullable = false)},
+            @JoinColumn(name = "announcement_id")},
             inverseJoinColumns = {@JoinColumn(name = "photo_id",
                     nullable = false)})
     private Announcement announcement;

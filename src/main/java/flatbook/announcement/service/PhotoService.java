@@ -1,8 +1,8 @@
 package flatbook.announcement.service;
 
 import flatbook.announcement.dao.PhotoDao;
-import flatbook.announcement.entity.FileBucket;
 import flatbook.announcement.entity.Photo;
+import flatbook.profile.util.FileUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -35,15 +35,15 @@ public class PhotoService {
         return photoDao.findOne(id);
     }
 
-    public Photo createPhoto(FileBucket fileBucket) {
-//        MultipartFile multipartFile = fileBucket.getFile();
+    public Photo createPhoto(MultipartFile multipartFile) {
+        String fileName = multipartFile.getOriginalFilename();
         Photo photo = new Photo();
-//        photo.setTitle(fileBucket.getDescription());
-//        try {
-//            photo.setImage(multipartFile.getBytes());
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
+        photo.setTitle(fileName);
+        try {
+            photo.setImage(FileUtil.multipartToBytes(multipartFile));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         return photoDao.save(photo);
     }
 

@@ -1,11 +1,13 @@
 package flatbook.announcement.controller;
 
-import flatbook.announcement.entity.FileBucket;
 import flatbook.announcement.entity.Photo;
 import flatbook.announcement.service.PhotoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -29,9 +31,18 @@ public class PhotoController {
         return photoService.getPhotoById(id);
     }
 
-    @RequestMapping(value = "", method = RequestMethod.POST,headers = "content-type=multipart/form-data")
-    public Photo createPhoto(@RequestBody FileBucket photo) {
-        return photoService.createPhoto(photo);
+    @PostMapping
+    public void createPhoto(@RequestParam("image") MultipartFile image,HttpServletResponse response) {
+        try {
+            Photo photo = photoService.createPhoto(image);
+            response.setContentType("image/jpeg");
+            response.setHeader("Content-Disposition", "attachment; filename=\"somefile.pdf\"");
+            response.setHeader("imageId",""+photo.getId());
+            response.getOutputStream().write(photo.getImage());
+            response.getOutputStream().flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @RequestMapping(value = "", method = RequestMethod.PUT)
