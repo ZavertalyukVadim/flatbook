@@ -2,8 +2,10 @@ package flatbook.profile.service;
 
 import flatbook.announcement.dao.AnnouncementByUserDao;
 import flatbook.announcement.dao.AnnouncementDao;
+import flatbook.announcement.dao.FavoriteAnnouncementInUserDao;
 import flatbook.announcement.entity.Announcement;
 import flatbook.announcement.entity.AnnouncementByUser;
+import flatbook.announcement.entity.FavoriteAnnouncementInUser;
 import flatbook.profile.dao.EmailDao;
 import flatbook.profile.dao.ImageDao;
 import flatbook.profile.dao.PhoneDao;
@@ -37,9 +39,10 @@ public class ProfileService {
     private final AnnouncementByUserDao announcementByUserDao;
     private final EntityManager entityManager;
     private final AnnouncementDao announcementDao;
+    private final FavoriteAnnouncementInUserDao favoriteAnnouncementInUserDao;
 
     @Autowired
-    public ProfileService(UserDao userDao, EmailDao emailDao, PhoneDao phoneDao, EntityManager entityManager, ImageDao imageDao, AnnouncementByUserDao announcementByUserDao, AnnouncementDao announcementDao) {
+    public ProfileService(UserDao userDao, EmailDao emailDao, PhoneDao phoneDao, EntityManager entityManager, ImageDao imageDao, AnnouncementByUserDao announcementByUserDao, AnnouncementDao announcementDao, FavoriteAnnouncementInUserDao favoriteAnnouncementInUserDao) {
         this.userDao = userDao;
         this.emailDao = emailDao;
         this.phoneDao = phoneDao;
@@ -47,6 +50,7 @@ public class ProfileService {
         this.imageDao = imageDao;
         this.announcementByUserDao = announcementByUserDao;
         this.announcementDao = announcementDao;
+        this.favoriteAnnouncementInUserDao = favoriteAnnouncementInUserDao;
     }
 
     @Transactional
@@ -369,5 +373,21 @@ public class ProfileService {
             announcements.add(announcementDao.getAnnouncementById(i.getAnnouncementId()));
         }
         return announcements;
+    }
+
+    public List<Announcement> getLikedAnnouncementsByUser() {
+        List<Announcement> announcements = new ArrayList<>();
+        List<FavoriteAnnouncementInUser> announcementByUser = favoriteAnnouncementInUserDao.getAnnouncementIdByUserId(getCurrentUser().getId());
+        for (FavoriteAnnouncementInUser i : announcementByUser ) {
+            announcements.add(announcementDao.getAnnouncementById(i.getAnnouncementId()));
+        }
+        return announcements;
+    }
+
+    public void markFavorite(Integer id) {
+        FavoriteAnnouncementInUser favoriteAnnouncementInUser = new FavoriteAnnouncementInUser();
+        favoriteAnnouncementInUser.setUserId(getCurrentUser().getId());
+        favoriteAnnouncementInUser.setAnnouncementId(id);
+        favoriteAnnouncementInUserDao.save(favoriteAnnouncementInUser);
     }
 }

@@ -75,8 +75,14 @@ public class ProfileController {
 
     @PostMapping(value = "/{id}/favorite")
     public void addAnnouncementToFavorite(@PathVariable("id") Integer id){
-
+        profileService.markFavorite(id);
     }
+
+    @PostMapping(value = "/favorites")
+    public List<Announcement> getLikedAnnouncementsByUser(){
+        return profileService.getLikedAnnouncementsByUser();
+    }
+
 
     @PostMapping(value = "/myAnnouncements")
     public List<Announcement> getAnnouncementsByUser(){
