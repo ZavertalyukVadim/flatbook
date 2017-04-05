@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -25,8 +27,16 @@ public class PhotoController {
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    public Photo getPhotoById(@PathVariable("id") Integer id) {
-        return photoService.getPhotoById(id);
+    public void getPhotoById(@PathVariable("id") Integer id,HttpServletResponse response) {
+        try {
+            Photo photo = photoService.getPhotoById(id);
+            response.setContentType("image/jpeg");
+            response.setHeader("Content-Disposition", "attachment; filename=\"somefile.pdf\"");
+            response.getOutputStream().write(photo.getImage());
+            response.getOutputStream().flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @PostMapping
