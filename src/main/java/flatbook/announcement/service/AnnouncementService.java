@@ -12,7 +12,10 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.Date;
+import java.util.List;
 
 @Service
 @Transactional
@@ -33,8 +36,10 @@ public class AnnouncementService {
 
     private final UserDao userDao;
 
+    private final AnnouncementByUserDao announcementByUserDao;
+
     @Autowired
-    public AnnouncementService(AnnouncementDao announcementDao, CountryDao countryDao, RegionDao regionDao, CityDao cityDao, AmenityDao amenityDao, DistrictDao districtDao, EmailDao emailDao, UserDao userDao) {
+    public AnnouncementService(AnnouncementDao announcementDao, CountryDao countryDao, RegionDao regionDao, CityDao cityDao, AmenityDao amenityDao, DistrictDao districtDao, EmailDao emailDao, UserDao userDao, AnnouncementByUserDao announcementByUserDao) {
         this.announcementDao = announcementDao;
         this.countryDao = countryDao;
         this.regionDao = regionDao;
@@ -43,6 +48,7 @@ public class AnnouncementService {
         this.districtDao = districtDao;
         this.emailDao = emailDao;
         this.userDao = userDao;
+        this.announcementByUserDao = announcementByUserDao;
     }
 
     public List<Announcement> getAllAnnouncement() {
@@ -387,18 +393,13 @@ public class AnnouncementService {
 
     public Announcement createAnnouncement(Announcement announcement) {
         announcement.setLastUpdated(new Date());
-        announcement.setUser(getCurrentUser());
-//        announcementDao.save(announcement);
-        User user = getCurrentUser();
-        Set<Announcement> announcements;
-        if (user.getAnnouncements().isEmpty()) {
-            announcements = new HashSet<>();
-        } else {
-            announcements = getCurrentUser().getAnnouncements();
-        }
-        announcements.add(announcement);
-        user.setAnnouncements(announcements);
-        userDao.save(user);
+        announcementDao.save(announcement);
+
+        AnnouncementByUser announcementByUser = new AnnouncementByUser();
+        announcementByUser.setUserId(getCurrentUser().getId());
+        announcementByUser.setAnnouncementId(announcement.getId());
+        announcementByUserDao.save(announcementByUser);
+
         return announcement;
     }
 

@@ -1,5 +1,6 @@
 package flatbook.profile.controller;
 
+import flatbook.announcement.entity.Announcement;
 import flatbook.profile.entity.Email;
 import flatbook.profile.entity.User;
 import flatbook.profile.service.ProfileService;
@@ -10,6 +11,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 
 @RestController
 @RequestMapping(value = "/api/profile")
@@ -76,6 +78,10 @@ public class ProfileController {
 
     }
 
+    @PostMapping(value = "/myAnnouncements")
+    public List<Announcement> getAnnouncementsByUser(){
+        return profileService.getAnnouncementsByUser();
+    }
 
     @GetMapping(value = "/issigned")
     @Secured("ROLE_USER")

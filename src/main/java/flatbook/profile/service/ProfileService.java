@@ -1,5 +1,9 @@
 package flatbook.profile.service;
 
+import flatbook.announcement.dao.AnnouncementByUserDao;
+import flatbook.announcement.dao.AnnouncementDao;
+import flatbook.announcement.entity.Announcement;
+import flatbook.announcement.entity.AnnouncementByUser;
 import flatbook.profile.dao.EmailDao;
 import flatbook.profile.dao.ImageDao;
 import flatbook.profile.dao.PhoneDao;
@@ -19,6 +23,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -29,16 +34,19 @@ public class ProfileService {
     private final EmailDao emailDao;
     private final PhoneDao phoneDao;
     private final ImageDao imageDao;
-
+    private final AnnouncementByUserDao announcementByUserDao;
     private final EntityManager entityManager;
+    private final AnnouncementDao announcementDao;
 
     @Autowired
-    public ProfileService(UserDao userDao, EmailDao emailDao, PhoneDao phoneDao, EntityManager entityManager, ImageDao imageDao) {
+    public ProfileService(UserDao userDao, EmailDao emailDao, PhoneDao phoneDao, EntityManager entityManager, ImageDao imageDao, AnnouncementByUserDao announcementByUserDao, AnnouncementDao announcementDao) {
         this.userDao = userDao;
         this.emailDao = emailDao;
         this.phoneDao = phoneDao;
         this.entityManager = entityManager;
         this.imageDao = imageDao;
+        this.announcementByUserDao = announcementByUserDao;
+        this.announcementDao = announcementDao;
     }
 
     @Transactional
@@ -352,5 +360,17 @@ public class ProfileService {
 
     private Authentication getUserDetails() {
         return SecurityContextHolder.getContext().getAuthentication();
+    }
+
+    public List<Announcement> getAnnouncementsByUser() {
+        List<Announcement> announcements = new ArrayList<>();
+        List<AnnouncementByUser> announcementByUser = announcementByUserDao.getAnnouncementIdByUserId(getCurrentUser().getId());
+        System.out.println(announcementByUser.size());
+        for (AnnouncementByUser i : announcementByUser ) {
+            System.out.println("!!!!!!!!!!!!!!!!!!!!!!!"+i);
+            announcements.add(announcementDao.getAnnouncementById(i.getAnnouncementId()));
+            System.out.println("!!!!!!!!!!!!!!!!!!!!!!!"+announcementDao.getAnnouncementById(i.getAnnouncementId()));
+        }
+        return announcements;
     }
 }
