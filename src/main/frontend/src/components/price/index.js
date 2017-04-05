@@ -10,7 +10,7 @@ const Price = props => {
     const {value, payment} = props;
 
     return (
-        <p className="price">Price {payment}: <span> {value}<i className="fa fa-usd"/> </span></p>
+        <p className="price-payment">{payment}: <span className="price-value">  {value} <i className="price-icon fa fa-usd"/> </span></p>
     );
 };
 

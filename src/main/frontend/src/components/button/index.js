@@ -7,6 +7,7 @@ export const ButtonTypes = {
     success: 'btn-success',
     danger: 'btn-danger',
     primary: 'btn-primary',
+    link: 'btn-link',
     disabled: 'btn-disabled'
 };
 

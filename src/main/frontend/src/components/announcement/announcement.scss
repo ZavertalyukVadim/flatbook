@@ -2,6 +2,9 @@
   width: 100%;
   display: flex;
   align-self: flex-start;
+  background-color: #ebebeb;
+  padding: 12px;
+  margin-bottom: 32px;
 }
 
 .announcement-description {
@@ -10,12 +13,23 @@
   align-self: flex-start;
 }
 
+.announcement-description-field {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
 
 .description-field {
-  margin: 16px 0;
+  box-sizing: border-box;
+    padding: 16px 0;
+    border-top: 1px solid #d7d7d7;
+    border-bottom: 1px solid #d7d7d7;
 }
 .announcement-buttons {
-  align-self: flex-end;
+  display: flex;
+  justify-content: flex-end;
+  flex-direction: row;
+  align-self: stretch;
 
 }
 

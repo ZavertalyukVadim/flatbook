@@ -45,7 +45,7 @@ class ProfileSettings extends Component {
                         onChange={this.onArrayChange(name, index)}
                     />
                     <Button
-                        type={ButtonTypes.info}
+                        type={ButtonTypes.danger}
                         size={ButtonSizes.medium}
                         caption="Delete"
                         onClick={this.handleRemoveInput(name, index)}
@@ -53,8 +53,8 @@ class ProfileSettings extends Component {
                 </div>
             )}
             <Button
-                type={ButtonTypes.info}
-                size={ButtonSizes.medium}
+                type={ButtonTypes.link}
+                
                 caption="Add more"
                 onClick={this.addNewInput(name)}
             />
@@ -90,13 +90,11 @@ class ProfileSettings extends Component {
 
                     <Button
                         onClick={this.onChangePassword}
-                        type={ButtonTypes.info}
+                        type={ButtonTypes.primary}
                         size={ButtonSizes.block}
                         caption="Change Password"
                     />
-
-                </div>
-                <div className="contact-info">
+                    <div className="contact-info">
                     <Header
                         type={HeaderTypes.primary}
                         value="Contact Info"
@@ -110,12 +108,15 @@ class ProfileSettings extends Component {
                         Send me notifications from this site
                     </Checkbox>
                     <Button
-                        type={ButtonTypes.info}
-                        size={ButtonSizes.medium}
+                        type={ButtonTypes.primary}
+                        size={ButtonSizes.block}
                         caption="Save"
                         onClick={this.onChangePassword}
                     />
                 </div>
+
+                </div>
+                
             </div>
         );
     }

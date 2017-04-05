@@ -36,39 +36,37 @@ class Announcement extends Component {
             <div className="announcement-item">
                 {photos.length > 1 ? <Carousel slides={photos}/> : <Image src={photos[0]}/>}
                 <div className="announcement-description-field">
-                <div className="announcement-description">
-                    {title && <Header value={title} type={HeaderTypes.secondary}/>}
-                    {pricePerDay && <Price payment={PriceTypes.daily} value={pricePerDay}/>}
-                    {pricePerMonth && <Price payment={PriceTypes.monthly} value={pricePerMonth}/>}
-                    <p className="description-field">{description}</p>
+                    <div className="announcement-description">
+                        {title && <Header value={title} type={HeaderTypes.secondary}/>}
+                        {pricePerMonth && <Price payment={PriceTypes.monthly} className="price-per-month" value={pricePerMonth}/>}
+                        {pricePerDay && <Price payment={PriceTypes.daily} value={pricePerDay}/>}                   
+                        <p className="description-field">{description}</p>
 
-                </div>
-                <div className="announcement-buttons">
-                <Checkbox
-                    className="hide-announcement"
-                    onClick={this.onCheckboxClick}
-                    checked={visibility}
-                    disabled={false}
-                >Hide</Checkbox>
+                    </div>
+                    <div className="announcement-buttons">
+                    <Checkbox
+                        className="hide-announcement"
+                        onClick={this.onCheckboxClick}
+                        checked={visibility}
+                        disabled={false}
+                    >Hide</Checkbox>
 
-                </div>
+                
                     <Button
-                        type={ButtonTypes.info}
-                        size={ButtonSizes.medium}
+                        type={ButtonTypes.primary}
+                        size={ButtonSizes.small}
                         caption="Edit"
 
                     />
                     <Button
                         type={ButtonTypes.danger}
-                        size={ButtonSizes.medium}
+                        size={ButtonSizes.small}
                         caption="Delete"
                     />
-                    <Button
-                        type={ButtonTypes.primary}
-                        size={ButtonSizes.medium}
-                        caption="Show more"
-                    />
+                   
                 </div>
+                </div>
+                
             </div>
         )
     }

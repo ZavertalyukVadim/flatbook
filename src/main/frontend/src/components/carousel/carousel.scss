@@ -2,7 +2,7 @@
 
 .carousel-wrapper {
   position: relative;
-  width: $img-medium-width;
+  min-width: $img-medium-width;
   height: 250px;
   overflow: hidden;
 }

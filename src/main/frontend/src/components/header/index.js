@@ -1,4 +1,5 @@
 import React, {PropTypes} from 'react';
+import './header.scss';
 
 export const HeaderTypes = {
     primary: 'primary',
@@ -13,7 +14,7 @@ const Header = props => {
     }
 
     if (type === 'secondary') {
-        return <h2>{value}</h2>;
+        return <h2 className="secondary-header">{value}</h2>;
     }
 
     return <h3>{value}</h3>;

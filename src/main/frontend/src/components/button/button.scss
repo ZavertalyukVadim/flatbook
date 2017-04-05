@@ -1,9 +1,10 @@
 @import "../../style/color-theme.scss";
 @import "../../style/sizes.scss";
 
-$btn-border-radius: 6px;
+$btn-border-radius: 3px;
 
 .btn-default {
+  cursor: pointer;
   text-align: center;
   border: none;
   border-radius: $btn-border-radius;
@@ -49,12 +50,12 @@ $btn-border-radius: 6px;
 /*Size*/
 
 .small {
-  padding: map-get($indentSizes, xs) map-get($indentSizes, s);
-  font-size: 12px;
+  padding: map-get($indentSizes, xs) map-get($indentSizes, m);
+  font-size: 14px;
 }
 
 .medium {
-  padding:  map-get($indentSizes, s) map-get($indentSizes, l);
+  padding:  map-get($indentSizes, m) map-get($indentSizes, l);
   font-size: 16px;
 }
 
@@ -70,3 +71,7 @@ $btn-border-radius: 6px;
   margin-left: 0;
   margin-right: 0;
 }
+
+.btn-link {
+  
+} 

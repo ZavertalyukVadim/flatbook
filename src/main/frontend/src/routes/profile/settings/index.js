@@ -10,7 +10,7 @@ const Settings = () => {
              <Sidebar/>
          }
      >
-         <div>
+         <div className="profile-settings-wrapper">
              <ProfileSettings/>
          </div>
 
