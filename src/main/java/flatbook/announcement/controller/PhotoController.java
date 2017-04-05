@@ -4,13 +4,12 @@ import flatbook.announcement.entity.FileBucket;
 import flatbook.announcement.entity.Photo;
 import flatbook.announcement.service.PhotoService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "/photo")
+@RequestMapping(value = "/api/photo")
 public class PhotoController {
     @Autowired
     private PhotoService photoService;

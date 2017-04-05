@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 @RestController
-@RequestMapping(value = "/profile")
+@RequestMapping(value = "/api/profile")
 public class ProfileController {
 
     private final ProfileService profileService;
@@ -70,6 +70,12 @@ public class ProfileController {
         response.getOutputStream().write(profileService.getImage());
         response.getOutputStream().flush();
     }
+
+    @PostMapping(value = "/{id}/favorite")
+    public void addAnnouncementToFavorite(@PathVariable("id") Integer id){
+
+    }
+
 
     @GetMapping(value = "/issigned")
     @Secured("ROLE_USER")
