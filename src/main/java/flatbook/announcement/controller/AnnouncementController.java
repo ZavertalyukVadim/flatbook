@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "/api/announcement")
+@RequestMapping(value = "/announcement")
 public class AnnouncementController {
     @Autowired
     private AnnouncementService announcementService;

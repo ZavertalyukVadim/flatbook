@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Set;
 
 @RestController
-@RequestMapping(value = "/api/profile/phone")
+@RequestMapping(value = "/profile/phone")
 public class PhoneController {
     private final ProfileService profileService;
 

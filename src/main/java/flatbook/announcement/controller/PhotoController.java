@@ -11,7 +11,7 @@ import java.io.IOException;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "/api/photo")
+@RequestMapping(value = "/photo")
 public class PhotoController {
     @Autowired
     private PhotoService photoService;

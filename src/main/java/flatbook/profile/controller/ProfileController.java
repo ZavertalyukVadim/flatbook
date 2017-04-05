@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "/api/profile")
+@RequestMapping(value = "/profile")
 public class ProfileController {
 
     private final ProfileService profileService;

@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Set;
 
 @RestController
-@RequestMapping(value = "/api/profile/email")
+@RequestMapping(value = "/profile/email")
 public class EmailController {
 
     private final ProfileService profileService;
