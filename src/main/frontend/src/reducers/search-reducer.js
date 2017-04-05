@@ -10,7 +10,19 @@ import {
     GET_REGIONS_FAILURE,
     GET_CITIES_REQUEST,
     GET_CITIES_SUCCESS,
-    GET_CITIES_FAILURE
+    GET_CITIES_FAILURE,
+    GET_WORLD_MAX_PRICE_REQUEST,
+    GET_WORLD_MAX_PRICE_SUCCESS,
+    GET_WORLD_MAX_PRICE_FAILURE,
+    GET_COUNTRIES_MAX_PRICE_REQUEST,
+    GET_COUNTRIES_MAX_PRICE_SUCCESS,
+    GET_COUNTRIES_MAX_PRICE_FAILURE,
+    GET_REGIONS_MAX_PRICE_REQUEST,
+    GET_REGIONS_MAX_PRICE_SUCCESS,
+    GET_REGIONS_MAX_PRICE_FAILURE,
+    GET_CITIES_MAX_PRICE_REQUEST,
+    GET_CITIES_MAX_PRICE_SUCCESS,
+    GET_CITIES_MAX_PRICE_FAILURE
 } from '../actions/search-constants';
 
 const DEFAULT_STATE = {
@@ -30,6 +42,24 @@ const DEFAULT_STATE = {
     searchResult: {
         data: [],
         pending: false
+    },
+    maxPrice: {
+        world: {
+            data: {},
+            pending: false
+        },
+        country: {
+            data: {},
+            pending: false
+        },
+        region: {
+            data: {},
+            pending: false
+        },
+        city: {
+            data: {},
+            pending: false
+        }
     }
 };
 
@@ -81,6 +111,54 @@ export default (state = DEFAULT_STATE, action) => {
 
     if (action.type === GET_CITIES_FAILURE) {
         return {...state, cities: {...state.cities, data: [], pending: false}}
+    }
+
+    if (action.type === GET_WORLD_MAX_PRICE_REQUEST) {
+        return {...state, maxPrice: {...state.maxPrice, world: {data: {}, pending: true}}}
+    }
+
+    if (action.type === GET_WORLD_MAX_PRICE_SUCCESS) {
+        return {...state, maxPrice: {...state.maxPrice, world: {data: action.response, pending: false}}}
+    }
+
+    if (action.type === GET_WORLD_MAX_PRICE_FAILURE) {
+        return {...state, maxPrice: {...state.maxPrice, world: {data: {}, pending: false}}}
+    }
+
+    if (action.type === GET_COUNTRIES_MAX_PRICE_REQUEST) {
+        return {...state, maxPrice: {...state.maxPrice, country: {data: {}, pending: true}}}
+    }
+
+    if (action.type === GET_COUNTRIES_MAX_PRICE_SUCCESS) {
+        return {...state, maxPrice: {...state.maxPrice, country: {data: action.response, pending: false}}}
+    }
+
+    if (action.type === GET_COUNTRIES_MAX_PRICE_FAILURE) {
+        return {...state, maxPrice: {...state.maxPrice, country: {data: {}, pending: false}}}
+    }
+
+    if (action.type === GET_REGIONS_MAX_PRICE_REQUEST) {
+        return {...state, maxPrice: {...state.maxPrice, region: {data: {}, pending: true}}}
+    }
+
+    if (action.type === GET_REGIONS_MAX_PRICE_SUCCESS) {
+        return {...state, maxPrice: {...state.maxPrice, region: {data: action.response, pending: false}}}
+    }
+
+    if (action.type === GET_REGIONS_MAX_PRICE_FAILURE) {
+        return {...state, maxPrice: {...state.maxPrice, region: {data: {}, pending: false}}}
+    }
+
+    if (action.type === GET_CITIES_MAX_PRICE_REQUEST) {
+        return {...state, maxPrice: {...state.maxPrice, city: {data: {}, pending: true}}}
+    }
+
+    if (action.type === GET_CITIES_MAX_PRICE_SUCCESS) {
+        return {...state, maxPrice: {...state.maxPrice, city: {data: action.response, pending: false}}}
+    }
+
+    if (action.type === GET_CITIES_MAX_PRICE_FAILURE) {
+        return {...state, maxPrice: {...state.maxPrice, city: {data: {}, pending: false}}}
     }
 
     return state

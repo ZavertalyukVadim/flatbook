@@ -11,7 +11,19 @@ import {
     GET_REGIONS_FAILURE,
     GET_CITIES_REQUEST,
     GET_CITIES_SUCCESS,
-    GET_CITIES_FAILURE
+    GET_CITIES_FAILURE,
+    GET_WORLD_MAX_PRICE_REQUEST,
+    GET_WORLD_MAX_PRICE_SUCCESS,
+    GET_WORLD_MAX_PRICE_FAILURE,
+    GET_COUNTRIES_MAX_PRICE_REQUEST,
+    GET_COUNTRIES_MAX_PRICE_SUCCESS,
+    GET_COUNTRIES_MAX_PRICE_FAILURE,
+    GET_REGIONS_MAX_PRICE_REQUEST,
+    GET_REGIONS_MAX_PRICE_SUCCESS,
+    GET_REGIONS_MAX_PRICE_FAILURE,
+    GET_CITIES_MAX_PRICE_REQUEST,
+    GET_CITIES_MAX_PRICE_SUCCESS,
+    GET_CITIES_MAX_PRICE_FAILURE
 } from './search-constants';
 
 export const search = body => (dispatch, getState) => {
@@ -86,6 +98,82 @@ export const getCities = id => (dispatch, getState) => {
                 GET_CITIES_FAILURE
             ],
             endpoint: () => get(`search/cities/${id}`)
+        }
+    });
+};
+
+export const getWorldMaxPrice = () => (dispatch, getState) => {
+    const {search: {maxPrice: {world: {pending}}}} = getState();
+
+    if (pending) {
+        return null;
+    }
+
+    return dispatch({
+        [CALL_API]: {
+            types: [
+                GET_WORLD_MAX_PRICE_REQUEST,
+                GET_WORLD_MAX_PRICE_SUCCESS,
+                GET_WORLD_MAX_PRICE_FAILURE
+            ],
+            endpoint: () => get('search/world/maxPrice')
+        }
+    });
+};
+
+export const getCountyMaxPrice = id => (dispatch, getState) => {
+    const {search: {maxPrice: {country: {pending}}}} = getState();
+
+    if (pending) {
+        return null;
+    }
+
+    return dispatch({
+        [CALL_API]: {
+            types: [
+                GET_COUNTRIES_MAX_PRICE_REQUEST,
+                GET_COUNTRIES_MAX_PRICE_SUCCESS,
+                GET_COUNTRIES_MAX_PRICE_FAILURE
+            ],
+            endpoint: () => get(`search/country/${id}/maxPrice`)
+        }
+    });
+};
+
+export const getRegionMaxPrice = id => (dispatch, getState) => {
+    const {search: {maxPrice: {region: {pending}}}} = getState();
+
+    if (pending) {
+        return null;
+    }
+
+    return dispatch({
+        [CALL_API]: {
+            types: [
+                GET_REGIONS_MAX_PRICE_REQUEST,
+                GET_REGIONS_MAX_PRICE_SUCCESS,
+                GET_REGIONS_MAX_PRICE_FAILURE
+            ],
+            endpoint: () => get(`search/region/${id}/maxPrice`)
+        }
+    });
+};
+
+export const getCityMaxPrice = id => (dispatch, getState) => {
+    const {search: {maxPrice: {city: {pending}}}} = getState();
+
+    if (pending) {
+        return null;
+    }
+
+    return dispatch({
+        [CALL_API]: {
+            types: [
+                GET_CITIES_MAX_PRICE_REQUEST,
+                GET_CITIES_MAX_PRICE_SUCCESS,
+                GET_CITIES_MAX_PRICE_FAILURE
+            ],
+            endpoint: () => get(`search/city/${id}/maxPrice`)
         }
     });
 };

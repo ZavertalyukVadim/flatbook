@@ -14,6 +14,10 @@ import {
     getCountries,
     getRegions,
     getCities,
+    getWorldMaxPrice,
+    getCountyMaxPrice,
+    getRegionMaxPrice,
+    getCityMaxPrice,
     search
 } from '../../actions/search-actions';
 
@@ -25,6 +29,7 @@ class SearchForm extends Component {
             chosenCountryID: null,
             chosenRegionID: null,
             chosenCityID: null,
+            maxPrice: 10000,
             priceValue: [0, 10000],
             priceType: 'PRICE_PER_DAY',
             rooms: 1,
@@ -36,7 +41,54 @@ class SearchForm extends Component {
 
     componentDidMount() {
         this.props.getCountries();
+        this.props.getWorldMaxPrice();
     }
+
+    componentWillUpdate() {
+        this.checkPriceValue()
+    }
+
+    componentWillReceiveProps(nextProps) {
+        const {
+            chosenCountryID,
+            chosenRegionID,
+            chosenCityID,
+            priceType
+        } = this.state;
+
+        if (nextProps.maxPrice !== this.props.maxPrice) {
+
+            if (nextProps.maxPrice.world !== this.props.maxPrice.world && !nextProps.maxPrice.world.pending && isNull(chosenCountryID)) {
+                this.setState({
+                    maxPrice: priceType === 'PRICE_PER_DAY' ?
+                        nextProps.maxPrice.world.data.pricePerDay : nextProps.maxPrice.world.data.pricePerMonth
+                });
+            } else if (nextProps.maxPrice.country !== this.props.maxPrice.country && !nextProps.maxPrice.country.pending && isNull(chosenRegionID)) {
+                this.setState({
+                    maxPrice: priceType === 'PRICE_PER_DAY' ?
+                        nextProps.maxPrice.country.data.pricePerDay : nextProps.maxPrice.country.data.pricePerMonth
+
+                })
+            } else if (nextProps.maxPrice.region !== this.props.maxPrice.region && !nextProps.maxPrice.region.pending && isNull(chosenCityID)) {
+                this.setState({
+                    maxPrice: priceType === 'PRICE_PER_DAY' ?
+                        nextProps.maxPrice.region.data.pricePerDay : nextProps.maxPrice.region.data.pricePerMonth
+                })
+            } else if (nextProps.maxPrice.city !== this.props.maxPrice.city && !nextProps.maxPrice.city.pending) {
+                this.setState({
+                    maxPrice: priceType === 'PRICE_PER_DAY' ?
+                        nextProps.maxPrice.city.data.pricePerDay : nextProps.maxPrice.city.data.pricePerMonth
+                })
+            }
+        }
+    }
+
+    checkPriceValue = () => {
+        const {priceValue, maxPrice} = this.state;
+        if (priceValue[1] > maxPrice) {
+            this.setState({priceValue: [priceValue[0], maxPrice]})
+        }
+    };
 
     changeCountry = id => {
         this.setState({
@@ -44,6 +96,7 @@ class SearchForm extends Component {
             chosenRegionID: null,
             chosenCityID: null
         });
+        this.props.getCountyMaxPrice(id);
         this.props.getRegions(id);
     };
     changeRegion = id => {
@@ -51,11 +104,48 @@ class SearchForm extends Component {
             chosenRegionID: id,
             chosenCityID: null
         });
+        this.props.getRegionMaxPrice(id);
         this.props.getCities(id);
     };
-    changeCities = id => this.setState({chosenCityID: id});
+    changeCities = id => {
+        this.props.getCityMaxPrice(id);
+        this.setState({chosenCityID: id});
+    };
     savePriceValue = v => this.setState({sliderValue: v});
-    changePriceType = type => () => this.setState({priceType: type});
+    changePriceType = type => () => {
+        const {
+            chosenCountryID,
+            chosenRegionID,
+            chosenCityID
+        } = this.state;
+        const {
+            maxPrice: {
+                world,
+                country,
+                region,
+                city
+            }
+        } = this.props;
+
+        this.setState({priceType: type});
+        if (isNull(chosenCountryID)) {
+            this.setState({
+                maxPrice: type === 'PRICE_PER_DAY' ? world.data.pricePerDay : world.data.pricePerMonth
+            })
+        } else if (isNull(chosenRegionID)) {
+            this.setState({
+                maxPrice: type === 'PRICE_PER_DAY' ? country.data.pricePerDay : country.data.pricePerMonth
+            })
+        } else if (isNull(chosenCityID)) {
+            this.setState({
+                maxPrice: type === 'PRICE_PER_DAY' ? region.data.pricePerDay : region.data.pricePerMonth
+            })
+        } else {
+            this.setState({
+                maxPrice: type === 'PRICE_PER_DAY' ? city.data.pricePerDay : city.data.pricePerMonth
+            })
+        }
+    };
     changeRooms = v => this.setState({rooms: v});
     changeLeavingPlaces = v => this.setState({livingPlaces: v});
     saveStartDate = d => this.setState({startDate: d});
@@ -88,8 +178,11 @@ class SearchForm extends Component {
             rooms,
             livingPlaces,
             startDate,
-            endDate
+            endDate,
+            maxPrice
         } = this.state;
+
+        console.log(priceValue);
 
         const formClassName = classNames('search-form', {['search-vertical']: type === 'vertical'});
         const containerClassName = classNames('search-form-options-container', {['search-vertical']: type === 'vertical'});
@@ -148,9 +241,9 @@ class SearchForm extends Component {
                             </div>
                             <div className="search-form-price-slider">
                                 <Slider
-                                    from={priceValue[0]}
-                                    to={priceValue[1]}
-                                    value={[100, 900]}
+                                    from={0}
+                                    to={maxPrice}
+                                    value={priceValue}
                                     onSave={this.savePriceValue}
                                 />
                             </div>
@@ -202,15 +295,21 @@ export default connect(
          search: {
              countries,
              regions,
-             cities
+             cities,
+             maxPrice
          }
      }) => ({
         countries: countries,
         regions: regions,
-        cities: cities
+        cities: cities,
+        maxPrice: maxPrice
     }), {
         getCountries,
         getRegions,
         getCities,
+        getWorldMaxPrice,
+        getCountyMaxPrice,
+        getRegionMaxPrice,
+        getCityMaxPrice,
         search
     })(SearchForm);

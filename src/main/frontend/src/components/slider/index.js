@@ -7,16 +7,8 @@ class Slider extends Component {
     constructor(props) {
         super(props);
 
-        const {
-            from,
-            to,
-            value
-        } = props;
-
         this.state = {
-            sliderValue: value,
-            min: from,
-            max: to
+            sliderValue: props.value
         };
     }
 
@@ -24,10 +16,12 @@ class Slider extends Component {
 
     render() {
         const {
-            sliderValue,
-            min,
-            max
+            sliderValue
         } = this.state;
+        const {
+            from,
+            to
+        } = this.props;
         const [right, left] = sliderValue;
 
         return (
@@ -39,8 +33,8 @@ class Slider extends Component {
                     <span className="slider-value">{left}</span>
                 </div>
                 <ReactSlider
-                    min={min}
-                    max={max}
+                    min={from}
+                    max={to}
                     value={sliderValue}
                     withBars={true}
                     barClassName="bar"
