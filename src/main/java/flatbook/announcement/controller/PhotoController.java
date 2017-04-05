@@ -6,8 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -32,17 +30,8 @@ public class PhotoController {
     }
 
     @PostMapping
-    public void createPhoto(@RequestParam("image") MultipartFile image,HttpServletResponse response) {
-        try {
-            Photo photo = photoService.createPhoto(image);
-            response.setContentType("image/jpeg");
-            response.setHeader("Content-Disposition", "attachment; filename=\"somefile.pdf\"");
-            response.setHeader("imageId",""+photo.getId());
-            response.getOutputStream().write(photo.getImage());
-            response.getOutputStream().flush();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    public Integer createPhoto(@RequestParam("image") MultipartFile image) {
+       return photoService.createPhoto(image).getId();
     }
 
     @RequestMapping(value = "", method = RequestMethod.PUT)
