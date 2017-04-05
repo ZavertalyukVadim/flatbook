@@ -21,7 +21,7 @@ public class CustomUserDetailService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Email email = emailDao.findOneByAddress(username);
+        Email email = emailDao.findOneByContent(username);
 
         if (email == null)
             throw new UsernameNotFoundException("invalid user");
@@ -34,7 +34,7 @@ public class CustomUserDetailService implements UserDetailsService {
 
     private UserDetails getUserDetails(User user, Email email) {
         String password = user.getPassword();
-        String userName = email.getAddress();
+        String userName = email.getContent();
 
         return new org.springframework.security.core.userdetails.User(userName, password, true, true, true, true, getGrantedAuthorities());
     }

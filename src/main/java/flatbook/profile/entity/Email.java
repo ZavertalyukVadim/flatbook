@@ -12,9 +12,9 @@ public class Email {
     @Column(name = "id", unique = true)
     private Integer id;
 
-    @Column(name = "address", unique = true, nullable = false)
+    @Column(name = "content", unique = true, nullable = false)
     @org.hibernate.validator.constraints.Email
-    private String address;
+    private String content;
 
     @Column(name = "is_primary")
     private Boolean isPrimary;
@@ -32,12 +32,12 @@ public class Email {
         this.id = id;
     }
 
-    public String getAddress() {
-        return address;
+    public String getContent() {
+        return content;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
+    public void setContent(String content) {
+        this.content = content;
     }
 
     public Boolean getPrimary() {
@@ -59,6 +59,6 @@ public class Email {
     @Override
     public boolean equals(Object o) {
         Email email = (Email)(o);
-        return this.address.equals(email.address);
+        return this.content.equals(email.content);
     }
 }

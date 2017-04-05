@@ -13,9 +13,9 @@ public class Phone {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name = "number")
+    @Column(name = "content")
     @Pattern(regexp = "(^[+][\\d]{1,2}[\\d]{10}$)|(^[\\d]{10})$")
-    private String number;
+    private String content;
 
     @Column(name = "is_primary", nullable = false)
     private Boolean isPrimary;
@@ -33,12 +33,12 @@ public class Phone {
         this.id = id;
     }
 
-    public String getNumber() {
-        return number;
+    public String getContent() {
+        return content;
     }
 
-    public void setNumber(String number) {
-        this.number = number;
+    public void setContent(String content) {
+        this.content = content;
     }
 
     public Boolean getPrimary() {
@@ -52,7 +52,7 @@ public class Phone {
     @Override
     public boolean equals(Object o) {
         Phone phone = (Phone) o;
-        if (this.number.equals(phone.getNumber())) {
+        if (this.content.equals(phone.getContent())) {
             return true;
         }
 

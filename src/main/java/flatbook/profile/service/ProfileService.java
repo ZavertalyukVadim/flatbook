@@ -62,13 +62,13 @@ public class ProfileService {
         Set<Email> emails = user.getEmails();
         if (emails.size() != 1) throw new Exception("Allowed only one primary email");
 
-        Email primary = emailDao.findOneByAddress(emails.iterator().next().getAddress());
+        Email primary = emailDao.findOneByContent(emails.iterator().next().getContent());
         if (primary != null) throw new Exception("email is exist");
 
         Set<Phone> phones = user.getPhones();
         if (phones.size() != 1) throw new Exception("Allowed only one primary phone");
 
-        Phone primaryPhone = phoneDao.findOneByNumber(phones.iterator().next().getNumber());
+        Phone primaryPhone = phoneDao.findOneByContent(phones.iterator().next().getContent());
         if (primaryPhone != null) throw new Exception("email is exist");
 
         user.setEmails(null);
@@ -106,7 +106,7 @@ public class ProfileService {
     }
 
     public User getCurrentUser() {
-        Email email = emailDao.findOneByAddress(getUserEmail());
+        Email email = emailDao.findOneByContent(getUserEmail());
 
         User user = userDao.getUserByEmails(email);
         return userDao.getUserByEmails(email);
@@ -120,7 +120,7 @@ public class ProfileService {
     public Email deleteEmail(Email email) throws Exception {
         if (!isUserContainsEmail(getCurrentUser(), email)) throw new Exception("User contains no email");
 
-        Email dbEmail = emailDao.findOneByAddress(email.getAddress());
+        Email dbEmail = emailDao.findOneByContent(email.getContent());
         if (dbEmail.getPrimary()) throw new Exception("Cannot delete primary email");
 
         User currentUser = getCurrentUser();
@@ -132,7 +132,7 @@ public class ProfileService {
         dbEmail.setUser(null);
 
         entityManager.remove(dbEmail);
-        Email deleted = emailDao.findOneByAddress(dbEmail.getAddress());
+        Email deleted = emailDao.findOneByContent(dbEmail.getContent());
         return null;
     }
 
@@ -140,7 +140,7 @@ public class ProfileService {
     public Phone deletePhone(Phone phone) throws Exception {
         if (!isUserContainsPhone(getCurrentUser(), phone)) throw new Exception("User contains no email");
 
-        Phone dbPhone = phoneDao.findOneByNumber(phone.getNumber());
+        Phone dbPhone = phoneDao.findOneByContent(phone.getContent());
         if (dbPhone.getPrimary()) throw new Exception("Cannot delete primary phone");
 
         User currentUser = getCurrentUser();
@@ -185,12 +185,12 @@ public class ProfileService {
         String userEmail = getCurrentUserPrimaryEmail();
         if (!isUserNameExist(userEmail)) throw new Exception("Unknown user");
 
-        User user = emailDao.findOneByAddress(userEmail).getUser();
+        User user = emailDao.findOneByContent(userEmail).getUser();
         if (user == null) throw new Exception("Unknown user");
 
         if (isUserContainsEmail(user, email)) return email;
 
-        Email existingEmail = emailDao.findOneByAddress(email.getAddress());
+        Email existingEmail = emailDao.findOneByContent(email.getContent());
         if (existingEmail != null) throw new Exception("Email is used");
 
         email.setPrimary(false);
@@ -206,12 +206,12 @@ public class ProfileService {
         String userEmail = getCurrentUserPrimaryEmail();
         if (!isUserNameExist(userEmail)) throw new Exception("Unknown user");
 
-        User user = emailDao.findOneByAddress(userEmail).getUser();
+        User user = emailDao.findOneByContent(userEmail).getUser();
         if (user == null) throw new Exception("Unknown user");
 
         if (isUserContainsPhone(user, phone)) return phone;
 
-        Phone existingPhone = phoneDao.findOneByNumber(phone.getNumber());
+        Phone existingPhone = phoneDao.findOneByContent(phone.getContent());
         if (existingPhone != null) throw new Exception("Phone is used");
 
         phone.setPrimary(false);
@@ -226,13 +226,13 @@ public class ProfileService {
         User user = getCurrentUser();
         if (!user.getEmails().contains(email)) throw new Exception("User contains no email");
 
-        Email oldPrimaryEmail = emailDao.findOneByAddress(getUserEmail());
+        Email oldPrimaryEmail = emailDao.findOneByContent(getUserEmail());
         if (oldPrimaryEmail.equals(email)) return email;
 
         oldPrimaryEmail.setPrimary(false);
         emailDao.save(oldPrimaryEmail);
 
-        Email newPrimary = emailDao.findOneByAddress(email.getAddress());
+        Email newPrimary = emailDao.findOneByContent(email.getContent());
         newPrimary.setPrimary(true);
         emailDao.save(newPrimary);
 
@@ -255,13 +255,13 @@ public class ProfileService {
         if (!user.getPhones().stream().anyMatch(currentPhone -> phone.equals(currentPhone)))
             throw new Exception("User contains no phone");
 
-        Phone oldPrimaryPhone = phoneDao.findOneByNumber(getPrimaryPhone().getNumber());
+        Phone oldPrimaryPhone = phoneDao.findOneByContent(getPrimaryPhone().getContent());
         if (oldPrimaryPhone.equals(phone)) return phone;
 
         oldPrimaryPhone.setPrimary(false);
         phoneDao.save(oldPrimaryPhone);
 
-        Phone newPrimary = phoneDao.findOneByNumber(phone.getNumber());
+        Phone newPrimary = phoneDao.findOneByContent(phone.getContent());
         newPrimary.setPrimary(true);
         phoneDao.save(newPrimary);
 
@@ -312,8 +312,8 @@ public class ProfileService {
         Set<Email> emails = user.getEmails();
 
         return emails.stream().anyMatch(currentEmail -> {
-            String currentAddress = currentEmail.getAddress();
-            String newAddress = email.getAddress();
+            String currentAddress = currentEmail.getContent();
+            String newAddress = email.getContent();
 
             return currentAddress.equals(newAddress);
         });
@@ -323,8 +323,8 @@ public class ProfileService {
         Set<Phone> phones = user.getPhones();
 
         return phones.stream().anyMatch(currenttPhone -> {
-            String currentNumber = currenttPhone.getNumber();
-            String newNumber = phone.getNumber();
+            String currentNumber = currenttPhone.getContent();
+            String newNumber = phone.getContent();
 
             return currentNumber.equals(newNumber);
         });
@@ -339,7 +339,7 @@ public class ProfileService {
     }
 
     private boolean isEmailUsed(Email email) {
-        Email existingEmail = emailDao.findOneByAddress(email.getAddress());
+        Email existingEmail = emailDao.findOneByContent(email.getContent());
         return existingEmail != null;
     }
 
@@ -353,7 +353,7 @@ public class ProfileService {
     private boolean isCorrectPassword(String password) throws Exception {
 
         String userName = getUserDetails().getName();
-        String hashedPassword = emailDao.findOneByAddress(userName).getUser().getPassword();
+        String hashedPassword = emailDao.findOneByContent(userName).getUser().getPassword();
 
         return BCrypt.checkpw(password, hashedPassword);
     }
