@@ -13,7 +13,8 @@ module.exports = {
     ],
     output: {
         filename: 'bundle.[hash].js',
-        path: PATHS.output
+        path: PATHS.output,
+        publicPath: '/',
     },
     plugins: [
         new HtmlWebpackPlugin({

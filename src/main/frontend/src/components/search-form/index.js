@@ -2,11 +2,13 @@ import React, {Component, PropTypes} from 'react';
 import {connect} from 'react-redux';
 import {isNull, noop} from 'lodash';
 import classNames from 'classnames';
+import moment from 'moment';
 import Dropdown from '../dropdown';
 import Slider from '../slider';
 import Radio from '../radio';
 import Button, {ButtonSizes, ButtonTypes} from '../button';
 import InputRange from '../input-range';
+import DatePickerRange from '../datepicker-range';
 import './search-form.scss';
 import {
     getCountries,
@@ -26,7 +28,9 @@ class SearchForm extends Component {
             priceValue: [0, 10000],
             priceType: 'PRICE_PER_DAY',
             rooms: 1,
-            livingPlaces: 2
+            livingPlaces: 2,
+            startDate: moment(),
+            endDate: moment().add(5, 'days')
         }
     }
 
@@ -54,6 +58,8 @@ class SearchForm extends Component {
     changePriceType = type => () => this.setState({priceType: type});
     changeRooms = v => this.setState({rooms: v});
     changeLeavingPlaces = v => this.setState({livingPlaces: v});
+    saveStartDate = d => this.setState({startDate: d});
+    saveEndDate = d => this.setState({endDate: d});
     search = () => {
         this.props.search({
             cityId: this.state.chosenCityID,
@@ -80,7 +86,9 @@ class SearchForm extends Component {
             priceValue,
             priceType,
             rooms,
-            livingPlaces
+            livingPlaces,
+            startDate,
+            endDate
         } = this.state;
 
         const formClassName = classNames('search-form', {['search-vertical']: type === 'vertical'});
@@ -118,6 +126,12 @@ class SearchForm extends Component {
                         />
                     </div>
                     <div className="search-form-options">
+                        <DatePickerRange
+                            endDate={endDate}
+                            startDate={startDate}
+                            handleChangeEnd={this.saveEndDate}
+                            handleChangeStart={this.saveStartDate}
+                        />
                         Price
                         <div className="search-form-price">
                             <div className="search-form-price-radio">

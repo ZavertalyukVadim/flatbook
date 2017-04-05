@@ -1,7 +1,6 @@
 package flatbook.profile.service;
 
 import flatbook.profile.dao.EmailDao;
-import flatbook.profile.dao.UserDao;
 import flatbook.profile.entity.Email;
 import flatbook.profile.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,19 +8,24 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Service;
 
-import javax.xml.soap.Detail;
 import java.util.ArrayList;
 import java.util.List;
 
+@Service
 public class CustomUserDetailService implements UserDetailsService {
 
     @Autowired
     private EmailDao emailDao;
 
     @Override
-    public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
-        Email email = emailDao.findOneByAddress(s);
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        Email email = emailDao.findOneByAddress(username);
+
+        if (email == null)
+            throw new UsernameNotFoundException("invalid user");
+
         User user = email.getUser();
         if (!isCorrectCredentials(user, email)) throw new UsernameNotFoundException("invalid user");
 
