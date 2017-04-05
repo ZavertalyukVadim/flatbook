@@ -5,7 +5,7 @@ import Input from '../../components/input';
 import Button, {ButtonTypes, ButtonSizes} from '../../components/button';
 import Header from '../../components/header';
 import './signin.scss';
-import {signin} from '../../actions/signin-actions';
+import {signin} from '../../actions/user-actions';
 
 class SignIn extends Component {
 
@@ -18,7 +18,7 @@ class SignIn extends Component {
     }
 
     onInputChange = val => e => this.setState({[val]: e.target.value});
-    onSubmit = () => this.props.signin({email: this.state.email, password: this.state.password});
+    // onSubmit = () => this.props.signin({email: this.state.email, password: this.state.password});
 
     render() {
         const {
@@ -71,7 +71,7 @@ class SignIn extends Component {
                     type={ButtonTypes.primary}
                     size={ButtonSizes.block}
                     caption="Sign In"
-                    onClick={this.onSubmit}
+                    onClick={noop}
                 />
                 <div className="row">
                     <div className="col-6">

@@ -19,3 +19,15 @@ export const getUser = id => (dispatch, getState) => {
         }
     });
 };
+
+export const signin = user => dispatch =>
+    dispatch({
+        [CALL_API]: {
+            types: [
+                ActionTypes.SIGN_IN_REQUEST,
+                ActionTypes.SIGN_IN_SUCCESS,
+                ActionTypes.SIGN_IN_FAILURE
+            ],
+            user: user
+        }
+    });

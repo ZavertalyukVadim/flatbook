@@ -182,7 +182,6 @@ class SearchForm extends Component {
             maxPrice
         } = this.state;
 
-        console.log(priceValue);
 
         const formClassName = classNames('search-form', {['search-vertical']: type === 'vertical'});
         const containerClassName = classNames('search-form-options-container', {['search-vertical']: type === 'vertical'});
