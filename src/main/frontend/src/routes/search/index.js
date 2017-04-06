@@ -1,4 +1,8 @@
 import React from 'react';
+import Container from '../../components/container';
+import SearchResult from '../../components/search/search-result';
 
 export default () =>
-    <h1>Search result page</h1>
+    <Container>
+        <SearchResult />
+    </Container>;
