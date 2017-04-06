@@ -1,7 +1,7 @@
 import React from 'react';
 import Container from '../../components/container';
 import Sidebar from '../../components/profile/sidebar';
-import Announcement from '../../components/profile/announcement';
+import AnnouncementControl from '../../components/announcement/announcement-control';
 import {Link} from 'react-router-dom';
 import './profile.scss';
 import Button, {ButtonTypes, ButtonSizes} from '../../components/button';
@@ -63,8 +63,7 @@ const Profile = () => {
                     </Link>
                 </div>
                 {example.map((item, index) =>
-                    <Announcement
-                        key={index}
+                    <AnnouncementControl
                         {...item}
                     />)
                 }
