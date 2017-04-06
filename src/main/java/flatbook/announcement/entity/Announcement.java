@@ -1,7 +1,5 @@
 package flatbook.announcement.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Date;
@@ -75,7 +73,6 @@ public class Announcement {
                     nullable = false)})
     private List<Amenity> amenities = new ArrayList<>();
 
-    @JsonIgnore
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "announcement", cascade = CascadeType.ALL)
     private List<Photo> photos = new ArrayList<>();
 
