@@ -13,7 +13,7 @@ public class Photo {
     @Column(name = "photo_id", nullable = false)
     private Integer id;
 
-    @Column(name = "image", columnDefinition = "BLOB")
+    @Column(name = "image", columnDefinition = "MEDIUMBLOB")
     private byte[] image;
 
     @Column(name = "title")

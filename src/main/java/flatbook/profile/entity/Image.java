@@ -13,7 +13,7 @@ public class Image {
     private Integer id;
 
     @JsonIgnore
-    @Column(name = "photo", columnDefinition = "BLOB")
+    @Column(name = "photo", columnDefinition = "MEDIUMBLOB")
     private byte[] photo;
 
     @OneToOne(fetch = FetchType.LAZY)
