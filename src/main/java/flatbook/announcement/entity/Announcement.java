@@ -1,9 +1,14 @@
 package flatbook.announcement.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import flatbook.profile.entity.Email;
+import flatbook.profile.entity.Phone;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "announcement")
@@ -20,11 +25,11 @@ public class Announcement {
     @Column(name = "price_per_month")
     private Integer pricePerMonth;
 
-    @Column(name = "email")
-    private String email;
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user",targetEntity = Email.class)
+    private Set<Email> email;
 
-    @Column(name = "phone")
-    private String phone;
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "phonesUser",targetEntity = Phone.class)
+    private Set<Phone> phone;
 
     @Column(name = "title")
     private String title;
@@ -44,6 +49,7 @@ public class Announcement {
     @JoinColumn(name = "city_id")
     private City city;
 
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "district_id")
     private District district;
@@ -73,6 +79,7 @@ public class Announcement {
                     nullable = false)})
     private List<Amenity> amenities = new ArrayList<>();
 
+    @JsonIgnore
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "announcement", cascade = CascadeType.ALL)
     private List<Photo> photos = new ArrayList<>();
 
@@ -126,19 +133,19 @@ public class Announcement {
         this.description = description;
     }
 
-    public String getEmail() {
+    public Set<Email> getEmail() {
         return email;
     }
 
-    public void setEmail(String email) {
+    public void setEmail(Set<Email> email) {
         this.email = email;
     }
 
-    public String getPhone() {
+    public Set<Phone> getPhone() {
         return phone;
     }
 
-    public void setPhone(String phone) {
+    public void setPhone(Set<Phone> phone) {
         this.phone = phone;
     }
 
