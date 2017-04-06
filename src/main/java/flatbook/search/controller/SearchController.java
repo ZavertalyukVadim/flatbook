@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "/search")
+@RequestMapping(value = "/api/search")
 public class SearchController {
     private final CountryService countryService;
 

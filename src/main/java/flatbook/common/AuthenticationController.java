@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/auth")
+@RequestMapping("/api/auth")
 public class AuthenticationController {
 
     @RequestMapping(value = "logged", method = RequestMethod.GET)
