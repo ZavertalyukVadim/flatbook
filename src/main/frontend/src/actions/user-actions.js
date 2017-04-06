@@ -1,4 +1,5 @@
-import {CALL_API, get} from '../api';
+import base64 from 'base-64';
+import {CALL_API, get, post} from '../api';
 import * as ActionTypes from './user-constants';
 
 export const getUser = id => (dispatch, getState) => {
@@ -20,14 +21,16 @@ export const getUser = id => (dispatch, getState) => {
     });
 };
 
-export const signin = user => dispatch =>
-    dispatch({
+export const signin = user => dispatch => {
+
+    return dispatch({
         [CALL_API]: {
             types: [
                 ActionTypes.SIGN_IN_REQUEST,
                 ActionTypes.SIGN_IN_SUCCESS,
                 ActionTypes.SIGN_IN_FAILURE
             ],
-            user: user
+            endpoint: () => post('login', {}, {}, {headers: {'Authorization': `basic: ${base64.encode(`${user.email}:${user.password}`)}`}})
         }
     });
+};

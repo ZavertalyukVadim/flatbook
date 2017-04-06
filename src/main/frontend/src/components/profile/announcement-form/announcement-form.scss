@@ -1,0 +1,10 @@
+.announcement-form-field {
+  width: 50%;
+  align-self: center;
+}
+
+.announcement-btn-field, .announcement-range-field {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}

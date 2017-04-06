@@ -1,7 +1,7 @@
 import React from 'react';
 import Container from '../../components/container';
-import Sidebar from '../../components/sidebar';
-import Announcement from '../../components/announcement';
+import Sidebar from '../../components/profile/sidebar';
+import AnnouncementControl from '../../components/announcement/announcement-control';
 import {Link} from 'react-router-dom';
 import './profile.scss';
 import Button, {ButtonTypes, ButtonSizes} from '../../components/button';
@@ -53,7 +53,7 @@ const Profile = () => {
         >
             <div className="announcements-field">
                 <div className="create-announcement-link">
-                    <Link to='profile/create-announcement'>
+                    <Link to='/profile/create-announcement'>
                         <Button
                             type={ButtonTypes.primary}
                             size={ButtonSizes.medium}
@@ -63,7 +63,7 @@ const Profile = () => {
                     </Link>
                 </div>
                 {example.map((item, index) =>
-                    <Announcement
+                    <AnnouncementControl
                         {...item}
                     />)
                 }

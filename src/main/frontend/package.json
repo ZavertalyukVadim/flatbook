@@ -44,6 +44,7 @@
     "webpack-merge": "2.6.1"
   },
   "dependencies": {
+    "base-64": "0.1.0",
     "classnames": "2.2.5",
     "history": "4.6.1",
     "isomorphic-fetch": "2.2.1",

@@ -1,12 +1,12 @@
 import React, {Component, propTypes} from 'react';
-import Checkbox from '../checkbox';
-import Input from '../input';
-import Button, {ButtonTypes, ButtonSizes} from '../button';
-import Dropdown from '../dropdown';
-import Header, {HeaderTypes} from '../header';
+import Checkbox from '../../checkbox';
+import Input from '../../input';
+import Button, {ButtonTypes, ButtonSizes} from '../../button';
+import Dropdown from '../../dropdown';
+import Header, {HeaderTypes} from '../../header';
 import './announcement-form.scss';
-import Textarea from '../textarea';
-import InputRange from '../input-range';
+import Textarea from '../../textarea';
+import InputRange from '../../input-range';
 
 let example = [
     {
@@ -110,10 +110,16 @@ class AnnouncementForm extends Component {
                     value={pricePerMonth}
                     onChange={this.onCheckboxClick}
                 />
-
-                <InputRange value={room} maxValue={10} onChangeValue={this.onInputRangeChange}/>
-                <InputRange value={livingPlaces} maxValue={10} onChangeValue={this.onInputRangeChange}/>
-
+                <div className="announcement-range-field">
+                    <p>Room<InputRange
+                        value={room}
+                        maxValue={10}
+                        onChangeValue={this.onInputRangeChange}/></p>
+                    <p>Living Places<InputRange
+                        value={livingPlaces}
+                        maxValue={10}
+                        onChangeValue={this.onInputRangeChange}/></p>
+                </div>
                 {amenties.map((item, index) =>
                     <div key={index}>
                         <Checkbox
@@ -125,18 +131,18 @@ class AnnouncementForm extends Component {
                     </div>
                 )}
                 <Textarea value={description} onChange={this.onInputChange}/>
-                <Button
-                    type={ButtonTypes.primary}
-                    size={ButtonSizes.medium}
-                    caption="Publish"
-
-                />
-                <Button
-                    type={ButtonTypes.danger}
-                    size={ButtonSizes.medium}
-                    caption="Discard"
-                />
-
+                <div className="announcement-btn-field">
+                    <Button
+                        type={ButtonTypes.primary}
+                        size={ButtonSizes.block}
+                        caption="Publish"
+                    />
+                    <Button
+                        type={ButtonTypes.danger}
+                        size={ButtonSizes.block}
+                        caption="Discard"
+                    />
+                </div>
 
             </div>
 

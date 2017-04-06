@@ -39,7 +39,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .passwordParameter("Password");
         http.logout().invalidateHttpSession(true).logoutSuccessUrl("/");
         http
-//                .antMatcher("/api/**")
                 .authorizeRequests()
 //                .antMatchers("/announcement").authenticated()
                 .antMatchers("/api/profile/**").authenticated()
