@@ -3,7 +3,7 @@
 @import "../../style/sizes.scss";
 
 .dropdown {
-
+  margin: 6px 0;
   .dropdown-disabled {
     background-color: $btn-disabled-color !important;
     border: 2px solid $btn-disabled-color !important;
