@@ -13,6 +13,7 @@ class AnnouncementControl extends Component {
     }
 
     onCheckboxClick = () => this.setState({visibility: !this.state.visibility});
+    deleteAnnouncement = () => this.props.onDelete(this.props.id);
 
     render() {
         const {
@@ -22,7 +23,6 @@ class AnnouncementControl extends Component {
         return (
             <div className="announcement-item">
                 <AnnouncementPreview {...this.props}/>
-
                 <div className="announcement-buttons">
                     <Checkbox
                         className="hide-announcement"
@@ -30,17 +30,16 @@ class AnnouncementControl extends Component {
                         checked={visibility}
                         disabled={false}
                     >Hide</Checkbox>
-
                     <Button
                         type={ButtonTypes.primary}
                         size={ButtonSizes.small}
                         caption="Edit"
-
                     />
                     <Button
                         type={ButtonTypes.danger}
                         size={ButtonSizes.small}
                         caption="Delete"
+                        onClick={this.deleteAnnouncement}
                     />
                 </div>
             </div>

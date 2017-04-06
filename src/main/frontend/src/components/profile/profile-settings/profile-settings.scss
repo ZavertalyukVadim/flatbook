@@ -22,3 +22,10 @@
  .modal .modal-content {
    width: 30%;
  }
+
+ .contact-info-header {
+   display: flex;
+   flex-direction: row;
+   justify-content: space-between;
+   align-items: baseline;
+ }

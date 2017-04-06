@@ -111,14 +111,14 @@ class AnnouncementForm extends Component {
                     onChange={this.onCheckboxClick}
                 />
                 <div className="announcement-range-field">
-                    <p>Room<InputRange
+                    <div>Room<InputRange
                         value={room}
                         maxValue={10}
-                        onChangeValue={this.onInputRangeChange}/></p>
-                    <p>Living Places<InputRange
+                        onChangeValue={this.onInputRangeChange}/></div>
+                    <div>Living Places<InputRange
                         value={livingPlaces}
                         maxValue={10}
-                        onChangeValue={this.onInputRangeChange}/></p>
+                        onChangeValue={this.onInputRangeChange}/></div>
                 </div>
                 {amenties.map((item, index) =>
                     <div key={index}>
