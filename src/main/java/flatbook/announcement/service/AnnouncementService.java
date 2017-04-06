@@ -390,9 +390,12 @@ public class AnnouncementService {
         announcementDao.delete(id);
         return null;
     }
-
+    @Transactional
     public Announcement createAnnouncement(Announcement announcement) {
+        announcement.setPhone(getCurrentUser().getPhones());
+        announcement.setEmail(getCurrentUser().getEmails());
         Announcement savedAnnouncement = saveAnnouncement(announcement);
+        System.out.println();
         AnnouncementByUser announcementByUser = new AnnouncementByUser();
         announcementByUser.setUserId(getCurrentUser().getId());
         announcementByUser.setAnnouncementId(savedAnnouncement.getId());
