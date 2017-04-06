@@ -1,23 +1,32 @@
 import React, {Component} from 'react';
-import Input from '../input';
-import Header, {HeaderTypes} from '../header';
-import Button, {ButtonTypes, ButtonSizes} from '../button';
+import {connect} from 'react-redux';
+import {getUser, updateUser} from '../../../actions/user-actions';
+import Input from '../../input';
+import Header, {HeaderTypes} from '../../header';
+import Button, {ButtonTypes, ButtonSizes} from '../../button';
 import './profile-settings.scss';
-import Checkbox from '../checkbox';
+import Checkbox from '../../checkbox';
+import ChangePassword from '../../change-password';
 
 class ProfileSettings extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            email: props.email,
-            firstName: props.firstName,
-            lastName: props.lastName,
-            phones: props.phones,
-            emails: props.emails,
-            notifications: false
+
+            id: 2
         }
     }
 
+    componentDidMount() {
+        this.props.getUser();
+        console.log(this.props);
+    }
+
+    componentWillReceiveProps(nextProps) {
+        if (nextProps !== this.props) {
+            this.setState({...nextProps.user.data});
+        }
+    }
     onChangePassword = () => console.log(this.state);
 
     onInputChange = name => e => this.setState({[name]: e.target.value});
@@ -34,14 +43,17 @@ class ProfileSettings extends Component {
         [name]: this.state[name].filter((item, index) => idx !== index)
     });
 
+    onSubmit = () => {
+        console.log(this.state);
+        this.props.updateUser(this.state)};
 
-    renderInputs = name =>
+    renderInputs = (name, placeholder) =>
         <div>
             {this.state[name].map((item, index) =>
                 <div key={index} className="contact-info-field">
                     <Input
-                        placeholder={name}
-                        value={item.value}
+                        placeholder={placeholder}
+                        value={item.address}
                         onChange={this.onArrayChange(name, index)}
                     />
                     <Button
@@ -54,26 +66,19 @@ class ProfileSettings extends Component {
             )}
             <Button
                 type={ButtonTypes.link}
-
                 caption="Add more"
                 onClick={this.addNewInput(name)}
             />
         </div>;
 
-
     render() {
         return (
             <div className="profile-settings-field">
-                <div className="profile-settings">
+                {this.props.user.loaded ? (
+                    <div className="profile-settings">
                     <Header
                         type={HeaderTypes.primary}
                         value="Profile Settings"
-                    />
-                    <Input
-                        type="text"
-                        placeholder="Email"
-                        value={this.state.email}
-                        onChange={this.onInputChange('email')}
                     />
                     <Input
                         type="text"
@@ -87,21 +92,15 @@ class ProfileSettings extends Component {
                         value={this.state.lastName}
                         onChange={this.onInputChange('lastName')}
                     />
-
-                    <Button
-                        onClick={this.onChangePassword}
-                        type={ButtonTypes.primary}
-                        size={ButtonSizes.block}
-                        caption="Change Password"
-                    />
+                    <ChangePassword/>
                     <div className="contact-info">
                         <Header
                             type={HeaderTypes.primary}
                             value="Contact Info"
                         />
-                        {this.renderInputs('phones')}
+                        {this.renderInputs('phones', 'Phone')}
 
-                        {this.renderInputs('emails')}
+                        {this.renderInputs('emails', 'Email')}
                         <Checkbox
                             checked={this.state.notifications}
                             onClick={this.onCheckboxClick}>
@@ -111,30 +110,14 @@ class ProfileSettings extends Component {
                             type={ButtonTypes.primary}
                             size={ButtonSizes.block}
                             caption="Save"
-                            onClick={this.onChangePassword}
+                            onClick={this.onSubmit}
                         />
                     </div>
-                </div>
+                </div>) : (<div>Loading</div>)}
             </div>
         );
     }
 }
 
-let phones = [
-    {value: ' 3800000001'},
-    {value: ' 3800000002'}
+export default connect(({user}) => ({user: user}), {getUser, updateUser})(ProfileSettings);
 
-];
-
-let emails = [
-    {value: 'juliakukuliak@gmail.com1'},
-    {value: 'juliakukuliak@gmail.com2'}
-
-];
-
-ProfileSettings.defaultProps = {
-    phones: phones,
-    emails: emails
-};
-
-export default ProfileSettings;

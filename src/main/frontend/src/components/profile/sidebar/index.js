@@ -1,5 +1,5 @@
 import React from 'react';
-import AvatarContainer from '../avatar-container';
+import AvatarContainer from '../../avatar-container';
 import {Link} from 'react-router-dom';
 import './sidebar.scss';
 

@@ -1,6 +1,6 @@
 import React from 'react';
 import Container from '../../../components/container';
-import Sidebar from '../../../components/sidebar';
+import Sidebar from '../../../components/profile/sidebar';
 
 const Favourite = () => {
  return (

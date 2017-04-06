@@ -1,25 +1,36 @@
-import {
-    GET_USER_REQUEST,
-    GET_USER_SUCCESS,
-    GET_USER_FAILURE
-} from '../actions/user-constants';
+import * as ActionTypes from '../actions/user-constants';
 
 const DEFAULT_STATE = {
-    data: {}
+    data: {
+        phones: [],
+        emails: []
+    },
+    loaded: false
 };
 
-export default (state = DEFAULT_STATE, action) => {
+export const user = (state = DEFAULT_STATE, action) => {
 
-    if (action.type === GET_USER_REQUEST) {
-        return {...state};
+    if (action.type === ActionTypes.GET_USER_REQUEST) {
+        return {...state, loaded: false};
     }
 
-    if (action.type === GET_USER_SUCCESS) {
-        return {...state};
+    if (action.type === ActionTypes.GET_USER_SUCCESS) {
+        return {...state, data: action.response, loaded: true};
     }
 
-    if (action.type === GET_USER_FAILURE) {
-        return {...state};
+    if (action.type === ActionTypes.GET_USER_FAILURE) {
+        return {...state, loaded: false};
+    }
+    if (action.type === ActionTypes.UPDATE_USER_REQUEST) {
+        return {...state, loaded: false};
+    }
+
+    if (action.type === ActionTypes.UPDATE_USER_SUCCESS) {
+        return {...state, data: action.response, loaded: true};
+    }
+
+    if (action.type === ActionTypes.UPDATE_USER_FAILURE) {
+        return {...state, loaded: false};
     }
 
     return state;
