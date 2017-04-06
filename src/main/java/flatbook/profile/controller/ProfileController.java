@@ -77,6 +77,11 @@ public class ProfileController {
         profileService.markFavorite(id);
     }
 
+    @DeleteMapping(value = "/{id}/removeFromFavorite")
+    public void removeFromFavorite(@PathVariable("id") Integer id){
+        profileService.removeFromFavorite(id);
+    }
+
     @PostMapping(value = "/favorites")
     public List<Announcement> getLikedAnnouncementsByUser(){
         return profileService.getLikedAnnouncementsByUser();

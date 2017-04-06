@@ -400,6 +400,11 @@ public class ProfileService {
         return announcements;
     }
 
+    @org.springframework.transaction.annotation.Transactional
+    public void removeFromFavorite(Integer announcementId){
+        favoriteAnnouncementInUserDao.deleteFavoriteAnnouncementInUserByAnnouncementIdAndUserId(announcementId,getCurrentUser().getId());
+    }
+
     public void markFavorite(Integer id) {
         FavoriteAnnouncementInUser favoriteAnnouncementInUser = new FavoriteAnnouncementInUser();
         favoriteAnnouncementInUser.setUserId(getCurrentUser().getId());

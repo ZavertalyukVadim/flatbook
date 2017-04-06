@@ -27,6 +27,7 @@ class ProfileSettings extends Component {
             this.setState({...nextProps.user.data});
         }
     }
+
     onChangePassword = () => console.log(this.state);
 
     onInputChange = name => e => this.setState({[name]: e.target.value});
@@ -45,15 +46,28 @@ class ProfileSettings extends Component {
 
     onSubmit = () => {
         console.log(this.state);
-        this.props.updateUser(this.state)};
+        this.props.updateUser(this.state)
+    };
 
     renderInputs = (name, placeholder) =>
         <div>
+            <div className="contact-info-header">
+                <Header
+
+                    value={placeholder}
+                />
+                <Button
+                    type={ButtonTypes.link}
+                    caption="Add more"
+                    onClick={this.addNewInput(name)}
+                />
+            </div>
             {this.state[name].map((item, index) =>
                 <div key={index} className="contact-info-field">
+
                     <Input
                         placeholder={placeholder}
-                        value={item.address}
+                        value={item.content}
                         onChange={this.onArrayChange(name, index)}
                     />
                     <Button
@@ -64,56 +78,50 @@ class ProfileSettings extends Component {
                     />
                 </div>
             )}
-            <Button
-                type={ButtonTypes.link}
-                caption="Add more"
-                onClick={this.addNewInput(name)}
-            />
         </div>;
-
     render() {
         return (
             <div className="profile-settings-field">
                 {this.props.user.loaded ? (
                     <div className="profile-settings">
-                    <Header
-                        type={HeaderTypes.primary}
-                        value="Profile Settings"
-                    />
-                    <Input
-                        type="text"
-                        placeholder="First name"
-                        value={this.state.firstName}
-                        onChange={this.onInputChange('firstName')}
-                    />
-                    <Input
-                        type="text"
-                        placeholder="Last name"
-                        value={this.state.lastName}
-                        onChange={this.onInputChange('lastName')}
-                    />
-                    <ChangePassword/>
-                    <div className="contact-info">
                         <Header
                             type={HeaderTypes.primary}
-                            value="Contact Info"
+                            value="Profile Settings"
                         />
-                        {this.renderInputs('phones', 'Phone')}
+                        <Input
+                            type="text"
+                            placeholder="First name"
+                            value={this.state.firstName}
+                            onChange={this.onInputChange('firstName')}
+                        />
+                        <Input
+                            type="text"
+                            placeholder="Last name"
+                            value={this.state.lastName}
+                            onChange={this.onInputChange('lastName')}
+                        />
+                        <ChangePassword/>
+                        <div className="contact-info">
+                            <Header
+                                type={HeaderTypes.primary}
+                                value="Contact Info"
+                            />
+                            {this.renderInputs('phones', 'Phone')}
 
-                        {this.renderInputs('emails', 'Email')}
-                        <Checkbox
-                            checked={this.state.notifications}
-                            onClick={this.onCheckboxClick}>
-                            Send me notifications from this site
-                        </Checkbox>
-                        <Button
-                            type={ButtonTypes.primary}
-                            size={ButtonSizes.block}
-                            caption="Save"
-                            onClick={this.onSubmit}
-                        />
-                    </div>
-                </div>) : (<div>Loading</div>)}
+                            {this.renderInputs('emails', 'Email')}
+                            <Checkbox
+                                checked={this.state.notifications}
+                                onClick={this.onCheckboxClick}>
+                                Send me notifications from this site
+                            </Checkbox>
+                            <Button
+                                type={ButtonTypes.primary}
+                                size={ButtonSizes.block}
+                                caption="Save"
+                                onClick={this.onSubmit}
+                            />
+                        </div>
+                    </div>) : (<div>Loading</div>)}
             </div>
         );
     }

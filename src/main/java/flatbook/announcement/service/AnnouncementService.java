@@ -52,7 +52,7 @@ public class AnnouncementService {
     }
 
     public List<Announcement> getAllAnnouncement() {
-        List<Announcement> list = announcementDao.findAll();
+        List<Announcement> list = announcementDao.getAllByVisibilityTrue();
         list.sort(Comparator.comparing(Announcement::getLastUpdated));
         return list;
     }

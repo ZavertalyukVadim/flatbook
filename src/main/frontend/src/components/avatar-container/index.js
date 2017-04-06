@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import Avatar from '../avatar';
 import Button, {ButtonTypes, ButtonSizes} from '../button';
+import {noop} from 'lodash';
 
 class AvatarContainer extends Component {
  constructor(props) {
@@ -23,6 +24,7 @@ class AvatarContainer extends Component {
                  type={ButtonTypes.primary}
                  size={ButtonSizes.medium}
                  caption="Add Photo"
+                 onClick={noop}
              />
          </div>
      );
