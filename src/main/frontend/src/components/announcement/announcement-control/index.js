@@ -8,7 +8,7 @@ class AnnouncementControl extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            visibility: props.visibility
+            visibility: !props.visibility
         }
     }
 
@@ -47,6 +47,5 @@ class AnnouncementControl extends Component {
         )
     }
 }
-
 
 export default  AnnouncementControl;

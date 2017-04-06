@@ -18,7 +18,7 @@ class AnnouncementPreview extends Component {
 
         return (
             <div>
-                {photos.length > 1 ? <Carousel slides={photos}/> : <Image src={photos[0]}/>}
+                {photos.length > 1 ? <Carousel slides={photos}/> : <Image src={photos[0]}/> ||  <Image/>}
                 <div className="announcement-description-field">
                     <div className="announcement-description">
                         {title && <Header value={title} type={HeaderTypes.secondary}/>}

@@ -1,4 +1,6 @@
-import React from 'react';
+import React, {Component} from 'react';
+import {connect} from 'react-redux';
+import {getUserAnnouncements} from '../../actions/user-actions';
 import Container from '../../components/container';
 import Sidebar from '../../components/profile/sidebar';
 import AnnouncementControl from '../../components/announcement/announcement-control';
@@ -44,32 +46,48 @@ let example = [{
         pricePerMonth: '1234,56'
     }];
 
-const Profile = () => {
-    return (
-        <Container
-            sidebar={
-                <Sidebar/>
-            }
-        >
-            <div className="announcements-field">
-                <div className="create-announcement-link">
-                    <Link to='/profile/create-announcement'>
-                        <Button
-                            type={ButtonTypes.primary}
-                            size={ButtonSizes.medium}
-                            onClick={noop}
-                            caption="Create Announcement"
-                        />
-                    </Link>
-                </div>
-                {example.map((item, index) =>
-                    <AnnouncementControl
-                        {...item}
-                    />)
+class Profile extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            id: 2
+        }
+    }
+
+    componentDidMount() {
+        this.props.getUserAnnouncements();
+        console.log(this.props);
+    }
+
+
+    render() {
+        return (
+            <Container
+                sidebar={
+                    <Sidebar/>
                 }
-            </div>
-        </Container>
-    );
+            >
+                <div className="announcements-field">
+                    <div className="create-announcement-link">
+                        <Link to='/profile/create-announcement'>
+                            <Button
+                                type={ButtonTypes.primary}
+                                size={ButtonSizes.medium}
+                                onClick={noop}
+                                caption="Create Announcement"
+                            />
+                        </Link>
+                    </div>
+                    {this.props.user.announcements.map((item, index) =>
+                        <AnnouncementControl
+                            key={index}
+                            {...item}
+                        />)
+                    }
+                </div>
+            </Container>
+        );
+    }
 };
 
-export default Profile;
+export default connect(({user}) => ({user: user}), {getUserAnnouncements})(Profile);

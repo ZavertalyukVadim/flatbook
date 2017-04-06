@@ -21,6 +21,26 @@ export const getUser = id => (dispatch, getState) => {
     });
 };
 
+export const getUserAnnouncements = id => (dispatch, getState) => {
+    const {user: {pending}} = getState();
+
+    if (pending) {
+        return null;
+    }
+
+    return dispatch({
+        [CALL_API]: {
+            types: [
+                ActionTypes.GET_USER_ANNOUNCEMENTS_REQUEST,
+                ActionTypes.GET_USER_ANNOUNCEMENTS_SUCCESS,
+                ActionTypes.GET_USER_ANNOUNCEMENTS_FAILURE
+            ],
+            endpoint: () => get('announcement/')
+        }
+    });
+};
+
+
 export const signin = user => dispatch => {
 
     return dispatch({
