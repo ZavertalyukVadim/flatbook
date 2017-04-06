@@ -1,7 +1,6 @@
 package flatbook.profile.controller;
 
 import flatbook.announcement.entity.Announcement;
-import flatbook.profile.entity.Email;
 import flatbook.profile.entity.User;
 import flatbook.profile.service.ProfileService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,11 +46,11 @@ public class ProfileController {
         return profileService.getUserById(id);
     }
 
-    @RequestMapping(value = "/primaryemail", method = RequestMethod.POST)
-    public Email update(@RequestBody User user) {
-        profileService.update(user);
-        return null;
-    }
+//    @RequestMapping(value = "/primaryemail", method = RequestMethod.POST)
+//    public Email update(@RequestBody User user) {
+//        profileService.update(user);
+//        return null;
+//    }
 
     @RequestMapping(value = "/test", method = RequestMethod.GET)
     public void test() {
@@ -87,6 +86,11 @@ public class ProfileController {
     @PostMapping(value = "/myAnnouncements")
     public List<Announcement> getAnnouncementsByUser(){
         return profileService.getAnnouncementsByUser();
+    }
+
+    @PutMapping(value = "")
+    public User updateUser(@RequestBody User user) throws Exception {
+        return profileService.update(user);
     }
 
     @GetMapping(value = "/issigned")

@@ -87,4 +87,5 @@ public class SinglePageAppConfig extends WebMvcConfigurerAdapter {
             return handledExtensions.stream().anyMatch(ext -> ext.equals(extension));
         }
     }
+
 }

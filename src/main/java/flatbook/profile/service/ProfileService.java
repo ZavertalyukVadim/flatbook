@@ -96,20 +96,36 @@ public class ProfileService {
         return null;
     }
 
-    public User update(User user) {
-        if (!isUserEqualsToSecurityUser(user)) return null;
+    @Transactional
+    public User update(User user) throws Exception {
+        if ( user.getEmails().stream().anyMatch(email -> email.getPrimary())) throw new Exception("You can`t change primary email");
+
+        Set<Email> emailsSet = user.getEmails();
 
         User oldUser = userDao.findOne(user.getId());
-        if (!oldUser.equals(user)) return null;
+        if (!getCurrentUser().equals(oldUser)) throw new Exception("User is not current user");
+
+        emailsSet.add(getPrimaryEmail());
+
+        oldUser.setEmails(emailsSet);
+        oldUser.setFirstName(user.getFirstName());
+        oldUser.setLastName(user.getLastName());
+        oldUser.setPhones(user.getPhones());
+
+        for (Email email1 : emailsSet) email1.setUser(oldUser);
+        for (Phone phone : oldUser.getPhones()) phone.setPhonesUser(oldUser);
 
         return userDao.save(oldUser);
     }
 
     public User getCurrentUser() {
         Email email = emailDao.findOneByContent(getUserEmail());
+        User user = email.getUser();
 
-        User user = userDao.getUserByEmails(email);
-        return userDao.getUserByEmails(email);
+        return user;
+
+//        User user = userDao.getUserByEmails(email);
+//        return userDao.getUserByEmails(email);
     }
 
     public User getUserById(Integer id) {
@@ -240,7 +256,7 @@ public class ProfileService {
     }
 
     public Email getPrimaryEmail() throws Exception {
-        Email primary = getCurrentUser().getEmails().stream().filter(email -> email.getPrimary()).findFirst().get();
+        Email primary = getCurrentUser().getEmails().stream().filter(Email::getPrimary).findFirst().get();
         if (primary == null) throw new Exception("There is no primary email");
 
         return primary;
@@ -369,7 +385,7 @@ public class ProfileService {
     public List<Announcement> getAnnouncementsByUser() {
         List<Announcement> announcements = new ArrayList<>();
         List<AnnouncementByUser> announcementByUser = announcementByUserDao.getAnnouncementIdByUserId(getCurrentUser().getId());
-        for (AnnouncementByUser i : announcementByUser ) {
+        for (AnnouncementByUser i : announcementByUser) {
             announcements.add(announcementDao.getAnnouncementById(i.getAnnouncementId()));
         }
         return announcements;
@@ -378,7 +394,7 @@ public class ProfileService {
     public List<Announcement> getLikedAnnouncementsByUser() {
         List<Announcement> announcements = new ArrayList<>();
         List<FavoriteAnnouncementInUser> announcementByUser = favoriteAnnouncementInUserDao.getAnnouncementIdByUserId(getCurrentUser().getId());
-        for (FavoriteAnnouncementInUser i : announcementByUser ) {
+        for (FavoriteAnnouncementInUser i : announcementByUser) {
             announcements.add(announcementDao.getAnnouncementById(i.getAnnouncementId()));
         }
         return announcements;
