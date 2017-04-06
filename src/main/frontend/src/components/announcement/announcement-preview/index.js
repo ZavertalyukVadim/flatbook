@@ -17,7 +17,7 @@ class AnnouncementPreview extends Component {
         } = this.props;
 
         return (
-            <div>
+            <div className="announcement-preview">
                 {photos.length > 1 ? <Carousel slides={photos}/> : <Image src={photos[0]}/> ||  <Image/>}
                 <div className="announcement-description-field">
                     <div className="announcement-description">
