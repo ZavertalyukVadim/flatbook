@@ -51,8 +51,8 @@ const get = (url, extraParams = {}) =>
     fetch(urlResolver(url, extraParams));
 
 const POST_CONFIG = {method: 'POST', headers: {'Content-Type': CONTENT_TYPE_JSON}};
-const post = (url, body, extraParams = {}) =>
-    fetch(urlResolver(url, extraParams), {...POST_CONFIG, body: JSON.stringify(body)});
+const post = (url, body, extraParams = {}, headers = {}) =>
+    fetch(urlResolver(url, extraParams), {...POST_CONFIG, ...headers, body: JSON.stringify(body)});
 
 const PUT_CONFIG = {method: 'PUT', headers: {'Content-Type': CONTENT_TYPE_JSON}};
 const put = (url, body, extraParams = {}) =>
