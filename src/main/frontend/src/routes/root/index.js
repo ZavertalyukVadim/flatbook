@@ -1,10 +1,8 @@
 import React from 'react';
-import {Link} from 'react-router-dom';
 import Container from '../../components/container';
-import Search from '../../components/search-form';
+import SearchForm from '../../components/search/search-form';
 
 export default ({history}) =>
     <Container>
-        <Search redirect={path => history.push(path)}/>
-        <Link to="/showroom">Showroom</Link>
+        <SearchForm redirect={path => history.push(path)}/>
     </Container>;
