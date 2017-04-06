@@ -50,7 +50,7 @@ export default store => next => action => {
 const get = (url, extraParams = {}) =>
     fetch(urlResolver(url, extraParams));
 
-const POST_CONFIG = {method: 'POST', headers: {'Content-Type': CONTENT_TYPE_JSON}};
+const POST_CONFIG = {method: 'POST', mode: 'cors', headers: {'Content-Type': CONTENT_TYPE_JSON}};
 const post = (url, body, extraParams = {}, headers = {}) =>
     fetch(urlResolver(url, extraParams), {...POST_CONFIG, ...headers, body: JSON.stringify(body)});
 

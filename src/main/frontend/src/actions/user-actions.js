@@ -50,7 +50,11 @@ export const signin = user => dispatch => {
                 ActionTypes.SIGN_IN_SUCCESS,
                 ActionTypes.SIGN_IN_FAILURE
             ],
-            endpoint: () => post('login', {}, {}, {headers: {'Authorization': `basic: ${base64.encode(`${user.email}:${user.password}`)}`}})
+            endpoint: () => post('login', {}, {}, {
+                headers: {
+                    'Authorization': `basic: ${base64.encode(`${user.email}:${user.password}`)}`
+                }
+            })
         }
     });
 };
