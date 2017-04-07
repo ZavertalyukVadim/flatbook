@@ -40,15 +40,16 @@ class AnnouncementForm extends Component {
         }
     }
 
-    onInputChange = e => this.setState({value: e.target.value});
-    onCheckboxClick = () => this.setState({visibility: !this.state.visibility});
-    onInputRangeChange = value => this.setState({inputRange: value});
+    onInputChange = name => e => this.setState({[name]: e.target.value});
+    onInputRangeChange = (name, value) => e => this.setState({[name]: value});
+    onArrayChange = (name, idx) => e => this.setState({
+        [name]: this.state[name].map((item, index) => idx === index ? {value: e.target.value} : item)
+    });
 
     render() {
         const {
             region,
             description,
-            photos,
             pricePerDay,
             pricePerMonth,
             title,
@@ -70,7 +71,7 @@ class AnnouncementForm extends Component {
                 <Input
                     placeholder='Fill in title'
                     value={title}
-                    onChange={this.onCheckboxClick}
+                    onChange={this.onInputChange('title')}
                 />
                 <Dropdown
                     defaultMassage="Choose country"
@@ -93,32 +94,38 @@ class AnnouncementForm extends Component {
                 <Input
                     placeholder='Street'
                     value={street}
-                    onChange={this.onCheckboxClick}
+                    onChange={this.onInputChange('street')}
                 />
                 <Input
                     placeholder='Apartment'
                     value={apartment}
-                    onChange={this.onCheckboxClick}
+                    onChange={this.onInputChange('apartment')}
                 />
                 <Input
                     placeholder='Price per day'
                     value={pricePerDay}
-                    onChange={this.onCheckboxClick}
+                    onChange={this.onInputChange('pricePerDay')}
                 />
                 <Input
                     placeholder='Price per month'
                     value={pricePerMonth}
-                    onChange={this.onCheckboxClick}
+                    onChange={this.onInputChange('pricePerMonth')}
                 />
                 <div className="announcement-range-field">
-                    <div>Room<InputRange
-                        value={room}
-                        maxValue={10}
-                        onChangeValue={this.onInputRangeChange}/></div>
-                    <div>Living Places<InputRange
-                        value={livingPlaces}
-                        maxValue={10}
-                        onChangeValue={this.onInputRangeChange}/></div>
+                    <div>Room
+                        <InputRange
+                            value={room}
+                            maxValue={10}
+                            onChangeValue={this.onInputRangeChange('room')}
+                        />
+                    </div>
+                    <div>Living Places
+                        <InputRange
+                            value={livingPlaces}
+                            maxValue={10}
+                            onChangeValue={this.onInputRangeChange('livingPlaces')}
+                        />
+                    </div>
                 </div>
                 {amenties.map((item, index) =>
                     <div key={index}>
@@ -130,13 +137,16 @@ class AnnouncementForm extends Component {
                         >{item.value}</Checkbox>
                     </div>
                 )}
-                <Textarea value={description} onChange={this.onInputChange}/>
+                <Textarea value={description} onChange={this.onInputChange('description')}/>
                 <div className="announcement-btn-field">
+
                     <Button
                         type={ButtonTypes.primary}
                         size={ButtonSizes.block}
                         caption="Publish"
+                        className="announcement-btn"
                     />
+
                     <Button
                         type={ButtonTypes.danger}
                         size={ButtonSizes.block}
