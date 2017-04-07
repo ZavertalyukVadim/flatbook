@@ -8,8 +8,10 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.AuthenticationEntryPoint;
+import org.springframework.security.web.session.SessionManagementFilter;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -17,8 +19,14 @@ import javax.servlet.http.HttpServletResponse;
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
+    private final CustomUserDetailService userDetailsService;
+//    private final CustomUsernamePasswordAuthenticationProvider customUsernamePasswordAuthenticationProvider;
+
     @Autowired
-    private CustomUserDetailService userDetailsService;
+    public SecurityConfig(CustomUserDetailService userDetailsService) {
+        this.userDetailsService = userDetailsService;
+//        this.customUsernamePasswordAuthenticationProvider = customUsernamePasswordAuthenticationProvider;
+    }
 
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder builder) throws Exception {
@@ -29,26 +37,29 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.httpBasic()
-            .and()
-                .csrf().disable()
-                .formLogin()
-                .loginProcessingUrl("/api/login")
-                .defaultSuccessUrl("/", true)
-                .usernameParameter("Username")
-                .passwordParameter("Password")
-            .and()
-                .logout()
-                .logoutUrl("/api/logout")
-                .invalidateHttpSession(true)
-                .logoutSuccessUrl("/");
         http
-                .authorizeRequests()
+            .httpBasic().and()
+            .addFilterBefore(new CORSFilter(), SessionManagementFilter.class)
+            .csrf().disable().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
+            .formLogin().permitAll()
+            .loginProcessingUrl("/api/login")
+            .defaultSuccessUrl("/", true)
+            .usernameParameter("username")
+            .passwordParameter("password")
+            .failureForwardUrl("/")
+        .and()
+            .logout().permitAll()
+            .logoutUrl("/api/logout")
+            .invalidateHttpSession(true)
+            .logoutSuccessUrl("/")
+        .and()
+            .authorizeRequests()
 //                .antMatchers("/announcement").authenticated()
-                .antMatchers("/api/profile/**").authenticated()
-                .antMatchers("/**").permitAll();
-        http.exceptionHandling()
-                .authenticationEntryPoint(unauthorizedEntryPoint());
+            .antMatchers("/api/profile/**").authenticated()
+            .antMatchers("/**").permitAll()
+        .and()
+            .exceptionHandling()
+            .authenticationEntryPoint(unauthorizedEntryPoint());
     }
 
     @Bean
@@ -56,4 +67,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return (request, response, authException)
                 -> response.sendError(HttpServletResponse.SC_UNAUTHORIZED);
     }
+
+//    @Override
+//    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+//        auth.authenticationProvider(customUsernamePasswordAuthenticationProvider);
+//    }
 }

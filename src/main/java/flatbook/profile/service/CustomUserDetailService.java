@@ -32,6 +32,15 @@ public class CustomUserDetailService implements UserDetailsService {
         return getUserDetails(user, email);
     }
 
+    public User getUserByUsername(String username) {
+        Email email = emailDao.findOneByContent(username);
+
+        if (email == null)
+            throw new UsernameNotFoundException("invalid user");
+
+        return email.getUser();
+    }
+
     private UserDetails getUserDetails(User user, Email email) {
         String password = user.getPassword();
         String userName = email.getContent();
