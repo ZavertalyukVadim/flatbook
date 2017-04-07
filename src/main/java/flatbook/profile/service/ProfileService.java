@@ -98,14 +98,24 @@ public class ProfileService {
 
     @Transactional
     public User update(User user) throws Exception {
-        if ( user.getEmails().stream().anyMatch(email -> email.getPrimary())) throw new Exception("You can`t change primary email");
+        if ( !user.getEmails().stream().anyMatch(email -> {
+            Email primary = null;
+            try {
+                primary = getPrimaryEmail();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+           return email.equals(primary) && email.getPrimary();
+
+        })) throw new Exception("You can`t change primary email");
 
         Set<Email> emailsSet = user.getEmails();
 
         User oldUser = userDao.findOne(user.getId());
         if (!getCurrentUser().equals(oldUser)) throw new Exception("User is not current user");
 
-        emailsSet.add(getPrimaryEmail());
+//        emailsSet.add(getPrimaryEmail());
 
         oldUser.setEmails(emailsSet);
         oldUser.setFirstName(user.getFirstName());
