@@ -7,4 +7,5 @@ import java.util.List;
 
 public interface FavoriteAnnouncementInUserDao extends JpaRepository<FavoriteAnnouncementInUser,Integer> {
     List<FavoriteAnnouncementInUser> getAnnouncementIdByUserId(Integer id);
+    Integer deleteFavoriteAnnouncementInUserByAnnouncementIdAndUserId(Integer announcementId, Integer userId);
 }

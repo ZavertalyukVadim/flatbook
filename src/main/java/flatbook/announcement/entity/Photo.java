@@ -13,7 +13,7 @@ public class Photo {
     @Column(name = "photo_id", nullable = false)
     private Integer id;
 
-    @Column(name = "image", columnDefinition = "varbinary(999999)")
+    @Column(name = "image", columnDefinition = "MEDIUMBLOB")
     private byte[] image;
 
     @Column(name = "title")

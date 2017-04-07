@@ -46,5 +46,17 @@ export const user = (state = DEFAULT_STATE, action) => {
         return {...state, loaded: false};
     }
 
+    if (action.type === ActionTypes.DELETE_USER_ANNOUNCEMENTS_REQUEST) {
+        return {...state, loaded: false};
+    }
+
+    if (action.type === ActionTypes.DELETE_USER_ANNOUNCEMENTS_SUCCESS) {
+        return {...state, announcements: state.user.announcements.filter(obj => obj.id !== action.response.id), loaded: true};
+    }
+
+    if (action.type === ActionTypes.DELETE_USER_ANNOUNCEMENTS_FAILURE) {
+        return {...state, loaded: false};
+    }
+
     return state;
 };

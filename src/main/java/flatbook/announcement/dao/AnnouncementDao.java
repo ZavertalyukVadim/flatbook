@@ -53,4 +53,6 @@ public interface AnnouncementDao extends JpaRepository<Announcement, Integer> {
     List<Announcement> getAnnouncementByCityOrderByPricePerMonthDesc(City city);
 
     Announcement getAnnouncementById(Integer id);
+
+    List<Announcement> getAllByVisibilityTrue();
 }

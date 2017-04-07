@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {getUserAnnouncements} from '../../actions/user-actions';
+import {getUserAnnouncements, deleteAnnouncement} from '../../actions/user-actions';
 import Container from '../../components/container';
 import Sidebar from '../../components/profile/sidebar';
 import AnnouncementControl from '../../components/announcement/announcement-control';
@@ -59,6 +59,8 @@ class Profile extends Component {
         console.log(this.props);
     }
 
+    onDelete = id => this.props.deleteAnnouncement(id);
+
 
     render() {
         return (
@@ -82,12 +84,15 @@ class Profile extends Component {
                         <AnnouncementControl
                             key={index}
                             {...item}
-                        />)
+                            onDelete={this.onDelete}
+                        />
+                        )
                     }
                 </div>
             </Container>
         );
     }
-};
+}
+;
 
-export default connect(({user}) => ({user: user}), {getUserAnnouncements})(Profile);
+export default connect(({user}) => ({user: user}), {getUserAnnouncements, deleteAnnouncement})(Profile);
