@@ -213,7 +213,7 @@ public class AnnouncementService {
         announcement.setAmenities(amenityList);
         announcement.setPhotos(photos);
         announcementDao.save(announcement);
-        for (Photo photoFor:announcement.getPhotos()){
+        for (Photo photoFor : announcement.getPhotos()) {
             photoFor.setAnnouncement(announcement);
             photoDao.save(photoFor);
         }
@@ -440,8 +440,7 @@ public class AnnouncementService {
         announcement.setLivingPlaces(newAnnouncement.getLivingPlaces());
         announcement.setAmenities(newAnnouncement.getAmenities());
         announcement.setPhotos(newAnnouncement.getPhotos());
-        announcement.setPhone(newAnnouncement.getPhone());
-        announcement.setEmail(newAnnouncement.getEmail());
+        announcement.setUser(getCurrentUser());
         announcement.setDistrict(newAnnouncement.getDistrict());
         announcementDao.save(announcement);
         return announcement;
@@ -451,12 +450,11 @@ public class AnnouncementService {
         announcementDao.delete(id);
         return null;
     }
+
     @Transactional
     public Announcement createAnnouncement(Announcement announcement) {
-        announcement.setPhone(getCurrentUser().getPhones());
-        announcement.setEmail(getCurrentUser().getEmails());
+        announcement.setUser(getCurrentUser());
         Announcement savedAnnouncement = saveAnnouncement(announcement);
-        System.out.println();
         AnnouncementByUser announcementByUser = new AnnouncementByUser();
         announcementByUser.setUserId(getCurrentUser().getId());
         announcementByUser.setAnnouncementId(savedAnnouncement.getId());
