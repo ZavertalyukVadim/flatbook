@@ -14,6 +14,7 @@ import {
     getRegions,
     getCities
 } from '../../../actions/search-actions';
+import {saveAnnouncement} from '../../../actions/announcement-actions';
 
 class AnnouncementForm extends Component {
     constructor(props) {
@@ -64,6 +65,7 @@ class AnnouncementForm extends Component {
     });
     changeRooms = v => this.setState({rooms: v});
     changeLeavingPlaces = v => this.setState({livingPlaces: v});
+    onSaveAnnouncement = () => this.props.saveAnnouncement(this.state);
 
     render() {
         const {
@@ -170,7 +172,11 @@ class AnnouncementForm extends Component {
                             >{a.name}</Checkbox>
                         </div>
                     )}
-                <Textarea value={description} onChange={this.onInputChange('description')}/>
+                <Textarea
+                    value={description}
+                    onChange={this.onInputChange('description')}
+                    placeholder="description"
+                />
                 <div className="announcement-btn-field">
 
                     <Button
@@ -178,6 +184,7 @@ class AnnouncementForm extends Component {
                         size={ButtonSizes.block}
                         caption="Publish"
                         className="announcement-btn"
+                        onClick={this.onSaveAnnouncement}
                     />
 
                     <Button
@@ -237,5 +244,6 @@ export default connect(
     }), {
         getCountries,
         getRegions,
-        getCities
+        getCities,
+        saveAnnouncement
     })(AnnouncementForm);

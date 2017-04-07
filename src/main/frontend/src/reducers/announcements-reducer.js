@@ -3,7 +3,8 @@ import * as ActionTypes from '../actions/announcement-constants';
 const DEFAULT_STATE = {
     announcements: [],
     loaded: false,
-    pending: false
+    pending: false,
+    uploaded: ''
 };
 
 export const announcements = (state = DEFAULT_STATE, action) => {
@@ -18,6 +19,18 @@ export const announcements = (state = DEFAULT_STATE, action) => {
 
     if (action.type === ActionTypes.GET_ALL_ANNOUNCEMENTS_FAILURE) {
         return {...state, loaded: false, pending: false}
+    }
+
+    if (action.type === ActionTypes.UPDATE_ANNOUNCEMENT_REQUEST) {
+        return {...state};
+    }
+
+    if (action.type === ActionTypes.UPDATE_ANNOUNCEMENT_SUCCESS) {
+        return {...state, uploaded: action.response};
+    }
+
+    if (action.type === ActionTypes.UPDATE_ANNOUNCEMENT_FAILURE) {
+        return {...state}
     }
 
     return state;
