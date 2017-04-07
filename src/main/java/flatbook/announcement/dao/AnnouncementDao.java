@@ -54,5 +54,5 @@ public interface AnnouncementDao extends JpaRepository<Announcement, Integer> {
 
     Announcement getAnnouncementById(Integer id);
 
-    List<Announcement> getAllByVisibilityTrue();
+    List<Announcement> getAllByVisibilityTrueOrderByLastUpdatedDesc();
 }

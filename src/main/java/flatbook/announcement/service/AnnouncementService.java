@@ -16,7 +16,10 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.*;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 @Service
 @Transactional
@@ -57,9 +60,7 @@ public class AnnouncementService {
     }
 
     public List<Announcement> getAllAnnouncement() {
-        List<Announcement> list = announcementDao.getAllByVisibilityTrue();
-        list.sort(Comparator.comparing(Announcement::getLastUpdated));
-        return list;
+        return announcementDao.getAllByVisibilityTrueOrderByLastUpdatedDesc();
     }
 
     @Transactional
