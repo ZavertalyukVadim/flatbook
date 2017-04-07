@@ -19,18 +19,6 @@ public class PhotoService {
         return photoDao.findAll();
     }
 
-    public void test() {
-        Photo photo = new Photo();
-        photo.setTitle("photo");
-        photoDao.save(photo);
-        Photo photo1 = new Photo();
-        photo1.setTitle("photo1");
-        photoDao.save(photo1);
-        Photo photo2 = new Photo();
-        photo2.setTitle("photo2");
-        photoDao.save(photo2);
-    }
-
     public Photo getPhotoById(Integer id) {
         return photoDao.findOne(id);
     }

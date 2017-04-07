@@ -13,6 +13,7 @@ public class Photo {
     @Column(name = "photo_id", nullable = false)
     private Integer id;
 
+    @JsonIgnore
     @Column(name = "image", columnDefinition = "MEDIUMBLOB")
     private byte[] image;
 

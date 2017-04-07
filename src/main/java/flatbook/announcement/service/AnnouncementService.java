@@ -12,10 +12,11 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.Date;
-import java.util.List;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.*;
 
 @Service
 @Transactional
@@ -38,8 +39,10 @@ public class AnnouncementService {
 
     private final AnnouncementByUserDao announcementByUserDao;
 
+    private final PhotoDao photoDao;
+
     @Autowired
-    public AnnouncementService(AnnouncementDao announcementDao, CountryDao countryDao, RegionDao regionDao, CityDao cityDao, AmenityDao amenityDao, DistrictDao districtDao, EmailDao emailDao, UserDao userDao, AnnouncementByUserDao announcementByUserDao) {
+    public AnnouncementService(AnnouncementDao announcementDao, CountryDao countryDao, RegionDao regionDao, CityDao cityDao, AmenityDao amenityDao, DistrictDao districtDao, EmailDao emailDao, UserDao userDao, AnnouncementByUserDao announcementByUserDao, PhotoDao photoDao) {
         this.announcementDao = announcementDao;
         this.countryDao = countryDao;
         this.regionDao = regionDao;
@@ -49,6 +52,7 @@ public class AnnouncementService {
         this.emailDao = emailDao;
         this.userDao = userDao;
         this.announcementByUserDao = announcementByUserDao;
+        this.photoDao = photoDao;
     }
 
     public List<Announcement> getAllAnnouncement() {
@@ -59,7 +63,57 @@ public class AnnouncementService {
 
     @Transactional
     public void test() {
-        List<Amenity> amenityList = new ArrayList<>();
+
+        Photo photo = new Photo();
+        photo.setTitle("photo");
+
+        File file = new File("/C:/Users/USER/IdeaProjects/SPDU_Team4/target/classes/16637656.jpg");
+        Path path = file.toPath();
+        try {
+            photo.setImage(Files.readAllBytes(path));
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        Photo photo1 = new Photo();
+        photo1.setTitle("photo1");
+        File file1 = new File("/C:/Users/USER/IdeaProjects/SPDU_Team4/target/classes/kvartira_7610014483815758105.jpg");
+        Path path1 = file1.toPath();
+        try {
+            photo1.setImage(Files.readAllBytes(path1));
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        Photo photo2 = new Photo();
+        File file2 = new File("/C:/Users/USER/IdeaProjects/SPDU_Team4/target/classes/qwe.jpg");
+        Path path2 = file2.toPath();
+        try {
+            photo2.setImage(Files.readAllBytes(path2));
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        photo2.setTitle("photo2");
+
+
+        photoDao.save(photo1);
+        photoDao.save(photo2);
+        photoDao.save(photo);
+
+        Set<Photo> photos = new HashSet<>();
+        photos.add(photo);
+        photos.add(photo1);
+        photos.add(photo2);
+
+        Set<Photo> photos1 = new HashSet<>();
+        photos1.add(photo);
+        photos1.add(photo1);
+        photos1.add(photo2);
+
+        Set<Amenity> amenityList = new HashSet<>();
         Country country = new Country();
         country.setName("Ukraine");
         countryDao.save(country);
@@ -139,7 +193,7 @@ public class AnnouncementService {
         amenityList.add(amenity);
         amenityList.add(amenity1);
         amenityList.add(amenity2);
-        List<Amenity> amenityList2 = new ArrayList<>();
+        Set<Amenity> amenityList2 = new HashSet<>();
         amenityList2.add(amenity);
         amenityList2.add(amenity1);
 
@@ -157,6 +211,13 @@ public class AnnouncementService {
         announcement.setCity(city);
         announcement.setDistrict(district);
         announcement.setAmenities(amenityList);
+        announcement.setPhotos(photos);
+        announcementDao.save(announcement);
+        for (Photo photoFor:announcement.getPhotos()){
+            photoFor.setAnnouncement(announcement);
+            photoDao.save(photoFor);
+        }
+
 
         Announcement announcement1 = new Announcement(122, "ololo1", true, new Date());
         announcement1.setPricePerMonth(1200);
