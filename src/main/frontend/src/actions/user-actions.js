@@ -1,4 +1,3 @@
-import base64 from 'base-64';
 import {CALL_API, get, post, remove} from '../api';
 import * as ActionTypes from './user-constants';
 
@@ -16,7 +15,7 @@ export const getUser = id => (dispatch, getState) => {
                 ActionTypes.GET_USER_SUCCESS,
                 ActionTypes.GET_USER_FAILURE
             ],
-            endpoint: () => get('profile/')
+            endpoint: () => get('profile')
         }
     });
 };
