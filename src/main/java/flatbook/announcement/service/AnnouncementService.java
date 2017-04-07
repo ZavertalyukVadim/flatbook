@@ -41,6 +41,7 @@ public class AnnouncementService {
 
     private final PhotoDao photoDao;
 
+
     @Autowired
     public AnnouncementService(AnnouncementDao announcementDao, CountryDao countryDao, RegionDao regionDao, CityDao cityDao, AmenityDao amenityDao, DistrictDao districtDao, EmailDao emailDao, UserDao userDao, AnnouncementByUserDao announcementByUserDao, PhotoDao photoDao) {
         this.announcementDao = announcementDao;
@@ -66,8 +67,7 @@ public class AnnouncementService {
 
         Photo photo = new Photo();
         photo.setTitle("photo");
-
-        File file = new File("/C:/Users/USER/IdeaProjects/SPDU_Team4/target/classes/16637656.jpg");
+        File file = new File(("src/main/resources/16637656.jpg"));
         Path path = file.toPath();
         try {
             photo.setImage(Files.readAllBytes(path));
@@ -78,7 +78,7 @@ public class AnnouncementService {
 
         Photo photo1 = new Photo();
         photo1.setTitle("photo1");
-        File file1 = new File("/C:/Users/USER/IdeaProjects/SPDU_Team4/target/classes/kvartira_7610014483815758105.jpg");
+        File file1 = new File("src/main/resources/16637656.jpg");
         Path path1 = file1.toPath();
         try {
             photo1.setImage(Files.readAllBytes(path1));
@@ -88,7 +88,7 @@ public class AnnouncementService {
         }
 
         Photo photo2 = new Photo();
-        File file2 = new File("/C:/Users/USER/IdeaProjects/SPDU_Team4/target/classes/qwe.jpg");
+        File file2 = new File("src/main/resources/qwe.jpg");
         Path path2 = file2.toPath();
         try {
             photo2.setImage(Files.readAllBytes(path2));
