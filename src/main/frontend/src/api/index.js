@@ -48,17 +48,17 @@ export default store => next => action => {
 };
 
 const get = (url, extraParams = {}) =>
-    fetch(urlResolver(url, extraParams, {mode: 'cors'}));
+    fetch(urlResolver(url, extraParams), {mode: 'cors', credentials: "include"});
 
-const POST_CONFIG = {method: 'POST', mode: 'cors', headers: {'Content-Type': CONTENT_TYPE_JSON}};
+const POST_CONFIG = {method: 'POST', credentials: "include", mode: 'cors', headers: {'Content-Type': CONTENT_TYPE_JSON}};
 const post = (url, body, extraParams = {}, headers = {}) =>
     fetch(urlResolver(url, extraParams), {...POST_CONFIG, ...headers, body: JSON.stringify(body)});
 
-const PUT_CONFIG = {method: 'PUT', headers: {'Content-Type': CONTENT_TYPE_JSON}};
+const PUT_CONFIG = {method: 'PUT', mode: 'cors', credentials: "include", headers: {'Content-Type': CONTENT_TYPE_JSON}};
 const put = (url, body, extraParams = {}) =>
     fetch(urlResolver(url, extraParams), {...PUT_CONFIG, body: JSON.stringify(body)});
 
 const remove = (url, extraParams = {}) =>
-    fetch(urlResolver(url, extraParams), {method: 'DELETE'});
+    fetch(urlResolver(url, extraParams), {method: 'DELETE', mode: 'cors', credentials: "include"});
 
 export {get, post, put, remove};
