@@ -75,6 +75,7 @@ public class User implements UserDetails {
         this.lastName = lastName;
     }
 
+    @JsonIgnore
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return Collections.singletonList(new SimpleGrantedAuthority("USER"));
@@ -85,26 +86,31 @@ public class User implements UserDetails {
         return password;
     }
 
+    @JsonIgnore
     @Override
     public String getUsername() {
         return emails.stream().filter(Email::getPrimary).map(Email::getContent).findFirst().orElse(null);
     }
 
+    @JsonIgnore
     @Override
     public boolean isAccountNonExpired() {
         return false;
     }
 
+    @JsonIgnore
     @Override
     public boolean isAccountNonLocked() {
         return false;
     }
 
+    @JsonIgnore
     @Override
     public boolean isCredentialsNonExpired() {
         return false;
     }
 
+    @JsonIgnore
     @Override
     public boolean isEnabled() {
         return false;
