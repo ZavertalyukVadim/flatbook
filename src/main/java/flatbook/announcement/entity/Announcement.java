@@ -79,7 +79,6 @@ public class Announcement {
                     nullable = false)})
     private List<Amenity> amenities = new ArrayList<>();
 
-    @JsonIgnore
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "announcement", cascade = CascadeType.ALL)
     private List<Photo> photos = new ArrayList<>();
 
