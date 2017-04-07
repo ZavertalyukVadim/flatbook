@@ -1,4 +1,4 @@
-import {CALL_API, get, post, remove} from '../api';
+import {CALL_API, get, post, remove, put} from '../api';
 import * as ActionTypes from './user-constants';
 
 export const getUser = id => (dispatch, getState) => {
@@ -19,6 +19,27 @@ export const getUser = id => (dispatch, getState) => {
         }
     });
 };
+
+export const updateUser = values => (dispatch, getState) => {
+    const {user: {pending}} = getState();
+
+    if (pending) {
+        return null;
+    }
+    console.log(values);
+    return dispatch({
+        [CALL_API]: {
+            types: [
+                ActionTypes.UPDATE_USER_REQUEST,
+                ActionTypes.UPDATE_USER_SUCCESS,
+                ActionTypes.UPDATE_USER_FAILURE
+            ],
+            endpoint: () => put('profile/', values)
+        }
+    });
+};
+
+
 
 export const getUserAnnouncements = id => (dispatch, getState) => {
     const {user: {pending}} = getState();

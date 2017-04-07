@@ -46,7 +46,7 @@ class ProfileSettings extends Component {
 
     onSubmit = () => {
         console.log(this.state);
-        this.props.updateUser(this.state)
+        this.props.updateUser(this.state);
     };
 
     renderInputs = (name, placeholder) =>

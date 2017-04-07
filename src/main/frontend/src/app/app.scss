@@ -1,6 +1,11 @@
 @import "../style/font";
 @import "../style/color-theme";
 
+
+body {
+  background-color: #f3f3f3;
+}
+
 body, select, ul, li, p {
   margin: 0;
   padding: 0;
