@@ -1,8 +1,7 @@
 package flatbook.announcement.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import flatbook.profile.entity.Email;
-import flatbook.profile.entity.Phone;
+import flatbook.profile.entity.User;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -24,11 +23,9 @@ public class Announcement {
     @Column(name = "price_per_month")
     private Integer pricePerMonth;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user",targetEntity = Email.class)
-    private Set<Email> email;
-
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "phonesUser",targetEntity = Phone.class)
-    private Set<Phone> phone;
+    @JsonIgnore
+    @ManyToOne(fetch = FetchType.LAZY, targetEntity = User.class)
+    private User user;
 
     @Column(name = "title")
     private String title;
@@ -60,7 +57,7 @@ public class Announcement {
     private String houseNumber;
 
     @Column(name = "visibility")
-    private Boolean visibility;
+    private Boolean visibility = true;
 
     @Column(name = "last_updated")
     private Date lastUpdated;
@@ -131,20 +128,12 @@ public class Announcement {
         this.description = description;
     }
 
-    public Set<Email> getEmail() {
-        return email;
+    public User getUser() {
+        return user;
     }
 
-    public void setEmail(Set<Email> email) {
-        this.email = email;
-    }
-
-    public Set<Phone> getPhone() {
-        return phone;
-    }
-
-    public void setPhone(Set<Phone> phone) {
-        this.phone = phone;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public Boolean getVisibility() {
