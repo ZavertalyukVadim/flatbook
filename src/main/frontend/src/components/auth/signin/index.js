@@ -19,7 +19,7 @@ class SignIn extends Component {
 
     onInputChange = val => e => this.setState({[val]: e.target.value});
     onLinkClick = () => this.props.redirect('/signup');
-    onSubmit = () => this.props.signin({email: this.state.email, password: this.state.password});
+    //onSubmit = () => this.props.signin({email: this.state.email, password: this.state.password});
 
     render() {
         const {
@@ -33,24 +33,28 @@ class SignIn extends Component {
                     type="primary"
                     value="Sign In"
                 />
-                <Input
-                    placeholder="Email"
-                    type="email"
-                    value={email}
-                    onChange={this.onInputChange('email')}
-                />
-                <Input
-                    placeholder="Password"
-                    type="password"
-                    value={password}
-                    onChange={this.onInputChange('password')}
-                />
-                <Button
-                    type={ButtonTypes.primary}
-                    size={ButtonSizes.block}
-                    caption="Sign In"
-                    onClick={this.onSubmit}
-                />
+                <form method="post" action="http://localhost:8080/api/login" id="login-form">
+                    <Input
+                        placeholder="Email"
+                        type="email"
+                        value={email}
+                        onChange={this.onInputChange('email')}
+                        name="username"
+                    />
+                    <Input
+                        placeholder="Password"
+                        type="password"
+                        value={password}
+                        onChange={this.onInputChange('password')}
+                        name="password"
+                    />
+                    <Button
+                        type={ButtonTypes.primary}
+                        size={ButtonSizes.block}
+                        caption="Sign In"
+                        onClick={this.onSubmit}
+                    />
+                </form>
                 <span className="auth-item">or</span>
                 <div className="auth-social-button-field">
                     <Button

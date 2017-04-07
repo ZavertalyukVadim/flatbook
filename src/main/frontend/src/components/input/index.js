@@ -15,7 +15,8 @@ const Input = props => {
         onChange,
         value,
         validationState,
-        errorMessage
+        errorMessage,
+        name
     } = props;
 
     return (
@@ -27,6 +28,7 @@ const Input = props => {
                 onChange={onChange}
                 value={value}
                 className={`input input-${validationState}`}
+                name={name}
             />
             {errorMessage ? <span className="error-massage">{errorMessage}</span> : null}
         </div>
@@ -49,7 +51,8 @@ Input.defaultProps = {
     disabled: false,
     validationState: 'default',
     value: '',
-    errorMessage: ''
+    errorMessage: '',
+    name: ''
 };
 
 export default Input;
