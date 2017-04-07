@@ -13,7 +13,7 @@ class ProfileSettings extends Component {
         super(props);
         this.state = {
 
-            id: 2
+            id: 1
         }
     }
 

@@ -16,7 +16,7 @@ export const getUser = id => (dispatch, getState) => {
                 ActionTypes.GET_USER_SUCCESS,
                 ActionTypes.GET_USER_FAILURE
             ],
-            endpoint: () => get('profile/1')
+            endpoint: () => get('profile/')
         }
     });
 };
