@@ -18,7 +18,7 @@ public class PhotoController {
 
     @RequestMapping(value = "/test", method = RequestMethod.GET)
     public void test() {
-        photoService.test();
+//        photoService.test();
     }
 
     @RequestMapping(value = "", method = RequestMethod.GET)

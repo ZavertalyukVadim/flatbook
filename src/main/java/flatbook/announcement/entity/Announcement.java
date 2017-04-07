@@ -5,9 +5,8 @@ import flatbook.profile.entity.Email;
 import flatbook.profile.entity.Phone;
 
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -77,10 +76,10 @@ public class Announcement {
             @JoinColumn(name = "announcement_id", nullable = false)},
             inverseJoinColumns = {@JoinColumn(name = "amenity_id",
                     nullable = false)})
-    private List<Amenity> amenities = new ArrayList<>();
+    private Set<Amenity> amenities = new HashSet<>();
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "announcement", cascade = CascadeType.ALL)
-    private List<Photo> photos = new ArrayList<>();
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "announcement", cascade = CascadeType.ALL)
+    private Set<Photo> photos = new HashSet<>();
 
     public Announcement() {
     }
@@ -164,11 +163,11 @@ public class Announcement {
         this.lastUpdated = lastUpdated;
     }
 
-    public List<Amenity> getAmenities() {
+    public Set<Amenity> getAmenities() {
         return amenities;
     }
 
-    public void setAmenities(List<Amenity> amenities) {
+    public void setAmenities(Set<Amenity> amenities) {
         this.amenities = amenities;
     }
 
@@ -188,11 +187,11 @@ public class Announcement {
         this.livingPlaces = livingPlaces;
     }
 
-    public List<Photo> getPhotos() {
+    public Set<Photo> getPhotos() {
         return photos;
     }
 
-    public void setPhotos(List<Photo> photos) {
+    public void setPhotos(Set<Photo> photos) {
         this.photos = photos;
     }
 
