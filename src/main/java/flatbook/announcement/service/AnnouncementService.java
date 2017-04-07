@@ -128,13 +128,13 @@ public class AnnouncementService {
 
 
         Amenity amenity = new Amenity();
-        amenity.setName("amenity");
+        amenity.setName("WI FI");
         amenityDao.save(amenity);
         Amenity amenity1 = new Amenity();
-        amenity1.setName("amenity1");
+        amenity1.setName("Iron");
         amenityDao.save(amenity1);
         Amenity amenity2 = new Amenity();
-        amenity2.setName("amenity2");
+        amenity2.setName("Balcony");
         amenityDao.save(amenity2);
         amenityList.add(amenity);
         amenityList.add(amenity1);
