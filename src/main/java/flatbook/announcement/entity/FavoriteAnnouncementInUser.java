@@ -1,5 +1,7 @@
 package flatbook.announcement.entity;
 
+import flatbook.profile.entity.User;
+
 import javax.persistence.*;
 
 @Entity
@@ -10,20 +12,28 @@ public class FavoriteAnnouncementInUser {
     @Column(name = "favorite_announcement_in_user_id", nullable = false)
     private Integer id;
 
-    @JoinColumn(name = "user_id", nullable = false)
-    private Integer userId;
+    @ManyToOne(fetch = FetchType.LAZY, targetEntity = User.class)
+    private User user;
 
 
     @JoinColumn(name = "announcement_id")
     private Integer announcementId;
 
 
-    public Integer getUserId() {
-        return userId;
+    public Integer getId() {
+        return id;
     }
 
-    public void setUserId(Integer userId) {
-        this.userId = userId;
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public Integer getAnnouncementId() {
