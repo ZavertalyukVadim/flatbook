@@ -2,7 +2,9 @@
 	text-align: center;
 	background-color: #34495e;
 	padding: 28px;
-	width: 100%;
+	position: fixed;
+	box-sizing: border-box;
+	height: 80%;
 }
 
 .profile-sidebar-links {

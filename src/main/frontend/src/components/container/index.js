@@ -1,9 +1,10 @@
-import React, {PropTypes} from 'react';
+import React from 'react';
 import './container.scss';
 import Navbar from '../navbar';
+import Footer from '../footer';
 
-const Container = ({sidebar, navbar, footer, children}) => (
-		<div>
+const Container = ({sidebar, navbar, children}) => (
+		<div className="container">
 		<div className="navbar-wrapper"><Navbar/></div>
         <div className="main-container">
             
@@ -11,8 +12,9 @@ const Container = ({sidebar, navbar, footer, children}) => (
             <div className="content-wrapper">
                 {children}
             </div>
-            {footer && <div className="footer-wrapper">{footer}</div>}
+
         </div>
+            <div className="footer-wrapper"><Footer/></div>
         </div>
     );
 

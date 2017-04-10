@@ -31,6 +31,11 @@ class AnnouncementControl extends Component {
                         disabled={false}
                     >Hide</Checkbox>
                     <Button
+                        type={ButtonTypes.info}
+                        size={ButtonSizes.small}
+                        caption="Show more"
+                    />
+                    <Button
                         type={ButtonTypes.primary}
                         size={ButtonSizes.small}
                         caption="Edit"

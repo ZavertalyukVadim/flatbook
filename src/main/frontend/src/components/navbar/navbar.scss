@@ -9,9 +9,15 @@
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+  overflow: hidden;
 
   .navbar-logo {
     margin-left: map-get($indentSizes, l);
+    height: 100%;
+
+    .navbar-logo-img {
+      height: 100%;
+    }
   }
 
   .navbar-links {
@@ -28,7 +34,7 @@
       cursor: pointer;
 
       .navbar-link-icon {
-        margin: map-get($indentSizes, m);
+        margin: 0 map-get($indentSizes, m);
       }
     }
   }
