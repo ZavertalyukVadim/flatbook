@@ -417,7 +417,7 @@ public class ProfileService {
 
     public void markFavorite(Integer id) {
         FavoriteAnnouncementInUser favoriteAnnouncementInUser = new FavoriteAnnouncementInUser();
-        favoriteAnnouncementInUser.setUserId(getCurrentUser().getId());
+        favoriteAnnouncementInUser.setUser(getCurrentUser());
         favoriteAnnouncementInUser.setAnnouncementId(id);
         favoriteAnnouncementInUserDao.save(favoriteAnnouncementInUser);
     }
