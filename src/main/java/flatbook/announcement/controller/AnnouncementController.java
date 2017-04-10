@@ -10,8 +10,12 @@ import java.util.List;
 @RestController
 @RequestMapping(value = "/api/announcement")
 public class AnnouncementController {
+    private final AnnouncementService announcementService;
+
     @Autowired
-    private AnnouncementService announcementService;
+    public AnnouncementController(AnnouncementService announcementService) {
+        this.announcementService = announcementService;
+    }
 
     @RequestMapping(value = "/test", method = RequestMethod.GET)
     public void test() {

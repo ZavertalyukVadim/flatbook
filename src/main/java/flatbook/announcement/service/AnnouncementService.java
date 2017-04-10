@@ -454,6 +454,7 @@ public class AnnouncementService {
 
     @Transactional
     public Announcement createAnnouncement(Announcement announcement) {
+        announcement.setLastUpdated(new Date());
         announcement.setUser(getCurrentUser());
         Announcement savedAnnouncement = saveAnnouncement(announcement);
         AnnouncementByUser announcementByUser = new AnnouncementByUser();
