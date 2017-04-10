@@ -11,18 +11,21 @@ public interface AnnouncementDao extends JpaRepository<Announcement, Integer> {
 
     @Query("SELECT a FROM Announcement a where a.city = :#{#city} " +
             "and  a.rooms=:#{#search.rooms} " +
+            "and a.visibility = true "+
             "and a.livingPlaces=:#{#search.livingPlaces} " +
             "and a.pricePerDay between :#{#search.startingPrice} and :#{#search.finalPrice}")
     List<Announcement> getAnnouncementPerDay(@Param("city") City city, @Param("search") Search search);
 
     @Query("SELECT a FROM Announcement a where a.city = :#{#city} " +
             "and  a.rooms=:#{#search.rooms} " +
+            "and a.visibility = true "+
             "and a.livingPlaces=:#{#search.livingPlaces} " +
             "and a.pricePerMonth between :#{#search.startingPrice} and :#{#search.finalPrice}")
     List<Announcement> getAnnouncementPerMonth(@Param("city") City city, @Param("search") Search search);
 
     @Query("SELECT a FROM Announcement a INNER JOIN a.amenities amenities where a.city = :#{#city} " +
             "and a.rooms=:#{#search.rooms} " +
+            "and a.visibility = true "+
             "and a.livingPlaces=:#{#search.livingPlaces} " +
             "and amenities in :#{#search.amenities} " +
             "and a.pricePerDay between :#{#search.startingPrice} and :#{#search.finalPrice} group by a")
@@ -30,6 +33,7 @@ public interface AnnouncementDao extends JpaRepository<Announcement, Integer> {
 
     @Query("SELECT a FROM Announcement a INNER JOIN  a.amenities amenities where a.city = :#{#city} " +
             "and a.rooms = :#{#search.rooms} " +
+            "and a.visibility = true "+
             "and a.livingPlaces = :#{#search.livingPlaces} " +
             "and amenities in  :#{#search.amenities} " +
             "and a.pricePerMonth between :#{#search.startingPrice} and :#{#search.finalPrice} group by a")
