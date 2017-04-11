@@ -183,7 +183,7 @@ public class AnnouncementService {
 
 
         Amenity amenity = new Amenity();
-        amenity.setName("WI FI");
+        amenity.setName("Wi-Fi");
         amenityDao.save(amenity);
         Amenity amenity1 = new Amenity();
         amenity1.setName("Iron");
@@ -191,6 +191,37 @@ public class AnnouncementService {
         Amenity amenity2 = new Amenity();
         amenity2.setName("Balcony");
         amenityDao.save(amenity2);
+        Amenity amenity3= new Amenity();
+        amenity3.setName("Animals");
+        amenityDao.save(amenity3);
+        Amenity amenity4 =  new Amenity();
+        amenity4.setName("Smoking");
+        amenityDao.save(amenity4);
+        Amenity amenity5 = new Amenity();
+        amenity5.setName("TV");
+        amenityDao.save(amenity5);
+        Amenity amenity6 = new Amenity();
+        amenity6.setName("Kitchen staff");
+        amenityDao.save(amenity6);
+        Amenity amenity7 = new Amenity();
+        amenity7.setName("Children");
+        amenityDao.save(amenity7);
+        Amenity amenity8 = new Amenity();
+        amenity8.setName("Parking");
+        amenityDao.save(amenity8);
+        Amenity amenity9 = new Amenity();
+        amenity9.setName("Parking");
+        amenityDao.save(amenity9);
+        Amenity amenity10 = new Amenity();
+        amenity10.setName("Parking");
+        amenityDao.save(amenity10);
+        Amenity amenity11 = new Amenity();
+        amenity11.setName("Parking");
+        amenityDao.save(amenity11);
+        Amenity amenity12 = new Amenity();
+        amenity12.setName("Parking");
+        amenityDao.save(amenity12);
+
         amenityList.add(amenity);
         amenityList.add(amenity1);
         amenityList.add(amenity2);
