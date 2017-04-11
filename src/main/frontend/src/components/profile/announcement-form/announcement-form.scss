@@ -1,4 +1,5 @@
 @import "../../../style/sizes.scss";
+@import "../../../style/color-theme.scss";
 
 .announcement-form {
   width: 50%;
@@ -23,6 +24,10 @@
 
   .announcement-form-amenties {
 
+  }
+
+  .announcement-form-required-field {
+    color: $danger;
   }
 
   .announcement-btn {

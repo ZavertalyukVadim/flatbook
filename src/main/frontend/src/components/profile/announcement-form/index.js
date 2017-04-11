@@ -18,8 +18,8 @@ import {
 import {getAmenity} from '../../../actions/amenity-actions';
 import {saveAnnouncement} from '../../../actions/announcement-actions';
 
-const PRICE_PER_DAY = 'pricePerDay';
-const PRICE_PER_MONTH = 'pricePerMonth';
+const pricePerDay = 'PRICE_PER_DAY';
+const pricePerMonth = 'PRICE_PER_MONTH';
 
 class AnnouncementForm extends Component {
     constructor(props) {
@@ -35,11 +35,11 @@ class AnnouncementForm extends Component {
             rooms: props.rooms,
             street: props.street,
             livingPlaces: props.livingPlaces,
-            pricePerDay: props.pricePerDay,
-            pricePerMonth: props.pricePerMonth,
-            priceType: isNull(props.pricePerDay) ? PRICE_PER_MONTH : PRICE_PER_DAY,
+            PRICE_PER_DAY: props.PRICE_PER_DAY,
+            PRICE_PER_MONTH: props.PRICE_PER_MONTH,
+            priceType: isNull(props.PRICE_PER_DAY) ? pricePerMonth : pricePerDay,
             photos: props.photos,
-            toggleValue: isNull(props.pricePerDay)
+            toggleValue: isNull(props.PRICE_PER_DAY)
         }
     }
 
@@ -69,13 +69,18 @@ class AnnouncementForm extends Component {
         this.setState({chosenCityID: id});
     };
     onInputChange = name => e => this.setState({[name]: e.target.value});
+    onChangePrice = name => e => {
+        if (e.target.value.match(new RegExp('^[0-9]*$'))) {
+            this.setState({[name]: e.target.value});
+        }
+    };
     checkAmenity = id => () => this.setState({
         amenities: this.state.amenities.map(a => a.id === id ? {name: a.name, checked: !a.checked, id: a.id} : a)
     });
     changeRooms = v => this.setState({rooms: v});
     changeLeavingPlaces = v => this.setState({livingPlaces: v});
     changePriceType = v => this.setState({
-        priceType: !this.state.toggleValue ? PRICE_PER_MONTH : PRICE_PER_DAY,
+        priceType: !this.state.toggleValue ? pricePerMonth : pricePerDay,
         toggleValue: !this.state.toggleValue
     });
     onSaveAnnouncement = () => {
@@ -85,26 +90,23 @@ class AnnouncementForm extends Component {
             street,
             rooms,
             livingPlaces,
-            chosenCountryID,
-            chosenRegionID,
             chosenCityID,
             amenities,
             priceType
         } = this.state;
 
         this.props.saveAnnouncement({
-            chosenCountryID: chosenCountryID,
-            chosenRegionID: chosenRegionID,
-            chosenCityID: chosenCityID,
+            cityId: chosenCityID,
             title: title,
             description: description,
             rooms: rooms,
             street: street,
             livingPlaces: livingPlaces,
-            [priceType]: this.state[priceType],
+            priceType: priceType,
+            priceValue: this.state[priceType],
             amenities: amenities.filter(a => a.checked).map(a => ({id: a.id, name: a.name}))
         }).then(
-            () => this.props.redirect('/profile'), noop
+            a => !a.error ? this.props.redirect('/profile') : noop
         );
     };
     onDiscard = () => this.setState({
@@ -133,8 +135,8 @@ class AnnouncementForm extends Component {
             chosenRegionID,
             chosenCityID,
             description,
-            pricePerDay,
-            pricePerMonth,
+            PRICE_PER_DAY,
+            PRICE_PER_MONTH,
             title,
             amenities,
             street,
@@ -146,7 +148,7 @@ class AnnouncementForm extends Component {
 
         const saveDisabled = !(
             !isNull(chosenCountryID) && !isNull(chosenRegionID) && !isNull(chosenCityID)
-                && (!isNull(pricePerDay) || !isNull(pricePerMonth)) && title
+            && (!isNull(PRICE_PER_DAY) || !isNull(PRICE_PER_MONTH)) && title
         );
 
         return (
@@ -157,7 +159,7 @@ class AnnouncementForm extends Component {
                     className="announcement-form-item"
                 />
                 <Input
-                    placeholder='Title'
+                    placeholder='Title *'
                     value={title}
                     onChange={this.onInputChange('title')}
                     maxLength={100}
@@ -167,7 +169,7 @@ class AnnouncementForm extends Component {
                     selectedID={chosenCountryID}
                     onOptionChange={this.changeCountry}
                     loader={countries.pending}
-                    defaultMassage="Choose country"
+                    defaultMassage="Choose country *"
                     className="announcement-form-item"
                 />
                 <Dropdown
@@ -175,7 +177,7 @@ class AnnouncementForm extends Component {
                     selectedID={chosenRegionID}
                     onOptionChange={this.changeRegion}
                     loader={regions.pending || isNull(chosenCountryID)}
-                    defaultMassage="Choose region"
+                    defaultMassage="Choose region *"
                     disabled={isNull(chosenCountryID)}
                     className="announcement-form-item"
                 />
@@ -184,7 +186,7 @@ class AnnouncementForm extends Component {
                     selectedID={chosenCityID}
                     onOptionChange={this.changeCities}
                     loader={cities.pending || isNull(chosenRegionID)}
-                    defaultMassage="Choose city"
+                    defaultMassage="Choose city *"
                     disabled={isNull(chosenRegionID)}
                     className="announcement-form-item"
                 />
@@ -193,6 +195,7 @@ class AnnouncementForm extends Component {
                     value={street}
                     onChange={this.onInputChange('street')}
                     className="announcement-form-item"
+                    maxLength={100}
                 />
                 <div className="announcement-form-custom-field ">
                     <div className="announcement-form-custom-field-toggle">
@@ -205,15 +208,15 @@ class AnnouncementForm extends Component {
                     {
                         priceType === PRICE_PER_DAY ?
                             <Input
-                                placeholder='Price per day'
-                                value={isNull(pricePerDay) ? '' : pricePerDay}
-                                onChange={this.onInputChange(PRICE_PER_DAY)}
+                                placeholder='Price per day *'
+                                value={isNull(PRICE_PER_DAY) ? '' : PRICE_PER_DAY}
+                                onChange={this.onChangePrice(pricePerDay)}
                                 className="announcement-form-custom-field-input"
                             /> :
                             <Input
-                                placeholder='Price per month'
-                                value={isNull(pricePerMonth) ? '' : pricePerMonth}
-                                onChange={this.onInputChange(PRICE_PER_MONTH)}
+                                placeholder='Price per month *'
+                                value={isNull(PRICE_PER_MONTH) ? '' : PRICE_PER_MONTH}
+                                onChange={this.onChangePrice(pricePerMonth)}
                                 className="announcement-form-custom-field-input"
                             />
                     }
@@ -255,6 +258,9 @@ class AnnouncementForm extends Component {
                     placeholder="Description"
                     className="announcement-form-item"
                 />
+                <div className="announcement-form-item">
+                    <span className="announcement-form-required-field">* - this fields are required</span>
+                </div>
                 <div className="announcement-form-custom-field announcement-form-item">
                     <Button
                         type={ButtonTypes.primary}
@@ -278,8 +284,8 @@ class AnnouncementForm extends Component {
 
 AnnouncementForm.defaultProps = {
     description: '',
-    pricePerDay: null,
-    pricePerMonth: null,
+    PRICE_PER_DAY: null,
+    PRICE_PER_MONTH: null,
     title: '',
     amenities: [],
     rooms: 4,
@@ -292,8 +298,8 @@ AnnouncementForm.defaultProps = {
 
 AnnouncementForm.propTypes = {
     description: PropTypes.string,
-    pricePerDay: PropTypes.number,
-    pricePerMonth: PropTypes.number,
+    PRICE_PER_DAY: PropTypes.number,
+    PRICE_PER_MONTH: PropTypes.number,
     title: PropTypes.string,
     amenities: PropTypes.array,
     rooms: PropTypes.number,
