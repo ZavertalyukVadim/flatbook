@@ -27,7 +27,7 @@ class Carousel extends Component {
         });
         return (
             <div  key={index} className={imageClassNames}>
-                <Image src={urlResolver(`photo/${obj.id}`, {})}/>
+                <Image src={urlResolver(`photo/${obj.id}`)}/>
             </div>
         );
     });

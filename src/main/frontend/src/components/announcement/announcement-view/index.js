@@ -26,7 +26,9 @@ class AnnouncementView extends Component {
         return (
             <div className="announcement-view">
                 {photos.length > 1 ? <Carousel slides={photos}/> :
-                    <Image src={urlResolver(`photo/${photos[0].id}`, {})} size={ImageSizes.large}/>}
+                    photos.length ?
+                        <Image src={urlResolver(`photo/${photos[0].id}`)} size={ImageSizes.large}/> :
+                        <Image size={ImageSizes.large}/>}
                 <div className="announcement-description-field">
                     <div className="announcement-description">
                         {title && <Header value={title} type={HeaderTypes.secondary}/>}
