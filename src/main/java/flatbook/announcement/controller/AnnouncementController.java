@@ -1,10 +1,12 @@
 package flatbook.announcement.controller;
 
 import flatbook.announcement.entity.Announcement;
+import flatbook.announcement.entity.Post;
 import flatbook.announcement.service.AnnouncementService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -33,13 +35,13 @@ public class AnnouncementController {
     }
 
     @RequestMapping(value = "", method = RequestMethod.POST)
-    public Announcement createAnnouncement(@RequestBody Announcement announcement) {
-        return announcementService.createAnnouncement(announcement);
+    public Announcement createAnnouncement(@RequestBody @Valid Post post) {
+        return announcementService.createAnnouncement(post);
     }
 
     @RequestMapping(value = "", method = RequestMethod.PUT)
-    public Announcement updateAnnouncement(@RequestBody Announcement announcement) {
-        return announcementService.updateAnnouncement(announcement);
+    public Announcement updateAnnouncement(@RequestBody @Valid Post post) {
+        return announcementService.updateAnnouncement(post);
     }
 
     @RequestMapping(value = "/{id}/changeVisibility", method = RequestMethod.PUT)
