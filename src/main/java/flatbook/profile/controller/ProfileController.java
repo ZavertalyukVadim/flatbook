@@ -63,7 +63,6 @@ public class ProfileController {
     @Secured("ROLE_USER")
     public void getPhoto(HttpServletResponse response) throws Exception {
         response.setContentType("image/jpeg");
-        response.setHeader("Content-Disposition", "attachment; filename=\"somefile.pdf\"");
         response.getOutputStream().write(profileService.getImage());
         response.getOutputStream().flush();
     }

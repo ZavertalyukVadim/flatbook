@@ -31,7 +31,6 @@ public class PhotoController {
         try {
             Photo photo = photoService.getPhotoById(id);
             response.setContentType("image/jpeg");
-            response.setHeader("Content-Disposition", "attachment; filename=\"somefile.pdf\"");
             response.getOutputStream().write(photo.getImage());
             response.getOutputStream().flush();
         } catch (IOException e) {
