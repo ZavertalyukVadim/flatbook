@@ -210,16 +210,16 @@ public class AnnouncementService {
         amenity8.setName("Parking");
         amenityDao.save(amenity8);
         Amenity amenity9 = new Amenity();
-        amenity9.setName("Parking");
+        amenity9.setName("For people with disabilities");
         amenityDao.save(amenity9);
         Amenity amenity10 = new Amenity();
-        amenity10.setName("Parking");
+        amenity10.setName("Lift");
         amenityDao.save(amenity10);
         Amenity amenity11 = new Amenity();
-        amenity11.setName("Parking");
+        amenity11.setName("Washing machine");
         amenityDao.save(amenity11);
         Amenity amenity12 = new Amenity();
-        amenity12.setName("Parking");
+        amenity12.setName("Private house");
         amenityDao.save(amenity12);
 
         amenityList.add(amenity);
