@@ -9,12 +9,12 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Table(name = "announcement")
+@Table(name = "announcements")
 public class Announcement {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "announcement_id", nullable = false)
+//    @Column(name = "id", nullable = false)
     private Integer id;
 
     @Column(name = "price_per_day")

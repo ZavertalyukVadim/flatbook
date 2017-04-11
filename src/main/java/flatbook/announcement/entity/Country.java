@@ -3,11 +3,11 @@ package flatbook.announcement.entity;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "country")
+@Table(name = "countries")
 public class Country {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "country_id", nullable = false)
+//    @Column(name = "id", nullable = false)
     private Integer id;
 
     @Column(name = "name")

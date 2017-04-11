@@ -30,7 +30,7 @@
                 <artifactId>flyway-maven-plugin</artifactId>
                 <version>4.1.2</version>
                 <configuration>
-                    <url>jdbc:mysql://localhost:3306/team4?serverTimezone=UTC</url>
+                    <url>jdbc:mysql://localhost:3306/team5?serverTimezone=UTC</url>
                     <user>admin</user>
                     <password>admin</password>
                 </configuration>

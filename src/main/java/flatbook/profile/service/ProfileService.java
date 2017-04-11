@@ -115,8 +115,6 @@ public class ProfileService {
         User oldUser = userDao.findOne(user.getId());
         if (!getCurrentUser().equals(oldUser)) throw new Exception("User is not current user");
 
-//        emailsSet.add(getPrimaryEmail());
-
         oldUser.setEmails(emailsSet);
         oldUser.setFirstName(user.getFirstName());
         oldUser.setLastName(user.getLastName());
@@ -133,9 +131,6 @@ public class ProfileService {
         User user = email.getUser();
 
         return user;
-
-//        User user = userDao.getUserByEmails(email);
-//        return userDao.getUserByEmails(email);
     }
 
     public User getUserById(Integer id) {
