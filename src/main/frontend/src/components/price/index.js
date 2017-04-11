@@ -15,7 +15,7 @@ const Price = props => {
 };
 
 Price.propTypes = {
-    value: PropTypes.number,
+    value: PropTypes.string,
     payment: PropTypes.oneOf(Object.values(PriceTypes))
 };
 

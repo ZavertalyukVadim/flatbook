@@ -6,15 +6,15 @@ import Header, {HeaderTypes} from '../../header';
 import Button, {ButtonTypes, ButtonSizes} from '../../button';
 import './profile-settings.scss';
 import Checkbox from '../../checkbox';
+import Loader from '../../loader';
 import ChangePassword from '../../change-password';
 
 class ProfileSettings extends Component {
     constructor(props) {
         super(props);
         this.state = {
-
-            id: 1
-        }
+            ...props.user.data
+        };
     }
 
     componentDidMount() {
@@ -44,18 +44,12 @@ class ProfileSettings extends Component {
         [name]: this.state[name].filter((item, index) => idx !== index)
     });
 
-    onSubmit = () => {
-        console.log(this.state);
-        this.props.updateUser(this.state);
-    };
+    onSubmit = () => this.props.updateUser(this.state);
 
     renderInputs = (name, placeholder) =>
         <div>
             <div className="contact-info-header">
-                <Header
-
-                    value={placeholder}
-                />
+                <Header value={placeholder}/>
                 <Button
                     type={ButtonTypes.link}
                     caption="Add more"
@@ -64,7 +58,6 @@ class ProfileSettings extends Component {
             </div>
             {this.state[name].map((item, index) =>
                 <div key={index} className="contact-info-field">
-
                     <Input
                         placeholder={placeholder}
                         value={item.content}
@@ -79,7 +72,9 @@ class ProfileSettings extends Component {
                 </div>
             )}
         </div>;
+
     render() {
+        console.log(this.props.user.loaded);
         return (
             <div className="profile-settings-field">
                 {this.props.user.loaded ? (
@@ -121,11 +116,10 @@ class ProfileSettings extends Component {
                                 onClick={this.onSubmit}
                             />
                         </div>
-                    </div>) : (<div>Loading</div>)}
+                    </div>) : (<Loader/>)}
             </div>
         );
     }
 }
 
 export default connect(({user}) => ({user: user}), {getUser, updateUser})(ProfileSettings);
-
