@@ -464,12 +464,12 @@ public class AnnouncementService {
         announcement.setRooms(post.getRooms());
         announcement.setStreet(post.getStreet());
         announcement.setLivingPlaces(post.getLivingPlaces());
-        if(post.getPrice() == Price.PRICE_PER_DAY){
-            announcement.setPricePerDay(post.getValue());
+        if(post.getPriceType() == Price.PRICE_PER_DAY){
+            announcement.setPricePerDay(post.getPriceValue());
         }
         else {
 
-            announcement.setPricePerMonth(post.getValue());
+            announcement.setPricePerMonth(post.getPriceValue());
         }
         announcement.setAmenities(post.getAmenities());
         announcement.setLastUpdated(new Date());
@@ -495,12 +495,12 @@ public class AnnouncementService {
         announcement.setRooms(post.getRooms());
         announcement.setStreet(post.getStreet());
         announcement.setLivingPlaces(post.getLivingPlaces());
-        if(post.getPrice() == Price.PRICE_PER_DAY){
-            announcement.setPricePerDay(post.getValue());
+        if(post.getPriceType() == Price.PRICE_PER_DAY){
+            announcement.setPricePerDay(post.getPriceValue());
         }
         else {
 
-            announcement.setPricePerMonth(post.getValue());
+            announcement.setPricePerMonth(post.getPriceValue());
         }
         announcement.setAmenities(post.getAmenities());
         announcement.setLastUpdated(new Date());

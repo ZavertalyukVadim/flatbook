@@ -21,9 +21,9 @@ public class Post {
 
     private Integer livingPlaces;
 
-    private Integer value;
+    private Integer priceValue;
 
-    private Price price;
+    private Price priceType;
 
     private Set<Amenity> amenities;
 
@@ -75,20 +75,20 @@ public class Post {
         this.livingPlaces = livingPlaces;
     }
 
-    public Integer getValue() {
-        return value;
+    public Integer getPriceValue() {
+        return priceValue;
     }
 
-    public void setValue(Integer value) {
-        this.value = value;
+    public void setPriceValue(Integer priceValue) {
+        this.priceValue = priceValue;
     }
 
-    public Price getPrice() {
-        return price;
+    public Price getPriceType() {
+        return priceType;
     }
 
-    public void setPrice(Price price) {
-        this.price = price;
+    public void setPriceType(Price priceType) {
+        this.priceType = priceType;
     }
 
     public Set<Amenity> getAmenities() {
