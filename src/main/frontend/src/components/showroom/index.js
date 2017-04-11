@@ -119,7 +119,11 @@ export default class Showroom extends Component {
                                     Toggle
                                 </div>
                                 <div className="panel-body">
-                                    <Toggle isToggled={this.state.checked} changeToggle={this.onCheckboxClick}/>
+                                    <Toggle
+                                        isToggled={this.state.checked}
+                                        changeToggle={this.onCheckboxClick}
+                                        icons={[<i className="fa fa-th-list"/>, <i className="fa fa-th-large"/>]}
+                                    />
                                 </div>
                             </div>
                         </div>

@@ -7,7 +7,8 @@ const Textarea = props => {
         value,
         className,
         onChange,
-        placeholder
+        placeholder,
+        maxLength
     } = props;
 
     return (
@@ -17,6 +18,7 @@ const Textarea = props => {
             value={value}
             onChange={onChange}
             placeholder={placeholder}
+            maxLength={maxLength}
         />
     );
 };
@@ -26,14 +28,16 @@ Textarea.propTypes = {
     value: PropTypes.string.isRequired,
     className: PropTypes.string,
     placeholder: PropTypes.string,
-    onChange: PropTypes.func.isRequired
+    onChange: PropTypes.func.isRequired,
+    maxLength: PropTypes.number
 };
 
 Textarea.defaultProps = {
     disabled: false,
     value: '',
     className: '',
-    placeholder: 'Enter your text here...'
+    placeholder: 'Enter your text here...',
+    maxLength: 1000
 };
 
 export default Textarea;

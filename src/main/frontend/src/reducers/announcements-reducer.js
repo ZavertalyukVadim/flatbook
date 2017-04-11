@@ -7,7 +7,7 @@ const DEFAULT_STATE = {
     uploaded: ''
 };
 
-export const announcements = (state = DEFAULT_STATE, action) => {
+export default (state = DEFAULT_STATE, action) => {
 
     if (action.type === ActionTypes.GET_ALL_ANNOUNCEMENTS_REQUEST) {
         return {...state, loaded: false, pending: true};

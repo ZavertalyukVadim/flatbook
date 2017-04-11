@@ -16,11 +16,13 @@ const Input = props => {
         value,
         validationState,
         errorMessage,
-        name
+        name,
+        className,
+        maxLength
     } = props;
 
     return (
-        <div className="input-container">
+        <div className={`input-container ${className}`}>
             <input
                 placeholder={placeholder}
                 type={type}
@@ -29,6 +31,7 @@ const Input = props => {
                 value={value}
                 className={`input input-${validationState}`}
                 name={name}
+                maxLength={maxLength}
             />
             {errorMessage ? <span className="error-massage">{errorMessage}</span> : null}
         </div>
@@ -42,7 +45,9 @@ Input.propTypes = {
     onChange: PropTypes.func.isRequired,
     value: PropTypes.string.isRequired,
     validationState: PropTypes.oneOf(Object.values(inputValidationStateTypes)),
-    errorMessage: PropTypes.string
+    errorMessage: PropTypes.string,
+    maxLength: PropTypes.number,
+    name: PropTypes.string
 };
 
 Input.defaultProps = {
@@ -52,7 +57,9 @@ Input.defaultProps = {
     validationState: 'default',
     value: '',
     errorMessage: '',
-    name: ''
+    name: '',
+    className: '',
+    maxLength: 100
 };
 
 export default Input;

@@ -4,7 +4,8 @@ import './toggle.scss';
 const Toggle = props => {
     const {
         isToggled,
-        changeToggle
+        changeToggle,
+        icons
     } = props;
 
     return (
@@ -12,8 +13,8 @@ const Toggle = props => {
             <label className="toggle-switch" >
                 <input type="checkbox" checked={isToggled} onClick={changeToggle}/>
                 <div className="toggle-slider">
-                    <span className="toggle-icon-list"><i className="fa fa-th-list"/></span>
-                    <span className="toggle-icon-table"><i className="fa fa-th-large"/></span>
+                    <span className="toggle-icon">{icons[0]}</span>
+                    <span className="toggle-icon">{icons[1]}</span>
                 </div>
             </label>
         </div>
@@ -22,7 +23,8 @@ const Toggle = props => {
 
 Toggle.propTypes = {
     isToggled: PropTypes.bool.isRequired,
-    changeToggle: PropTypes.func.isRequired
+    changeToggle: PropTypes.func.isRequired,
+    icons: PropTypes.array.isRequired
 };
 
 export default Toggle;

@@ -9,7 +9,7 @@ const DEFAULT_STATE = {
     loaded: false
 };
 
-export const user = (state = DEFAULT_STATE, action) => {
+export default (state = DEFAULT_STATE, action) => {
 
     if (action.type === ActionTypes.GET_USER_REQUEST) {
         return {...state, loaded: false};

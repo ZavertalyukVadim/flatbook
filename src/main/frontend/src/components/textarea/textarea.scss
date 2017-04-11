@@ -4,6 +4,7 @@
 
 .textarea {
   display: block;
+  resize: vertical;
   width: 100%;
   border: 2px solid $text-field-default-border-color;
   color: $text-field-default-text-color;
@@ -12,7 +13,7 @@
   line-height: $text-field-default-line-height;
   padding: map-get($indentSizes, s) map-get($indentSizes, m);
   height: 90px;
-  border-radius: 6px;
+  border-radius: 3px;
   box-shadow: none;
   box-sizing: border-box;
   background: $text-field-background;
