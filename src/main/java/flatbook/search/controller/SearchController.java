@@ -81,6 +81,4 @@ public class SearchController {
     public List<Announcement> extendedSearch(@RequestBody ExtendSearch amenities) {
         return announcementService.getAnnouncementByExtendedSearch(amenities);
     }
-
-
 }

@@ -23,9 +23,8 @@ public class Photo {
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinTable(name = "announcements_photos", joinColumns = {
-            @JoinColumn(name = "announcement_id")},
-            inverseJoinColumns = {@JoinColumn(name = "photo_id",
-                    nullable = false)})
+            @JoinColumn(name = "photo_id")},
+            inverseJoinColumns = {@JoinColumn(name = "announcement_id")})
     private Announcement announcement;
 
     public Photo() {
