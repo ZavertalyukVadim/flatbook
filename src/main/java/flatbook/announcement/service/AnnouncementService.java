@@ -184,7 +184,7 @@ public class AnnouncementService {
 
 
         Amenity amenity = new Amenity();
-        amenity.setName("WI FI");
+        amenity.setName("Wi-Fi");
         amenityDao.save(amenity);
         Amenity amenity1 = new Amenity();
         amenity1.setName("Iron");
@@ -192,6 +192,37 @@ public class AnnouncementService {
         Amenity amenity2 = new Amenity();
         amenity2.setName("Balcony");
         amenityDao.save(amenity2);
+        Amenity amenity3= new Amenity();
+        amenity3.setName("Animals");
+        amenityDao.save(amenity3);
+        Amenity amenity4 =  new Amenity();
+        amenity4.setName("Smoking");
+        amenityDao.save(amenity4);
+        Amenity amenity5 = new Amenity();
+        amenity5.setName("TV");
+        amenityDao.save(amenity5);
+        Amenity amenity6 = new Amenity();
+        amenity6.setName("Kitchen staff");
+        amenityDao.save(amenity6);
+        Amenity amenity7 = new Amenity();
+        amenity7.setName("Children");
+        amenityDao.save(amenity7);
+        Amenity amenity8 = new Amenity();
+        amenity8.setName("Parking");
+        amenityDao.save(amenity8);
+        Amenity amenity9 = new Amenity();
+        amenity9.setName("For people with disabilities");
+        amenityDao.save(amenity9);
+        Amenity amenity10 = new Amenity();
+        amenity10.setName("Lift");
+        amenityDao.save(amenity10);
+        Amenity amenity11 = new Amenity();
+        amenity11.setName("Washing machine");
+        amenityDao.save(amenity11);
+        Amenity amenity12 = new Amenity();
+        amenity12.setName("Private house");
+        amenityDao.save(amenity12);
+
         amenityList.add(amenity);
         amenityList.add(amenity1);
         amenityList.add(amenity2);
@@ -425,27 +456,28 @@ public class AnnouncementService {
         return announcementDao.findOne(id);
     }
 
-    public Announcement updateAnnouncement(Announcement newAnnouncement) {
-        Announcement announcement = announcementDao.findOne(newAnnouncement.getId());
-        announcement.setPricePerDay(newAnnouncement.getPricePerDay());
-        announcement.setPricePerMonth(newAnnouncement.getPricePerMonth());
-        announcement.setTitle(newAnnouncement.getTitle());
-        announcement.setDescription(newAnnouncement.getDescription());
-        announcement.setCountry(newAnnouncement.getCountry());
-        announcement.setRegion(newAnnouncement.getRegion());
-        announcement.setCity(newAnnouncement.getCity());
-        announcement.setStreet(newAnnouncement.getStreet());
-        announcement.setHouseNumber(newAnnouncement.getHouseNumber());
-        announcement.setVisibility(newAnnouncement.getVisibility());
+    public Announcement updateAnnouncement(Post post) {
+        City city = cityDao.findOne(post.getCityId());
+        Announcement announcement = announcementDao.findOne(post.getAnnouncementId());
+        announcement.setTitle(post.getTitle());
+        announcement.setDescription(post.getDescription());
+        announcement.setRooms(post.getRooms());
+        announcement.setStreet(post.getStreet());
+        announcement.setLivingPlaces(post.getLivingPlaces());
+        if(post.getPrice() == Price.PRICE_PER_DAY){
+            announcement.setPricePerDay(post.getValue());
+        }
+        else {
+
+            announcement.setPricePerMonth(post.getValue());
+        }
+        announcement.setAmenities(post.getAmenities());
         announcement.setLastUpdated(new Date());
-        announcement.setRooms(newAnnouncement.getRooms());
-        announcement.setLivingPlaces(newAnnouncement.getLivingPlaces());
-        announcement.setAmenities(newAnnouncement.getAmenities());
-        announcement.setPhotos(newAnnouncement.getPhotos());
+        announcement.setCity(city);
+        announcement.setRegion(city.getRegion());
+        announcement.setCountry(city.getRegion().getCountry());
         announcement.setUser(getCurrentUser());
-        announcement.setDistrict(newAnnouncement.getDistrict());
-        announcementDao.save(announcement);
-        return announcement;
+       return announcementDao.save(announcement);
     }
 
     public Announcement deleteAnnouncement(Integer id) {
@@ -454,15 +486,34 @@ public class AnnouncementService {
     }
 
     @Transactional
-    public Announcement createAnnouncement(Announcement announcement) {
+    public Announcement createAnnouncement(Post post) {
+        City city = cityDao.findOne(post.getCityId());
+
+        Announcement announcement = new Announcement();
+        announcement.setTitle(post.getTitle());
+        announcement.setDescription(post.getDescription());
+        announcement.setRooms(post.getRooms());
+        announcement.setStreet(post.getStreet());
+        announcement.setLivingPlaces(post.getLivingPlaces());
+        if(post.getPrice() == Price.PRICE_PER_DAY){
+            announcement.setPricePerDay(post.getValue());
+        }
+        else {
+
+            announcement.setPricePerMonth(post.getValue());
+        }
+        announcement.setAmenities(post.getAmenities());
         announcement.setLastUpdated(new Date());
+        announcement.setCity(city);
+        announcement.setRegion(city.getRegion());
+        announcement.setCountry(city.getRegion().getCountry());
         announcement.setUser(getCurrentUser());
         Announcement savedAnnouncement = saveAnnouncement(announcement);
         AnnouncementByUser announcementByUser = new AnnouncementByUser();
         announcementByUser.setUserId(getCurrentUser().getId());
         announcementByUser.setAnnouncementId(savedAnnouncement.getId());
         announcementByUserDao.save(announcementByUser);
-        return announcement;
+        return savedAnnouncement;
     }
 
     private Announcement saveAnnouncement(Announcement announcement) {
