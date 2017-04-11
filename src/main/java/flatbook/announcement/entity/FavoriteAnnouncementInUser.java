@@ -5,11 +5,11 @@ import flatbook.profile.entity.User;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "favorite_announcement_in_user")
+@Table(name = "favorites_announcements_in_user")
 public class FavoriteAnnouncementInUser {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "favorite_announcement_in_user_id", nullable = false)
+//    @Column(name = "id", nullable = false)
     private Integer id;
 
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = User.class)

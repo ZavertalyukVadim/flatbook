@@ -5,12 +5,12 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "photo")
+@Table(name = "photos")
 public class Photo {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "photo_id", nullable = false)
+//    @Column(name = "id", nullable = false)
     private Integer id;
 
     @JsonIgnore

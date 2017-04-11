@@ -3,12 +3,12 @@ package flatbook.announcement.entity;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "user_announcements")
+@Table(name = "users_announcements")
 public class AnnouncementByUser {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "user_announcements_id", nullable = false)
+//    @Column(name = "id", nullable = false)
     private Integer id;
 
     @JoinColumn(name = "user_id", nullable = false)
