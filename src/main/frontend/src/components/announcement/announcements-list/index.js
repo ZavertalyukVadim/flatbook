@@ -1,11 +1,11 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {getAllAnnouncements} from '../../actions/announcement-actions';
-import AnnouncementPreview from '../../components/announcement/announcement-preview';
-import Header, {HeaderTypes} from '../../components/header';
+import {getAllAnnouncements} from '../../../actions/announcement-actions';
+import AnnouncementPreview from '../.././../components/announcement/announcement-preview';
+import Header, {HeaderTypes} from '../../../components/header';
 import './all-announcements.scss';
 
-class AllAnnouncements extends Component {
+class AnnouncementsList extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -44,4 +44,4 @@ class AllAnnouncements extends Component {
 }
 ;
 
-export default connect(({announcements}) => ({announcements: announcements}), {getAllAnnouncements})(AllAnnouncements);
+export default connect(({announcements}) => ({announcements: announcements}), {getAllAnnouncements})(AnnouncementsList);

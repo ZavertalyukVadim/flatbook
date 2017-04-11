@@ -34,3 +34,22 @@ export const saveAnnouncement = body => (dispatch, getState) => {
         }
     });
 };
+
+export const getAnnouncementById = id => (dispatch, getState) => {
+    const {announcements: {pending}} = getState();
+
+    if (pending) {
+        return null;
+    }
+
+    return dispatch({
+        [CALL_API]: {
+            types: [
+                ActionTypes.GET_ANNOUNCEMENT_BY_ID_REQUEST,
+                ActionTypes.GET_ANNOUNCEMENT_BY_ID_SUCCESS,
+                ActionTypes.GET_ANNOUNCEMENT_BY_ID_FAILURE
+            ],
+            endpoint: () => get(`announcement/${id}`)
+        }
+    });
+};

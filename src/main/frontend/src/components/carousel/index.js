@@ -1,7 +1,8 @@
 import React, {PropTypes, Component} from 'react';
 import classNames from 'classnames';
 import './carousel.scss';
-import Image from '../image';
+import Image, {ImageSizes} from '../image';
+import urlResolver from '../../api/urlResolver';
 
 class Carousel extends Component {
     constructor(props) {
@@ -19,13 +20,14 @@ class Carousel extends Component {
         counter: this.state.counter + 1 < this.props.slides.length ? this.state.counter + 1 : 0
     });
 
-    renderSlides = () => this.props.slides.map((image, index) => {
+    renderSlides = () => this.props.slides.map((obj, index) => {
+
         const imageClassNames = classNames('carousel-slide', {
             'carousel-slide-shown': index === this.state.counter
         });
         return (
             <div  key={index} className={imageClassNames}>
-                <Image src={image}/>
+                <Image src={urlResolver(`photo/${obj.id}`)}/>
             </div>
         );
     });
