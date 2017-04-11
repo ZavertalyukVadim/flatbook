@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import Price, {PriceTypes} from '../../price';
 import Carousel from '../../carousel';
+import {Link} from 'react-router-dom';
 import Image from '../../image';
 import Header, {HeaderTypes} from '../../header';
 import './announcement-preview.scss';
@@ -9,8 +10,8 @@ class AnnouncementPreview extends Component {
 
     render() {
         const {
+            id,
             description,
-            photos,
             pricePerDay,
             pricePerMonth,
             title
@@ -21,11 +22,12 @@ class AnnouncementPreview extends Component {
                  <Image/>
                 <div className="announcement-description-field">
                     <div className="announcement-description">
-                        {title && <Header value={title} type={HeaderTypes.secondary}/>}
+                        <Link to={`announcement/${id}`}>
+                            <Header value={title} type={HeaderTypes.secondary}/>
+                        </Link>
                         {pricePerMonth && <Price payment={PriceTypes.monthly} className="price-per-month" value={pricePerMonth}/>}
                         {pricePerDay && <Price payment={PriceTypes.daily} value={pricePerDay}/>}
                         <p className="description-field">{description}</p>
-
                     </div>
                 </div>
             </div>

@@ -1,5 +1,6 @@
 import React, {PropTypes, Component} from 'react';
 import classNames from 'classnames';
+import urlResolver from '../../api/urlResolver';
 import './image.scss';
 
 export const ImageSizes = {
