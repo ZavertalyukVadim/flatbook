@@ -1,7 +1,7 @@
 package flatbook.profile.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import flatbook.announcement.entity.Role;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -29,8 +29,18 @@ public class User implements UserDetails {
 
     @Column(name = "pass")
     @NotNull
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+//    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
+
+    public User() {
+    }
+
+    public User(Set<Email> emails, String password, Set<Role> roles) {
+       this.emails = emails;
+       this.password= password;
+       this.roles=roles;
+
+    }
 
     public Set<Email> getEmails() {
         return emails;
@@ -74,6 +84,9 @@ public class User implements UserDetails {
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
+
+    @OneToMany(fetch = FetchType.EAGER, cascade=CascadeType.ALL)
+    private Set<Role> roles;
 
     @JsonIgnore
     @Override
@@ -129,6 +142,14 @@ public class User implements UserDetails {
                 ", password='" + password + '\'' +
                 ", emails=" + emails +
                 '}';
+    }
+
+    public Set<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
     }
 
     public Set<Phone> getPhones() {
