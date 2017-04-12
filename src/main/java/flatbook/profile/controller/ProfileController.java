@@ -68,8 +68,9 @@ public class ProfileController {
     }
 
     @PostMapping(value = "/{id}/favorite")
-    public void addAnnouncementToFavorite(@PathVariable("id") Integer id){
+    public boolean addAnnouncementToFavorite(@PathVariable("id") Integer id){
         profileService.markFavorite(id);
+        return true;
     }
 
     @DeleteMapping(value = "/{id}/removeFromFavorite")
