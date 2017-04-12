@@ -1,4 +1,4 @@
-import {CALL_API, get, post} from '../api';
+import {CALL_API, get, post, put} from '../api';
 import * as ActionTypes from './announcement-constants';
 
 export const getAllAnnouncements = () => (dispatch, getState) => {
@@ -20,8 +20,31 @@ export const getAllAnnouncements = () => (dispatch, getState) => {
     });
 };
 
-export const saveAnnouncement = body => (dispatch, getState) => {
+export const addNewAnnouncement = body => (dispatch, getState) => {
     const {announcements: {pending}} = getState();
+
+    if (pending) {
+        return null;
+    }
+
+    return dispatch({
+        [CALL_API]: {
+            types: [
+                ActionTypes.ADD_NEW_ANNOUNCEMENT_REQUEST,
+                ActionTypes.ADD_NEW_ANNOUNCEMENT_SUCCESS,
+                ActionTypes.ADD_NEW_ANNOUNCEMENT_FAILURE
+            ],
+            endpoint: () => post('announcement/', body)
+        }
+    });
+};
+
+export const updateAnnouncement = body => (dispatch, getState) => {
+    const {announcements: {pending}} = getState();
+
+    if (pending) {
+        return null;
+    }
 
     return dispatch({
         [CALL_API]: {
@@ -30,7 +53,7 @@ export const saveAnnouncement = body => (dispatch, getState) => {
                 ActionTypes.UPDATE_ANNOUNCEMENT_SUCCESS,
                 ActionTypes.UPDATE_ANNOUNCEMENT_FAILURE
             ],
-            endpoint: () => post('announcement/', body)
+            endpoint: () => put('announcement/', body)
         }
     });
 };

@@ -1,6 +1,6 @@
 import React, {Component, PropTypes} from 'react';
 import {connect} from 'react-redux';
-import {isNull, noop} from 'lodash';
+import {isNull} from 'lodash';
 import Checkbox from '../../checkbox';
 import Input from '../../input';
 import Button, {ButtonTypes, ButtonSizes} from '../../button';
@@ -16,7 +16,6 @@ import {
     getCities
 } from '../../../actions/search-actions';
 import {getAmenity} from '../../../actions/amenity-actions';
-import {saveAnnouncement} from '../../../actions/announcement-actions';
 
 const pricePerDay = 'PRICE_PER_DAY';
 const pricePerMonth = 'PRICE_PER_MONTH';
@@ -95,7 +94,7 @@ class AnnouncementForm extends Component {
             priceType
         } = this.state;
 
-        this.props.saveAnnouncement({
+        this.props.onSave({
             cityId: chosenCityID,
             title: title,
             description: description,
@@ -105,9 +104,7 @@ class AnnouncementForm extends Component {
             priceType: priceType,
             priceValue: this.state[priceType],
             amenities: amenities.filter(a => a.checked).map(a => ({id: a.id, name: a.name}))
-        }).then(
-            a => !a.error ? this.props.redirect('/profile') : noop
-        );
+        });
     };
     onDiscard = () => this.setState({
         chosenCountryID: null,
@@ -287,6 +284,7 @@ AnnouncementForm.defaultProps = {
     PRICE_PER_DAY: null,
     PRICE_PER_MONTH: null,
     title: '',
+    street: '',
     amenities: [],
     rooms: 4,
     livingPlaces: 4,
@@ -324,6 +322,5 @@ export default connect(
         getCountries,
         getRegions,
         getCities,
-        saveAnnouncement,
         getAmenity
     })(AnnouncementForm);

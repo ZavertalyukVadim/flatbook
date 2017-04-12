@@ -11,7 +11,12 @@ const DEFAULT_STATE = {
         loaded: false,
         pending: false
     },
-    uploaded: ''
+    loaded: false,
+    pending: false,
+    uploaded: {
+        data: {},
+        pending: false
+    }
 };
 
 export default (state = DEFAULT_STATE, action) => {
@@ -40,18 +45,29 @@ export default (state = DEFAULT_STATE, action) => {
         return {...state, announcementView: {loaded: false, pending: false}}
     }
 
+    if (action.type === ActionTypes.ADD_NEW_ANNOUNCEMENT_REQUEST) {
+        return {...state, uploaded: {...state.uploaded, pending: true}};
+    }
+
+    if (action.type === ActionTypes.ADD_NEW_ANNOUNCEMENT_SUCCESS) {
+        return {...state, uploaded: {...state.uploaded, data: action.response, pending: false}}
+    }
+
+    if (action.type === ActionTypes.ADD_NEW_ANNOUNCEMENT_FAILURE) {
+        return {...state, uploaded: {...state.uploaded, data: {}, pending: false}};
+    }
+
     if (action.type === ActionTypes.UPDATE_ANNOUNCEMENT_REQUEST) {
-        return {...state};
+        return {...state, uploaded: {...state.uploaded, pending: true}};
     }
 
     if (action.type === ActionTypes.UPDATE_ANNOUNCEMENT_SUCCESS) {
-        return {...state, uploaded: action.response};
+        return {...state, uploaded: {...state.uploaded, data: action.response}};
     }
 
     if (action.type === ActionTypes.UPDATE_ANNOUNCEMENT_FAILURE) {
-        return {...state}
+        return {...state, uploaded: {...state.uploaded, data: {}, pending: false}};
     }
 
     return state;
 };
-
