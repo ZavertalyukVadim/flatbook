@@ -1,7 +1,7 @@
 import React from 'react';
 import Container from '../../../components/container';
 import Sidebar from '../../../components/profile/sidebar';
-import AnnouncementForm from '../../../components/profile/announcement-form';
+import AnnouncementNew from '../../../components/announcement/announcement-new';
 
 const AnnouncementCreation = ({history}) => {
     return (
@@ -10,7 +10,7 @@ const AnnouncementCreation = ({history}) => {
                 <Sidebar/>
             }
         >
-            <AnnouncementForm redirect={path => history.push(path)}/>
+            <AnnouncementNew redirect={path => history.push(path)}/>
         </Container>
     );
 };

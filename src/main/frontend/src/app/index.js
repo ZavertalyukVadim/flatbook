@@ -1,7 +1,6 @@
 import React from 'react';
 import {Router} from 'react-router';
 import {Route, Switch} from 'react-router-dom';
-import createBrowserHistory from 'history/createBrowserHistory';
 import {Provider} from 'react-redux';
 import Showroom from '../components/showroom';
 import Root from '../routes/root';
@@ -17,10 +16,11 @@ import Announcement from '../routes/announcement/id';
 import '../style/grid.scss';
 import './app.scss';
 import store from '../store';
+import history from '../utils/history';
 
 export default () =>
     <Provider store={store}>
-        <Router history={createBrowserHistory()}>
+        <Router history={history}>
             <Switch>
                 <Route path="/announcement/:id" component={Announcement}/>
                 <Route path="/profile/create-announcement" component={AnnouncementCreation}/>
