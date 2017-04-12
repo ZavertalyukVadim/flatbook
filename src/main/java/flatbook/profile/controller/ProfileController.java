@@ -68,8 +68,9 @@ public class ProfileController {
     }
 
     @PostMapping(value = "/{id}/favorite")
-    public void addAnnouncementToFavorite(@PathVariable("id") Integer id){
+    public boolean addAnnouncementToFavorite(@PathVariable("id") Integer id){
         profileService.markFavorite(id);
+        return true;
     }
 
     @DeleteMapping(value = "/{id}/removeFromFavorite")
@@ -77,13 +78,13 @@ public class ProfileController {
         profileService.removeFromFavorite(id);
     }
 
-    @PostMapping(value = "/favorites")
+    @GetMapping(value = "/favorites")
     public List<Announcement> getLikedAnnouncementsByUser(){
         return profileService.getLikedAnnouncementsByUser();
     }
 
 
-    @PostMapping(value = "/myAnnouncements")
+    @GetMapping(value = "/announcements")
     public List<Announcement> getAnnouncementsByUser(){
         return profileService.getAnnouncementsByUser();
     }
