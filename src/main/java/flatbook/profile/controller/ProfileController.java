@@ -77,13 +77,13 @@ public class ProfileController {
         profileService.removeFromFavorite(id);
     }
 
-    @PostMapping(value = "/favorites")
+    @GetMapping(value = "/favorites")
     public List<Announcement> getLikedAnnouncementsByUser(){
         return profileService.getLikedAnnouncementsByUser();
     }
 
 
-    @PostMapping(value = "/myAnnouncements")
+    @GetMapping(value = "/announcements")
     public List<Announcement> getAnnouncementsByUser(){
         return profileService.getAnnouncementsByUser();
     }
