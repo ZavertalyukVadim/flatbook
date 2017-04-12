@@ -19,24 +19,23 @@ class ProfileSettings extends Component {
 
     componentDidMount() {
         this.props.getUser();
-        console.log(this.props);
+
     }
 
     componentWillReceiveProps(nextProps) {
         if (nextProps !== this.props) {
             this.setState({...nextProps.user.data});
         }
-    }
 
-    onChangePassword = () => console.log(this.state);
+    }
 
     onInputChange = name => e => this.setState({[name]: e.target.value});
 
     onArrayChange = (name, idx) => e => this.setState({
-        [name]: this.state[name].map((item, index) => idx === index ? {value: e.target.value} : item)
+        [name]: this.state[name].map((item, index) => idx === index ? {content: e.target.value} : item)
     });
 
-    addNewInput = name => () => this.setState({[name]: this.state[name].concat({value: ''})});
+    addNewInput = name => () => this.setState({[name]: this.state[name].concat({content: ''})});
 
     onCheckboxClick = () => this.setState({notifications: !this.state.notifications});
 
@@ -74,7 +73,6 @@ class ProfileSettings extends Component {
         </div>;
 
     render() {
-        console.log(this.props.user.loaded);
         return (
             <div className="profile-settings-field">
                 {this.props.user.loaded ? (
