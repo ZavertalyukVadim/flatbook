@@ -47,7 +47,7 @@ public class Application {
 
     @Autowired
     public void authenticationManager(AuthenticationManagerBuilder builder, UserDao userDao) throws Exception {
-        if (userDao.count()==0) {
+        if (userDao.count() == 0) {
             Set<Email> emailSet = new HashSet<>();
             Email email = new Email();
             email.setPrimary(true);
@@ -56,8 +56,8 @@ public class Application {
             Set<Role> roles = new HashSet<>();
             Role role = new Role("USER");
             roles.add(role);
-            User user = new User(emailSet, "password",roles);
-            email.setUser( user);
+            User user = new User(emailSet, "password", roles);
+            email.setUser(user);
             userDao.save(user);
             emailDao.save(email);
         }
@@ -68,7 +68,7 @@ public class Application {
         Set<Email> emailSet = new HashSet<>();
         Email email = emailDao.findOneByContent("hello@gmail.com");
 
-        System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"+userDao.getUserByEmails(email));
+        System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" + userDao.getUserByEmails(email));
 
         return username -> new CustomUserDetails(userDao.getUserByEmails(email));
     }
