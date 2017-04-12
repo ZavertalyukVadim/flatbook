@@ -6,6 +6,7 @@ import flatbook.search.service.CityService;
 import flatbook.search.service.CountryService;
 import flatbook.search.service.RegionService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -71,20 +72,13 @@ public class SearchController {
         return announcementService.getMaxPriceOnCity(id);
     }
 
-
     @PostMapping
-    public List<Announcement> search(@RequestBody Search search) {
+    public Page<Announcement> search(@RequestBody Search search) {
         return announcementService.getAnnouncementBySmallSearch(search);
     }
 
     @PostMapping(value = "/extended")
-    public List<Announcement> extendedSearch(@RequestBody ExtendSearch amenities) {
+    public Page<Announcement> extendedSearch(@RequestBody ExtendSearch amenities) {
         return announcementService.getAnnouncementByExtendedSearch(amenities);
-    }
-
-
-    @PostMapping(value = "/extended/{page}/{itemsPerPage}")
-    public List<Announcement> extendedPageSearch(@RequestBody ExtendSearch amenities, @PathVariable("page") Integer page, @PathVariable("itemsPerPage") Integer itemsPerPage) {
-        return announcementService.getPageAnnouncementsByExtendSearch(amenities, page, itemsPerPage);
     }
 }

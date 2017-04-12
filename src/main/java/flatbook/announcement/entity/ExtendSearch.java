@@ -3,6 +3,8 @@ package flatbook.announcement.entity;
 import java.util.List;
 
 public class ExtendSearch {
+    private int pageNum;
+    private int itemsPerPage;
     private Integer cityId;
     private Integer startingPrice;
     private Integer finalPrice;
@@ -107,5 +109,21 @@ public class ExtendSearch {
         result = 31 * result + (livingPlaces != null ? livingPlaces.hashCode() : 0);
         result = 31 * result + (amenities != null ? amenities.hashCode() : 0);
         return result;
+    }
+
+    public int getPageNum() {
+        return pageNum;
+    }
+
+    public void setPageNum(int pageNum) {
+        this.pageNum = pageNum;
+    }
+
+    public int getItemsPerPage() {
+        return itemsPerPage;
+    }
+
+    public void setItemsPerPage(int imtesPerPage) {
+        this.itemsPerPage = imtesPerPage;
     }
 }

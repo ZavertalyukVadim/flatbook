@@ -4,10 +4,10 @@ import flatbook.announcement.entity.Announcement;
 import flatbook.announcement.entity.Post;
 import flatbook.announcement.service.AnnouncementService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.List;
 
 @RestController
 @RequestMapping(value = "/api/announcement")
@@ -19,14 +19,10 @@ public class AnnouncementController {
         this.announcementService = announcementService;
     }
 
-    @RequestMapping(value = "/test", method = RequestMethod.GET)
-    public void test() {
-       announcementService.test();
-    }
+    @GetMapping(value = "/all/{page}/{itemsPerPage}")
+    public Page<Announcement> getAllAnnouncement(@PathVariable("page") Integer page, @PathVariable("itemsPerPage") Integer itemPerPage) {
 
-    @RequestMapping(value = "", method = RequestMethod.GET)
-    public List<Announcement> getAllAnnouncement() {
-        return announcementService.getAllAnnouncement();
+        return announcementService.getAllAnnouncement(page, itemPerPage);
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
@@ -52,11 +48,6 @@ public class AnnouncementController {
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public Announcement deleteAnnouncement(@PathVariable("id") Integer id) {
         return announcementService.deleteAnnouncement(id);
-    }
-
-    @RequestMapping(value = "/page", method = RequestMethod.GET)
-    public List<Announcement> getPageAllAnnouncement() {
-        return announcementService.getPageAllAnnouncement();
     }
 }
 

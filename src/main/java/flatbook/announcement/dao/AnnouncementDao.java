@@ -11,35 +11,36 @@ import java.util.List;
 
 public interface AnnouncementDao extends JpaRepository<Announcement, Integer> {
 
-    @Query("SELECT a FROM Announcement a where a.city = :#{#city} " +
+    @Query("SELECT a FROM Announcement a where a.city.id = :#{#search.cityId} " +
             "and  a.rooms=:#{#search.rooms} " +
-            "and a.visibility = true "+
+            "and a.visibility = true " +
             "and a.livingPlaces=:#{#search.livingPlaces} " +
             "and a.pricePerDay between :#{#search.startingPrice} and :#{#search.finalPrice}")
-    List<Announcement> getAnnouncementPerDay(@Param("city") City city, @Param("search") Search search);
+    Page<Announcement> getAnnouncementPerDay(@Param("search") Search search, Pageable pageable);
 
-    @Query("SELECT a FROM Announcement a where a.city = :#{#city} " +
+    @Query("SELECT a FROM Announcement a where a.city.id = :#{#search.cityId} " +
             "and  a.rooms=:#{#search.rooms} " +
-            "and a.visibility = true "+
+            "and a.visibility = true " +
             "and a.livingPlaces=:#{#search.livingPlaces} " +
             "and a.pricePerMonth between :#{#search.startingPrice} and :#{#search.finalPrice}")
-    List<Announcement> getAnnouncementPerMonth(@Param("city") City city, @Param("search") Search search);
+    Page<Announcement> getAnnouncementPerMonth(@Param("search") Search search, Pageable pageable);
 
-    @Query("SELECT a FROM Announcement a INNER JOIN a.amenities amenities where a.city = :#{#city} " +
+    @Query(value = "SELECT a FROM Announcement a INNER JOIN a.amenities amenities where a.city.id = :#{#search.cityId} " +
             "and a.rooms=:#{#search.rooms} " +
-            "and a.visibility = true "+
+            "and a.visibility = true " +
             "and a.livingPlaces=:#{#search.livingPlaces} " +
             "and amenities in :#{#search.amenities} " +
-            "and a.pricePerDay between :#{#search.startingPrice} and :#{#search.finalPrice} group by a")
-    List<Announcement> getAnnouncementPerDayWithAmenities(@Param("city") City city, @Param("search") ExtendSearch search);
+            "and a.pricePerDay between :#{#search.startingPrice} and :#{#search.finalPrice} group by a"
+    )
+    Page<Announcement> getAnnouncementPerDayWithAmenities(@Param("search") ExtendSearch search, Pageable pageRequest);
 
-    @Query("SELECT a FROM Announcement a INNER JOIN  a.amenities amenities where a.city = :#{#city} " +
+    @Query("SELECT a FROM Announcement a INNER JOIN  a.amenities amenities where a.city.id = :#{#search.cityId} " +
             "and a.rooms = :#{#search.rooms} " +
-            "and a.visibility = true "+
+            "and a.visibility = true " +
             "and a.livingPlaces = :#{#search.livingPlaces} " +
             "and amenities in  :#{#search.amenities} " +
             "and a.pricePerMonth between :#{#search.startingPrice} and :#{#search.finalPrice} group by a")
-    List<Announcement> getAnnouncementPerMonthWithAmenities(@Param("city") City city, @Param("search") ExtendSearch search);
+    Page<Announcement> getAnnouncementPerMonthWithAmenities(@Param("search") ExtendSearch search, Pageable pageable);
 
     Announcement findTopByOrderByPricePerDayDesc();
 
@@ -48,7 +49,6 @@ public interface AnnouncementDao extends JpaRepository<Announcement, Integer> {
     List<Announcement> getAnnouncementByCountryOrderByPricePerDayDesc(Country country);
 
     List<Announcement> getAnnouncementByCountryOrderByPricePerMonthDesc(Country country);
-
 
     List<Announcement> getAnnouncementByRegionOrderByPricePerDayDesc(Region region);
 
@@ -60,40 +60,5 @@ public interface AnnouncementDao extends JpaRepository<Announcement, Integer> {
 
     Announcement getAnnouncementById(Integer id);
 
-    List<Announcement> getAllByVisibilityTrueOrderByLastUpdatedDesc();
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    @Query("SELECT a FROM Announcement a INNER JOIN  a.amenities amenities where a.city = :#{#city} " +
-            "and a.rooms = :#{#search.rooms} " +
-            "and a.visibility = true "+
-            "and a.livingPlaces = :#{#search.livingPlaces} " +
-            "and amenities in  :#{#search.amenities} " +
-            "and a.pricePerMonth between :#{#search.startingPrice} and :#{#search.finalPrice} group by a")
-    Page<Announcement> getPageAnnouncementPerMonthWithAmenities(@Param("city") City city, @Param("search") ExtendSearch search, Pageable pageRequest);
-
-
-
-
-
-
-
-
-
-
-    @Query(value = "SELECT a FROM Announcement a where a.city.name='Shpola'" )
-    Page<Announcement> getPageAnnouncementPerDayWithAmenities(/*@Param("city") City city,*/ /*@Param("search") ExtendSearch search,*/ Pageable pageRequest);
+    Page<Announcement> getAllByVisibilityTrueOrderByLastUpdatedDesc(Pageable pageable);
 }

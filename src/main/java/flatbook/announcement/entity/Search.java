@@ -3,6 +3,9 @@ package flatbook.announcement.entity;
 
 public class Search {
 
+    private int pageNum;
+    private int itemsPerPage;
+
     private Integer cityId;
     private Integer startingPrice;
     private Integer finalPrice;
@@ -44,5 +47,21 @@ public class Search {
 
     public Integer getLivingPlaces() {
         return livingPlaces;
+    }
+
+    public int getPageNum() {
+        return pageNum;
+    }
+
+    public void setPageNum(int pageNum) {
+        this.pageNum = pageNum;
+    }
+
+    public int getItemsPerPage() {
+        return itemsPerPage;
+    }
+
+    public void setItemsPerPage(int itemsPerPage) {
+        this.itemsPerPage = itemsPerPage;
     }
 }
