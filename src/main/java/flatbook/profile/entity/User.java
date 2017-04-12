@@ -1,7 +1,6 @@
 package flatbook.profile.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import flatbook.announcement.entity.Role;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -30,7 +29,7 @@ public class User implements UserDetails {
 
     @Column(name = "pass")
     @NotNull
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+//    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
 
     public User() {
@@ -86,7 +85,7 @@ public class User implements UserDetails {
         this.lastName = lastName;
     }
 
-    @OneToMany(fetch = FetchType.EAGER, cascade=CascadeType.ALL)
+    @OneToMany(fetch = FetchType.EAGER, cascade=CascadeType.ALL,mappedBy = "user")
     private Set<Role> roles;
 
     @JsonIgnore

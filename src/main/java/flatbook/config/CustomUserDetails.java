@@ -2,6 +2,7 @@ package flatbook.config;
 
 
 import flatbook.announcement.entity.Role;
+import flatbook.profile.entity.Email;
 import flatbook.profile.entity.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -19,8 +20,15 @@ public class CustomUserDetails implements UserDetails {
     private String password;
     private String username;
 
-    public CustomUserDetails(User user) {
-        this.username = user.getUsername();
+    CustomUserDetails(User user) {
+        Set<Email> emails = user.getEmails();
+        Email primaryEmail = null;
+        for (Email email : emails) {
+            if (email.getPrimary()) {
+                primaryEmail = email;
+            }
+        }
+        this.username = primaryEmail.getContent();
         this.password = user.getPassword();
         this.authorities = translate(user.getRoles());
     }
