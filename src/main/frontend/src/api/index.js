@@ -55,7 +55,7 @@ const post = (url, body, extraParams = {}, headers = {}) =>
     fetch(urlResolver(url, extraParams), {...POST_CONFIG, ...headers, body: JSON.stringify(body)});
 
 const PUT_CONFIG = {method: 'PUT', mode: 'cors', credentials: "include", headers: {'Content-Type': CONTENT_TYPE_JSON}};
-const put = (url, body, extraParams = {}) =>
+const put = (url, body = {}, extraParams = {}) =>
     fetch(urlResolver(url, extraParams), {...PUT_CONFIG, body: JSON.stringify(body)});
 
 const remove = (url, extraParams = {}) =>

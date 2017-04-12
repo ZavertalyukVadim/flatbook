@@ -1,17 +1,17 @@
 import React, {Component} from 'react';
 import Price, {PriceTypes} from '../../price';
-import Image, {ImageSizes} from '../../image';
 import Avatar from '../../avatar';
 import Button, {ButtonTypes, ButtonSizes} from '../../button';
 import Header, {HeaderTypes} from '../../header';
-import Carousel from "../../carousel/index";
-import urlResolver from '../../../api/urlResolver';
+import AnnouncementPhotoContainer from '../announcement-photo-container';
 import './announcement-view.scss';
 
 class AnnouncementView extends Component {
 
     render() {
+
         const {
+            id,
             city,
             country,
             region,
@@ -25,10 +25,7 @@ class AnnouncementView extends Component {
 
         return (
             <div className="announcement-view">
-                {photos.length > 1 ? <Carousel slides={photos}/> :
-                    photos.length ?
-                        <Image src={urlResolver(`photo/${photos[0].id}`)} size={ImageSizes.large}/> :
-                        <Image size={ImageSizes.large}/>}
+                <AnnouncementPhotoContainer  photos={photos} id={id}/>
                 <div className="announcement-description-field">
                     <div className="announcement-description">
                         {title && <Header value={title} type={HeaderTypes.secondary}/>}
