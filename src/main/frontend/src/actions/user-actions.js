@@ -61,11 +61,6 @@ export const getUserAnnouncements = id => (dispatch, getState) => {
 };
 
 export const deleteAnnouncement = id => (dispatch, getState) => {
-    const {user: {pending}} = getState();
-
-    if (pending) {
-        return null;
-    }
 
     return dispatch({
         [CALL_API]: {
@@ -79,6 +74,57 @@ export const deleteAnnouncement = id => (dispatch, getState) => {
     });
 };
 
+export const getLikedAnnouncements = () => (dispatch, getState) => {
+    const {user: {favouriteAnnouncements: {pending}}} = getState();
+
+    if (pending) {
+        return null;
+    }
+
+    return dispatch({
+        [CALL_API]: {
+            types: [
+                ActionTypes.GET_FAVOURITE_ANNOUNCEMENTS_REQUEST,
+                ActionTypes.GET_FAVOURITE_ANNOUNCEMENTS_SUCCESS,
+                ActionTypes.GET_FAVOURITE_ANNOUNCEMENTS_FAILURE
+            ],
+            endpoint: () => get('profile/favorites')
+        }
+    });
+};
+
+export const addAnnouncementToFavourites = id => (dispatch, getState) => {
+    const {user: {favouriteAnnouncements: {pending}}} = getState();
+
+    if (pending) {
+        return null;
+    }
+
+    return dispatch({
+        [CALL_API]: {
+            types: [
+                ActionTypes.ADD_FAVOURITE_ANNOUNCEMENT_REQUEST,
+                ActionTypes.ADD_FAVOURITE_ANNOUNCEMENT_SUCCESS,
+                ActionTypes.ADD_FAVOURITE_ANNOUNCEMENT_FAILURE
+            ],
+            endpoint: () => post(`profile/${id}/favorite`)
+        }
+    });
+};
+
+export const deleteAnnouncementFromFavourites = id => (dispatch, getState) => {
+
+    return dispatch({
+        [CALL_API]: {
+            types: [
+                ActionTypes.DELETE_FAVOURITE_ANNOUNCEMENT_REQUEST,
+                ActionTypes.DELETE_FAVOURITE_ANNOUNCEMENT_SUCCESS,
+                ActionTypes.DELETE_FAVOURITE_ANNOUNCEMENT_FAILURE
+            ],
+            endpoint: () => remove(`profile/${id}/removeFromFavorite`)
+        }
+    });
+};
 
 export const signin = user => dispatch => {
 

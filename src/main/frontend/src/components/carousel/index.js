@@ -27,7 +27,7 @@ class Carousel extends Component {
         });
         return (
             <div  key={index} className={imageClassNames}>
-                <Image src={urlResolver(`photo/${obj.id}`)}/>
+                <Image src={urlResolver(`photo/${obj.id}`)} liked={this.props.liked} onLike={this.props.onLike}/>
             </div>
         );
     });
@@ -44,7 +44,9 @@ class Carousel extends Component {
 }
 
 Carousel.propTypes = {
-    slides: PropTypes.array
+    slides: PropTypes.array,
+    liked: PropTypes.bool,
+    onLike: PropTypes.func
 };
 
 export default Carousel;

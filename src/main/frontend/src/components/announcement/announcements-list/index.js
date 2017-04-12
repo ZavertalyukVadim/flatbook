@@ -6,16 +6,8 @@ import Header, {HeaderTypes} from '../../../components/header';
 import './all-announcements.scss';
 
 class AnnouncementsList extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            id: 2
-        }
-    }
-
     componentDidMount() {
         this.props.getAllAnnouncements();
-        console.log(this.props);
     }
 
     render() {
@@ -26,9 +18,9 @@ class AnnouncementsList extends Component {
                         value="Last updated announcements"
                         className="main-header"
                     />
-                    {this.props.announcements.loaded ? (
+                    {this.props.announcements.announcements.loaded ? (
                         <div className="announcements-field">
-                            {this.props.announcements.announcements.map((item, index) =>
+                            {this.props.announcements.announcements.data.map((item, index) =>
                                 <AnnouncementPreview
                                     key={index}
                                     {...item}

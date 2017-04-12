@@ -1,6 +1,5 @@
 import React, {PropTypes, Component} from 'react';
 import classNames from 'classnames';
-import urlResolver from '../../api/urlResolver';
 import './image.scss';
 
 export const ImageSizes = {
@@ -10,19 +9,12 @@ export const ImageSizes = {
 };
 
 class Image extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            liked: false
-        };
-    }
-
-    handleClick = () => this.setState({liked: !this.state.liked});
+    handleClick = () => this.props.onLike();
 
     render() {
         const {size, src} = this.props;
         const likeClassName = classNames('like', {
-            liked: this.state.liked
+            liked: this.props.liked
         });
 
         return (
@@ -41,7 +33,9 @@ class Image extends Component {
 
 Image.propTypes = {
     size: PropTypes.oneOf(Object.values(ImageSizes)),
-    src: PropTypes.string
+    src: PropTypes.string,
+    liked: PropTypes.bool,
+    onLike: PropTypes.func
 };
 
 Image.defaultProps = {

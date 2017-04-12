@@ -1,8 +1,7 @@
 import React, {Component} from 'react';
 import Price, {PriceTypes} from '../../price';
-import Carousel from '../../carousel';
+import AnnouncementPhotoContainer from '../announcement-photo-container';
 import {Link} from 'react-router-dom';
-import Image from '../../image';
 import Header, {HeaderTypes} from '../../header';
 import './announcement-preview.scss';
 
@@ -14,12 +13,13 @@ class AnnouncementPreview extends Component {
             description,
             pricePerDay,
             pricePerMonth,
-            title
+            title,
+            photos
         } = this.props;
 
         return (
             <div className="announcement-preview">
-                 <Image/>
+                <AnnouncementPhotoContainer photos={photos} id={id}/>
                 <div className="announcement-description-field">
                     <div className="announcement-description">
                         <Link to={`announcement/${id}`}>
