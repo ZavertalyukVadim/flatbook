@@ -1,9 +1,9 @@
 package flatbook.announcement.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import flatbook.profile.entity.User;
+
+import javax.persistence.*;
 
 @Entity
 public class Role {
@@ -13,6 +13,10 @@ public class Role {
 
     @Column(name = "name")
     private String name;
+
+    @JsonIgnore
+    @JoinColumn(name = "id")
+    private User user;
 
     public Role() {
     }
@@ -35,5 +39,13 @@ public class Role {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }
