@@ -17,7 +17,7 @@ public class CorsConfig {
         return new WebMvcConfigurerAdapter() {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
-                registry.addMapping("/**");
+                registry.addMapping("/*");
             }
         };
     }
@@ -26,10 +26,10 @@ public class CorsConfig {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         CorsConfiguration config = new CorsConfiguration();
         config.setAllowCredentials(true);
-        config.addAllowedOrigin("*");
-        config.addAllowedHeader("*");
-        config.addAllowedMethod("*");
-        source.registerCorsConfiguration("/**", config);
+        config.addAllowedOrigin("localhost:7070");
+        config.addAllowedHeader("Access-Control-Allow-Headers,Content-Type, Accept, X-Requested-With, remember-me, Authorization");
+        config.addAllowedMethod("POST, GET, OPTIONS, DELETE, PUT");
+        source.registerCorsConfiguration("/*", config);
         FilterRegistrationBean bean = new FilterRegistrationBean(new CorsFilter(source));
         bean.setOrder(0);
         return bean;
