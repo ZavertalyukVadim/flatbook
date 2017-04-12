@@ -21,7 +21,6 @@ public class AnnouncementController {
 
     @GetMapping(value = "/all/{page}/{itemsPerPage}")
     public Page<Announcement> getAllAnnouncement(@PathVariable("page") Integer page, @PathVariable("itemsPerPage") Integer itemPerPage) {
-
         return announcementService.getAllAnnouncement(page, itemPerPage);
     }
 
