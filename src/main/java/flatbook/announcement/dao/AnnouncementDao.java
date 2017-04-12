@@ -1,6 +1,8 @@
 package flatbook.announcement.dao;
 
 import flatbook.announcement.entity.*;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -59,4 +61,39 @@ public interface AnnouncementDao extends JpaRepository<Announcement, Integer> {
     Announcement getAnnouncementById(Integer id);
 
     List<Announcement> getAllByVisibilityTrueOrderByLastUpdatedDesc();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    @Query("SELECT a FROM Announcement a INNER JOIN  a.amenities amenities where a.city = :#{#city} " +
+            "and a.rooms = :#{#search.rooms} " +
+            "and a.visibility = true "+
+            "and a.livingPlaces = :#{#search.livingPlaces} " +
+            "and amenities in  :#{#search.amenities} " +
+            "and a.pricePerMonth between :#{#search.startingPrice} and :#{#search.finalPrice} group by a")
+    Page<Announcement> getPageAnnouncementPerMonthWithAmenities(@Param("city") City city, @Param("search") ExtendSearch search, Pageable pageRequest);
+
+
+
+
+
+
+
+
+
+
+    @Query(value = "SELECT a FROM Announcement a where a.city.name='Shpola'" )
+    Page<Announcement> getPageAnnouncementPerDayWithAmenities(/*@Param("city") City city,*/ /*@Param("search") ExtendSearch search,*/ Pageable pageRequest);
 }

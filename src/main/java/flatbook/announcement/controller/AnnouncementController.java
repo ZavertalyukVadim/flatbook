@@ -53,6 +53,11 @@ public class AnnouncementController {
     public Announcement deleteAnnouncement(@PathVariable("id") Integer id) {
         return announcementService.deleteAnnouncement(id);
     }
+
+    @RequestMapping(value = "/page", method = RequestMethod.GET)
+    public List<Announcement> getPageAllAnnouncement() {
+        return announcementService.getPageAllAnnouncement();
+    }
 }
 
 

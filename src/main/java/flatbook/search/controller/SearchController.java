@@ -81,4 +81,10 @@ public class SearchController {
     public List<Announcement> extendedSearch(@RequestBody ExtendSearch amenities) {
         return announcementService.getAnnouncementByExtendedSearch(amenities);
     }
+
+
+    @PostMapping(value = "/extended/{page}/{itemsPerPage}")
+    public List<Announcement> extendedPageSearch(@RequestBody ExtendSearch amenities, @PathVariable("page") Integer page, @PathVariable("itemsPerPage") Integer itemsPerPage) {
+        return announcementService.getPageAnnouncementsByExtendSearch(amenities, page, itemsPerPage);
+    }
 }

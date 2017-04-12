@@ -7,7 +7,8 @@ import flatbook.profile.dao.UserDao;
 import flatbook.profile.entity.Email;
 import flatbook.profile.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -62,6 +63,11 @@ public class AnnouncementService {
 
     public List<Announcement> getAllAnnouncement() {
         return announcementDao.getAllByVisibilityTrueOrderByLastUpdatedDesc();
+    }
+
+    public List<Announcement> getPageAllAnnouncement() {
+        return announcementDao.findAll(new PageRequest(1, 3)).getContent();
+//        return announcementDao.getAllByVisibilityTrueOrderByLastUpdatedDesc();
     }
 
     @Transactional
@@ -537,11 +543,9 @@ public class AnnouncementService {
                 : announcementDao.getAnnouncementPerMonth(city, search);
     }
 
-    public List<Announcement> getAnnouncementBySmallSearchPagination(Pageable pageable) {
-        return null;
-    }
-
-
+//    public List<Announcement> getAnnouncementBySmallSearchPagination(Pageable pageable) {
+//        return null;
+//    }
 
     @Transactional
     public List<Announcement> getAnnouncementByExtendedSearch(ExtendSearch extendSearch) {
@@ -549,7 +553,23 @@ public class AnnouncementService {
         return (extendSearch.getPrice() == Price.PRICE_PER_DAY)
                 ? announcementDao.getAnnouncementPerDayWithAmenities(city, extendSearch)
                 : announcementDao.getAnnouncementPerMonthWithAmenities(city, extendSearch);
+    }
 
+    public List<Announcement> getPageAnnouncementsByExtendSearch(ExtendSearch extendSearch, Integer pageNum, Integer itemsPerPage) {
+        PageRequest pageRequest = new PageRequest(pageNum, itemsPerPage);
+        City city = cityDao.findOne(extendSearch.getCityId());
+
+
+
+
+        Page<Announcement> page = announcementDao.getPageAnnouncementPerDayWithAmenities(/*city, extendSearch,*/ pageRequest);
+        List<Announcement> result = page.getContent();
+
+        System.out.println(result.size());
+
+        return (extendSearch.getPrice() == Price.PRICE_PER_DAY)
+                ? announcementDao.getPageAnnouncementPerDayWithAmenities(/*city, extendSearch,*/ pageRequest).getContent()
+                : announcementDao.getPageAnnouncementPerMonthWithAmenities(city, extendSearch, pageRequest).getContent();
     }
 
     public MaxPrice getMaxPriceOnWorldPerDay() {
