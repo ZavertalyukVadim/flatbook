@@ -1,11 +1,11 @@
-import React, {Component} from 'react';
-import {connect} from 'react-redux';
-import {noop} from 'lodash';
-import Input from '../../input';
-import Button, {ButtonTypes, ButtonSizes} from '../../button';
-import Header from '../../header';
-import '../auth.scss';
-import {signin} from '../../../actions/user-actions';
+import React, {Component} from "react";
+import {connect} from "react-redux";
+import {noop} from "lodash";
+import Input from "../../input";
+import Button, {ButtonSizes, ButtonTypes} from "../../button";
+import Header from "../../header";
+import "../auth.scss";
+import {signin} from "../../../actions/user-actions";
 
 class SignIn extends Component {
 
@@ -19,7 +19,33 @@ class SignIn extends Component {
 
     onInputChange = val => e => this.setState({[val]: e.target.value});
     onLinkClick = () => this.props.redirect('/signup');
-    //onSubmit = () => this.props.signin({email: this.state.email, password: this.state.password});
+    onSubmit = () => {
+
+        const body = {
+            grant_type: 'password',
+            username: 'hello@gmail.com',
+            password: 'password'
+        };
+
+        const searchParams = Object.keys(body).map((key) => {
+            return encodeURIComponent(key) + '=' + encodeURIComponent(body[key]);
+        }).join('&');
+
+        const POST_CONFIG = {
+            method: 'POST', credentials: "omit", mode: 'cors', headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+                'Authorization': 'Basic bXktdHJ1c3RlZC1jbGllbnQ6c2VjcmV0'
+            }
+        };
+        fetch('http://localhost:8080/oauth/token', {
+            ...POST_CONFIG,
+            body: searchParams
+        }).then(
+            r => {
+                console.log(r.json())
+            }
+        )
+    };
 
     render() {
         const {
@@ -33,28 +59,26 @@ class SignIn extends Component {
                     type="primary"
                     value="Sign In"
                 />
-                <form method="post" action="http://localhost:8080/api/login" id="login-form">
-                    <Input
-                        placeholder="Email"
-                        type="email"
-                        value={email}
-                        onChange={this.onInputChange('email')}
-                        name="username"
-                    />
-                    <Input
-                        placeholder="Password"
-                        type="password"
-                        value={password}
-                        onChange={this.onInputChange('password')}
-                        name="password"
-                    />
-                    <Button
-                        type={ButtonTypes.primary}
-                        size={ButtonSizes.block}
-                        caption="Sign In"
-                        onClick={this.onSubmit}
-                    />
-                </form>
+                <Input
+                    placeholder="Email"
+                    type="email"
+                    value={email}
+                    onChange={this.onInputChange('email')}
+                    name="username"
+                />
+                <Input
+                    placeholder="Password"
+                    type="password"
+                    value={password}
+                    onChange={this.onInputChange('password')}
+                    name="password"
+                />
+                <Button
+                    type={ButtonTypes.primary}
+                    size={ButtonSizes.block}
+                    caption="Sign In"
+                    onClick={this.onSubmit}
+                />
                 <span className="auth-item">or</span>
                 <div className="auth-social-button-field">
                     <Button
