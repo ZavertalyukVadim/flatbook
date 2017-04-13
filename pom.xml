@@ -31,8 +31,8 @@
                 <configuration>
                     <!--<url>jdbc:mysql://localhost:3306/team5?serverTimezone=UTC</url>-->
                     <url>jdbc:mysql://us-cdbr-iron-east-03.cleardb.net/heroku_402365f31dab0c6</url>
-                    <user>admin</user>
-                    <password>admin</password>
+                    <user>bfbe8375c0eed3</user>
+                    <password>eeb47257</password>
                 </configuration>
                 <executions>
                     <execution>
