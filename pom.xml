@@ -29,7 +29,8 @@
                 <artifactId>flyway-maven-plugin</artifactId>
                 <version>4.1.2</version>
                 <configuration>
-                    <url>jdbc:mysql://localhost:3306/team5?serverTimezone=UTC</url>
+                    <!--<url>jdbc:mysql://localhost:3306/team5?serverTimezone=UTC</url>-->
+                    <url>mysql://bfbe8375c0eed3:eeb47257@us-cdbr-iron-east-03.cleardb.net/heroku_402365f31dab0c6?reconnect=true</url>
                     <user>admin</user>
                     <password>admin</password>
                 </configuration>
