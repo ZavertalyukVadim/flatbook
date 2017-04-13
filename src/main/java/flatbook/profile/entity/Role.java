@@ -1,7 +1,6 @@
-package flatbook.announcement.entity;
+package flatbook.profile.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import flatbook.profile.entity.User;
 
 import javax.persistence.*;
 

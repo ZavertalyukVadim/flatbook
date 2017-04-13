@@ -1,8 +1,8 @@
 package flatbook.config;
 
 
-import flatbook.announcement.entity.Role;
 import flatbook.profile.entity.Email;
+import flatbook.profile.entity.Role;
 import flatbook.profile.entity.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
