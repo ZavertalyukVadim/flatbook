@@ -79,9 +79,9 @@ CREATE TABLE `emails` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `content` varchar(255) NOT NULL,
   `is_primary` bit(1) DEFAULT NULL,
-  `user_id` int(11) DEFAULT NULL,
+  `user_id` int(11),
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
 DROP TABLE IF EXISTS `favorites_announcements_in_user`;
@@ -106,7 +106,7 @@ CREATE TABLE `phones` (
   `content` varchar(255) DEFAULT NULL,
   `is_primary` bit(1) NOT NULL,
   `user_id` int(11) DEFAULT NULL,
-  PRIMARY KEY (`id`)) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+  PRIMARY KEY (`id`)) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 DROP TABLE IF EXISTS `photos`;
 CREATE TABLE `photos` (
@@ -157,7 +157,7 @@ CREATE TABLE `users` (
   `last_name` varchar(255) DEFAULT NULL,
   `pass` varchar(255) NOT NULL,
   `image_id` int(11) DEFAULT NULL,
-  PRIMARY KEY (`id`)) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+  PRIMARY KEY (`id`)) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
 
