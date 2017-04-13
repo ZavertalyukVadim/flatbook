@@ -13,7 +13,7 @@ public class AnnouncementComments {
 //    @Column(name = "id", nullable = false)
     private Integer id;
 
-    @ManyToOne(fetch = FetchType.LAZY, targetEntity = User.class)
+    @ManyToOne(fetch = FetchType.EAGER, targetEntity = User.class)
     private User user;
 
     @Column(name = "text")
