@@ -26,7 +26,7 @@ export default (state = DEFAULT_STATE, action) => {
     }
 
     if (action.type === ActionTypes.GET_ALL_ANNOUNCEMENTS_SUCCESS) {
-        return {...state, announcements: {data: action.response, loaded: true, pending: false}};
+        return {...state, announcements: {data: [...action.response.content], loaded: true, pending: false}};
     }
 
     if (action.type === ActionTypes.GET_ALL_ANNOUNCEMENTS_FAILURE) {

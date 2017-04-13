@@ -5,8 +5,6 @@ import {getAnnouncementById} from '../../../actions/announcement-actions';
 import Loader from '../../../components/loader';
 import {connect} from 'react-redux';
 
-
-
 class Announcement extends Component {
     constructor(props) {
         super(props);
@@ -20,10 +18,8 @@ class Announcement extends Component {
         this.props.getAnnouncementById(this.state.id);
     }
 
-
     render() {
         const {loaded, data} = this.props.announcements.announcementView;
-        console.log(data);
         return (
 
             <Container>

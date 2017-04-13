@@ -15,7 +15,7 @@ export const getAllAnnouncements = () => (dispatch, getState) => {
                 ActionTypes.GET_ALL_ANNOUNCEMENTS_SUCCESS,
                 ActionTypes.GET_ALL_ANNOUNCEMENTS_FAILURE
             ],
-            endpoint: () => get('announcement/')
+            endpoint: () => get('announcement/all/0/20')
         }
     });
 };

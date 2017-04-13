@@ -9,7 +9,7 @@ import './announcement-view.scss';
 class AnnouncementView extends Component {
 
     render() {
-
+        console.log(this.props.data);
         const {
             id,
             city,
@@ -25,8 +25,8 @@ class AnnouncementView extends Component {
 
         return (
             <div className="announcement-view">
-                <AnnouncementPhotoContainer  photos={photos} id={id}/>
                 <div className="announcement-description-field">
+                    <AnnouncementPhotoContainer  photos={photos} id={id} size="large"/>
                     <div className="announcement-description">
                         {title && <Header value={title} type={HeaderTypes.secondary}/>}
                         {pricePerMonth && <Price
@@ -36,21 +36,27 @@ class AnnouncementView extends Component {
                         {pricePerDay && <Price
                             payment={PriceTypes.daily}
                             value={pricePerDay}/>}
+                        <p>Country: {country.name}</p>
+                        <p>Region: {region.name}</p>
+                        <p>City: {city.name}</p>
                         <Button
                             type={ButtonTypes.primary}
                             size={ButtonSizes.large}
                             caption="Request a book"
                         />
                     </div>
-                    <div className="description-field">
-                        <Avatar/>
-                        <p>{description}</p>
-                        {amenities.map((item, index) =>
-                            <div key={index}>
-                                <p>{item.name}</p>
-                            </div>
-                        )}
-                    </div>
+
+                </div>
+                <div className="description-field">
+                    <Avatar/>
+                    <p>{description}</p>
+                </div>
+                <div className="amenities-field">
+                    {amenities.map((item, index) =>
+                        <div key={index}>
+                            <p>{item.name}</p>
+                        </div>
+                    )}
                 </div>
             </div>
         )
