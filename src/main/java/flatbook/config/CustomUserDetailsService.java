@@ -24,6 +24,6 @@ public class CustomUserDetailsService {
     }
 
     private UserDetailsService userDetailsService(final UserDao userDao) {
-        return username -> new CustomUserDetails(userDao.getUserByEmails(emailDao.findOneByContent(username)));
+        return username -> new CustomUserDetails(userDao.getUserByEmails(emailDao.findOneByContentAndIsPrimaryTrue(username)));
     }
 }
