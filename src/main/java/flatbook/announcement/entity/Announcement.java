@@ -1,5 +1,6 @@
 package flatbook.announcement.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import flatbook.profile.entity.User;
 
@@ -23,8 +24,9 @@ public class Announcement {
     @Column(name = "price_per_month")
     private Integer pricePerMonth;
 
-    @JsonIgnore
-    @ManyToOne(fetch = FetchType.LAZY, targetEntity = User.class)
+//    @JsonIgnore
+//    @JsonBackReference
+    @ManyToOne(fetch = FetchType.EAGER, targetEntity = User.class)
     private User user;
 
     @Column(name = "title")
