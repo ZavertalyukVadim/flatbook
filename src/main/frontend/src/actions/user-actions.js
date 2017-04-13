@@ -55,13 +55,13 @@ export const getUserAnnouncements = id => (dispatch, getState) => {
                 ActionTypes.GET_USER_ANNOUNCEMENTS_SUCCESS,
                 ActionTypes.GET_USER_ANNOUNCEMENTS_FAILURE
             ],
-            endpoint: () => get('announcement/')
+            endpoint: () => get('announcement/all/0/20')
         }
     });
 };
 
-export const deleteAnnouncement = id => (dispatch, getState) => {
-
+export const deleteAnnouncement = id => dispatch => {
+    console.log(id);
     return dispatch({
         [CALL_API]: {
             types: [
@@ -88,18 +88,12 @@ export const getLikedAnnouncements = () => (dispatch, getState) => {
                 ActionTypes.GET_FAVOURITE_ANNOUNCEMENTS_SUCCESS,
                 ActionTypes.GET_FAVOURITE_ANNOUNCEMENTS_FAILURE
             ],
-            endpoint: () => get('profile/favorites')
+            endpoint: () => post('profile/favorites')
         }
     });
 };
 
-export const addAnnouncementToFavourites = id => (dispatch, getState) => {
-    const {user: {favouriteAnnouncements: {pending}}} = getState();
-
-    if (pending) {
-        return null;
-    }
-
+export const addAnnouncementToFavourites = id => dispatch => {
     return dispatch({
         [CALL_API]: {
             types: [
@@ -112,8 +106,20 @@ export const addAnnouncementToFavourites = id => (dispatch, getState) => {
     });
 };
 
-export const deleteAnnouncementFromFavourites = id => (dispatch, getState) => {
+export const changeUserAnnouncementVisibility = id => dispatch => {
+    return dispatch({
+        [CALL_API]: {
+            types: [
+                ActionTypes.CHANGE_USER_ANNOUNCEMENT_VISIBILITY_REQUEST,
+                ActionTypes.CHANGE_USER_ANNOUNCEMENT_VISIBILITY_SUCCESS,
+                ActionTypes.CHANGE_USER_ANNOUNCEMENT_VISIBILITY_FAILURE
+            ],
+            endpoint: () => put(`announcement/${id}/changeVisibility`)
+        }
+    });
+};
 
+export const deleteAnnouncementFromFavourites = id => dispatch => {
     return dispatch({
         [CALL_API]: {
             types: [

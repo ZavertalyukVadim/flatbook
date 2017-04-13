@@ -54,8 +54,17 @@ export default (state = DEFAULT_STATE, action) => {
         return {...state, favouriteAnnouncements:{pending: false}};
     }
 
+    if (action.type === ActionTypes.CHANGE_USER_ANNOUNCEMENT_VISIBILITY_REQUEST) {
+        return {...state};
+    }
 
+    if (action.type === ActionTypes.CHANGE_USER_ANNOUNCEMENT_VISIBILITY_SUCCESS) {
+        return {...state};
+    }
 
+    if (action.type === ActionTypes.CHANGE_USER_ANNOUNCEMENT_VISIBILITY_FAILURE) {
+        return {...state};
+    }
 
     if (action.type === ActionTypes.DELETE_FAVOURITE_ANNOUNCEMENT_REQUEST) {
         return {...state, favouriteAnnouncements: {loaded: false, pending: true}};
@@ -68,10 +77,6 @@ export default (state = DEFAULT_STATE, action) => {
     if (action.type === ActionTypes.DELETE_FAVOURITE_ANNOUNCEMENT_FAILURE) {
         return {...state, likedAnnouncements:{loaded: false, pending: false}};
     }
-
-
-
-
 
     if (action.type === ActionTypes.UPDATE_USER_REQUEST) {
         return {...state, loaded: false};
@@ -90,7 +95,7 @@ export default (state = DEFAULT_STATE, action) => {
     }
 
     if (action.type === ActionTypes.GET_USER_ANNOUNCEMENTS_SUCCESS) {
-        return {...state, announcements: action.response, loaded: true};
+        return {...state, announcements: action.response.content, loaded: true};
     }
 
     if (action.type === ActionTypes.GET_USER_ANNOUNCEMENTS_FAILURE) {
@@ -98,11 +103,11 @@ export default (state = DEFAULT_STATE, action) => {
     }
 
     if (action.type === ActionTypes.DELETE_USER_ANNOUNCEMENTS_REQUEST) {
-        return {...state, loaded: false};
+        return {...state};
     }
 
     if (action.type === ActionTypes.DELETE_USER_ANNOUNCEMENTS_SUCCESS) {
-        return {...state, announcements: state.user.announcements.filter(obj => obj.id !== action.response.id), loaded: true};
+        return {...state};
     }
 
     if (action.type === ActionTypes.DELETE_USER_ANNOUNCEMENTS_FAILURE) {

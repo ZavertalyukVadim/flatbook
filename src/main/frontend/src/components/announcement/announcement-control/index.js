@@ -1,4 +1,6 @@
 import React, {Component} from 'react';
+import {connect} from 'react-redux';
+import {deleteAnnouncement, changeUserAnnouncementVisibility} from '../../../actions/user-actions';
 import Checkbox from '../../checkbox';
 import Button, {ButtonTypes, ButtonSizes} from '../../button';
 import './announcement-control.scss';
@@ -12,8 +14,11 @@ class AnnouncementControl extends Component {
         }
     }
 
-    onCheckboxClick = () => this.setState({visibility: !this.state.visibility});
-    deleteAnnouncement = () => this.props.onDelete(this.props.id);
+    onChangeAnnouncementVisibility = () => {
+        this.setState({visibility: !this.state.visibility});
+        this.props.changeUserAnnouncementVisibility(this.props.id);
+    };
+    onDeleteAnnouncement = () => this.props.deleteAnnouncement(this.props.id);
 
     render() {
         const {
@@ -26,7 +31,7 @@ class AnnouncementControl extends Component {
                 <div className="announcement-buttons">
                     <Checkbox
                         className="hide-announcement"
-                        onClick={this.onCheckboxClick}
+                        onClick={this.onChangeAnnouncementVisibility}
                         checked={visibility}
                         disabled={false}
                     >Hide</Checkbox>
@@ -44,7 +49,7 @@ class AnnouncementControl extends Component {
                         type={ButtonTypes.danger}
                         size={ButtonSizes.small}
                         caption="Delete"
-                        onClick={this.deleteAnnouncement}
+                        onClick={this.onDeleteAnnouncement}
                     />
                 </div>
             </div>
@@ -52,4 +57,7 @@ class AnnouncementControl extends Component {
     }
 }
 
-export default  AnnouncementControl;
+export default connect(({user}) => ({user: user}), {
+    deleteAnnouncement,
+    changeUserAnnouncementVisibility
+})(AnnouncementControl);

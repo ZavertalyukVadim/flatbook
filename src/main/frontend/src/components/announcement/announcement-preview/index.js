@@ -19,7 +19,7 @@ class AnnouncementPreview extends Component {
 
         return (
             <div className="announcement-preview">
-                <AnnouncementPhotoContainer photos={photos} id={id}/>
+                <AnnouncementPhotoContainer photos={photos} id={id} size="medium"/>
                 <div className="announcement-description-field">
                     <div className="announcement-description">
                         <Link to={`announcement/${id}`}>
