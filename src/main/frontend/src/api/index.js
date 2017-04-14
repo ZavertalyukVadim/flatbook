@@ -49,29 +49,29 @@ export default store => next => action => {
     );
 };
 
-const GET_CONFIG = {headers: {...getAuthorization()}};
+const GET_CONFIG = () => ({headers: {...getAuthorization()}});
 const get = (url, extraParams = {}) =>
-    fetch(urlResolver(url, extraParams), {...GET_CONFIG, mode: 'cors', credentials: "include"});
+    fetch(urlResolver(url, extraParams), {...GET_CONFIG(), mode: 'cors', credentials: "include"});
 
-const POST_CONFIG = {
+const POST_CONFIG = () => ({
     method: 'POST',
     credentials: "include",
     mode: 'cors',
     headers: {'Content-Type': CONTENT_TYPE_JSON, ...getAuthorization()}
-};
+});
 const post = (url, body = {}, extraParams = {}) =>
     fetch(urlResolver(url, extraParams), {...POST_CONFIG, body: JSON.stringify(body)});
 
-const PUT_CONFIG = {
+const PUT_CONFIG = () => ({
     method: 'PUT',
     mode: 'cors',
     credentials: "include",
     headers: {'Content-Type': CONTENT_TYPE_JSON, ...getAuthorization()}
-};
+});
 const put = (url, body = {}, extraParams = {}) =>
     fetch(urlResolver(url, extraParams), {...PUT_CONFIG, body: JSON.stringify(body)});
 
-const REMOVE_CONFIG = {headers: {...getAuthorization()}};
+const REMOVE_CONFIG = () => ({headers: {...getAuthorization()}});
 const remove = (url, extraParams = {}) =>
     fetch(urlResolver(url, extraParams), {...REMOVE_CONFIG, method: 'DELETE', mode: 'cors', credentials: "include"});
 

@@ -1,8 +1,6 @@
 import * as ActionTypes from '../actions/user-constants';
 import {getAuth} from "../utils/auth";
 
-const auth = getAuth();
-
 const DEFAULT_STATE = {
     announcements: [],
     favouriteAnnouncements: {
@@ -17,7 +15,7 @@ const DEFAULT_STATE = {
     auth: {
         pending: false,
         logged: false,
-        ...auth
+        ...getAuth()
     },
     loaded: false
 };
@@ -147,15 +145,15 @@ export default (state = DEFAULT_STATE, action) => {
     }
 
     if (action.type === ActionTypes.SIGN_OUT_REQUEST) {
-        return {...state}
+        return {...state};
     }
 
     if (action.type === ActionTypes.SIGN_OUT_SUCCESS) {
-        return {...state, auth: {pending: false, logged: false}}
+        return {...state, auth: {pending: false, logged: false}};
     }
 
     if (action.type === ActionTypes.SIGN_IN_FAILURE) {
-        return {...state}
+        return {...state};
     }
 
     return state;
