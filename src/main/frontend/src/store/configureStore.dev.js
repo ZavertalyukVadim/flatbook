@@ -2,6 +2,7 @@ import {createStore, applyMiddleware, compose} from 'redux';
 import createLogger from 'redux-logger';
 import thunk from 'redux-thunk';
 import api from '../api';
+import auth from '../auth';
 import rootReducer from '../reducers';
 
 export default function configureStore(preloadedState) {
@@ -9,7 +10,7 @@ export default function configureStore(preloadedState) {
         rootReducer,
         preloadedState,
         compose(
-            applyMiddleware(thunk, api, createLogger({
+            applyMiddleware(thunk, api, auth, createLogger({
                 duration: true
             })),
             window.devToolsExtension ? window.devToolsExtension() : f => f
