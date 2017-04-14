@@ -1,4 +1,4 @@
-import {CALL_API, get, post, remove, put} from '../api';
+import {CALL_API, get, remove, put, custom} from '../api';
 import * as ActionTypes from './user-constants';
 
 export const getUser = id => (dispatch, getState) => {
@@ -38,8 +38,6 @@ export const updateUser = values => (dispatch, getState) => {
         }
     });
 };
-
-
 
 export const getUserAnnouncements = id => (dispatch, getState) => {
     const {user: {pending}} = getState();
@@ -132,7 +130,27 @@ export const deleteAnnouncementFromFavourites = id => dispatch => {
     });
 };
 
-export const signin = user => dispatch => {
+export const signin = user => (dispatch, getState) => {
+
+    const {user: {auth: {pending}}} = getState();
+
+    if (pending) {
+        return null;
+    }
+
+    const body = {...user, grant_type: 'password'};
+
+    const CONFIG = {
+        method: 'POST',
+        mode: 'cors',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'Authorization': 'Basic bXktdHJ1c3RlZC1jbGllbnQ6c2VjcmV0'
+        },
+        body: Object.keys(body)
+            .map(key => `${encodeURIComponent(key)}=${encodeURIComponent(body[key])}`)
+            .join('&')
+    };
 
     return dispatch({
         [CALL_API]: {
@@ -141,10 +159,16 @@ export const signin = user => dispatch => {
                 ActionTypes.SIGN_IN_SUCCESS,
                 ActionTypes.SIGN_IN_FAILURE
             ],
-            endpoint: () => post('login', {
-                username: user.email,
-                password: user.password
-            })
+            endpoint: () => custom('oauth/token', CONFIG)
         }
     });
 };
+
+export const addAuthToStore = r => ({
+    type: ActionTypes.ADD_AUTH_TO_STORE,
+    response: r
+});
+
+export const removeAuthFromStore = () => ({
+    type: ActionTypes.REMOVE_AUTH_FROM_STORE
+});

@@ -1,4 +1,7 @@
 import * as ActionTypes from '../actions/user-constants';
+import {getAuth} from "../utils/auth";
+
+const auth = getAuth();
 
 const DEFAULT_STATE = {
     announcements: [],
@@ -10,6 +13,11 @@ const DEFAULT_STATE = {
     data: {
         phones: [],
         emails: []
+    },
+    auth: {
+        pending: false,
+        logged: false,
+        ...auth
     },
     loaded: false
 };
@@ -39,8 +47,6 @@ export default (state = DEFAULT_STATE, action) => {
     if (action.type === ActionTypes.GET_FAVOURITE_ANNOUNCEMENTS_FAILURE) {
         return {...state, favouriteAnnouncements:{loaded: false, pending: false}};
     }
-
-
 
     if (action.type === ActionTypes.ADD_FAVOURITE_ANNOUNCEMENT_REQUEST) {
         return {...state, favouriteAnnouncements: {pending: true}};
@@ -103,15 +109,35 @@ export default (state = DEFAULT_STATE, action) => {
     }
 
     if (action.type === ActionTypes.DELETE_USER_ANNOUNCEMENTS_REQUEST) {
-        return {...state};
+        return {...state, loaded: false};
     }
 
     if (action.type === ActionTypes.DELETE_USER_ANNOUNCEMENTS_SUCCESS) {
-        return {...state};
+        return {
+            ...state,
+            announcements: state.user.announcements.filter(obj => obj.id !== action.response.id),
+            loaded: true
+        };
     }
 
     if (action.type === ActionTypes.DELETE_USER_ANNOUNCEMENTS_FAILURE) {
         return {...state, loaded: false};
+    }
+
+    if (action.type === ActionTypes.SIGN_IN_REQUEST) {
+        return {...state, auth: {pending: true}};
+    }
+
+    if (action.type === ActionTypes.ADD_AUTH_TO_STORE) {
+        return {
+            ...state, auth: {
+                pending: false, logged: true, token: `${action.response.token_type} ${action.response.access_token}`
+            }
+        };
+    }
+
+    if (action.type === ActionTypes.REMOVE_AUTH_FROM_STORE) {
+        return {...state, auth: {pending: false, logged: false}};
     }
 
     return state;

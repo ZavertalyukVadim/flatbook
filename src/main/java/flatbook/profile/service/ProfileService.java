@@ -6,14 +6,8 @@ import flatbook.announcement.dao.FavoriteAnnouncementInUserDao;
 import flatbook.announcement.entity.Announcement;
 import flatbook.announcement.entity.AnnouncementByUser;
 import flatbook.announcement.entity.FavoriteAnnouncementInUser;
-import flatbook.profile.dao.EmailDao;
-import flatbook.profile.dao.ImageDao;
-import flatbook.profile.dao.PhoneDao;
-import flatbook.profile.dao.UserDao;
-import flatbook.profile.entity.Email;
-import flatbook.profile.entity.Image;
-import flatbook.profile.entity.Phone;
-import flatbook.profile.entity.User;
+import flatbook.profile.dao.*;
+import flatbook.profile.entity.*;
 import flatbook.profile.util.FileUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -26,6 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -40,9 +35,10 @@ public class ProfileService {
     private final EntityManager entityManager;
     private final AnnouncementDao announcementDao;
     private final FavoriteAnnouncementInUserDao favoriteAnnouncementInUserDao;
+    private final RoleDao roleDao;
 
     @Autowired
-    public ProfileService(UserDao userDao, EmailDao emailDao, PhoneDao phoneDao, EntityManager entityManager, ImageDao imageDao, AnnouncementByUserDao announcementByUserDao, AnnouncementDao announcementDao, FavoriteAnnouncementInUserDao favoriteAnnouncementInUserDao) {
+    public ProfileService(UserDao userDao, EmailDao emailDao, PhoneDao phoneDao, EntityManager entityManager, ImageDao imageDao, AnnouncementByUserDao announcementByUserDao, AnnouncementDao announcementDao, FavoriteAnnouncementInUserDao favoriteAnnouncementInUserDao, RoleDao roleDao) {
         this.userDao = userDao;
         this.emailDao = emailDao;
         this.phoneDao = phoneDao;
@@ -51,6 +47,7 @@ public class ProfileService {
         this.announcementByUserDao = announcementByUserDao;
         this.announcementDao = announcementDao;
         this.favoriteAnnouncementInUserDao = favoriteAnnouncementInUserDao;
+        this.roleDao = roleDao;
     }
 
     @Transactional
@@ -74,8 +71,15 @@ public class ProfileService {
         user.setEmails(null);
         user.setPhones(null);
 
-        User savingUser = userDao.save(user);
+        Set<Role> roles = new HashSet<>();
+        Role role = new Role("USER");
+        roles.add(role);
 
+        roleDao.save(role);
+        user.setRoles(roles);
+        User savingUser = userDao.save(user);
+        role.setUser(savingUser);
+        roleDao.save(role);
         Email newPrimary = emails.iterator().next();
         newPrimary.setUser(savingUser);
         emailDao.save(newPrimary);
