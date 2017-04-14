@@ -1,6 +1,7 @@
-import urlResolver from './urlResolver';
+import urlResolver, {apiRoot} from './urlResolver';
 import {CONTENT_TYPE_JSON} from './const';
 import 'isomorphic-fetch';
+import {getAuthorization} from "../utils/auth";
 
 export const CALL_API = Symbol('Call API');
 

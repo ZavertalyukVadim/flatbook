@@ -1,6 +1,7 @@
 import * as ActionTypes from '../actions/user-constants';
+import {getAuth} from "../utils/auth";
 
-const auth = JSON.parse(localStorage.getItem('auth'));
+const auth = getAuth();
 
 const DEFAULT_STATE = {
     announcements: [],
