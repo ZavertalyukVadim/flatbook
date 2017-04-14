@@ -76,3 +76,39 @@ export const getAnnouncementById = id => (dispatch, getState) => {
         }
     });
 };
+
+export const getAnnouncementComments = id => (dispatch, getState) => {
+    const {announcements: {announcementView: {comments: {pending} } } } = getState();
+    if (pending) {
+        return null;
+    }
+
+    return dispatch({
+        [CALL_API]: {
+            types: [
+                ActionTypes.GET_ANNOUNCEMENT_COMMENTS_REQUEST,
+                ActionTypes.GET_ANNOUNCEMENT_COMMENTS_SUCCESS,
+                ActionTypes.GET_ANNOUNCEMENT_COMMENTS_FAILURE
+            ],
+            endpoint: () => get(`comment/${id}`)
+        }
+    });
+};
+
+export const addNewComment = body => (dispatch, getState) => {
+    const {announcements: {announcementView: {comments: {pending} } } } = getState();
+    if (pending) {
+        return null;
+    }
+
+    return dispatch({
+        [CALL_API]: {
+            types: [
+                ActionTypes.POST_NEW_COMMENT_REQUEST,
+                ActionTypes.POST_NEW_COMMENT_SUCCESS,
+                ActionTypes.POST_NEW_COMMENT_FAILURE
+            ],
+            endpoint: () => post('comment/', body)
+        }
+    });
+};

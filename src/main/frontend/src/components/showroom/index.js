@@ -16,7 +16,6 @@ import './showroom.scss';
 import Carousel from '../carousel';
 import Toggle from '../toggle';
 import Slider from '../slider';
-import Comment from "../comment";
 import Loader from '../loader';
 import Radio from '../radio';
 import DatePickerRange from '../datepicker-range';
@@ -361,14 +360,6 @@ export default class Showroom extends Component {
                         <div className="panel-heading">Carousel</div>
                         <div className="panel-body">
                             <Carousel slides={slides}/>
-                        </div>
-                    </div>
-                </div>
-                <div className="col-4">
-                    <div className="panel">
-                        <div className="panel-heading">Comment</div>
-                        <div className="panel-body">
-                            <Comment/>
                         </div>
                     </div>
                 </div>
