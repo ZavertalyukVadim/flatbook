@@ -1,4 +1,4 @@
-import {CALL_API, get, post, put} from '../api';
+import {CALL_API, get, post, put, remove} from '../api';
 import * as ActionTypes from './announcement-constants';
 
 export const getAllAnnouncements = () => (dispatch, getState) => {
@@ -109,6 +109,39 @@ export const addNewComment = body => (dispatch, getState) => {
                 ActionTypes.POST_NEW_COMMENT_FAILURE
             ],
             endpoint: () => post('comment/', body)
+        }
+    });
+};
+
+export const updateExistingComment = body => (dispatch, getState) => {
+    const {announcements: {announcementView: {comments: {pending} } } } = getState();
+    if (pending) {
+        return null;
+    }
+
+    return dispatch({
+        [CALL_API]: {
+            types: [
+                ActionTypes.UPDATE_EXISTING_COMMENT_REQUEST,
+                ActionTypes.UPDATE_EXISTING_COMMENT_SUCCESS,
+                ActionTypes.UPDATE_EXISTING_COMMENT_FAILURE
+            ],
+            endpoint: () => put('comment/', body)
+        }
+    });
+};
+
+
+export const deleteComment = id => dispatch  => {
+
+    return dispatch({
+        [CALL_API]: {
+            types: [
+                ActionTypes.DELETE_COMMENT_REQUEST,
+                ActionTypes.DELETE_COMMENT_SUCCESS,
+                ActionTypes.DELETE_COMMENT_FAILURE
+            ],
+            endpoint: () => remove(`comment/${id}`)
         }
     });
 };

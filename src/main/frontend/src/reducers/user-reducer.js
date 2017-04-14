@@ -119,7 +119,7 @@ export default (state = DEFAULT_STATE, action) => {
     if (action.type === ActionTypes.DELETE_USER_ANNOUNCEMENTS_SUCCESS) {
         return {
             ...state,
-            announcements: state.user.announcements.filter(obj => obj.id !== action.response.id),
+            announcements: state.user.announcements.filter(obj => obj.id !== action.id),
             loaded: true
         };
     }

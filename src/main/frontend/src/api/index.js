@@ -73,7 +73,7 @@ const put = (url, body = {}, extraParams = {}) =>
 
 const REMOVE_CONFIG = () => ({headers: {...getAuthorization()}});
 const remove = (url, extraParams = {}) =>
-    fetch(urlResolver(url, extraParams), {...REMOVE_CONFIG(), method: 'DELETE', mode: 'cors', credentials: "include"});
+    fetch(urlResolver(url, extraParams), {...REMOVE_CONFIG(), method: 'DELETE'});
 
 const custom = (url, config,) =>
     fetch(`${apiRoot()}${url}`, {...config});
