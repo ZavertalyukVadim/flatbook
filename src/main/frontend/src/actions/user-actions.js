@@ -53,7 +53,7 @@ export const getUserAnnouncements = id => (dispatch, getState) => {
                 ActionTypes.GET_USER_ANNOUNCEMENTS_SUCCESS,
                 ActionTypes.GET_USER_ANNOUNCEMENTS_FAILURE
             ],
-            endpoint: () => get('announcement/all/0/20')
+            endpoint: () => get('profile/announcements')
         }
     });
 };
