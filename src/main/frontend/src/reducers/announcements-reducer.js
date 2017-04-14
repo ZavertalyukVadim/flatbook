@@ -8,8 +8,11 @@ const DEFAULT_STATE = {
     },
     announcementView: {
         data:{},
-        loaded: false,
-        pending: false
+        comments: {
+            data: [],
+            loaded: false,
+            pending: false
+        }
     },
     loaded: false,
     pending: false,
@@ -18,6 +21,7 @@ const DEFAULT_STATE = {
         pending: false
     }
 };
+
 
 export default (state = DEFAULT_STATE, action) => {
 
@@ -34,15 +38,15 @@ export default (state = DEFAULT_STATE, action) => {
     }
 
     if (action.type === ActionTypes.GET_ANNOUNCEMENT_BY_ID_REQUEST) {
-        return {...state, announcementView: {loaded: false, pending: true}};
+        return {...state, announcementView: {...state.announcementView, loaded: false, pending: true}};
     }
 
     if (action.type === ActionTypes.GET_ANNOUNCEMENT_BY_ID_SUCCESS) {
-        return {...state, announcementView: {data: action.response, loaded: true, pending: false}};
+        return {...state, announcementView: {...state.announcementView, data: action.response, loaded: true, pending: false}};
     }
 
     if (action.type === ActionTypes.GET_ANNOUNCEMENT_BY_ID_FAILURE) {
-        return {...state, announcementView: {loaded: false, pending: false}}
+        return {...state, announcementView: {...state.announcementView, loaded: false, pending: false}}
     }
 
     if (action.type === ActionTypes.ADD_NEW_ANNOUNCEMENT_REQUEST) {
@@ -67,6 +71,30 @@ export default (state = DEFAULT_STATE, action) => {
 
     if (action.type === ActionTypes.UPDATE_ANNOUNCEMENT_FAILURE) {
         return {...state, uploaded: {...state.uploaded, data: {}, pending: false}};
+    }
+
+    if (action.type === ActionTypes.GET_ANNOUNCEMENT_COMMENTS_REQUEST) {
+        return {...state, announcementView: {comments: {pending: true, loaded: false}}};
+    }
+
+    if (action.type === ActionTypes.GET_ANNOUNCEMENT_COMMENTS_SUCCESS) {
+        return {...state, announcementView: {comments: {data: action.response, pending: false, loaded: true}}};
+    }
+
+    if (action.type === ActionTypes.GET_ANNOUNCEMENT_COMMENTS_FAILURE) {
+        return {...state, announcementView: {comments: {pending: false, loaded: false}}}
+    }
+
+    if (action.type === ActionTypes.POST_NEW_COMMENT_REQUEST) {
+        return {...state, announcementView: {comments: {pending: true, loaded: false}}};
+    }
+
+    if (action.type === ActionTypes.POST_NEW_COMMENT_SUCCESS) {
+        return {...state, announcementView: {comments: {data: action.response, pending: false, loaded: true}}};
+    }
+
+    if (action.type === ActionTypes.POST_NEW_COMMENT_FAILURE) {
+        return {...state, announcementView: {comments: {pending: false, loaded: false}}}
     }
 
     return state;
