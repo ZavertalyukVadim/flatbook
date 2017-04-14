@@ -19,33 +19,7 @@ class SignIn extends Component {
 
     onInputChange = val => e => this.setState({[val]: e.target.value});
     onLinkClick = () => this.props.redirect('/signup');
-    onSubmit = () => {
-
-        const body = {
-            grant_type: 'password',
-            username: 'hello@gmail.com',
-            password: 'password'
-        };
-
-        const searchParams = Object.keys(body).map((key) => {
-            return encodeURIComponent(key) + '=' + encodeURIComponent(body[key]);
-        }).join('&');
-
-        const POST_CONFIG = {
-            method: 'POST', credentials: "omit", mode: 'cors', headers: {
-                'Content-Type': 'application/x-www-form-urlencoded',
-                'Authorization': 'Basic bXktdHJ1c3RlZC1jbGllbnQ6c2VjcmV0'
-            }
-        };
-        fetch('http://localhost:8080/oauth/token', {
-            ...POST_CONFIG,
-            body: searchParams
-        }).then(
-            r => {
-                console.log(r.json())
-            }
-        )
-    };
+    onSubmit = () => this.props.signin({username: this.state.email, password: this.state.password});
 
     render() {
         const {
