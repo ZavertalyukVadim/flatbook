@@ -2,10 +2,13 @@ import React, {PropTypes} from 'react';
 import './avatar.scss';
 
 const Avatar = props => {
-    const {src} = props;
+    const {src, firstName, lastName} = props;
 
     return (
-        <img className="img-circled" src={src}/>
+        <div className="avatar">
+            <img className="img-circled" src={src}/>
+            <p>{firstName} {lastName}</p>
+        </div>
     );
 };
 

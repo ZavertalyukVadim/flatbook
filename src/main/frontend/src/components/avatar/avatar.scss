@@ -8,3 +8,7 @@
   padding: map-get($indentSizes, xxs);
   border-radius: 50%;
 }
+
+.avatar {
+  max-width: 100%;
+}

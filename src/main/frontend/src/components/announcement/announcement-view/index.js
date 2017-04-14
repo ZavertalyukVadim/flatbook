@@ -9,7 +9,6 @@ import './announcement-view.scss';
 class AnnouncementView extends Component {
 
     render() {
-        console.log(this.props.data);
         const {
             id,
             city,
@@ -20,7 +19,8 @@ class AnnouncementView extends Component {
             pricePerDay,
             pricePerMonth,
             title,
-            amenities
+            amenities,
+            user
         } = this.props.data;
 
         return (
@@ -48,8 +48,8 @@ class AnnouncementView extends Component {
 
                 </div>
                 <div className="description-field">
-                    <Avatar/>
-                    <p>{description}</p>
+                    <Avatar firstName={user.firstName} lastName={user.lastName}/>
+                    <p className="description">{description}</p>
                 </div>
                 <div className="amenities-field">
                     {amenities.map((item, index) =>

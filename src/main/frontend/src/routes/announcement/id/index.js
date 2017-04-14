@@ -1,8 +1,10 @@
 import React, {Component}  from 'react';
 import Container from '../../../components/container';
 import AnnouncementView from '../../../components/announcement/announcement-view';
-import {getAnnouncementById} from '../../../actions/announcement-actions';
+import {getAnnouncementById, getAnnouncementComments, addNewComment} from '../../../actions/announcement-actions';
 import Loader from '../../../components/loader';
+import CommentForm from '../../../components/comment/comment-form';
+import CommentView from '../../../components/comment/comment-view';
 import {connect} from 'react-redux';
 
 class Announcement extends Component {
@@ -16,18 +18,33 @@ class Announcement extends Component {
 
     componentDidMount() {
         this.props.getAnnouncementById(this.state.id);
+        this.props.getAnnouncementComments(this.state.id);
     }
 
     render() {
-        const {loaded, data} = this.props.announcements.announcementView;
+        const {loaded, data, comments} = this.props.announcements.announcementView;
+        console.log(comments);
         return (
-
             <Container>
-                {loaded ? <AnnouncementView data={data}/> : <Loader/>}
+                {loaded ? (
+                    <div>
+                        <AnnouncementView data={data}/>
+                        {comments.data.map((item, index) =>
+                            <CommentView
+                                key={index}
+                                {...item}
+                            />
+                        )}
+                        <CommentForm announcementId={data.id} add={this.props.addNewComment}/>
+                    </div>) : (<Loader/>)}
             </Container>
 
         );
     }
 }
 
-export default connect(({announcements}) => ({announcements: announcements}), {getAnnouncementById})(Announcement);
+export default connect(({announcements}) => ({announcements: announcements}), {
+    getAnnouncementById,
+    getAnnouncementComments,
+    addNewComment
+})(Announcement);

@@ -58,7 +58,7 @@ const POST_CONFIG = {
     mode: 'cors',
     headers: {'Content-Type': CONTENT_TYPE_JSON, ...getAuthorization()}
 };
-const post = (url, body, extraParams = {}, headers = {}) =>
+const post = (url, body = {}, extraParams = {}, headers = {}) =>
     fetch(urlResolver(url, extraParams), {...POST_CONFIG, ...headers, body: JSON.stringify(body)});
 
 const PUT_CONFIG = {

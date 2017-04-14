@@ -22,7 +22,6 @@ class Favourite extends Component {
                 }
             >
                 <div className="announcements-field">
-
                     {loaded ? (
                         <div className="announcements-field">
                             {data.map((item, index) =>
