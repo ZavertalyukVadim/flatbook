@@ -163,12 +163,3 @@ export const signin = user => (dispatch, getState) => {
         }
     });
 };
-
-export const addAuthToStore = r => ({
-    type: ActionTypes.ADD_AUTH_TO_STORE,
-    response: r
-});
-
-export const removeAuthFromStore = () => ({
-    type: ActionTypes.REMOVE_AUTH_FROM_STORE
-});

@@ -2,10 +2,7 @@ import {
     SIGN_IN_SUCCESS,
     SIGN_IN_FAILURE
 } from '../actions/user-constants';
-import {
-    addAuthToStore,
-    removeAuthFromStore
-} from '../actions/user-actions';
+import {redirect} from "../utils/history";
 
 export default store => next => action => {
     if (action.type === SIGN_IN_SUCCESS) {
@@ -14,11 +11,14 @@ export default store => next => action => {
             logged: true,
             token: `${action.response.token_type} ${action.response.access_token}`
         }));
-        next(addAuthToStore(action.response))
+        redirect('/');
+        return next(action);
     }
 
     if (action.type === SIGN_IN_FAILURE) {
         localStorage.setItem('auth', JSON.stringify({}));
-        next(removeAuthFromStore())
+        return next(action);
     }
+
+    return next(action)
 };
