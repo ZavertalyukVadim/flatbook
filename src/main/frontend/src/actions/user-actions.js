@@ -163,3 +163,9 @@ export const signin = user => (dispatch, getState) => {
         }
     });
 };
+
+export const signout = user => (dispatch) => {
+    return dispatch({
+        type: ActionTypes.SIGN_OUT_SUCCESS
+    });
+};

@@ -41,10 +41,11 @@ export default store => next => action => {
                 type: successType
             }));
         },
-        error => next(actionWith({
-            type: failureType,
-            error: error.message || 'Something bad happened'
-        }))
+        error =>
+            next(actionWith({
+                type: failureType,
+                error: error.error || 'Something bad happened'
+            }))
     );
 };
 

@@ -41,11 +41,11 @@ export default (state = DEFAULT_STATE, action) => {
     }
 
     if (action.type === ActionTypes.GET_FAVOURITE_ANNOUNCEMENTS_SUCCESS) {
-        return {...state,  favouriteAnnouncements: {data: action.response, loaded: true, pending: false}};
+        return {...state, favouriteAnnouncements: {data: action.response, loaded: true, pending: false}};
     }
 
     if (action.type === ActionTypes.GET_FAVOURITE_ANNOUNCEMENTS_FAILURE) {
-        return {...state, favouriteAnnouncements:{loaded: false, pending: false}};
+        return {...state, favouriteAnnouncements: {loaded: false, pending: false}};
     }
 
     if (action.type === ActionTypes.ADD_FAVOURITE_ANNOUNCEMENT_REQUEST) {
@@ -53,11 +53,11 @@ export default (state = DEFAULT_STATE, action) => {
     }
 
     if (action.type === ActionTypes.ADD_FAVOURITE_ANNOUNCEMENT_SUCCESS) {
-        return {...state,  favouriteAnnouncements: {...state.favouriteAnnouncements, pending: false}};
+        return {...state, favouriteAnnouncements: {...state.favouriteAnnouncements, pending: false}};
     }
 
     if (action.type === ActionTypes.ADD_FAVOURITE_ANNOUNCEMENT_FAILURE) {
-        return {...state, favouriteAnnouncements:{pending: false}};
+        return {...state, favouriteAnnouncements: {pending: false}};
     }
 
     if (action.type === ActionTypes.CHANGE_USER_ANNOUNCEMENT_VISIBILITY_REQUEST) {
@@ -77,11 +77,17 @@ export default (state = DEFAULT_STATE, action) => {
     }
 
     if (action.type === ActionTypes.DELETE_FAVOURITE_ANNOUNCEMENT_SUCCESS) {
-        return {...state,  likedAnnouncements: {data: state.user.likedAnnouncements.data.filter(obj => obj.id !== action.response.id), loaded: false, pending: false}};
+        return {...state,
+            likedAnnouncements: {
+                data: state.user.likedAnnouncements.data.filter(obj => obj.id !== action.response.id),
+                loaded: false,
+                pending: false
+            }
+        };
     }
 
     if (action.type === ActionTypes.DELETE_FAVOURITE_ANNOUNCEMENT_FAILURE) {
-        return {...state, likedAnnouncements:{loaded: false, pending: false}};
+        return {...state, likedAnnouncements: {loaded: false, pending: false}};
     }
 
     if (action.type === ActionTypes.UPDATE_USER_REQUEST) {
@@ -128,7 +134,7 @@ export default (state = DEFAULT_STATE, action) => {
         return {...state, auth: {pending: true}};
     }
 
-    if (action.type === ActionTypes.ADD_AUTH_TO_STORE) {
+    if (action.type === ActionTypes.SIGN_IN_SUCCESS) {
         return {
             ...state, auth: {
                 pending: false, logged: true, token: `${action.response.token_type} ${action.response.access_token}`
@@ -136,8 +142,20 @@ export default (state = DEFAULT_STATE, action) => {
         };
     }
 
-    if (action.type === ActionTypes.REMOVE_AUTH_FROM_STORE) {
+    if (action.type === ActionTypes.SIGN_IN_FAILURE) {
         return {...state, auth: {pending: false, logged: false}};
+    }
+
+    if (action.type === ActionTypes.SIGN_OUT_REQUEST) {
+        return {...state}
+    }
+
+    if (action.type === ActionTypes.SIGN_OUT_SUCCESS) {
+        return {...state, auth: {pending: false, logged: false}}
+    }
+
+    if (action.type === ActionTypes.SIGN_IN_FAILURE) {
+        return {...state}
     }
 
     return state;
