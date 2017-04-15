@@ -183,7 +183,7 @@ public class ProfileService {
     }
 
     @Transactional
-    public void addImage(MultipartFile multipartFile) throws Exception {
+    public Integer addImage(MultipartFile multipartFile) throws Exception {
         String fileName = multipartFile.getOriginalFilename();
         if (!FileUtil.isImage(fileName)) throw new Exception("File is not image file");
 
@@ -198,10 +198,16 @@ public class ProfileService {
 
         currentUser.setImage(imageEntity);
         userDao.save(currentUser);
+
+        return imageEntity.getId();
     }
 
     public byte[] getImage() throws Exception {
         return getCurrentUser().getImage().getPhoto();
+    }
+
+    public byte[] getImageById(Integer id) throws Exception {
+        return imageDao.findOne(id).getPhoto();
     }
 
     @Transactional
