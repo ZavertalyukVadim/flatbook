@@ -1,5 +1,0 @@
-CREATE TABLE `team5`.`rents` (
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `from` DATETIME NOT NULL,
-  `to` DATETIME NOT NULL,
-  PRIMARY KEY (`id`));

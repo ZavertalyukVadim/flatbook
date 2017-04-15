@@ -2,7 +2,6 @@ package flatbook.announcement.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import flatbook.profile.entity.User;
-import flatbook.rent.entity.Rent;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -78,14 +77,6 @@ public class Announcement {
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "announcement", cascade = CascadeType.ALL)
     private Set<Photo> photos = new HashSet<>();
-
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "announcements_rents", joinColumns = {
-            @JoinColumn(name = "announcement_id", nullable = false)},
-            inverseJoinColumns = {@JoinColumn(name = "rent_id",
-                    nullable = false)})
-    private Set<Rent> rents;
-
 
     public Announcement() {
     }
@@ -239,13 +230,5 @@ public class Announcement {
 
     public void setDistrict(District district) {
         this.district = district;
-    }
-
-    public Set<Rent> getRents() {
-        return rents;
-    }
-
-    public void setRents(Set<Rent> rents) {
-        this.rents = rents;
     }
 }
