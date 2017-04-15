@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {getAllAnnouncements} from '../../../actions/announcement-actions';
-import AnnouncementPreview from '../.././../components/announcement/announcement-preview';
+import AnnouncementPreview from '../../../components/announcement/announcement-preview';
+import Pagination from '../../../components/pagination';
 import Header, {HeaderTypes} from '../../../components/header';
 import './all-announcements.scss';
 
@@ -10,30 +11,44 @@ class AnnouncementsList extends Component {
         this.props.getAllAnnouncements();
     }
 
+    getAnnouncementPage = pageID => this.props.getAllAnnouncements(pageID);
+
     render() {
+        const {announcements: {data, loaded}} = this.props;
+        const {totalPages, number} = data;
+
         return (
-                <div>
-                    <Header
-                        type={HeaderTypes.primary}
-                        value="Last updated announcements"
-                        className="main-header"
-                    />
-                    {this.props.announcements.announcements.loaded ? (
+            <div>
+                <Header
+                    type={HeaderTypes.primary}
+                    value="Last updated announcements"
+                    className="main-header"
+                />
+                {
+                    loaded ? (
                         <div className="announcements-field">
-                            {this.props.announcements.announcements.data.map((item, index) =>
+                            {data.content.map((item, index) =>
                                 <AnnouncementPreview
                                     key={index}
                                     {...item}
-
                                 />
-                            )
-                            }
-                        </div>) : (<div>Loading</div>)}
-                </div>
-
+                            )}
+                        </div>)
+                        : <div>Loading</div>
+                }
+                <Pagination
+                    totalPages={totalPages}
+                    currentPage={number}
+                    getAnnouncementPage={this.getAnnouncementPage}
+                />
+            </div>
         );
     }
 }
-;
 
-export default connect(({announcements}) => ({announcements: announcements}), {getAllAnnouncements})(AnnouncementsList);
+export default connect(
+    ({announcements: {announcements}}) => ({
+        announcements: {...announcements}
+    }), {
+        getAllAnnouncements
+    })(AnnouncementsList);
