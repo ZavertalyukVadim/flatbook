@@ -1,9 +1,11 @@
 import React, {Component}  from 'react';
 import Container from '../../../components/container';
 import AnnouncementView from '../../../components/announcement/announcement-view';
-import {getAnnouncementById, getAnnouncementComments, addNewComment} from '../../../actions/announcement-actions';
+import {getAnnouncementById, getAnnouncementComments, deleteComment} from '../../../actions/announcement-actions';
+import {getUser} from '../../../actions/user-actions';
 import Loader from '../../../components/loader';
 import CommentForm from '../../../components/comment/comment-form';
+import CommentContainer from '../../../components/comment/comment-container';
 import CommentView from '../../../components/comment/comment-view';
 import {connect} from 'react-redux';
 
@@ -19,32 +21,41 @@ class Announcement extends Component {
     componentDidMount() {
         this.props.getAnnouncementById(this.state.id);
         this.props.getAnnouncementComments(this.state.id);
+        this.props.getUser();
     }
 
     render() {
         const {loaded, data, comments} = this.props.announcements.announcementView;
-        console.log(comments);
+        const {user} = this.props;
         return (
             <Container>
-                {loaded ? (
+                {loaded && this.props.user.loaded ? (
                     <div>
                         <AnnouncementView data={data}/>
                         {comments.data.map((item, index) =>
-                            <CommentView
-                                key={index}
-                                {...item}
-                            />
+                            user.data.id !== item.user.id ?
+                                <CommentView
+                                    key={index}
+                                    {...item}
+                                /> :
+                                <CommentContainer
+                                    key={index}
+                                    {...item}
+                                    onDelete={this.props.deleteComment}
+                                />
                         )}
-                        <CommentForm announcementId={data.id} add={this.props.addNewComment}/>
+                        <CommentForm announcementId={data.id}/>
                     </div>) : (<Loader/>)}
+
             </Container>
 
         );
     }
 }
 
-export default connect(({announcements}) => ({announcements: announcements}), {
+export default connect(({user, announcements}) => ({user: user, announcements: announcements}), {
     getAnnouncementById,
     getAnnouncementComments,
-    addNewComment
+    getUser,
+    deleteComment
 })(Announcement);

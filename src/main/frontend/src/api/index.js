@@ -60,7 +60,7 @@ const POST_CONFIG = () => ({
     headers: {'Content-Type': CONTENT_TYPE_JSON, ...getAuthorization()}
 });
 const post = (url, body = {}, extraParams = {}) =>
-    fetch(urlResolver(url, extraParams), {...POST_CONFIG, body: JSON.stringify(body)});
+    fetch(urlResolver(url, extraParams), {...POST_CONFIG(), body: JSON.stringify(body)});
 
 const PUT_CONFIG = () => ({
     method: 'PUT',
@@ -69,11 +69,11 @@ const PUT_CONFIG = () => ({
     headers: {'Content-Type': CONTENT_TYPE_JSON, ...getAuthorization()}
 });
 const put = (url, body = {}, extraParams = {}) =>
-    fetch(urlResolver(url, extraParams), {...PUT_CONFIG, body: JSON.stringify(body)});
+    fetch(urlResolver(url, extraParams), {...PUT_CONFIG(), body: JSON.stringify(body)});
 
 const REMOVE_CONFIG = () => ({headers: {...getAuthorization()}});
 const remove = (url, extraParams = {}) =>
-    fetch(urlResolver(url, extraParams), {...REMOVE_CONFIG, method: 'DELETE', mode: 'cors', credentials: "include"});
+    fetch(urlResolver(url, extraParams), {...REMOVE_CONFIG(), method: 'DELETE'});
 
 const custom = (url, config,) =>
     fetch(`${apiRoot()}${url}`, {...config});
