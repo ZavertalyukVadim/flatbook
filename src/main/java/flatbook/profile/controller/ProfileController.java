@@ -61,10 +61,15 @@ public class ProfileController {
 
     @GetMapping(value = "/photo")
     @Secured("ROLE_USER")
-    public void getPhoto(HttpServletResponse response) throws Exception {
-        response.setContentType("image/jpeg");
-        response.getOutputStream().write(profileService.getImage());
-        response.getOutputStream().flush();
+    public Integer getPhoto(HttpServletResponse response) throws Exception {
+        Integer photoId = null;
+        try {
+            photoId =  profileService.getIdPhoto();
+        } catch (Exception e) {
+
+            response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+        }
+        return photoId;
     }
 
     @GetMapping(value = "/photo/{id}")
@@ -76,23 +81,23 @@ public class ProfileController {
     }
 
     @PostMapping(value = "/{id}/favorite")
-    public void addAnnouncementToFavorite(@PathVariable("id") Integer id){
+    public void addAnnouncementToFavorite(@PathVariable("id") Integer id) {
         profileService.markFavorite(id);
     }
 
     @DeleteMapping(value = "/{id}/removeFromFavorite")
-    public void removeFromFavorite(@PathVariable("id") Integer id){
+    public void removeFromFavorite(@PathVariable("id") Integer id) {
         profileService.removeFromFavorite(id);
     }
 
     @PostMapping(value = "/favorites")
-    public List<Announcement> getLikedAnnouncementsByUser(){
+    public List<Announcement> getLikedAnnouncementsByUser() {
         return profileService.getLikedAnnouncementsByUser();
     }
 
 
     @GetMapping(value = "/announcements")
-    public List<Announcement> getAnnouncementsByUser(){
+    public List<Announcement> getAnnouncementsByUser() {
         return profileService.getAnnouncementsByUser();
     }
 
