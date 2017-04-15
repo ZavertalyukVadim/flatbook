@@ -55,8 +55,8 @@ public class ProfileController {
 
     @PostMapping(value = "/photo")
     @Secured("ROLE_USER")
-    public void addPhoto(@RequestParam("image") MultipartFile image) throws Exception {
-        profileService.addImage(image);
+    public Integer addPhoto(@RequestParam("image") MultipartFile image) throws Exception {
+        return profileService.addImage(image);
     }
 
     @GetMapping(value = "/photo")
@@ -64,6 +64,14 @@ public class ProfileController {
     public void getPhoto(HttpServletResponse response) throws Exception {
         response.setContentType("image/jpeg");
         response.getOutputStream().write(profileService.getImage());
+        response.getOutputStream().flush();
+    }
+
+    @GetMapping(value = "/photo/{id}")
+    @Secured("ROLE_USER")
+    public void getPhotoById(@PathVariable Integer id, HttpServletResponse response) throws Exception {
+        response.setContentType("image/jpeg");
+        response.getOutputStream().write(profileService.getImageById(id));
         response.getOutputStream().flush();
     }
 
