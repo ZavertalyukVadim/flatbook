@@ -45,7 +45,7 @@ public class AnnouncementController {
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-    public Announcement deleteAnnouncement(@PathVariable("id") Integer id) {
+    public Boolean deleteAnnouncement(@PathVariable("id") Integer id) {
         return announcementService.deleteAnnouncement(id);
     }
 }
