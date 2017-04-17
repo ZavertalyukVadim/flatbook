@@ -22,7 +22,6 @@ const DEFAULT_STATE = {
     }
 };
 
-
 export default (state = DEFAULT_STATE, action) => {
 
     if (action.type === ActionTypes.GET_ALL_ANNOUNCEMENTS_REQUEST) {
@@ -32,7 +31,7 @@ export default (state = DEFAULT_STATE, action) => {
     if (action.type === ActionTypes.GET_ALL_ANNOUNCEMENTS_SUCCESS) {
         return {
             ...state,
-            announcements: {...state.announcements, data: action.response.content, loaded: true, pending: false}
+            announcements: {...state.announcements, data: action.response, loaded: true, pending: false}
         };
     }
 
@@ -144,7 +143,6 @@ export default (state = DEFAULT_STATE, action) => {
         }
     }
 
-
     if (action.type === ActionTypes.UPDATE_EXISTING_COMMENT_REQUEST) {
         return {
             ...state,
@@ -181,8 +179,6 @@ export default (state = DEFAULT_STATE, action) => {
         }
     }
 
-
-
     if (action.type === ActionTypes.DELETE_COMMENT_REQUEST) {
         return {
             ...state,
@@ -217,6 +213,6 @@ export default (state = DEFAULT_STATE, action) => {
             }
         }
     }
+
     return state;
 };
-

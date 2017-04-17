@@ -34,7 +34,7 @@ public class AnnouncementCommentsController {
     }
 
     @DeleteMapping(value = "/{id}")
-    AnnouncementComments deleteComments(@PathVariable("id") Integer id) {
+    Boolean deleteComments(@PathVariable("id") Integer id) {
         return announcementCommentsService.deleteComments(id);
     }
 }

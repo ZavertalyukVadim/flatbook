@@ -88,9 +88,9 @@ public class AnnouncementService {
        return announcementDao.save(announcement);
     }
 
-    public Announcement deleteAnnouncement(Integer id) {
+    public Boolean deleteAnnouncement(Integer id) {
         announcementDao.delete(id);
-        return null;
+        return true;
     }
 
     public Announcement createAnnouncement(Post post) {

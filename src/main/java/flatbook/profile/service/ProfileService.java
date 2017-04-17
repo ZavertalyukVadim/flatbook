@@ -10,6 +10,7 @@ import flatbook.profile.dao.*;
 import flatbook.profile.entity.*;
 import flatbook.profile.util.FileUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCrypt;
@@ -129,7 +130,7 @@ public class ProfileService {
 
         return userDao.save(oldUser);
     }
-
+    @Secured("ROLE_USER")
     public User getCurrentUser() {
         Email email = emailDao.findOneByContent(getUserEmail());
         User user = email.getUser();

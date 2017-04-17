@@ -1,7 +1,7 @@
 import {CALL_API, get, post, put, remove} from '../api';
 import * as ActionTypes from './announcement-constants';
 
-export const getAllAnnouncements = () => (dispatch, getState) => {
+export const getAllAnnouncements = (pageID = 0) => (dispatch, getState) => {
     const {announcements: {pending}} = getState();
 
     if (pending) {
@@ -15,7 +15,7 @@ export const getAllAnnouncements = () => (dispatch, getState) => {
                 ActionTypes.GET_ALL_ANNOUNCEMENTS_SUCCESS,
                 ActionTypes.GET_ALL_ANNOUNCEMENTS_FAILURE
             ],
-            endpoint: () => get('announcement/all/0/20')
+            endpoint: () => get(`announcement/all/${pageID}/6`)
         }
     });
 };
@@ -78,7 +78,7 @@ export const getAnnouncementById = id => (dispatch, getState) => {
 };
 
 export const getAnnouncementComments = id => (dispatch, getState) => {
-    const {announcements: {announcementView: {comments: {pending} } } } = getState();
+    const {announcements: {announcementView: {comments: {pending}}}} = getState();
     if (pending) {
         return null;
     }
@@ -96,7 +96,7 @@ export const getAnnouncementComments = id => (dispatch, getState) => {
 };
 
 export const addNewComment = body => (dispatch, getState) => {
-    const {announcements: {announcementView: {comments: {pending} } } } = getState();
+    const {announcements: {announcementView: {comments: {pending}}}} = getState();
     if (pending) {
         return null;
     }
@@ -114,7 +114,7 @@ export const addNewComment = body => (dispatch, getState) => {
 };
 
 export const updateExistingComment = body => (dispatch, getState) => {
-    const {announcements: {announcementView: {comments: {pending} } } } = getState();
+    const {announcements: {announcementView: {comments: {pending}}}} = getState();
     if (pending) {
         return null;
     }
@@ -131,8 +131,7 @@ export const updateExistingComment = body => (dispatch, getState) => {
     });
 };
 
-
-export const deleteComment = id => dispatch  => {
+export const deleteComment = id => dispatch => {
 
     return dispatch({
         [CALL_API]: {

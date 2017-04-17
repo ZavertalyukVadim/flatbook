@@ -55,9 +55,9 @@ public class AnnouncementCommentsService {
         return SecurityContextHolder.getContext().getAuthentication();
     }
 
-    public AnnouncementComments deleteComments(Integer id) {
+    public Boolean deleteComments(Integer id) {
         announcementCommentsDao.delete(id);
-        return null;
+        return true;
     }
 
     public AnnouncementComments updateComment(Comment comment) {

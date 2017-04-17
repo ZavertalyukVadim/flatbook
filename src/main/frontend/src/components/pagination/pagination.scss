@@ -1,0 +1,9 @@
+.pagination {
+  list-style-type: none;
+
+  .pagination-item {
+    display: inline-block;
+    cursor: pointer;
+    margin: 0 16px;
+  }
+}
