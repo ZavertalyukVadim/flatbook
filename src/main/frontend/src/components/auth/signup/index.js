@@ -3,6 +3,8 @@ import Input from '../../input';
 import Button, {ButtonTypes, ButtonSizes} from '../../button';
 import Checkbox from '../../checkbox';
 import Header from '../../header';
+import {connect} from 'react-redux';
+import {signup} from '../../../actions/user-actions';
 import '../auth.scss';
 import {noop} from 'lodash';
 
@@ -13,14 +15,29 @@ class SignUp extends Component {
         this.state = {
             firstName: '',
             lastName: '',
-            email: '',
+            emails: [
+                {
+                    content: '',
+                    primary: true
+                }
+            ],
+            phones: [
+                {
+                    content: '',
+                    primary: true
+                }
+            ],
             password: '',
             confirmPass: '',
             checked: false
         };
     }
 
+    onSubmit = () => this.state.confirmPass === this.state.password && this.state.checked
+        ? this.props.signup(this.state) : noop();
     onCheckboxClick = () => this.setState({checked: !this.state.checked});
+    onEmailChange = e => this.setState({emails: [{content: e.target.value}]});
+    onPhoneChange = e => this.setState({phones: [{content: e.target.value}]});
     onInputChange = val => e => this.setState({[val]: e.target.value});
     onLinkClick = () => this.props.redirect('/signin');
 
@@ -29,7 +46,8 @@ class SignUp extends Component {
         const {
             firstName,
             lastName,
-            email,
+            emails,
+            phones,
             password,
             confirmPass,
             checked
@@ -56,8 +74,14 @@ class SignUp extends Component {
                 <Input
                     placeholder="Email"
                     type="email"
-                    value={email}
-                    onChange={this.onInputChange('email')}
+                    value={emails[0].content}
+                    onChange={this.onEmailChange}
+                />
+                <Input
+                    placeholder="Phone"
+                    type="text"
+                    value={phones[0].content}
+                    onChange={this.onPhoneChange}
                 />
                 <Input
                     placeholder="Password"
@@ -86,9 +110,8 @@ class SignUp extends Component {
                 <Button
                     type={ButtonTypes.primary}
                     size={ButtonSizes.block}
-                    onClick={noop}
+                    onClick={this.onSubmit}
                     caption="Sign up"
-
                 />
                 <span className="auth-item">or</span>
                 <div className="auth-social-button-field">
@@ -106,7 +129,6 @@ class SignUp extends Component {
                         caption={[<i className="fa fa-google auth-icon"/>, 'Sign up with Google']}
                     />
                 </div>
-
                 <div className="auth-link">
                     <p className="auth-link-description">Already have an account?</p>
                     <Button
@@ -121,4 +143,4 @@ class SignUp extends Component {
     }
 }
 
-export default SignUp;
+export default connect(({user}) => ({user: user}), {signup})(SignUp);
