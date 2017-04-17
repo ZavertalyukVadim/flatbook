@@ -1,7 +1,6 @@
 package flatbook.rent.controller;
 
 import flatbook.rent.entity.Rent;
-import flatbook.rent.entity.RentRequestBody;
 import flatbook.rent.service.RentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -21,7 +20,7 @@ public class RentController {
     }
 
     @PostMapping
-    public void rent(@RequestBody RentRequestBody rentRequestBody) {
-
+    public Rent rent(@RequestBody Rent rent) throws Exception {
+        return rentService.rent(rent);
     }
 }

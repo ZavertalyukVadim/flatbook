@@ -1,6 +1,8 @@
 package flatbook.rent.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.Date;
 
@@ -17,6 +19,7 @@ public class Rent {
     @Column(name = "`to`")
     private Date to;
 
+    @JsonIgnore
     @Column(name = "user_id")
     private Integer userId;
 
