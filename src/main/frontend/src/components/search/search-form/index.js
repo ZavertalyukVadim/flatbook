@@ -20,6 +20,7 @@ import {
     getCityMaxPrice,
     search
 } from '../../../actions/search-actions';
+import {redirect} from "../../../utils/history";
 
 class SearchForm extends Component {
     constructor(props) {
@@ -151,15 +152,29 @@ class SearchForm extends Component {
     saveStartDate = d => this.setState({startDate: d});
     saveEndDate = d => this.setState({endDate: d});
     search = () => {
+        const {
+            chosenCityID,
+            priceValue,
+            livingPlaces,
+            priceType,
+            rooms,
+            startDate,
+            endDate
+        } = this.state;
+
         this.props.search({
-            cityId: this.state.chosenCityID,
-            finalPrice: this.state.priceValue[1],
-            livingPlaces: this.state.livingPlaces,
-            price: this.state.priceType,
-            rooms: this.state.rooms,
-            startingPrice: this.state.priceValue[0]
+            cityId: chosenCityID,
+            finalPrice: priceValue[1],
+            livingPlaces: livingPlaces,
+            price: priceType,
+            rooms: rooms,
+            startingPrice: priceValue[0],
+            itemsPerPage: 20,
+            pageNum: 0,
+            startDate: startDate.format('x'),
+            endDate: endDate.format('x')
         });
-        this.props.redirect('/search');
+        redirect('/search');
     };
 
     render() {

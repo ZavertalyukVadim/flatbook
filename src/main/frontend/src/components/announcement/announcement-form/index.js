@@ -102,7 +102,7 @@ class AnnouncementForm extends Component {
             street: street,
             livingPlaces: livingPlaces,
             priceType: priceType,
-            priceValue: this.state[priceType],
+            priceValue: +this.state[priceType],
             amenities: amenities.filter(a => a.checked).map(a => ({id: a.id, name: a.name}))
         });
     };
@@ -203,7 +203,7 @@ class AnnouncementForm extends Component {
                         />
                     </div>
                     {
-                        priceType === PRICE_PER_DAY ?
+                        priceType === pricePerDay ?
                             <Input
                                 placeholder='Price per day *'
                                 value={isNull(PRICE_PER_DAY) ? '' : PRICE_PER_DAY}
