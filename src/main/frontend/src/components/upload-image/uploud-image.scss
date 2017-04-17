@@ -1,0 +1,24 @@
+@import "../../style/color-theme.scss";
+@import "../../style/sizes.scss";
+
+.upload-image {
+
+  cursor: pointer;
+  text-align: center;
+  border: 2px solid;
+  border-radius: 2px;
+  margin: map-get($indentSizes, s);
+
+  &:hover {
+    opacity: .75;
+    transition: opacity 0.5s linear;
+  }
+
+  span {
+    padding: map-get($indentSizes, m) map-get($indentSizes, l);
+  }
+
+  input {
+    display: none;
+  }
+}

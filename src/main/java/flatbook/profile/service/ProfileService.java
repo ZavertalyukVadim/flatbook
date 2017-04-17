@@ -103,7 +103,7 @@ public class ProfileService {
 
     @Transactional
     public User update(User user) throws Exception {
-        if ( !user.getEmails().stream().anyMatch(email -> {
+        if (!user.getEmails().stream().anyMatch(email -> {
             Email primary = null;
             try {
                 primary = getPrimaryEmail();
@@ -111,7 +111,7 @@ public class ProfileService {
                 e.printStackTrace();
             }
 
-           return email.equals(primary) && email.getPrimary();
+            return email.equals(primary) && email.getPrimary();
 
         })) throw new Exception("You can`t change primary email");
 
@@ -130,6 +130,7 @@ public class ProfileService {
 
         return userDao.save(oldUser);
     }
+
     @Secured("ROLE_USER")
     public User getCurrentUser() {
         Email email = emailDao.findOneByContent(getUserEmail());
@@ -197,14 +198,21 @@ public class ProfileService {
         imageEntity.setPhoto(imageBytes);
         imageDao.save(imageEntity);
 
-        currentUser.setImage(imageEntity);
+        currentUser.setImage(imageDao.save(imageEntity));
         userDao.save(currentUser);
 
         return imageEntity.getId();
     }
 
     public byte[] getImage() throws Exception {
-        return getCurrentUser().getImage().getPhoto();
+        byte[] photo = null;
+        try {
+            photo= getCurrentUser().getImage().getPhoto();
+        }
+        catch (Exception e){
+
+        }
+        return photo;
     }
 
     public byte[] getImageById(Integer id) throws Exception {
@@ -417,8 +425,8 @@ public class ProfileService {
     }
 
     @org.springframework.transaction.annotation.Transactional
-    public void removeFromFavorite(Integer announcementId){
-        favoriteAnnouncementInUserDao.deleteFavoriteAnnouncementInUserByAnnouncementIdAndUserId(announcementId,getCurrentUser().getId());
+    public void removeFromFavorite(Integer announcementId) {
+        favoriteAnnouncementInUserDao.deleteFavoriteAnnouncementInUserByAnnouncementIdAndUserId(announcementId, getCurrentUser().getId());
     }
 
     public void markFavorite(Integer id) {
@@ -426,5 +434,10 @@ public class ProfileService {
         favoriteAnnouncementInUser.setUser(getCurrentUser());
         favoriteAnnouncementInUser.setAnnouncementId(id);
         favoriteAnnouncementInUserDao.save(favoriteAnnouncementInUser);
+    }
+
+    public Integer getIdPhoto() {
+            return getCurrentUser().getImage().getId();
+
     }
 }

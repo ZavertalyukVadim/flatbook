@@ -19,6 +19,7 @@ import Slider from '../slider';
 import Loader from '../loader';
 import Radio from '../radio';
 import DatePickerRange from '../datepicker-range';
+import UploadImage from "../upload-image/index";
 
 let slides = [
     'https://images.unsplash.com/photo-1444703686981-a3abbc4d4fe3?fit=crop&fm=jpg&h=825&q=80&w=1325',
@@ -56,6 +57,9 @@ export default class Showroom extends Component {
         return (
             <div>
                 <div className="row">
+                    <div className="col-4">
+                        <UploadImage/>
+                    </div>
                     <div className="col-4">
                         <div className="panel-heading">
                             Date Picker Range

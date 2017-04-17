@@ -40,6 +40,7 @@ public class ResourceConfigurer extends ResourceServerConfigurerAdapter {
                 .antMatchers(HttpMethod.POST, "/api/announcement").access("hasRole('ROLE_USER')")
                 .antMatchers(HttpMethod.DELETE, "/api/announcement/**").access("hasRole('ROLE_USER')")
                 .antMatchers(HttpMethod.PUT, "/api/announcement").access("hasRole('ROLE_USER')")
+                .antMatchers(HttpMethod.GET, "/api/profile/photo/**").permitAll()
                 .antMatchers(HttpMethod.GET, "/api/announcement").permitAll()
                 .antMatchers(HttpMethod.POST, "/api/profile").permitAll()
                 .antMatchers( "/api/profile").access("hasRole('ROLE_USER')")

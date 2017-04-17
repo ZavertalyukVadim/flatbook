@@ -15,7 +15,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Service
 @Transactional
@@ -67,11 +69,16 @@ public class AnnouncementService {
     public Announcement updateAnnouncement(Post post) {
         City city = cityDao.findOne(post.getCityId());
         Announcement announcement = announcementDao.findOne(post.getAnnouncementId());
+        Set<Photo> photos = new HashSet<>();
+        for (Integer photo : post.getPhotos()){
+            photos.add(photoDao.findOne(photo));
+        }
         announcement.setTitle(post.getTitle());
         announcement.setDescription(post.getDescription());
         announcement.setRooms(post.getRooms());
         announcement.setStreet(post.getStreet());
         announcement.setLivingPlaces(post.getLivingPlaces());
+        announcement.setPhotos(photos);
         if(post.getPriceType() == Price.PRICE_PER_DAY){
             announcement.setPricePerDay(post.getPriceValue());
         }
@@ -95,13 +102,17 @@ public class AnnouncementService {
 
     public Announcement createAnnouncement(Post post) {
         City city = cityDao.findOne(post.getCityId());
-
+        Set<Photo> photos = new HashSet<>();
+        for (Integer photo : post.getPhotos()){
+            photos.add(photoDao.findOne(photo));
+        }
         Announcement announcement = new Announcement();
         announcement.setTitle(post.getTitle());
         announcement.setDescription(post.getDescription());
         announcement.setRooms(post.getRooms());
         announcement.setStreet(post.getStreet());
         announcement.setLivingPlaces(post.getLivingPlaces());
+        announcement.setPhotos(photos);
         if(post.getPriceType() == Price.PRICE_PER_DAY){
             announcement.setPricePerDay(post.getPriceValue());
         }

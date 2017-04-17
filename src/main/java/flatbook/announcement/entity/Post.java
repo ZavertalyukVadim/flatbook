@@ -27,6 +27,16 @@ public class Post {
 
     private Set<Amenity> amenities;
 
+    private Set<Integer> photos;
+
+    public Set<Integer> getPhotos() {
+        return photos;
+    }
+
+    public void setPhotos(Set<Integer> photos) {
+        this.photos = photos;
+    }
+
     public Integer getCityId() {
         return cityId;
     }

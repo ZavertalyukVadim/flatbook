@@ -1,4 +1,5 @@
 import {CALL_API, get, remove, put, custom} from '../api';
+import {getAuthorization} from '../utils/auth';
 import * as ActionTypes from './user-constants';
 
 export const getUser = id => (dispatch, getState) => {
@@ -167,5 +168,24 @@ export const signin = user => (dispatch, getState) => {
 export const signout = user => (dispatch) => {
     return dispatch({
         type: ActionTypes.SIGN_OUT_SUCCESS
+    });
+};
+
+export const getUserAvatar = () => (dispatch, getState) => {
+    const {loaded} = getState();
+
+    if (loaded) {
+        return null;
+    }
+
+    return dispatch({
+        [CALL_API]: {
+            types: [
+                ActionTypes.GET_USER_AVATAR_REQUEST,
+                ActionTypes.GET_USER_AVATAR_SUCCESS,
+                ActionTypes.GET_USER_AVATAR_FAILURE
+            ],
+            endpoint: () => get(`profile/photo`)
+        }
     });
 };
