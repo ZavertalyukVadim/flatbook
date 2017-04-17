@@ -1,6 +1,8 @@
 package flatbook.announcement.entity;
 
 
+import java.util.Date;
+
 public class Search {
 
     private int pageNum;
@@ -12,6 +14,9 @@ public class Search {
     private Price price;
     private Integer rooms;
     private Integer livingPlaces;
+
+    private Date startDate;
+    private Date endDate;
 
     public Search() {
     }
@@ -63,5 +68,21 @@ public class Search {
 
     public void setItemsPerPage(int itemsPerPage) {
         this.itemsPerPage = itemsPerPage;
+    }
+
+    public Date getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(Date startDate) {
+        this.startDate = startDate;
+    }
+
+    public Date getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(Date endDate) {
+        this.endDate = endDate;
     }
 }

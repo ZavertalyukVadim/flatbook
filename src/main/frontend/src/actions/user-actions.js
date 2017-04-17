@@ -1,4 +1,4 @@
-import {CALL_API, get, remove, put, custom} from '../api';
+import {CALL_API, get, remove, put, post, custom} from '../api';
 import {getAuthorization} from '../utils/auth';
 import * as ActionTypes from './user-constants';
 
@@ -69,7 +69,8 @@ export const deleteAnnouncement = id => dispatch => {
                 ActionTypes.DELETE_USER_ANNOUNCEMENTS_FAILURE
             ],
             endpoint: () => remove(`announcement/${id}`)
-        }
+        },
+        id: id
     });
 };
 
@@ -127,7 +128,8 @@ export const deleteAnnouncementFromFavourites = id => dispatch => {
                 ActionTypes.DELETE_FAVOURITE_ANNOUNCEMENT_FAILURE
             ],
             endpoint: () => remove(`profile/${id}/removeFromFavorite`)
-        }
+        },
+        id: id
     });
 };
 
@@ -186,6 +188,19 @@ export const getUserAvatar = () => (dispatch, getState) => {
                 ActionTypes.GET_USER_AVATAR_FAILURE
             ],
             endpoint: () => get(`profile/photo`)
+        }
+    });
+};
+
+export const signup = body => dispatch => {
+    return dispatch({
+        [CALL_API]: {
+            types: [
+                ActionTypes.SIGN_UP_REQUEST,
+                ActionTypes.SIGN_UP_SUCCESS,
+                ActionTypes.SIGN_UP_FAILURE
+            ],
+            endpoint: () => post('profile/', body)
         }
     });
 };

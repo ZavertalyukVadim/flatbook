@@ -156,8 +156,17 @@ public class AnnouncementService {
     }
 
     public Page<Announcement> getAnnouncementByExtendedSearch(ExtendSearch extendSearch) {
-        PageRequest pageRequest = new PageRequest(extendSearch.getPageNum(), extendSearch.getItemsPerPage());
+        if (!containsAmenities(extendSearch)) {
+            Search search = new Search(extendSearch.getCityId(), extendSearch.getStartingPrice(), extendSearch.getFinalPrice(), extendSearch.getPrice(),
+                                        extendSearch.getRooms(), extendSearch.getLivingPlaces());
+            search.setPageNum(extendSearch.getPageNum());
+            search.setItemsPerPage(extendSearch.getItemsPerPage());
+            search.setStartDate(extendSearch.getStartDate());
+            search.setEndDate(extendSearch.getEndDate());
+            return getAnnouncementBySmallSearch(search);
+        }
 
+        PageRequest pageRequest = new PageRequest(extendSearch.getPageNum(), extendSearch.getItemsPerPage());
         return (extendSearch.getPrice() == Price.PRICE_PER_DAY)
                 ? announcementDao.getAnnouncementPerDayWithAmenities(extendSearch, pageRequest)
                 : announcementDao.getAnnouncementPerMonthWithAmenities(extendSearch, pageRequest);
@@ -207,5 +216,9 @@ public class AnnouncementService {
 
     private Authentication getUserDetails() {
         return SecurityContextHolder.getContext().getAuthentication();
+    }
+
+    private boolean containsAmenities(ExtendSearch extendSearch) {
+        return extendSearch.getAmenities().size() != 0;
     }
 }

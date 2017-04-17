@@ -20,6 +20,9 @@ const DEFAULT_STATE = {
     avatar: {
         loaded: false
     },
+    signup: {
+        registered: false
+    },
     loaded: false
 };
 
@@ -78,9 +81,10 @@ export default (state = DEFAULT_STATE, action) => {
     }
 
     if (action.type === ActionTypes.DELETE_FAVOURITE_ANNOUNCEMENT_SUCCESS) {
-        return {...state,
+        return {
+            ...state,
             likedAnnouncements: {
-                data: state.user.likedAnnouncements.data.filter(obj => obj.id !== action.response.id),
+                data: state.user.likedAnnouncements.data.filter(obj => obj.id !== action.id),
                 loaded: false,
                 pending: false
             }
@@ -122,7 +126,7 @@ export default (state = DEFAULT_STATE, action) => {
     if (action.type === ActionTypes.DELETE_USER_ANNOUNCEMENTS_SUCCESS) {
         return {
             ...state,
-            announcements: state.user.announcements.filter(obj => obj.id !== action.id),
+            announcements: state.announcements.filter(obj => obj.id !== action.id),
             loaded: true
         };
     }
@@ -155,7 +159,7 @@ export default (state = DEFAULT_STATE, action) => {
         return {...state, auth: {pending: false, logged: false}};
     }
 
-    if (action.type === ActionTypes.SIGN_IN_FAILURE) {
+    if (action.type === ActionTypes.SIGN_OUT_FAILURE) {
         return {...state};
     }
 
@@ -169,6 +173,18 @@ export default (state = DEFAULT_STATE, action) => {
 
     if (action.type === ActionTypes.GET_USER_AVATAR_FAILURE) {
         return {...state, avatar: {loaded: false}};
+    }
+
+    if (action.type === ActionTypes.SIGN_UP_REQUEST) {
+        return {...state};
+    }
+
+    if (action.type === ActionTypes.SIGN_UP_SUCCESS) {
+        return {...state, signup: {registered: true}};
+    }
+
+    if (action.type === ActionTypes.SIGN_UP_FAILURE) {
+        return {...state, signup: {registered: false}};
     }
 
     return state;
