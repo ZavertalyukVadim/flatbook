@@ -3,8 +3,8 @@ import Container from '../../components/container';
 import AnnouncementsList from '../../components/announcement/announcements-list';
 import SearchForm from '../../components/search/search-form';
 
-export default ({history}) =>
+export default () =>
     <Container>
-        <SearchForm redirect={path => history.push(path)}/>
+        <SearchForm/>
         <AnnouncementsList/>
     </Container>;

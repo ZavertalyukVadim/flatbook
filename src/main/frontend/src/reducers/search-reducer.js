@@ -40,7 +40,9 @@ const DEFAULT_STATE = {
         pending: false
     },
     searchResult: {
-        data: [],
+        data: {
+            content: []
+        },
         pending: false
     },
     maxPrice: {
