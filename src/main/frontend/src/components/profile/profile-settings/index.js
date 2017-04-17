@@ -32,10 +32,10 @@ class ProfileSettings extends Component {
     onInputChange = name => e => this.setState({[name]: e.target.value});
 
     onArrayChange = (name, idx) => e => this.setState({
-        [name]: this.state[name].map((item, index) => idx === index ? {content: e.target.value} : item)
+        [name]: this.state[name].map((item, index) => idx === index ? {content: e.target.value, primary: false} : item)
     });
 
-    addNewInput = name => () => this.setState({[name]: this.state[name].concat({content: ''})});
+    addNewInput = name => () => this.setState({[name]: this.state[name].concat({content: '', primary: false})});
 
     onCheckboxClick = () => this.setState({notifications: !this.state.notifications});
 
@@ -56,6 +56,7 @@ class ProfileSettings extends Component {
                 />
             </div>
             {this.state[name].map((item, index) =>
+                item.primary ? <div>{item.content}</div> :
                 <div key={index} className="contact-info-field">
                     <Input
                         placeholder={placeholder}
