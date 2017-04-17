@@ -14,7 +14,7 @@ public class RentController {
     @Autowired
     private RentService rentService;
 
-    @GetMapping
+    @GetMapping(value = "/current")
     public List<Rent> getRents() {
         return rentService.getCurrentUserRents();
     }

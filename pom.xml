@@ -34,15 +34,15 @@
                     <user>admin</user>
                     <password>admin</password>
                 </configuration>
-                <!--<executions>-->
-                    <!--<execution>-->
-                        <!--<id>migratedb</id>-->
-                        <!--<goals>-->
-                            <!--<goal>migrate</goal>-->
-                        <!--</goals>-->
-                        <!--<phase>generate-resources</phase>-->
-                    <!--</execution>-->
-                <!--</executions>-->
+                <executions>
+                    <execution>
+                        <id>migratedb</id>
+                        <goals>
+                            <goal>migrate</goal>
+                        </goals>
+                        <phase>generate-resources</phase>
+                    </execution>
+                </executions>
             </plugin>
             <plugin>
                 <groupId>org.springframework.boot</groupId>

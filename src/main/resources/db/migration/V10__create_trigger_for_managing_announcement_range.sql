@@ -7,7 +7,7 @@ BEGIN
 declare msg varchar(255);
 
 set @result = (select count(*) from rents
-where new.`to` < rents.`from` or new.`from` > rents.`to`);
+where not (new.`to` < rents.`from` or new.`from` > rents.`to`));
 
 if (@result <> 0) then
 set msg = "my error";

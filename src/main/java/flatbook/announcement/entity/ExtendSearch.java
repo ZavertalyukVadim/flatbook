@@ -1,5 +1,6 @@
 package flatbook.announcement.entity;
 
+import java.util.Date;
 import java.util.List;
 
 public class ExtendSearch {
@@ -12,6 +13,8 @@ public class ExtendSearch {
     private Integer rooms;
     private Integer livingPlaces;
     private List<Amenity> amenities;
+    private Date startDate;
+    private Date endDate;
 
     public ExtendSearch() {
     }
@@ -125,5 +128,21 @@ public class ExtendSearch {
 
     public void setItemsPerPage(int imtesPerPage) {
         this.itemsPerPage = imtesPerPage;
+    }
+
+    public void setStartDate(Date startDate) {
+        this.startDate = startDate;
+    }
+
+    public Date getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(Date endDate) {
+        this.endDate = endDate;
+    }
+
+    public Date getStartDate() {
+        return startDate;
     }
 }
