@@ -17,6 +17,9 @@ const DEFAULT_STATE = {
         logged: false,
         ...getAuth()
     },
+    avatar: {
+        loaded: false
+    },
     loaded: false
 };
 
@@ -154,6 +157,18 @@ export default (state = DEFAULT_STATE, action) => {
 
     if (action.type === ActionTypes.SIGN_IN_FAILURE) {
         return {...state};
+    }
+
+    if (action.type === ActionTypes.GET_USER_AVATAR_REQUEST) {
+        return {...state};
+    }
+
+    if (action.type === ActionTypes.GET_USER_AVATAR_SUCCESS) {
+        return {...state, avatar:{loaded: true, id: action.response}};
+    }
+
+    if (action.type === ActionTypes.GET_USER_AVATAR_FAILURE) {
+        return {...state, avatar: {loaded: false}};
     }
 
     return state;
