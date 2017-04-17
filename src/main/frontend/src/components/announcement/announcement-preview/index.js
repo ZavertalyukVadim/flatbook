@@ -22,7 +22,7 @@ class AnnouncementPreview extends Component {
                 <AnnouncementPhotoContainer photos={photos} id={id} size="medium"/>
                 <div className="announcement-description-field">
                     <div className="announcement-description">
-                        <Link to={`announcement/${id}`}>
+                        <Link to={`/announcement/${id}`}>
                             <Header value={title} type={HeaderTypes.secondary}/>
                         </Link>
                         {pricePerMonth && <Price payment={PriceTypes.monthly} className="price-per-month" value={pricePerMonth}/>}

@@ -132,7 +132,6 @@ export const updateExistingComment = body => (dispatch, getState) => {
 };
 
 export const deleteComment = id => dispatch => {
-
     return dispatch({
         [CALL_API]: {
             types: [
@@ -141,6 +140,7 @@ export const deleteComment = id => dispatch => {
                 ActionTypes.DELETE_COMMENT_FAILURE
             ],
             endpoint: () => remove(`comment/${id}`)
-        }
+        },
+        id: id
     });
 };
