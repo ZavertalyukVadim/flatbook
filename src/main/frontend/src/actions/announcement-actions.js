@@ -144,3 +144,16 @@ export const deleteComment = id => dispatch => {
         id: id
     });
 };
+
+export const requestABook = body => dispatch => {
+    return dispatch({
+        [CALL_API]: {
+            types: [
+                ActionTypes.REQUEST_A_BOOK_REQUEST,
+                ActionTypes.REQUEST_A_BOOK_SUCCESS,
+                ActionTypes.REQUEST_A_BOOK_FAILURE
+            ],
+            endpoint: () => post('rent/', body)
+        }
+    });
+};

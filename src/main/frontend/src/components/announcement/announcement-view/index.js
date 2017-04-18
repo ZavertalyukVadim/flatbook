@@ -4,6 +4,7 @@ import Avatar from '../../avatar';
 import Button, {ButtonTypes, ButtonSizes} from '../../button';
 import Header, {HeaderTypes} from '../../header';
 import AnnouncementPhotoContainer from '../announcement-photo-container';
+import Booking from '../../booking';
 import './announcement-view.scss';
 
 class AnnouncementView extends Component {
@@ -39,11 +40,7 @@ class AnnouncementView extends Component {
                         <p>Country: {country.name}</p>
                         <p>Region: {region.name}</p>
                         <p>City: {city.name}</p>
-                        <Button
-                            type={ButtonTypes.primary}
-                            size={ButtonSizes.large}
-                            caption="Request a book"
-                        />
+                        <Booking id={id}/>
                     </div>
 
                 </div>

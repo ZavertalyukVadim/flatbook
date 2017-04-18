@@ -171,8 +171,8 @@ class SearchForm extends Component {
             startingPrice: priceValue[0],
             itemsPerPage: 20,
             pageNum: 0,
-            startDate: startDate.format('x'),
-            endDate: endDate.format('x')
+            startDate: startDate.format(),
+            endDate: endDate.format()
         });
         redirect('/search');
     };

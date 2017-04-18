@@ -20,8 +20,6 @@ class SearchResult extends Component {
             return <div>Nothing found</div>
         }
 
-        console.log(result.data.content);
-
         return (
             <div>
                 {result.data.content.map(a => <AnnouncementPreview {...a}/>)}
