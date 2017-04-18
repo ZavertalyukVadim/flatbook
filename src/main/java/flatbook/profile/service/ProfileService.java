@@ -6,6 +6,7 @@ import flatbook.announcement.dao.FavoriteAnnouncementInUserDao;
 import flatbook.announcement.entity.Announcement;
 import flatbook.announcement.entity.AnnouncementByUser;
 import flatbook.announcement.entity.FavoriteAnnouncementInUser;
+import flatbook.config.MailClient;
 import flatbook.profile.dao.*;
 import flatbook.profile.entity.*;
 import flatbook.profile.util.FileUtil;
@@ -36,8 +37,10 @@ public class ProfileService {
     private final FavoriteAnnouncementInUserDao favoriteAnnouncementInUserDao;
     private final RoleDao roleDao;
 
+    private final MailClient mailClient;
+
     @Autowired
-    public ProfileService(UserDao userDao, EmailDao emailDao, PhoneDao phoneDao, EntityManager entityManager, ImageDao imageDao, AnnouncementByUserDao announcementByUserDao, AnnouncementDao announcementDao, FavoriteAnnouncementInUserDao favoriteAnnouncementInUserDao, RoleDao roleDao) {
+    public ProfileService(UserDao userDao, EmailDao emailDao, PhoneDao phoneDao, EntityManager entityManager, ImageDao imageDao, AnnouncementByUserDao announcementByUserDao, AnnouncementDao announcementDao, FavoriteAnnouncementInUserDao favoriteAnnouncementInUserDao, RoleDao roleDao, MailClient mailClient) {
         this.userDao = userDao;
         this.emailDao = emailDao;
         this.phoneDao = phoneDao;
@@ -47,10 +50,14 @@ public class ProfileService {
         this.announcementDao = announcementDao;
         this.favoriteAnnouncementInUserDao = favoriteAnnouncementInUserDao;
         this.roleDao = roleDao;
+        this.mailClient = mailClient;
     }
 
     @Transactional
     public User createUser(User user) throws Exception {
+
+        mailClient.prepareAndSend("zavertalyuk.v@gmail.com","hello");
+
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         String hashedPassword = passwordEncoder.encode(user.getPassword());
         user.setPassword(hashedPassword);
