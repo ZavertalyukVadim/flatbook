@@ -473,7 +473,9 @@ public class ProfileService {
         List<Announcement> announcements = new ArrayList<>();
         List<AnnouncementByUser> announcementByUser = announcementByUserDao.getAnnouncementIdByUserId(getCurrentUser().getId());
         for (AnnouncementByUser i : announcementByUser) {
-            announcements.add(announcementDao.getAnnouncementById(i.getAnnouncementId()));
+            Announcement announcement = announcementDao.getAnnouncementById(i.getAnnouncementId());
+            announcement.setLiked(true);
+            announcements.add(announcement);
         }
         return announcements;
     }
