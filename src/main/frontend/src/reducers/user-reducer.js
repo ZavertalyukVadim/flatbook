@@ -53,7 +53,7 @@ export default (state = DEFAULT_STATE, action) => {
     }
 
     if (action.type === ActionTypes.ADD_FAVOURITE_ANNOUNCEMENT_REQUEST) {
-        return {...state, favouriteAnnouncements: {pending: true}};
+        return {...state, favouriteAnnouncements: {...state.favouriteAnnouncements, pending: true}};
     }
 
     if (action.type === ActionTypes.ADD_FAVOURITE_ANNOUNCEMENT_SUCCESS) {
@@ -61,7 +61,7 @@ export default (state = DEFAULT_STATE, action) => {
     }
 
     if (action.type === ActionTypes.ADD_FAVOURITE_ANNOUNCEMENT_FAILURE) {
-        return {...state, favouriteAnnouncements: {pending: false}};
+        return {...state, favouriteAnnouncements: {...state.favouriteAnnouncements, pending: false}};
     }
 
     if (action.type === ActionTypes.CHANGE_USER_ANNOUNCEMENT_VISIBILITY_REQUEST) {
@@ -85,14 +85,14 @@ export default (state = DEFAULT_STATE, action) => {
             ...state,
             favouriteAnnouncements: {
                 data: state.favouriteAnnouncements.data.filter(obj => obj.id !== action.id),
-                loaded: false,
+                loaded: true,
                 pending: false
             }
         };
     }
 
     if (action.type === ActionTypes.DELETE_FAVOURITE_ANNOUNCEMENT_FAILURE) {
-        return {...state, favouriteAnnouncements: {loaded: false, pending: false}};
+        return {...state, favouriteAnnouncements: {...state.favouriteAnnouncements, loaded: false, pending: false}};
     }
 
     if (action.type === ActionTypes.UPDATE_USER_REQUEST) {

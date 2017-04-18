@@ -15,7 +15,7 @@ class AnnouncementPhotoContainer extends Component {
     }
 
     onLike = () => {
-        !this.state.liked ? this.props.deleteAnnouncementFromFavourites(this.props.id) :
+        this.state.liked ? this.props.deleteAnnouncementFromFavourites(this.props.id) :
             this.props.addAnnouncementToFavourites(this.props.id);
         this.setState({liked: !this.state.liked});
     };
