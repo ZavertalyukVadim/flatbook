@@ -56,7 +56,7 @@ class ProfileSettings extends Component {
                 />
             </div>
             {this.state[name].map((item, index) =>
-                item.primary ? <div>{item.content}</div> :
+                item.primary ? <div key={index}>{item.content}</div> :
                 <div key={index} className="contact-info-field">
                     <Input
                         placeholder={placeholder}
