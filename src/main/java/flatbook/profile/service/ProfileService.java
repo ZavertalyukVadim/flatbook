@@ -504,11 +504,12 @@ public class ProfileService {
         return true;
     }
 
-    public void markFavorite(Integer id) {
+    public Boolean markFavorite(Integer id) {
         FavoriteAnnouncementInUser favoriteAnnouncementInUser = new FavoriteAnnouncementInUser();
         favoriteAnnouncementInUser.setUser(getCurrentUser());
         favoriteAnnouncementInUser.setAnnouncementId(id);
         favoriteAnnouncementInUserDao.save(favoriteAnnouncementInUser);
+        return true;
     }
 
     public Integer getIdPhoto() {
