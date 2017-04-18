@@ -482,7 +482,9 @@ public class ProfileService {
         List<Announcement> announcements = new ArrayList<>();
         List<FavoriteAnnouncementInUser> announcementByUser = favoriteAnnouncementInUserDao.getAnnouncementIdByUserId(getCurrentUser().getId());
         for (FavoriteAnnouncementInUser i : announcementByUser) {
-            announcements.add(announcementDao.getAnnouncementById(i.getAnnouncementId()));
+            Announcement announcement = announcementDao.getAnnouncementById(i.getAnnouncementId());
+            announcement.setLiked(true);
+            announcements.add(announcement);
         }
         return announcements;
     }
