@@ -14,10 +14,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Date;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Service
 @Transactional
@@ -42,9 +39,10 @@ public class AnnouncementService {
 
     private final PhotoDao photoDao;
 
+    private final FavoriteAnnouncementInUserDao favoriteAnnouncementInUserDao;
 
     @Autowired
-    public AnnouncementService(AnnouncementDao announcementDao, CountryDao countryDao, RegionDao regionDao, CityDao cityDao, AmenityDao amenityDao, DistrictDao districtDao, EmailDao emailDao, UserDao userDao, AnnouncementByUserDao announcementByUserDao, PhotoDao photoDao) {
+    public AnnouncementService(AnnouncementDao announcementDao, CountryDao countryDao, RegionDao regionDao, CityDao cityDao, AmenityDao amenityDao, DistrictDao districtDao, EmailDao emailDao, UserDao userDao, AnnouncementByUserDao announcementByUserDao, PhotoDao photoDao, FavoriteAnnouncementInUserDao favoriteAnnouncementInUserDao) {
         this.announcementDao = announcementDao;
         this.countryDao = countryDao;
         this.regionDao = regionDao;
@@ -55,15 +53,38 @@ public class AnnouncementService {
         this.userDao = userDao;
         this.announcementByUserDao = announcementByUserDao;
         this.photoDao = photoDao;
+        this.favoriteAnnouncementInUserDao = favoriteAnnouncementInUserDao;
     }
 
     public Page<Announcement> getAllAnnouncement(int page, int itemsPerPage) {
         PageRequest pageRequest = new PageRequest(page, itemsPerPage);
-        return announcementDao.getAllByVisibilityTrueOrderByLastUpdatedDesc(pageRequest);
+        Page<Announcement> announcements = announcementDao.getAllByVisibilityTrueOrderByLastUpdatedDesc(pageRequest);
+        List<Integer> listAnnouncementId = getListAnnouncementIdWhichLikedCurrentUser();
+        for (Announcement announcement : announcements) {
+            if (listAnnouncementId.contains(announcement.getId())){
+                announcement.setLiked(true);
+            }
+        }
+        return announcements;
+    }
+
+    private List<Integer> getListAnnouncementIdWhichLikedCurrentUser() {
+        List<Integer> listAnnouncementId = new ArrayList<>();
+        List<FavoriteAnnouncementInUser> announcementByUser = favoriteAnnouncementInUserDao.getAnnouncementIdByUserId(getCurrentUser().getId());
+        for(FavoriteAnnouncementInUser favoriteAnnouncementInUser:announcementByUser){
+            listAnnouncementId.add(favoriteAnnouncementInUser.getAnnouncementId());
+        }
+        return listAnnouncementId;
     }
 
     public Announcement getAnnouncementById(Integer id) {
-        return announcementDao.findOne(id);
+        List<Integer> listAnnouncementId = getListAnnouncementIdWhichLikedCurrentUser();
+        Announcement announcement = announcementDao.findOne(id);
+            if (listAnnouncementId.contains(announcement.getId())){
+                announcement.setLiked(true);
+            }
+
+        return announcement;
     }
 
     public Announcement updateAnnouncement(Post post) {

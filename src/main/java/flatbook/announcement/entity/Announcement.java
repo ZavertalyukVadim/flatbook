@@ -78,6 +78,9 @@ public class Announcement {
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "announcement", cascade = CascadeType.ALL)
     private Set<Photo> photos = new HashSet<>();
 
+    @Column(name = "is_liked")
+    private Boolean isLiked = false;
+
     public Announcement() {
     }
 
@@ -230,5 +233,13 @@ public class Announcement {
 
     public void setDistrict(District district) {
         this.district = district;
+    }
+
+    public Boolean getLiked() {
+        return isLiked;
+    }
+
+    public void setLiked(Boolean liked) {
+        isLiked = liked;
     }
 }
