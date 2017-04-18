@@ -19,6 +19,9 @@ const DEFAULT_STATE = {
     uploaded: {
         data: {},
         pending: false
+    },
+    booking: {
+        booked: false
     }
 };
 
@@ -212,6 +215,18 @@ export default (state = DEFAULT_STATE, action) => {
                 comments: {...state.announcementView.comments, pending: false, loaded: false}
             }
         }
+    }
+
+    if (action.type === ActionTypes.REQUEST_A_BOOK_REQUEST) {
+        return {...state, booking: {booked: false}};
+    }
+
+    if (action.type === ActionTypes.REQUEST_A_BOOK_SUCCESS) {
+        return {...state, booking: {booked: true}};
+    }
+
+    if (action.type === ActionTypes.REQUEST_A_BOOK_FAILURE) {
+        return {...state, booking: {booked: false}};
     }
 
     return state;
