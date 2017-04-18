@@ -15,18 +15,8 @@ class SignUp extends Component {
         this.state = {
             firstName: '',
             lastName: '',
-            emails: [
-                {
-                    content: '',
-                    primary: true
-                }
-            ],
-            phones: [
-                {
-                    content: '',
-                    primary: true
-                }
-            ],
+            email: '',
+            phone: '',
             password: '',
             confirmPass: '',
             checked: false
@@ -34,10 +24,14 @@ class SignUp extends Component {
     }
 
     onSubmit = () => this.state.confirmPass === this.state.password && this.state.checked
-        ? this.props.signup(this.state) : noop();
+        ? this.props.signup({
+            firstName: this.state.firstName,
+            lastName: this.state.lastName,
+            emails: [{content: this.state.email, primary: true}],
+            phones: [{content: this.state.phone, primary: true}],
+            password: this.state.password
+        }) : noop();
     onCheckboxClick = () => this.setState({checked: !this.state.checked});
-    onEmailChange = e => this.setState({emails: [{content: e.target.value}]});
-    onPhoneChange = e => this.setState({phones: [{content: e.target.value}]});
     onInputChange = val => e => this.setState({[val]: e.target.value});
     onLinkClick = () => this.props.redirect('/signin');
 
@@ -46,8 +40,8 @@ class SignUp extends Component {
         const {
             firstName,
             lastName,
-            emails,
-            phones,
+            email,
+            phone,
             password,
             confirmPass,
             checked
@@ -74,14 +68,14 @@ class SignUp extends Component {
                 <Input
                     placeholder="Email"
                     type="email"
-                    value={emails[0].content}
-                    onChange={this.onEmailChange}
+                    value={email}
+                    onChange={this.onInputChange('email')}
                 />
                 <Input
                     placeholder="Phone"
                     type="text"
-                    value={phones[0].content}
-                    onChange={this.onPhoneChange}
+                    value={phone}
+                    onChange={this.onInputChange('phone')}
                 />
                 <Input
                     placeholder="Password"
