@@ -102,11 +102,12 @@ public class AnnouncementService {
 
     public Announcement createAnnouncement(Post post) {
         City city = cityDao.findOne(post.getCityId());
+
+        Announcement announcement = new Announcement();
         Set<Photo> photos = new HashSet<>();
         for (Integer photo : post.getPhotos()){
             photos.add(photoDao.findOne(photo));
         }
-        Announcement announcement = new Announcement();
         announcement.setTitle(post.getTitle());
         announcement.setDescription(post.getDescription());
         announcement.setRooms(post.getRooms());
@@ -126,12 +127,17 @@ public class AnnouncementService {
         announcement.setRegion(city.getRegion());
         announcement.setCountry(city.getRegion().getCountry());
         announcement.setUser(getCurrentUser());
-        Announcement savedAnnouncement = saveAnnouncement(announcement);
+        announcement.setLastUpdated(new Date());
+        Announcement savedAnnouncement = announcementDao.save(announcement);
+        for(Photo photo:savedAnnouncement.getPhotos()){
+            photo.setAnnouncement(savedAnnouncement);
+            photoDao.save(photo);
+        }
         AnnouncementByUser announcementByUser = new AnnouncementByUser();
         announcementByUser.setUserId(getCurrentUser().getId());
         announcementByUser.setAnnouncementId(savedAnnouncement.getId());
         announcementByUserDao.save(announcementByUser);
-        return savedAnnouncement;
+        return announcementDao.findOne(savedAnnouncement.getId());
     }
 
     private Announcement saveAnnouncement(Announcement announcement) {

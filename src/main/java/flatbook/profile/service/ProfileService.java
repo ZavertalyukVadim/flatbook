@@ -20,10 +20,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
+import java.util.stream.Stream;
 
 @Service
 public class ProfileService {
@@ -101,34 +99,75 @@ public class ProfileService {
         return null;
     }
 
-    @Transactional
     public User update(User user) throws Exception {
-        if (!user.getEmails().stream().anyMatch(email -> {
-            Email primary = null;
-            try {
-                primary = getPrimaryEmail();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-
-            return email.equals(primary) && email.getPrimary();
-
-        })) throw new Exception("You can`t change primary email");
-
-        Set<Email> emailsSet = user.getEmails();
-
         User oldUser = userDao.findOne(user.getId());
-        if (!getCurrentUser().equals(oldUser)) throw new Exception("User is not current user");
+        if (!isUserEqualsCurrentUser(oldUser)) throw new Exception("User is not current user");
+        if (isPrimaryEmailChanged(user)) throw new Exception("Primary can`t be changed email is changed");
 
-        oldUser.setEmails(emailsSet);
+        oldUser.setPhones(user.getPhones());
+        oldUser.setEmails(user.getEmails());
         oldUser.setFirstName(user.getFirstName());
         oldUser.setLastName(user.getLastName());
-        oldUser.setPhones(user.getPhones());
-
-        for (Email email1 : emailsSet) email1.setUser(oldUser);
-        for (Phone phone : oldUser.getPhones()) phone.setPhonesUser(oldUser);
 
         return userDao.save(oldUser);
+
+
+//        if (!user.getEmails().stream().anyMatch(email -> {
+//            Email primary = null;
+//            try {
+//                primary = getPrimaryEmail();
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//            }
+//            return email.equals(primary) && email.getPrimary();
+//
+//        })) throw new Exception("You can`t change primary email");
+//
+//        Set<Email> emailsSet = user.getEmails();
+//
+//        User oldUser = userDao.findOne(user.getId());
+//        if (!getCurrentUser().equals(oldUser)) throw new Exception("User is not current user");
+//
+//
+//        Set<Phone> helpFulPhones = oldUser.getPhones().stream().filter(phone -> {
+//                    Set<Phone> usersPhones =  user.getPhones();
+//                    return usersPhones.stream().anyMatch(phone1 -> phone1.equals(phone));
+//                }).collect(Collectors.toSet());
+//        Set<Phone> useLessPhones = oldUser.getPhones().stream().filter(phone -> {
+//            Set<Phone> usersPhones =  user.getPhones();
+//            return !usersPhones.stream().anyMatch(phone1 -> phone1.equals(phone));
+//        }).collect(Collectors.toSet());
+//
+//        useLessPhones.forEach(phone -> phoneDao.delete(phoneDao.findOneByContent(useLessPhones.stream().findFirst().get().getContent())));
+//
+//        oldUser.setEmails(emailsSet);
+//        oldUser.setFirstName(user.getFirstName());
+//        oldUser.setLastName(user.getLastName());
+//        oldUser.setPhones(helpFulPhones);
+//
+//        userDao.save(user);
+//
+//
+//        for (Email email1 : emailsSet) email1.setUser(oldUser);
+//        for (Phone phone : oldUser.getPhones()) phone.setPhonesUser(oldUser);
+
+//        User newUser = userDao.findOne(user.getId());
+//        if (!getCurrentUser().equals(newUser)){throw new Exception("User is not current user");}
+//        newUser.setFirstName(user.getFirstName());
+//        newUser.setLastName(user.getLastName());
+//        Set<Phone> phones = new HashSet<>();
+//        phones.addAll(user.getPhones());
+//        newUser.setPhones(phones);
+//        Set<Email> emails = new HashSet<>();
+//        emails.addAll(user.getEmails());
+//        newUser.setEmails(emails);
+//        newUser.setPassword(user.getPassword());
+//        newUser.setImage(user.getImage());
+//        newUser.setRoles(user.getRoles());
+
+//        return userDao.save(newUser);
+//
+//        return userDao.save(user);
     }
 
     @Secured("ROLE_USER")
@@ -280,10 +319,18 @@ public class ProfileService {
     }
 
     public Email getPrimaryEmail() throws Exception {
-        Email primary = getCurrentUser().getEmails().stream().filter(Email::getPrimary).findFirst().get();
-        if (primary == null) throw new Exception("There is no primary email");
+        return getUserPrimaryEmail(getCurrentUser());
+    }
 
-        return primary;
+    public String getContentPrimaryEmail() {
+        return getUserDetails().getName();
+    }
+
+    public Email getUserPrimaryEmail(User user) throws Exception {
+        Optional<Email> primary = user.getEmails().stream().filter(Email::getPrimary).findFirst();
+        if (!primary.isPresent()) throw new Exception("There is no primary email");
+
+        return primary.get();
     }
 
     public Set<Email> getAllEmails() {
@@ -390,12 +437,28 @@ public class ProfileService {
         return false;
     }
 
+    private boolean isUserEqualsCurrentUser(User user) throws Exception {
+        String primaryEmail = getContentPrimaryEmail();
+
+        return user.getEmails().stream().anyMatch(email -> email.getContent().equals(primaryEmail));
+    }
+
     private boolean isCorrectPassword(String password) throws Exception {
 
         String userName = getUserDetails().getName();
         String hashedPassword = emailDao.findOneByContent(userName).getUser().getPassword();
 
         return BCrypt.checkpw(password, hashedPassword);
+    }
+
+    private boolean isPrimaryEmailChanged(User user) {
+        String primaryEmail = getContentPrimaryEmail();
+        Set<Email> emails = user.getEmails();
+
+        Stream<Email> emailsStream = emails.stream();
+
+        return emailsStream.anyMatch(email -> email.equals(primaryEmail) && email.getPrimary()) &&
+                emailsStream.filter(email -> email.getPrimary()).count() == 1;
     }
 
     private String getUserEmail() {

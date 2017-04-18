@@ -18,7 +18,7 @@ public class Phone {
     private String content;
 
     @Column(name = "is_primary", nullable = false)
-    private Boolean isPrimary;
+    private Boolean isPrimary = false;
 
     @JsonBackReference
     @ManyToOne(fetch = FetchType.EAGER)
@@ -52,11 +52,8 @@ public class Phone {
     @Override
     public boolean equals(Object o) {
         Phone phone = (Phone) o;
-        if (this.content.equals(phone.getContent())) {
-            return true;
-        }
+        return this.content.equals(phone.getContent());
 
-        return false;
     }
 
     public User getPhonesUser() {

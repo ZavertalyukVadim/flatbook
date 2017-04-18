@@ -16,7 +16,7 @@ public class Email {
     private String content;
 
     @Column(name = "is_primary")
-    private Boolean isPrimary;
+    private Boolean isPrimary = false;
 
     @JsonBackReference
     @ManyToOne(fetch = FetchType.EAGER)
