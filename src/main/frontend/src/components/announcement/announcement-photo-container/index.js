@@ -10,14 +10,14 @@ class AnnouncementPhotoContainer extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            liked: false
+            liked: props.liked
         };
     }
 
     onLike = () => {
-        this.setState({liked: !this.state.liked});
-        this.state.liked ? this.props.deleteAnnouncementFromFavourites(this.props.id) :
+        !this.state.liked ? this.props.deleteAnnouncementFromFavourites(this.props.id) :
             this.props.addAnnouncementToFavourites(this.props.id);
+        this.setState({liked: !this.state.liked});
     };
 
     render() {
@@ -29,12 +29,12 @@ class AnnouncementPhotoContainer extends Component {
         return (
             <div className="announcement-photo-container">
                 {photos.length > 1 ?
-                        <Carousel
-                            slides={photos}
-                            liked={this.state.liked}
-                            onLike={this.onLike}
-                            size={size}
-                        /> :
+                    <Carousel
+                        slides={photos}
+                        liked={this.state.liked}
+                        onLike={this.onLike}
+                        size={size}
+                    /> :
                     photos.length ?
                         <Image
                             src={urlResolver(`photo/${photos[0].id}`)}
@@ -52,7 +52,10 @@ class AnnouncementPhotoContainer extends Component {
         );
     }
 }
-;
+
+AnnouncementPhotoContainer.defaultProps = {
+    liked: false
+};
 
 export default connect(({user}) => ({user: user}), {
     addAnnouncementToFavourites,

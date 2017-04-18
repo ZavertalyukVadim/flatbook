@@ -10,7 +10,6 @@ class Favourite extends Component {
 
     componentDidMount() {
         this.props.getLikedAnnouncements();
-        console.log(this.props);
     }
 
     render() {
