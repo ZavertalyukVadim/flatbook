@@ -490,8 +490,9 @@ public class ProfileService {
     }
 
     @org.springframework.transaction.annotation.Transactional
-    public void removeFromFavorite(Integer announcementId) {
+    public Boolean removeFromFavorite(Integer announcementId) {
         favoriteAnnouncementInUserDao.deleteFavoriteAnnouncementInUserByAnnouncementIdAndUserId(announcementId, getCurrentUser().getId());
+        return true;
     }
 
     public void markFavorite(Integer id) {
