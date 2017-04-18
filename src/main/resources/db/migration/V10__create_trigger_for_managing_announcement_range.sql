@@ -6,11 +6,11 @@ CREATE DEFINER=`root`@`localhost` TRIGGER `team5`.`rents_BEFORE_INSERT` BEFORE I
 BEGIN
 declare msg varchar(255);
 
-set @result = (select count(*) from rents
-where not (new.`to` < rents.`from` or new.`from` > rents.`to`));
+set @result = (select count(announcement_id) from rents
+where (not (new.`to` < rents.`from` or new.`from` >= rents.`to`)) and new.`announcement_id`=rents.`announcement_id`);
 
 if (@result <> 0) then
-set msg = "my error";
+set msg = "data range is used";
 signal sqlstate '45000' set MESSAGE_TEXT = msg;
 end if;
 END$$

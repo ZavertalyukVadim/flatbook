@@ -162,6 +162,19 @@
             <artifactId>spring-social-facebook</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-websocket</artifactId>
+            <version>1.5.2.RELEASE</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-messaging</artifactId>
+            <version>5.0.0.M5</version>
+        </dependency>
+
+
         <!--<dependency>-->
             <!--<groupId>org.springframework.social</groupId>-->
             <!--<artifactId>spring-social-core</artifactId>-->
@@ -191,6 +204,10 @@
             <releases>
                 <enabled>true</enabled>
             </releases>
+        </repository>
+        <repository>
+            <id>alfresco-public</id>
+            <url>https://artifacts.alfresco.com/nexus/content/groups/public</url>
         </repository>
     </repositories>
     <pluginRepositories>

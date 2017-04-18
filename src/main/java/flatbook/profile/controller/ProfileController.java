@@ -101,7 +101,7 @@ public class ProfileController {
         return profileService.getAnnouncementsByUser();
     }
 
-    @PutMapping(value = "")
+    @PutMapping
     public User updateUser(@RequestBody User user) throws Exception {
         return profileService.update(user);
     }
