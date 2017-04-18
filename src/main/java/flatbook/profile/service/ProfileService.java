@@ -21,6 +21,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 import java.util.*;
+import java.util.stream.Stream;
 
 @Service
 public class ProfileService {
@@ -101,6 +102,7 @@ public class ProfileService {
     public User update(User user) throws Exception {
         User oldUser = userDao.findOne(user.getId());
         if (!isUserEqualsCurrentUser(oldUser)) throw new Exception("User is not current user");
+        if (isPrimaryEmailChanged(user)) throw new Exception("Primary can`t be changed email is changed");
 
         oldUser.setPhones(user.getPhones());
         oldUser.setEmails(user.getEmails());
@@ -447,6 +449,16 @@ public class ProfileService {
         String hashedPassword = emailDao.findOneByContent(userName).getUser().getPassword();
 
         return BCrypt.checkpw(password, hashedPassword);
+    }
+
+    private boolean isPrimaryEmailChanged(User user) {
+        String primaryEmail = getContentPrimaryEmail();
+        Set<Email> emails = user.getEmails();
+
+        Stream<Email> emailsStream = emails.stream();
+
+        return emailsStream.anyMatch(email -> email.equals(primaryEmail) && email.getPrimary()) &&
+                emailsStream.filter(email -> email.getPrimary()).count() == 1;
     }
 
     private String getUserEmail() {
