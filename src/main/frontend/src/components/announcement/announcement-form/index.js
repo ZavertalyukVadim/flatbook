@@ -1,6 +1,6 @@
 import React, {Component, PropTypes} from 'react';
 import {connect} from 'react-redux';
-import {isNull} from 'lodash';
+import {isNull, noop} from 'lodash';
 import Checkbox from '../../checkbox';
 import Input from '../../input';
 import Button, {ButtonTypes, ButtonSizes} from '../../button';
@@ -10,12 +10,15 @@ import './announcement-form.scss';
 import Textarea from '../../textarea';
 import Toggle from '../../toggle';
 import InputRange from '../../input-range';
+import UploadImage from '../../upload-image';
 import {
     getCountries,
     getRegions,
     getCities
 } from '../../../actions/search-actions';
 import {getAmenity} from '../../../actions/amenity-actions';
+import urlResolver from "../../../api/urlResolver";
+import {uploadImage} from "../../../actions/image-actions";
 
 const pricePerDay = 'PRICE_PER_DAY';
 const pricePerMonth = 'PRICE_PER_MONTH';
@@ -82,6 +85,8 @@ class AnnouncementForm extends Component {
         priceType: !this.state.toggleValue ? pricePerMonth : pricePerDay,
         toggleValue: !this.state.toggleValue
     });
+    addImage = id => !isNull(id) ? this.setState({photos: [...this.state.photos, id]}) : noop;
+    removePhoto = id => () => this.setState({photos: this.state.photos.filter(p => p !== id)});
     onSaveAnnouncement = () => {
         const {
             title,
@@ -103,7 +108,8 @@ class AnnouncementForm extends Component {
             livingPlaces: livingPlaces,
             priceType: priceType,
             priceValue: +this.state[priceType],
-            amenities: amenities.filter(a => a.checked).map(a => ({id: a.id, name: a.name}))
+            amenities: amenities.filter(a => a.checked).map(a => ({id: a.id, name: a.name})),
+            photos: this.state.photos
         });
     };
     onDiscard = () => this.setState({
@@ -140,7 +146,8 @@ class AnnouncementForm extends Component {
             rooms,
             livingPlaces,
             toggleValue,
-            priceType
+            priceType,
+            photos
         } = this.state;
 
         const saveDisabled = !(
@@ -258,6 +265,30 @@ class AnnouncementForm extends Component {
                 <div className="announcement-form-item">
                     <span className="announcement-form-required-field">* - this fields are required</span>
                 </div>
+                <div className="announcement-form-item">
+                    <UploadImage
+                        caption="Add Photo"
+                        newImageCallback={this.addImage}
+                        saveImage={this.props.uploadImage}
+                    />
+                    <ul className="announcement-form-photo-list">
+                        {
+                            photos.map(
+                                (p, i) =>
+                                    <li className="announcement-form-photo-item">
+                                        <img className="announcement-form-photo" src={urlResolver(`photo/${p}`)}
+                                             key={i}/>
+                                        <Button
+                                            type={ButtonTypes.danger}
+                                            size={ButtonSizes.small}
+                                            onClick={this.removePhoto(p)}
+                                            caption="Remove photo"
+                                        />
+                                    </li>
+                            )
+                        }
+                    </ul>
+                </div>
                 <div className="announcement-form-custom-field announcement-form-item">
                     <Button
                         type={ButtonTypes.primary}
@@ -322,5 +353,6 @@ export default connect(
         getCountries,
         getRegions,
         getCities,
-        getAmenity
+        getAmenity,
+        uploadImage
     })(AnnouncementForm);

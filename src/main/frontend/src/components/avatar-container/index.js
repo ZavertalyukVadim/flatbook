@@ -4,6 +4,7 @@ import UploadImage from '../upload-image';
 import {connect} from "react-redux";
 import {getUserAvatar} from "../../actions/user-actions";
 import urlResolver from "../../api/urlResolver";
+import {uploadAvatar} from "../../actions/image-actions";
 
 class AvatarContainer extends Component {
 
@@ -24,13 +25,14 @@ class AvatarContainer extends Component {
         }
     }
 
-    updateAvatar = (id) => this.setState({avatar: {id: id}});
+    updateAvatar = id => this.setState({avatar: {id: id}});
 
     render() {
         const {firstName, lastName} = this.props;
         const {avatar} = this.state;
 
-        const url = avatar.id ? urlResolver(`profile/photo/${avatar.id}`) : 'http://wowawards.ru/public/img/judge_noimg.jpg';
+        const url = avatar.id ?
+            urlResolver(`profile/photo/${avatar.id}`) : 'http://wowawards.ru/public/img/judge_noimg.jpg';
 
         return (
             <div>
@@ -40,8 +42,8 @@ class AvatarContainer extends Component {
                 <p>{firstName} {lastName}</p>
                 <UploadImage
                     caption="Add Photo"
-                    type="profile"
-                    newImageCallback={this.updateAvatar}
+                    newAvatarCallback={this.updateAvatar}
+                    saveImage={this.props.uploadAvatar}
                 />
             </div>
         );
@@ -54,6 +56,7 @@ export default connect(
      }) => ({
         avatar: avatar
     }), {
-        getUserAvatar
+        getUserAvatar,
+        uploadAvatar
     }
 )(AvatarContainer);
