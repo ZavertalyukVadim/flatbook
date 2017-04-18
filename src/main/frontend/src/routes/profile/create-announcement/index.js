@@ -3,14 +3,14 @@ import Container from '../../../components/container';
 import Sidebar from '../../../components/profile/sidebar';
 import AnnouncementNew from '../../../components/announcement/announcement-new';
 
-const AnnouncementCreation = ({history}) => {
+const AnnouncementCreation = () => {
     return (
         <Container
             sidebar={
                 <Sidebar/>
             }
         >
-            <AnnouncementNew redirect={path => history.push(path)}/>
+            <AnnouncementNew/>
         </Container>
     );
 };
