@@ -37,4 +37,21 @@
   .announcement-form-item {
     margin: map-get($indentSizes, l) 0;
   }
+
+  .announcement-form-photo-list {
+    list-style: none;
+
+    .announcement-form-photo-item {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      .announcement-form-photo {
+        border-radius: 3px;
+        max-width: 400px;
+        max-height: 400px;
+      }
+    }
+
+  }
 }

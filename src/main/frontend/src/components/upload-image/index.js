@@ -1,14 +1,17 @@
 import React, {Component} from 'react';
 import {connect} from "react-redux";
-import {uploadImage} from "../../actions/image-actions";
 import './uploud-image.scss';
 import {noop} from "lodash";
 
 class UploadImage extends Component {
 
     componentWillReceiveProps(nextProps) {
-        if(this.props.imageId !== nextProps.imageId){
-            this.props.newImageCallback(nextProps.imageId)
+        if(this.props.uploadedImageId !== nextProps.uploadedImageId){
+            this.props.newImageCallback(nextProps.uploadedImageId)
+        }
+
+        if(this.props.uploadedAvatarId !== nextProps.uploadedAvatarId){
+            this.props.newAvatarCallback(nextProps.uploadedAvatarId)
         }
     }
 
@@ -17,7 +20,7 @@ class UploadImage extends Component {
         const file = new FormData();
 
         file.append("image", e.target.files[0]);
-        this.props.uploadImage(file, this.props.type)
+        this.props.saveImage(file)
     };
 
     render() {
@@ -32,13 +35,13 @@ class UploadImage extends Component {
 
 UploadImage.defaultProps = {
     caption: 'Choose file',
-    newImageCallback: noop
+    newImageCallback: noop,
+    newAvatarCallback: noop
 };
 
 export default connect(
     ({image}) => ({
-        imageId: image.uploadedImageId
-    }), {
-        uploadImage
-    }
+        uploadedImageId: image.uploadedImageId,
+        uploadedAvatarId: image.uploadedAvatarId
+    })
 )(UploadImage);
