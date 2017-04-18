@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import Price, {PriceTypes} from '../../price';
-import Avatar from '../../avatar';
-import Button, {ButtonTypes, ButtonSizes} from '../../button';
+import AvatarContainer from '../../avatar-container';
 import Header, {HeaderTypes} from '../../header';
 import AnnouncementPhotoContainer from '../announcement-photo-container';
 import Booking from '../../booking';
@@ -45,7 +44,7 @@ class AnnouncementView extends Component {
 
                 </div>
                 <div className="description-field">
-                    <Avatar firstName={user.firstName} lastName={user.lastName}/>
+                    <AvatarContainer firstName={user.firstName} lastName={user.lastName} view={true}/>
                     <p className="description">{description}</p>
                 </div>
                 <div className="amenities-field">
