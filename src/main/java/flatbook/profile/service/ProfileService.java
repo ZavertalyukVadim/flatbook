@@ -21,7 +21,10 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
-import java.util.*;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Stream;
 
 @Service
@@ -476,8 +479,8 @@ public class ProfileService {
         return SecurityContextHolder.getContext().getAuthentication();
     }
 
-    public List<Announcement> getAnnouncementsByUser() {
-        List<Announcement> announcements = new ArrayList<>();
+    public Set<Announcement> getAnnouncementsByUser() {
+        Set<Announcement> announcements = new HashSet<>();
         List<AnnouncementByUser> announcementByUser = announcementByUserDao.getAnnouncementIdByUserId(getCurrentUser().getId());
         for (AnnouncementByUser i : announcementByUser) {
             Announcement announcement = announcementDao.getAnnouncementById(i.getAnnouncementId());
@@ -487,8 +490,8 @@ public class ProfileService {
         return announcements;
     }
 
-    public List<Announcement> getLikedAnnouncementsByUser() {
-        List<Announcement> announcements = new ArrayList<>();
+    public  Set<Announcement> getLikedAnnouncementsByUser() {
+        Set<Announcement> announcements = new HashSet<>();
         List<FavoriteAnnouncementInUser> announcementByUser = favoriteAnnouncementInUserDao.getAnnouncementIdByUserId(getCurrentUser().getId());
         for (FavoriteAnnouncementInUser i : announcementByUser) {
             Announcement announcement = announcementDao.getAnnouncementById(i.getAnnouncementId());

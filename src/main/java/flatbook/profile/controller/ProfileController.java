@@ -11,7 +11,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequestMapping(value = "/api/profile")
@@ -91,13 +91,12 @@ public class ProfileController {
     }
 
     @PostMapping(value = "/favorites")
-    public List<Announcement> getLikedAnnouncementsByUser() {
+    public Set<Announcement> getLikedAnnouncementsByUser() {
         return profileService.getLikedAnnouncementsByUser();
     }
 
-
     @GetMapping(value = "/announcements")
-    public List<Announcement> getAnnouncementsByUser() {
+    public Set<Announcement> getAnnouncementsByUser() {
         return profileService.getAnnouncementsByUser();
     }
 
