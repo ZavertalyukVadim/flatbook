@@ -11,7 +11,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequestMapping(value = "/api/profile")
@@ -81,23 +81,22 @@ public class ProfileController {
     }
 
     @PostMapping(value = "/{id}/favorite")
-    public void addAnnouncementToFavorite(@PathVariable("id") Integer id) {
-        profileService.markFavorite(id);
+    public Boolean addAnnouncementToFavorite(@PathVariable("id") Integer id) {
+        return profileService.markFavorite(id);
     }
 
     @DeleteMapping(value = "/{id}/removeFromFavorite")
-    public void removeFromFavorite(@PathVariable("id") Integer id) {
-        profileService.removeFromFavorite(id);
+    public Boolean removeFromFavorite(@PathVariable("id") Integer id) {
+       return profileService.removeFromFavorite(id);
     }
 
     @PostMapping(value = "/favorites")
-    public List<Announcement> getLikedAnnouncementsByUser() {
+    public Set<Announcement> getLikedAnnouncementsByUser() {
         return profileService.getLikedAnnouncementsByUser();
     }
 
-
     @GetMapping(value = "/announcements")
-    public List<Announcement> getAnnouncementsByUser() {
+    public Set<Announcement> getAnnouncementsByUser() {
         return profileService.getAnnouncementsByUser();
     }
 

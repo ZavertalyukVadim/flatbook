@@ -22,7 +22,7 @@ public class Announcement {
     @Column(name = "price_per_month")
     private Integer pricePerMonth;
 
-//    @JsonIgnore
+    //    @JsonIgnore
 //    @JsonBackReference
     @ManyToOne(fetch = FetchType.EAGER, targetEntity = User.class)
     private User user;
@@ -77,6 +77,9 @@ public class Announcement {
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "announcement", cascade = CascadeType.ALL)
     private Set<Photo> photos = new HashSet<>();
+
+    @Column(name = "is_liked", updatable = false, insertable = false)
+    private Boolean isLiked = false;
 
     public Announcement() {
     }
@@ -230,5 +233,13 @@ public class Announcement {
 
     public void setDistrict(District district) {
         this.district = district;
+    }
+
+    public Boolean getLiked() {
+        return false;
+    }
+
+    public void setLiked(Boolean liked) {
+        isLiked = liked;
     }
 }

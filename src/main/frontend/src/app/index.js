@@ -13,6 +13,7 @@ import Messages from '../routes/profile/messages';
 import Favourite from '../routes/profile/favourite';
 import AnnouncementCreation from '../routes/profile/create-announcement';
 import Announcement from '../routes/announcement/id';
+import AnnouncementEdit from '../routes/announcement/id/edit';
 import '../style/grid.scss';
 import './app.scss';
 import store from '../store';
@@ -22,6 +23,7 @@ export default () =>
     <Provider store={store}>
         <Router history={history}>
             <Switch>
+                <Route path="/announcement/:id/edit" component={AnnouncementEdit}/>
                 <Route path="/announcement/:id" component={Announcement}/>
                 <Route path="/profile/create-announcement" component={AnnouncementCreation}/>
                 <Route path="/profile/favourite" component={Favourite}/>

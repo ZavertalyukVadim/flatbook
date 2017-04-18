@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import Button, {ButtonTypes, ButtonSizes} from '../../button';
 import CommentView from '../comment-view';
 import CommentForm from '../comment-form';
+import './comment-container.scss';
 
 
 class CommentContainer extends Component {
@@ -26,20 +27,22 @@ class CommentContainer extends Component {
                     :
                     <div className="comment-view-container">
                         <CommentView {...this.props}/>
-                        <Button
-                            className="btn-submit"
-                            type={ButtonTypes.success}
-                            size={ButtonSizes.small}
-                            caption="Edit"
-                            onClick={this.onEditMode}
-                        />
-                        <Button
-                            className="btn-submit"
-                            type={ButtonTypes.danger}
-                            size={ButtonSizes.small}
-                            caption="Delete"
-                            onClick={this.onDelete}
-                        />
+                        <div className="comment-buttons">
+                            <Button
+                                className="btn-submit"
+                                type={ButtonTypes.success}
+                                size={ButtonSizes.small}
+                                caption="Edit"
+                                onClick={this.onEditMode}
+                            />
+                            <Button
+                                className="btn-submit"
+                                type={ButtonTypes.danger}
+                                size={ButtonSizes.small}
+                                caption="Delete"
+                                onClick={this.onDelete}
+                            />
+                        </div>
                     </div>
                 }
             </div>

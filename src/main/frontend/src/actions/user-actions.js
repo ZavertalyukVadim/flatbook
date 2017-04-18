@@ -200,7 +200,7 @@ export const signup = body => dispatch => {
                 ActionTypes.SIGN_UP_SUCCESS,
                 ActionTypes.SIGN_UP_FAILURE
             ],
-            endpoint: () => post('profile/', body)
+            endpoint: () => post('profile', body)
         }
     });
 };

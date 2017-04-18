@@ -1,6 +1,16 @@
 spring:
   application:
     name: jpa
+  mail:
+     host: smtp.gmail.com
+     username: flatbookspd@gmail.com
+     password: qwerty12345!
+     port: 587
+     properties:
+       mail:
+         smtp:
+           starttls:
+             enable: true
 management:
   context_path: /
 security:

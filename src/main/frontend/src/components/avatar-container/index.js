@@ -8,9 +8,9 @@ import {uploadAvatar} from "../../actions/image-actions";
 
 class AvatarContainer extends Component {
 
-    constructor(props){
+    constructor(props) {
         super(props);
-        this.state ={
+        this.state = {
             avatar: {}
         };
     }
@@ -28,7 +28,7 @@ class AvatarContainer extends Component {
     updateAvatar = id => this.setState({avatar: {id: id}});
 
     render() {
-        const {firstName, lastName} = this.props;
+        const {firstName, lastName, view} = this.props;
         const {avatar} = this.state;
 
         const url = avatar.id ?
@@ -40,15 +40,19 @@ class AvatarContainer extends Component {
                     src={url}
                 />
                 <p>{firstName} {lastName}</p>
-                <UploadImage
+                {!view ? <UploadImage
                     caption="Add Photo"
                     newAvatarCallback={this.updateAvatar}
                     saveImage={this.props.uploadAvatar}
-                />
+                /> : null}
             </div>
         );
     }
 }
+
+AvatarContainer.defaultProps = {
+    view: false
+};
 
 export default connect(
     ({

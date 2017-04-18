@@ -14,12 +14,13 @@ class AnnouncementPreview extends Component {
             pricePerDay,
             pricePerMonth,
             title,
-            photos
+            photos,
+            liked
         } = this.props;
 
         return (
             <div className="announcement-preview">
-                <AnnouncementPhotoContainer photos={photos} id={id} size="medium"/>
+                <AnnouncementPhotoContainer photos={photos} id={id} liked={liked} size="medium"/>
                 <div className="announcement-description-field">
                     <div className="announcement-description">
                         <Link to={`/announcement/${id}`}>

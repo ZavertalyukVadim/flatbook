@@ -37,16 +37,19 @@ public class ResourceConfigurer extends ResourceServerConfigurerAdapter {
                 .logoutSuccessUrl("/")
                 .and()
                 .authorizeRequests()
+                .antMatchers(HttpMethod.GET,"/api/search/**").permitAll()
+                .antMatchers(HttpMethod.POST,"/api/search/*").permitAll()
+                .antMatchers(HttpMethod.GET, "/api/announcement/**").permitAll()
+                .antMatchers(HttpMethod.GET, "/api/announcement").permitAll()
+                .antMatchers(HttpMethod.GET, "/api/profile/photo/**").permitAll()
+                .antMatchers(HttpMethod.POST, "/api/profile/**").permitAll()
                 .antMatchers(HttpMethod.POST, "/api/announcement").access("hasRole('ROLE_USER')")
                 .antMatchers(HttpMethod.DELETE, "/api/announcement/**").access("hasRole('ROLE_USER')")
                 .antMatchers(HttpMethod.PUT, "/api/announcement").access("hasRole('ROLE_USER')")
-                .antMatchers(HttpMethod.GET, "/api/profile/photo/**").permitAll()
-                .antMatchers(HttpMethod.GET, "/api/announcement").permitAll()
-                .antMatchers(HttpMethod.POST, "/api/profile").permitAll()
                 .antMatchers( "/api/profile").access("hasRole('ROLE_USER')")
                 .antMatchers( "/api/profile/**").access("hasRole('ROLE_USER')")
                 .antMatchers("/api/profile").access("hasRole('ROLE_USER')")
-                .antMatchers("/**").permitAll().and();
+                .antMatchers("/**").permitAll();
     }
 
     @Bean

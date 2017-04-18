@@ -5,6 +5,7 @@ import Checkbox from '../../checkbox';
 import Button, {ButtonTypes, ButtonSizes} from '../../button';
 import './announcement-control.scss';
 import AnnouncementPreview from '../announcement-preview';
+import {redirect} from "../../../utils/history";
 
 class AnnouncementControl extends Component {
     constructor(props) {
@@ -19,6 +20,8 @@ class AnnouncementControl extends Component {
         this.props.changeUserAnnouncementVisibility(this.props.id);
     };
     onDeleteAnnouncement = () => this.props.deleteAnnouncement(this.props.id);
+    onEditAnnouncement = () => redirect(`/announcement/${this.props.id}/edit`);
+    onMore = () => redirect(`/announcement/${this.props.id}`);
 
     render() {
         const {
@@ -39,11 +42,13 @@ class AnnouncementControl extends Component {
                         type={ButtonTypes.info}
                         size={ButtonSizes.small}
                         caption="Show more"
+                        onClick={this.onMore}
                     />
                     <Button
                         type={ButtonTypes.primary}
                         size={ButtonSizes.small}
                         caption="Edit"
+                        onClick={this.onEditAnnouncement}
                     />
                     <Button
                         type={ButtonTypes.danger}
