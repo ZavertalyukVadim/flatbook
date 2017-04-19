@@ -6,6 +6,7 @@ import flatbook.announcement.dao.UserAnnouncementsDao;
 import flatbook.announcement.entity.Announcement;
 import flatbook.announcement.entity.FavoriteAnnouncements;
 import flatbook.announcement.entity.UserAnnouncements;
+import flatbook.config.MailClient;
 import flatbook.profile.dao.*;
 import flatbook.profile.entity.*;
 import flatbook.profile.util.FileUtil;
@@ -36,9 +37,10 @@ public class ProfileService {
     private final AnnouncementDao announcementDao;
     private final FavoriteAnnouncementInUserDao favoriteAnnouncementInUserDao;
     private final RoleDao roleDao;
+    private final MailClient mailClient;
 
     @Autowired
-    public ProfileService(UserDao userDao, EmailDao emailDao, PhoneDao phoneDao, EntityManager entityManager, ImageDao imageDao, UserAnnouncementsDao userAnnouncementsDao, AnnouncementDao announcementDao, FavoriteAnnouncementInUserDao favoriteAnnouncementInUserDao, RoleDao roleDao) {
+    public ProfileService(UserDao userDao, EmailDao emailDao, PhoneDao phoneDao, EntityManager entityManager, ImageDao imageDao, UserAnnouncementsDao userAnnouncementsDao, AnnouncementDao announcementDao, FavoriteAnnouncementInUserDao favoriteAnnouncementInUserDao, RoleDao roleDao, MailClient mailClient) {
         this.userDao = userDao;
         this.emailDao = emailDao;
         this.phoneDao = phoneDao;
@@ -48,10 +50,13 @@ public class ProfileService {
         this.announcementDao = announcementDao;
         this.favoriteAnnouncementInUserDao = favoriteAnnouncementInUserDao;
         this.roleDao = roleDao;
+        this.mailClient = mailClient;
     }
 
     @Transactional
     public User createUser(User user) throws Exception {
+
+
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         String hashedPassword = passwordEncoder.encode(user.getPassword());
         user.setPassword(hashedPassword);
@@ -87,7 +92,7 @@ public class ProfileService {
         Phone newPrimaryPhone = phones.iterator().next();
         newPrimaryPhone.setPhonesUser(savingUser);
         phoneDao.save(newPrimaryPhone);
-
+        mailClient.prepareAndSend(savingUser);
         return getUserById(savingUser.getId());
     }
 

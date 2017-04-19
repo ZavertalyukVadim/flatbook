@@ -1,10 +1,13 @@
 package flatbook.config;
 
+import flatbook.profile.entity.Email;
+import flatbook.profile.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.mail.MailException;
-import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.mail.javamail.MimeMessagePreparator;
 
 @Configuration
 public class MailClient {
@@ -15,30 +18,32 @@ public class MailClient {
         this.mailSender = mailSender;
     }
 
-    public void prepareAndSend(String recipient, String text) {
+    public void prepareAndSend(User recipient) {
+        MimeMessagePreparator messagePreparator = mimeMessage -> {
+            MimeMessageHelper messageHelper = new MimeMessageHelper(mimeMessage);
+            try {
+                String primaryEmail = null;
+                for (Email email : recipient.getEmails()) {
+                    primaryEmail = email.getContent();
+                }
+            } catch (Exception ignored) {
 
+            }
+            messageHelper.setFrom("zavertal.v@gmail.com");
+//            messageHelper.setTo(primaryEmail);
+            messageHelper.setTo("zavertalyuk.v@gmail.com");
+            messageHelper.setSubject("Registration");
+            String prefLink = "<a href='http://localhost:8080/api/login/";
+            String link ="zavertalyuk.v@gmail.com" ;
+            String sufLink=">click!</a>";
+            String fullLink = prefLink+link+sufLink;
+            messageHelper.setText("Hello dear " + recipient.getFirstName() + " " + recipient.getLastName() + " You registration on Flatbook. If it's you click and work with this app -  "+fullLink + " to continue authorization.", true);
+        };
         try {
-            SimpleMailMessage message = new SimpleMailMessage();
-            message.setTo("zavertalyuk.v@gmail.com");
-            message.setSubject(recipient);
-            message.setText(text);
-
-            mailSender.send(message);
-        } catch (MailException exception) {
-            exception.printStackTrace();
+            mailSender.send(messagePreparator);
+        } catch (MailException e) {
+            e.printStackTrace();
         }
-//        MimeMessagePreparator messagePreparator = mimeMessage -> {
-//            MimeMessageHelper messageHelper = new MimeMessageHelper(mimeMessage);
-//            messageHelper.setFrom("zavertal.v@gmail.com");
-//            messageHelper.setTo(recipient);
-//            messageHelper.setSubject("Sample mail subject");
-//            messageHelper.setText(message);
-//        };
-//        try {
-//            mailSender.send(messagePreparator);
-//        } catch (MailException e) {
-//            e.printStackTrace();
-//        }
     }
 
 }
