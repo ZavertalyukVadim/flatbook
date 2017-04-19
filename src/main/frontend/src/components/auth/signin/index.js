@@ -5,7 +5,8 @@ import Input from "../../input";
 import Button, {ButtonSizes, ButtonTypes} from "../../button";
 import Header from "../../header";
 import "../auth.scss";
-import {signin} from "../../../actions/user-actions";
+import {signin, signInWithFacebook} from "../../../actions/user-actions";
+import FacebookLogin from 'react-facebook-login';
 
 class SignIn extends Component {
 
@@ -17,6 +18,7 @@ class SignIn extends Component {
         };
     }
 
+    signInWithFB = response => response.status !== 'unknown' ? this.props.signInWithFacebook(response) : noop();
     onInputChange = val => e => this.setState({[val]: e.target.value});
     onLinkClick = () => this.props.redirect('/signup');
     onSubmit = () => this.props.signin({username: this.state.email, password: this.state.password});
@@ -78,9 +80,15 @@ class SignIn extends Component {
                         onClick={this.onLinkClick}
                     />
                 </div>
+                <FacebookLogin
+                    appId="1429168600437309"
+                    autoLoad={false}
+                    fields="name,email"
+                    cssClass="info"
+                    callback={this.signInWithFB} />
             </div>
         );
     }
 }
 
-export default connect(({signin}) => ({user: {...signin}}), {signin})(SignIn);
+export default connect(({signin}) => ({user: {...signin}}), {signin, signInWithFacebook})(SignIn);

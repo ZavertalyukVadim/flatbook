@@ -204,3 +204,35 @@ export const signup = body => dispatch => {
         }
     });
 };
+
+export const getUserBookings = () => (dispatch, getState) => {
+    const {user: {pending}} = getState();
+
+    if (pending) {
+        return null;
+    }
+
+    return dispatch({
+        [CALL_API]: {
+            types: [
+                ActionTypes.GET_USER_BOOKINGS_REQUEST,
+                ActionTypes.GET_USER_BOOKINGS_SUCCESS,
+                ActionTypes.GET_USER_BOOKINGS_FAILURE
+            ],
+            endpoint: () => get('rent/current')
+        }
+    });
+};
+
+export const signInWithFacebook = body => dispatch => {
+    return dispatch({
+        [CALL_API]: {
+            types: [
+                ActionTypes.SIGN_IN_FACEBOOK_REQUEST,
+                ActionTypes.SIGN_IN_FACEBOOK_SUCCESS,
+                ActionTypes.SIGN_IN_FACEBOOK_FAILURE
+            ],
+            endpoint: () => post('login/facebook', body)
+        }
+    });
+};
