@@ -46,10 +46,50 @@ class AnnouncementForm extends Component {
     }
 
     componentDidMount() {
-        this.props.getCountries();
-        this.props.getAmenity().then(
-            r => this.setState({amenities: this.props.allAmenities.data})
-        );
+        const {
+            getCountries,
+            getRegions,
+            getCities,
+            chosenRegionID,
+            getAmenity,
+            chosenCountryID,
+            allAmenities,
+            chosenAmenities
+        } = this.props;
+
+        getCountries();
+
+        if (!isNull(chosenCountryID)) {
+            getRegions(chosenCountryID);
+        }
+
+        if (!isNull(chosenRegionID)) {
+            getCities(chosenRegionID);
+        }
+        getAmenity();
+
+        this.setState({
+            amenities: allAmenities.data.map(A => ({
+                ...A,
+                checked: !!(chosenAmenities.filter(a => a.id === A.id).length)
+            }))
+        })
+    }
+
+    componentWillReceiveProps(nextProps) {
+        const {allAmenities, chosenAmenities} = this.props;
+
+        console.log(nextProps);
+
+        if (allAmenities.data !== nextProps.allAmenities.data) {
+
+            this.setState({
+                amenities: nextProps.allAmenities.data.map(A => ({
+                    ...A,
+                    checked: !!(chosenAmenities.filter(a => a.id === A.id).length)
+                }))
+            })
+        }
     }
 
     changeCountry = id => {
@@ -310,7 +350,8 @@ class AnnouncementForm extends Component {
     }
 }
 
-AnnouncementForm.defaultProps = {
+AnnouncementForm
+    .defaultProps = {
     description: '',
     PRICE_PER_DAY: null,
     PRICE_PER_MONTH: null,
@@ -322,7 +363,8 @@ AnnouncementForm.defaultProps = {
     chosenCountryID: null,
     chosenRegionID: null,
     chosenCityID: null,
-    photos: []
+    photos: [],
+    chosenAmenities: []
 };
 
 AnnouncementForm.propTypes = {
@@ -333,7 +375,8 @@ AnnouncementForm.propTypes = {
     amenities: PropTypes.array,
     rooms: PropTypes.number,
     livingPlaces: PropTypes.number,
-    photos: PropTypes.array
+    photos: PropTypes.array,
+    chosenAmenities: PropTypes.array
 };
 
 export default connect(
@@ -342,17 +385,21 @@ export default connect(
              countries,
              regions,
              cities
-         },
+         }
+         ,
          amenity
-     }) => ({
-        countries: countries,
-        regions: regions,
-        cities: cities,
-        allAmenities: amenity
-    }), {
+     }) =>
+        ({
+            countries: countries,
+            regions: regions,
+            cities: cities,
+            allAmenities: amenity
+        }), {
         getCountries,
         getRegions,
         getCities,
         getAmenity,
         uploadImage
-    })(AnnouncementForm);
+    }
+)
+(AnnouncementForm);

@@ -236,7 +236,7 @@ public class Announcement {
     }
 
     public Boolean getLiked() {
-        return isLiked;
+        return false;
     }
 
     public void setLiked(Boolean liked) {

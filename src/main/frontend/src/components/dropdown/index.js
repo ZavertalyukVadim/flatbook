@@ -53,7 +53,7 @@ class Dropdown extends Component {
             <div className={`dropdown ${className}`}>
                 <div className={dropdownClassName} onClick={disabled ? noop : this.onDropdownClick}>
                     {
-                        isNull(selectedID) ? defaultMassage : options.find(o => o.id === selectedID).value
+                        isNull(selectedID) || !options.length ? defaultMassage : options.find(o => o.id === selectedID).value
                     }
                     <span className="dropdown-arrow">
                         <i className={`fa ${isOpen ? 'fa-angle-up' : 'fa-angle-down'}`}/>

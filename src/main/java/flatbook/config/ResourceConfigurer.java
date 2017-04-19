@@ -37,6 +37,9 @@ public class ResourceConfigurer extends ResourceServerConfigurerAdapter {
                 .logoutSuccessUrl("/")
                 .and()
                 .authorizeRequests()
+                .antMatchers(HttpMethod.GET,"/api/search/**").permitAll()
+                .antMatchers(HttpMethod.POST,"/api/search/*").permitAll()
+                .antMatchers(HttpMethod.GET, "/api/announcement/**").permitAll()
                 .antMatchers(HttpMethod.GET, "/api/announcement").permitAll()
                 .antMatchers(HttpMethod.GET, "/api/profile/photo/**").permitAll()
                 .antMatchers(HttpMethod.POST, "/api/profile/**").permitAll()
@@ -46,7 +49,7 @@ public class ResourceConfigurer extends ResourceServerConfigurerAdapter {
                 .antMatchers( "/api/profile").access("hasRole('ROLE_USER')")
                 .antMatchers( "/api/profile/**").access("hasRole('ROLE_USER')")
                 .antMatchers("/api/profile").access("hasRole('ROLE_USER')")
-                .antMatchers("/**").permitAll().and();
+                .antMatchers("/**").permitAll();
     }
 
     @Bean

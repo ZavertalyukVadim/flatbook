@@ -3,6 +3,17 @@
 @import "../../style/sizes.scss";
 
 .dropdown {
+  position: relative;
+
+  .dropdown-options {
+    position: absolute;
+    display: none;
+    list-style: none;
+    background-color: #ecf0f1;
+    margin-top: 2px;
+    width: 100%;
+    box-sizing: border-box;
+  }
 
   .dropdown-disabled {
     background-color: $btn-disabled-color !important;
@@ -11,6 +22,7 @@
 
   .dropdown-selected,
   .dropdown-options-open {
+    display: block;
     font-size: $text-field-font-size;
     border: 2px solid $primary;
     border-radius: 3px;
@@ -36,14 +48,7 @@
     cursor: pointer;
   }
 
-  .dropdown-options {
-    display: none;
-  }
-
   .dropdown-options-open {
-    position: absolute;
-    display: flex;
-    flex-direction: column;
     list-style: none;
     background-color: $dropdown-background-color;
     margin-top: map-get($indentSizes, xxs);

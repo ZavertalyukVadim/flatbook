@@ -6,7 +6,6 @@ import flatbook.announcement.dao.FavoriteAnnouncementInUserDao;
 import flatbook.announcement.entity.Announcement;
 import flatbook.announcement.entity.AnnouncementByUser;
 import flatbook.announcement.entity.FavoriteAnnouncementInUser;
-import flatbook.config.MailClient;
 import flatbook.profile.dao.*;
 import flatbook.profile.entity.*;
 import flatbook.profile.util.FileUtil;
@@ -21,7 +20,10 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
-import java.util.*;
+import java.util.HashSet;
+import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @Service
@@ -37,10 +39,8 @@ public class ProfileService {
     private final FavoriteAnnouncementInUserDao favoriteAnnouncementInUserDao;
     private final RoleDao roleDao;
 
-    private final MailClient mailClient;
-
     @Autowired
-    public ProfileService(UserDao userDao, EmailDao emailDao, PhoneDao phoneDao, EntityManager entityManager, ImageDao imageDao, AnnouncementByUserDao announcementByUserDao, AnnouncementDao announcementDao, FavoriteAnnouncementInUserDao favoriteAnnouncementInUserDao, RoleDao roleDao, MailClient mailClient) {
+    public ProfileService(UserDao userDao, EmailDao emailDao, PhoneDao phoneDao, EntityManager entityManager, ImageDao imageDao, AnnouncementByUserDao announcementByUserDao, AnnouncementDao announcementDao, FavoriteAnnouncementInUserDao favoriteAnnouncementInUserDao, RoleDao roleDao) {
         this.userDao = userDao;
         this.emailDao = emailDao;
         this.phoneDao = phoneDao;
@@ -50,14 +50,10 @@ public class ProfileService {
         this.announcementDao = announcementDao;
         this.favoriteAnnouncementInUserDao = favoriteAnnouncementInUserDao;
         this.roleDao = roleDao;
-        this.mailClient = mailClient;
     }
 
     @Transactional
     public User createUser(User user) throws Exception {
-
-        mailClient.prepareAndSend("zavertalyuk.v@gmail.com","hello");
-
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         String hashedPassword = passwordEncoder.encode(user.getPassword());
         user.setPassword(hashedPassword);
@@ -109,72 +105,50 @@ public class ProfileService {
     public User update(User user) throws Exception {
         User oldUser = userDao.findOne(user.getId());
         if (!isUserEqualsCurrentUser(oldUser)) throw new Exception("User is not current user");
-        if (isPrimaryEmailChanged(user)) throw new Exception("Primary can`t be changed email is changed");
+        if (!isPrimaryEmailPermanent(user)) throw new Exception("Primary can`t be changed email is changed");
 
-        oldUser.setPhones(user.getPhones());
-        oldUser.setEmails(user.getEmails());
+        user.getPhones().forEach(phone -> {
+            phone.setPhonesUser(oldUser);
+            phoneDao.save(phone);
+        });
+        user.getEmails().forEach(email -> {
+            email.setUser(oldUser);
+            emailDao.save(email);
+        });
+
         oldUser.setFirstName(user.getFirstName());
         oldUser.setLastName(user.getLastName());
+        userDao.save(oldUser);
 
-        return userDao.save(oldUser);
+        Set<Email> uselessEmails = oldUser.getEmails().stream().filter(email ->
+                !email.getPrimary() && user.getEmails().stream().noneMatch(email1 ->
+                        email1.equals(email))).collect(Collectors.toSet());
+
+        Set<Phone> uselessPhones = oldUser.getPhones().stream().filter(phone ->
+                user.getPhones().stream().noneMatch(phone1 ->
+                        phone1.equals(phone))).collect(Collectors.toSet());
 
 
-//        if (!user.getEmails().stream().anyMatch(email -> {
-//            Email primary = null;
-//            try {
-//                primary = getPrimaryEmail();
-//            } catch (Exception e) {
-//                e.printStackTrace();
-//            }
-//            return email.equals(primary) && email.getPrimary();
-//
-//        })) throw new Exception("You can`t change primary email");
-//
-//        Set<Email> emailsSet = user.getEmails();
-//
-//        User oldUser = userDao.findOne(user.getId());
-//        if (!getCurrentUser().equals(oldUser)) throw new Exception("User is not current user");
-//
-//
-//        Set<Phone> helpFulPhones = oldUser.getPhones().stream().filter(phone -> {
-//                    Set<Phone> usersPhones =  user.getPhones();
-//                    return usersPhones.stream().anyMatch(phone1 -> phone1.equals(phone));
-//                }).collect(Collectors.toSet());
-//        Set<Phone> useLessPhones = oldUser.getPhones().stream().filter(phone -> {
-//            Set<Phone> usersPhones =  user.getPhones();
-//            return !usersPhones.stream().anyMatch(phone1 -> phone1.equals(phone));
-//        }).collect(Collectors.toSet());
-//
-//        useLessPhones.forEach(phone -> phoneDao.delete(phoneDao.findOneByContent(useLessPhones.stream().findFirst().get().getContent())));
-//
-//        oldUser.setEmails(emailsSet);
-//        oldUser.setFirstName(user.getFirstName());
-//        oldUser.setLastName(user.getLastName());
-//        oldUser.setPhones(helpFulPhones);
-//
-//        userDao.save(user);
-//
-//
-//        for (Email email1 : emailsSet) email1.setUser(oldUser);
-//        for (Phone phone : oldUser.getPhones()) phone.setPhonesUser(oldUser);
+        uselessEmails.forEach(email -> emailDao.delete(email));
+        uselessPhones.forEach(phone -> phoneDao.delete(phone));
 
-//        User newUser = userDao.findOne(user.getId());
-//        if (!getCurrentUser().equals(newUser)){throw new Exception("User is not current user");}
-//        newUser.setFirstName(user.getFirstName());
-//        newUser.setLastName(user.getLastName());
-//        Set<Phone> phones = new HashSet<>();
-//        phones.addAll(user.getPhones());
-//        newUser.setPhones(phones);
-//        Set<Email> emails = new HashSet<>();
-//        emails.addAll(user.getEmails());
-//        newUser.setEmails(emails);
-//        newUser.setPassword(user.getPassword());
-//        newUser.setImage(user.getImage());
-//        newUser.setRoles(user.getRoles());
 
-//        return userDao.save(newUser);
-//
-//        return userDao.save(user);
+        User user1 = userDao.findOne(user.getId());
+
+        user.getEmails().forEach(email -> {
+            email.setUser(user1);
+        });
+        user.getPhones().forEach(phone -> {
+            phone.setPhonesUser(user1);
+        });
+
+        user.getEmails().forEach(email -> {
+            emailDao.save(email);
+        });
+        user.getPhones().forEach(phone -> phoneDao.save(phone));
+
+       entityManager.clear();
+        return userDao.findOne(user.getId());
     }
 
     @Secured("ROLE_USER")
@@ -458,14 +432,14 @@ public class ProfileService {
         return BCrypt.checkpw(password, hashedPassword);
     }
 
-    private boolean isPrimaryEmailChanged(User user) {
+    private boolean isPrimaryEmailPermanent(User user) {
         String primaryEmail = getContentPrimaryEmail();
         Set<Email> emails = user.getEmails();
 
         Stream<Email> emailsStream = emails.stream();
 
-        return emailsStream.anyMatch(email -> email.equals(primaryEmail) && email.getPrimary()) &&
-                emailsStream.filter(email -> email.getPrimary()).count() == 1;
+        return emails.stream().anyMatch(email -> email.getContent().equals(primaryEmail) && email.getPrimary()) &&
+                emails.stream().filter(email -> email.getPrimary()).count() == 1;
     }
 
     private String getUserEmail() {
@@ -476,24 +450,20 @@ public class ProfileService {
         return SecurityContextHolder.getContext().getAuthentication();
     }
 
-    public List<Announcement> getAnnouncementsByUser() {
-        List<Announcement> announcements = new ArrayList<>();
-        List<AnnouncementByUser> announcementByUser = announcementByUserDao.getAnnouncementIdByUserId(getCurrentUser().getId());
+    public Set<Announcement> getAnnouncementsByUser() {
+        Set<Announcement> announcements = new HashSet<>();
+        Set<AnnouncementByUser> announcementByUser = announcementByUserDao.getAnnouncementIdByUserId(getCurrentUser().getId());
         for (AnnouncementByUser i : announcementByUser) {
-            Announcement announcement = announcementDao.getAnnouncementById(i.getAnnouncementId());
-            announcement.setLiked(true);
-            announcements.add(announcement);
+            announcements.add(announcementDao.getAnnouncementById(i.getAnnouncementId()));
         }
         return announcements;
     }
 
-    public List<Announcement> getLikedAnnouncementsByUser() {
-        List<Announcement> announcements = new ArrayList<>();
-        List<FavoriteAnnouncementInUser> announcementByUser = favoriteAnnouncementInUserDao.getAnnouncementIdByUserId(getCurrentUser().getId());
+    public Set<Announcement> getLikedAnnouncementsByUser() {
+        Set<Announcement> announcements = new HashSet<>();
+        Set<FavoriteAnnouncementInUser> announcementByUser = new HashSet<>(favoriteAnnouncementInUserDao.getAnnouncementIdByUserId(getCurrentUser().getId()));
         for (FavoriteAnnouncementInUser i : announcementByUser) {
-            Announcement announcement = announcementDao.getAnnouncementById(i.getAnnouncementId());
-            announcement.setLiked(true);
-            announcements.add(announcement);
+            announcements.add(announcementDao.getAnnouncementById(i.getAnnouncementId()));
         }
         return announcements;
     }

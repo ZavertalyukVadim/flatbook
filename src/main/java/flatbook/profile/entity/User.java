@@ -52,7 +52,7 @@ public class User implements UserDetails {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user", fetch = FetchType.EAGER)
     private Set<Email> emails;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "phonesUser", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "phonesUser", fetch = FetchType.EAGER)
     private Set<Phone> phones;
 
     @JsonIgnore
