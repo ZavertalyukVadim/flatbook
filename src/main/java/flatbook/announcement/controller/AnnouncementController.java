@@ -1,7 +1,7 @@
 package flatbook.announcement.controller;
 
 import flatbook.announcement.entity.Announcement;
-import flatbook.announcement.entity.Post;
+import flatbook.announcement.entity.PostDto;
 import flatbook.announcement.service.AnnouncementService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -30,13 +30,13 @@ public class AnnouncementController {
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public Announcement createAnnouncement(@RequestBody @Valid Post post) {
-        return announcementService.createAnnouncement(post);
+    public Announcement createAnnouncement(@RequestBody @Valid PostDto postDto) {
+        return announcementService.createAnnouncement(postDto);
     }
 
     @RequestMapping(method = RequestMethod.PUT)
-    public Announcement updateAnnouncement(@RequestBody @Valid Post post) {
-        return announcementService.updateAnnouncement(post);
+    public Announcement updateAnnouncement(@RequestBody @Valid PostDto postDto) {
+        return announcementService.updateAnnouncement(postDto);
     }
 
     @RequestMapping(value = "/{id}/changeVisibility", method = RequestMethod.PUT)

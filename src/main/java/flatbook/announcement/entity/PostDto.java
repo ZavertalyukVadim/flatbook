@@ -3,7 +3,7 @@ package flatbook.announcement.entity;
 import javax.validation.constraints.Size;
 import java.util.Set;
 
-public class Post {
+public class PostDto {
     private Integer announcementId;
 
     private Integer cityId;

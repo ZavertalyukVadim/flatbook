@@ -95,26 +95,26 @@ public class AnnouncementService {
         return announcement;
     }
 
-    public Announcement updateAnnouncement(Post post) {
-        City city = cityDao.findOne(post.getCityId());
-        Announcement announcement = announcementDao.findOne(post.getAnnouncementId());
+    public Announcement updateAnnouncement(PostDto postDto) {
+        City city = cityDao.findOne(postDto.getCityId());
+        Announcement announcement = announcementDao.findOne(postDto.getAnnouncementId());
         Set<Photo> photos = new HashSet<>();
-        for (Integer photo : post.getPhotos()) {
+        for (Integer photo : postDto.getPhotos()) {
             photos.add(photoDao.findOne(photo));
         }
-        announcement.setTitle(post.getTitle());
-        announcement.setDescription(post.getDescription());
-        announcement.setRooms(post.getRooms());
-        announcement.setStreet(post.getStreet());
-        announcement.setLivingPlaces(post.getLivingPlaces());
+        announcement.setTitle(postDto.getTitle());
+        announcement.setDescription(postDto.getDescription());
+        announcement.setRooms(postDto.getRooms());
+        announcement.setStreet(postDto.getStreet());
+        announcement.setLivingPlaces(postDto.getLivingPlaces());
         announcement.setPhotos(photos);
-        if (post.getPriceType() == Price.PRICE_PER_DAY) {
-            announcement.setPricePerDay(post.getPriceValue());
+        if (postDto.getPriceType() == Price.PRICE_PER_DAY) {
+            announcement.setPricePerDay(postDto.getPriceValue());
         } else {
 
-            announcement.setPricePerMonth(post.getPriceValue());
+            announcement.setPricePerMonth(postDto.getPriceValue());
         }
-        announcement.setAmenities(post.getAmenities());
+        announcement.setAmenities(postDto.getAmenities());
         announcement.setLastUpdated(new Date());
         announcement.setCity(city);
         announcement.setRegion(city.getRegion());
@@ -128,27 +128,27 @@ public class AnnouncementService {
         return true;
     }
 
-    public Announcement createAnnouncement(Post post) {
-        City city = cityDao.findOne(post.getCityId());
+    public Announcement createAnnouncement(PostDto postDto) {
+        City city = cityDao.findOne(postDto.getCityId());
 
         Announcement announcement = new Announcement();
         Set<Photo> photos = new HashSet<>();
-        for (Integer photo : post.getPhotos()) {
+        for (Integer photo : postDto.getPhotos()) {
             photos.add(photoDao.findOne(photo));
         }
-        announcement.setTitle(post.getTitle());
-        announcement.setDescription(post.getDescription());
-        announcement.setRooms(post.getRooms());
-        announcement.setStreet(post.getStreet());
-        announcement.setLivingPlaces(post.getLivingPlaces());
+        announcement.setTitle(postDto.getTitle());
+        announcement.setDescription(postDto.getDescription());
+        announcement.setRooms(postDto.getRooms());
+        announcement.setStreet(postDto.getStreet());
+        announcement.setLivingPlaces(postDto.getLivingPlaces());
         announcement.setPhotos(photos);
-        if (post.getPriceType() == Price.PRICE_PER_DAY) {
-            announcement.setPricePerDay(post.getPriceValue());
+        if (postDto.getPriceType() == Price.PRICE_PER_DAY) {
+            announcement.setPricePerDay(postDto.getPriceValue());
         } else {
 
-            announcement.setPricePerMonth(post.getPriceValue());
+            announcement.setPricePerMonth(postDto.getPriceValue());
         }
-        announcement.setAmenities(post.getAmenities());
+        announcement.setAmenities(postDto.getAmenities());
         announcement.setLastUpdated(new Date());
         announcement.setCity(city);
         announcement.setRegion(city.getRegion());

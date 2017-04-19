@@ -1,7 +1,7 @@
 package flatbook.announcement.controller;
 
 import flatbook.announcement.entity.AnnouncementComments;
-import flatbook.announcement.entity.Comment;
+import flatbook.announcement.entity.CommentDto;
 import flatbook.announcement.service.AnnouncementCommentsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -24,13 +24,13 @@ public class AnnouncementCommentsController {
     }
 
     @PostMapping
-    public AnnouncementComments createCommentsToAnnouncement(@RequestBody Comment comment) {
-        return announcementCommentsService.createCommentsToAnnouncement(comment);
+    public AnnouncementComments createCommentsToAnnouncement(@RequestBody CommentDto commentDto) {
+        return announcementCommentsService.createCommentsToAnnouncement(commentDto);
     }
 
     @PutMapping
-    public AnnouncementComments updateComment(@RequestBody Comment comment) {
-        return announcementCommentsService.updateComment(comment);
+    public AnnouncementComments updateComment(@RequestBody CommentDto commentDto) {
+        return announcementCommentsService.updateComment(commentDto);
     }
 
     @DeleteMapping(value = "/{id}")
