@@ -20,9 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
-import java.util.HashSet;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -147,7 +145,7 @@ public class ProfileService {
         });
         user.getPhones().forEach(phone -> phoneDao.save(phone));
 
-       entityManager.clear();
+        entityManager.clear();
         return userDao.findOne(user.getId());
     }
 
@@ -227,9 +225,8 @@ public class ProfileService {
     public byte[] getImage() throws Exception {
         byte[] photo = null;
         try {
-            photo= getCurrentUser().getImage().getPhoto();
-        }
-        catch (Exception e){
+            photo = getCurrentUser().getImage().getPhoto();
+        } catch (Exception e) {
 
         }
         return photo;
@@ -452,12 +449,29 @@ public class ProfileService {
 
     public Set<Announcement> getAnnouncementsByUser() {
         Set<Announcement> announcements = new HashSet<>();
+        List<Integer> listAnnouncementId = getListAnnouncementIdWhichLikedCurrentUser();
         Set<AnnouncementByUser> announcementByUser = announcementByUserDao.getAnnouncementIdByUserId(getCurrentUser().getId());
         for (AnnouncementByUser i : announcementByUser) {
-            announcements.add(announcementDao.getAnnouncementById(i.getAnnouncementId()));
+            Announcement announcement = announcementDao.getAnnouncementById(i.getAnnouncementId());
+            if (listAnnouncementId.contains(announcement.getId())) {
+                announcement.setLiked(true);
+            } else {
+                announcement.setLiked(false);
+            }
+            announcements.add(announcement);
         }
         return announcements;
     }
+
+    private List<Integer> getListAnnouncementIdWhichLikedCurrentUser() {
+        List<Integer> listAnnouncementId = new ArrayList<>();
+        List<FavoriteAnnouncementInUser> announcementByUser = favoriteAnnouncementInUserDao.getAnnouncementIdByUserId(getCurrentUser().getId());
+        for (FavoriteAnnouncementInUser favoriteAnnouncementInUser : announcementByUser) {
+            listAnnouncementId.add(favoriteAnnouncementInUser.getAnnouncementId());
+        }
+        return listAnnouncementId;
+    }
+
 
     public Set<Announcement> getLikedAnnouncementsByUser() {
         Set<Announcement> announcements = new HashSet<>();
@@ -483,7 +497,7 @@ public class ProfileService {
     }
 
     public Integer getIdPhoto() {
-            return getCurrentUser().getImage().getId();
+        return getCurrentUser().getImage().getId();
 
     }
 }
