@@ -8,5 +8,4 @@ public interface EmailDao extends CrudRepository<Email, Integer> {
     Email findOneByContentAndIsPrimaryTrue(String content);
     Email findOneByContentAndIsPrimaryTrueAndActivatedTrue(String content);
     Email getEmailByIsPrimaryTrue();
-    Email findOneByContentAndIsPrimaryTrueAnd(String content);
 }
