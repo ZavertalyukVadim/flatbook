@@ -78,7 +78,7 @@ public class AnnouncementService {
 
     private List<Integer> getListAnnouncementIdWhichLikedCurrentUser() {
         List<Integer> listAnnouncementId = new ArrayList<>();
-        List<FavoriteAnnouncementInUser> announcementByUser = favoriteAnnouncementInUserDao.getAnnouncementIdByUserId(getCurrentUser().getId());
+        List<FavoriteAnnouncementInUser> announcementByUser = favoriteAnnouncementInUserDao.getFavoriteAnnouncementInUserByUserId(getCurrentUser().getId());
         for (FavoriteAnnouncementInUser favoriteAnnouncementInUser : announcementByUser) {
             listAnnouncementId.add(favoriteAnnouncementInUser.getAnnouncementId());
         }

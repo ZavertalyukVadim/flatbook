@@ -465,7 +465,7 @@ public class ProfileService {
 
     private List<Integer> getListAnnouncementIdWhichLikedCurrentUser() {
         List<Integer> listAnnouncementId = new ArrayList<>();
-        List<FavoriteAnnouncementInUser> announcementByUser = favoriteAnnouncementInUserDao.getAnnouncementIdByUserId(getCurrentUser().getId());
+        List<FavoriteAnnouncementInUser> announcementByUser = favoriteAnnouncementInUserDao.getFavoriteAnnouncementInUserByUserId(getCurrentUser().getId());
         for (FavoriteAnnouncementInUser favoriteAnnouncementInUser : announcementByUser) {
             listAnnouncementId.add(favoriteAnnouncementInUser.getAnnouncementId());
         }
@@ -476,7 +476,7 @@ public class ProfileService {
     public Set<Announcement> getLikedAnnouncementsByUser() {
         Set<Announcement> announcements = new HashSet<>();
         List<Integer> listAnnouncementId = getListAnnouncementIdWhichLikedCurrentUser();
-        Set<FavoriteAnnouncementInUser> announcementByUser = new HashSet<>(favoriteAnnouncementInUserDao.getAnnouncementIdByUserId(getCurrentUser().getId()));
+        Set<FavoriteAnnouncementInUser> announcementByUser = new HashSet<>(favoriteAnnouncementInUserDao.getFavoriteAnnouncementInUserByUserId(getCurrentUser().getId()));
         for (FavoriteAnnouncementInUser i : announcementByUser) {
             Announcement announcement = announcementDao.getAnnouncementById(i.getAnnouncementId());
             if (listAnnouncementId.contains(announcement.getId())) {
