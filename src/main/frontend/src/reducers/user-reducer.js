@@ -65,7 +65,7 @@ export default (state = DEFAULT_STATE, action) => {
     }
 
     if (action.type === ActionTypes.CHANGE_USER_ANNOUNCEMENT_VISIBILITY_REQUEST) {
-        return {...state};
+        return {...state, announcements: [...state.announcements]};
     }
 
     if (action.type === ActionTypes.CHANGE_USER_ANNOUNCEMENT_VISIBILITY_SUCCESS) {
@@ -74,7 +74,7 @@ export default (state = DEFAULT_STATE, action) => {
     }
 
     if (action.type === ActionTypes.CHANGE_USER_ANNOUNCEMENT_VISIBILITY_FAILURE) {
-        return {...state};
+        return {...state, announcements: [...state.announcements]};
     }
 
     if (action.type === ActionTypes.DELETE_FAVOURITE_ANNOUNCEMENT_REQUEST) {

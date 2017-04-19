@@ -82,11 +82,11 @@ public class Announcement {
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "announcement", cascade = CascadeType.ALL)
     private Set<Photo> photos = new HashSet<>();
 
-    @Column(name = "is_liked", updatable = false, insertable = false)
-    private Boolean isLiked = false;
+    @Column(name = "liked", updatable = false, insertable = false)
+    private Boolean liked = false;
 
     public Announcement() {
-        this.isLiked = false;
+        this.liked = false;
     }
 
     public Announcement(Integer pricePerDay, String description, Boolean visibility, Date date) {
@@ -94,7 +94,7 @@ public class Announcement {
         this.description = description;
         this.visibility = visibility;
         this.lastUpdated = date;
-        this.isLiked = false;
+        this.liked = false;
     }
 
     public Integer getId() {
@@ -242,10 +242,10 @@ public class Announcement {
     }
 
     public Boolean getLiked() {
-        return isLiked;
+        return liked;
     }
 
     public void setLiked(Boolean liked) {
-        isLiked = liked;
+        this.liked = liked;
     }
 }

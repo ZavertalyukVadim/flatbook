@@ -1,5 +1,5 @@
 package flatbook.announcement.entity;
 
-public enum Price {
+public enum PriceType {
     PRICE_PER_DAY, PRICE_PER_MONTH
 }

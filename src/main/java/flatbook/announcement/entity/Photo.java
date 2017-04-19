@@ -10,7 +10,6 @@ public class Photo {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-//    @Column(name = "id", nullable = false)
     private Integer id;
 
     @JsonIgnore

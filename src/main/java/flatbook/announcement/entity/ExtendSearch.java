@@ -9,7 +9,7 @@ public class ExtendSearch {
     private Integer cityId;
     private Integer startingPrice;
     private Integer finalPrice;
-    private Price price;
+    private PriceType priceType;
     private Integer rooms;
     private Integer livingPlaces;
     private List<Amenity> amenities;
@@ -19,11 +19,11 @@ public class ExtendSearch {
     public ExtendSearch() {
     }
 
-    public ExtendSearch(Integer cityId, Integer startingPrice, Integer finalPrice, Price price, Integer rooms, Integer livingPlaces, List<Amenity> amenities) {
+    public ExtendSearch(Integer cityId, Integer startingPrice, Integer finalPrice, PriceType priceType, Integer rooms, Integer livingPlaces, List<Amenity> amenities) {
         this.cityId = cityId;
         this.startingPrice = startingPrice;
         this.finalPrice = finalPrice;
-        this.price = price;
+        this.priceType = priceType;
         this.rooms = rooms;
         this.livingPlaces = livingPlaces;
         this.amenities = amenities;
@@ -53,12 +53,12 @@ public class ExtendSearch {
         this.finalPrice = finalPrice;
     }
 
-    public Price getPrice() {
-        return price;
+    public PriceType getPriceType() {
+        return priceType;
     }
 
-    public void setPrice(Price price) {
-        this.price = price;
+    public void setPriceType(PriceType priceType) {
+        this.priceType = priceType;
     }
 
     public Integer getRooms() {
@@ -96,7 +96,7 @@ public class ExtendSearch {
         if (startingPrice != null ? !startingPrice.equals(that.startingPrice) : that.startingPrice != null)
             return false;
         if (finalPrice != null ? !finalPrice.equals(that.finalPrice) : that.finalPrice != null) return false;
-        if (price != that.price) return false;
+        if (priceType != that.priceType) return false;
         if (rooms != null ? !rooms.equals(that.rooms) : that.rooms != null) return false;
         if (livingPlaces != null ? !livingPlaces.equals(that.livingPlaces) : that.livingPlaces != null) return false;
         return amenities != null ? amenities.equals(that.amenities) : that.amenities == null;
@@ -107,7 +107,7 @@ public class ExtendSearch {
         int result = cityId != null ? cityId.hashCode() : 0;
         result = 31 * result + (startingPrice != null ? startingPrice.hashCode() : 0);
         result = 31 * result + (finalPrice != null ? finalPrice.hashCode() : 0);
-        result = 31 * result + (price != null ? price.hashCode() : 0);
+        result = 31 * result + (priceType != null ? priceType.hashCode() : 0);
         result = 31 * result + (rooms != null ? rooms.hashCode() : 0);
         result = 31 * result + (livingPlaces != null ? livingPlaces.hashCode() : 0);
         result = 31 * result + (amenities != null ? amenities.hashCode() : 0);

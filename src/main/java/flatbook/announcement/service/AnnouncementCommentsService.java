@@ -2,7 +2,7 @@ package flatbook.announcement.service;
 
 import flatbook.announcement.dao.AnnouncementCommentsDao;
 import flatbook.announcement.entity.AnnouncementComments;
-import flatbook.announcement.entity.Comment;
+import flatbook.announcement.entity.CommentDto;
 import flatbook.profile.dao.EmailDao;
 import flatbook.profile.dao.UserDao;
 import flatbook.profile.entity.Email;
@@ -32,12 +32,12 @@ public class AnnouncementCommentsService {
         return announcementCommentsDao.getCommentsToAnnouncementByAnnouncementId(id);
     }
 
-    public AnnouncementComments createCommentsToAnnouncement(Comment comment) {
+    public AnnouncementComments createCommentsToAnnouncement(CommentDto commentDto) {
         AnnouncementComments announcementComments = new AnnouncementComments();
-        announcementComments.setAnnouncementId(comment.getAnnouncement_id());
+        announcementComments.setAnnouncementId(commentDto.getAnnouncement_id());
         announcementComments.setUser(getCurrentUser());
         announcementComments.setDateCreate(new Date());
-        announcementComments.setText(comment.getText());
+        announcementComments.setText(commentDto.getText());
         return announcementCommentsDao.save(announcementComments);
     }
 
@@ -60,9 +60,9 @@ public class AnnouncementCommentsService {
         return true;
     }
 
-    public AnnouncementComments updateComment(Comment comment) {
-        AnnouncementComments announcementComments = announcementCommentsDao.findOne(comment.getComment_id());
-        announcementComments.setText(comment.getText());
+    public AnnouncementComments updateComment(CommentDto commentDto) {
+        AnnouncementComments announcementComments = announcementCommentsDao.findOne(commentDto.getComment_id());
+        announcementComments.setText(commentDto.getText());
         announcementComments.setDateCreate(new Date());
         announcementCommentsDao.save(announcementComments);
         return announcementComments;
