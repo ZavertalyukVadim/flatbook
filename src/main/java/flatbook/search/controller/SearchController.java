@@ -36,39 +36,39 @@ public class SearchController {
     }
 
     @RequestMapping(value = "/countries", method = RequestMethod.GET)
-    List<Country> getAllCountries() {
+    public List<Country> getAllCountries() {
         return countryService.getAll();
     }
 
     @RequestMapping(value = "/regions/{id}", method = RequestMethod.GET)
-    List<Region> getAllRegions(@PathVariable("id") Integer id) {
+    public List<Region> getAllRegions(@PathVariable("id") Integer id) {
         return regionService.getAllRegionsByCountry(id);
     }
 
     @RequestMapping(value = "/cities/{id}", method = RequestMethod.GET)
-    List<City> getAllCities(@PathVariable("id") Integer id) {
+    public List<City> getAllCities(@PathVariable("id") Integer id) {
         return cityService.getAllCitiesByRegion(id);
     }
 
     @GetMapping(value = "/world/maxPrice")
-    MaxPrice getMaxPriceOnWorldPerDay() {
+    public MaxPrice getMaxPriceOnWorldPerDay() {
         return announcementService.getMaxPriceOnWorldPerDay();
     }
 
 
     @GetMapping(value = "/country/{id}/maxPrice")
-    MaxPrice getMaxPriceOnCountry(@PathVariable("id") Integer id) {
+    public MaxPrice getMaxPriceOnCountry(@PathVariable("id") Integer id) {
         return announcementService.getMaxPriceOnCountry(id);
     }
 
     @GetMapping(value = "/region/{id}/maxPrice")
-    MaxPrice getMaxPriceOnRegion(@PathVariable("id") Integer id) {
+    public MaxPrice getMaxPriceOnRegion(@PathVariable("id") Integer id) {
         return announcementService.getMaxPriceOnRegion(id);
     }
 
 
     @GetMapping(value = "/city/{id}/maxPrice")
-    MaxPrice getMaxPriceOnCity(@PathVariable("id") Integer id) {
+    public MaxPrice getMaxPriceOnCity(@PathVariable("id") Integer id) {
         return announcementService.getMaxPriceOnCity(id);
     }
 
