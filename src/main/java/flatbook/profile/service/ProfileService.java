@@ -300,11 +300,11 @@ public class ProfileService {
         return getUserPrimaryEmail(getCurrentUser());
     }
 
-    public String getContentPrimaryEmail() {
+    private String getContentPrimaryEmail() {
         return getUserDetails().getName();
     }
 
-    public Email getUserPrimaryEmail(User user) throws Exception {
+    private Email getUserPrimaryEmail(User user) throws Exception {
         Optional<Email> primary = user.getEmails().stream().filter(Email::getPrimary).findFirst();
         if (!primary.isPresent()) throw new Exception("There is no primary email");
 
@@ -344,10 +344,6 @@ public class ProfileService {
         return getCurrentUser().getPhones();
     }
 
-    private void setOwnersPrimaryEmail(User user, Email email) {
-        if (isUserEmailOwner(user, email)) makeEmailPrimary(email);
-    }
-
     private String getCurrentUserPrimaryEmail() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         return authentication.getName();
@@ -355,10 +351,6 @@ public class ProfileService {
 
     private void makeEmailPrimary(Email email) {
         if (!isEmailPrimary(email)) email.setPrimary(true);
-    }
-
-    private boolean isEmailExists(Email email) {
-        return emailDao.exists(email.getId());
     }
 
     private boolean isUserEmailOwner(User user, Email email) {
@@ -393,14 +385,6 @@ public class ProfileService {
 
             return currentNumber.equals(newNumber);
         });
-    }
-
-    private boolean isUserEqualsToSecurityUser(User user) {
-        String securityPrimaryEmail = getCurrentUserPrimaryEmail();
-
-//        return user.getPrimaryEmail().equals(securityPrimaryEmail);
-//
-        return false;
     }
 
     private boolean isEmailUsed(Email email) {
@@ -447,10 +431,10 @@ public class ProfileService {
         return SecurityContextHolder.getContext().getAuthentication();
     }
 
-    public Set<Announcement> getAnnouncementsByUser() {
-        Set<Announcement> announcements = new HashSet<>();
+    public List<Announcement> getAnnouncementsByUser() {
+        List<Announcement> announcements = new ArrayList<>();
         List<Integer> listAnnouncementId = getListAnnouncementIdWhichLikedCurrentUser();
-        Set<UserAnnouncements> userAnnouncements = userAnnouncementsDao.getUserAnnouncementsByUserId(getCurrentUser().getId());
+        List<UserAnnouncements> userAnnouncements = userAnnouncementsDao.getUserAnnouncementsByUserId(getCurrentUser().getId());
         for (UserAnnouncements i : userAnnouncements) {
             Announcement announcement = announcementDao.findOne(i.getAnnouncementId());
             if (listAnnouncementId.contains(announcement.getId())) {
@@ -460,6 +444,8 @@ public class ProfileService {
             }
             announcements.add(announcement);
         }
+        announcements.sort(Comparator.comparing(Announcement::getLastUpdated).reversed());
+
         return announcements;
     }
 
@@ -473,10 +459,10 @@ public class ProfileService {
     }
 
 
-    public Set<Announcement> getLikedAnnouncementsByUser() {
-        Set<Announcement> announcements = new HashSet<>();
+    public List<Announcement> getLikedAnnouncementsByUser() {
+        List<Announcement> announcements = new ArrayList<>();
         List<Integer> listAnnouncementId = getListAnnouncementIdWhichLikedCurrentUser();
-        Set<FavoriteAnnouncements> announcementByUser = new HashSet<>(favoriteAnnouncementInUserDao.getFavoriteAnnouncementInUserByUserId(getCurrentUser().getId()));
+        List<FavoriteAnnouncements> announcementByUser = favoriteAnnouncementInUserDao.getFavoriteAnnouncementInUserByUserId(getCurrentUser().getId());
         for (FavoriteAnnouncements i : announcementByUser) {
             Announcement announcement = announcementDao.findOne(i.getAnnouncementId());
             if (listAnnouncementId.contains(announcement.getId())) {
