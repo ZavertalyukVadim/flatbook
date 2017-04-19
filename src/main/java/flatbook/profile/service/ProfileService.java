@@ -87,12 +87,12 @@ public class ProfileService {
         roleDao.save(role);
         Email newPrimary = emails.iterator().next();
         newPrimary.setUser(savingUser);
-        emailDao.save(newPrimary);
+        Email email = emailDao.save(newPrimary);
 
         Phone newPrimaryPhone = phones.iterator().next();
         newPrimaryPhone.setPhonesUser(savingUser);
         phoneDao.save(newPrimaryPhone);
-        mailClient.prepareAndSend(savingUser);
+        mailClient.prepareAndSend(email);
         return getUserById(savingUser.getId());
     }
 
