@@ -108,7 +108,7 @@ public class AnnouncementService {
         announcement.setStreet(postDto.getStreet());
         announcement.setLivingPlaces(postDto.getLivingPlaces());
         announcement.setPhotos(photos);
-        if (postDto.getPriceTypeType() == PriceType.PRICE_PER_DAY) {
+        if (postDto.getPriceType() == PriceType.PRICE_PER_DAY) {
             announcement.setPricePerDay(postDto.getPriceValue());
         } else {
 
@@ -147,7 +147,7 @@ public class AnnouncementService {
         announcement.setStreet(postDto.getStreet());
         announcement.setLivingPlaces(postDto.getLivingPlaces());
         announcement.setPhotos(photos);
-        if (postDto.getPriceTypeType() == PriceType.PRICE_PER_DAY) {
+        if (postDto.getPriceType() == PriceType.PRICE_PER_DAY) {
             announcement.setPricePerDay(postDto.getPriceValue());
         } else {
 
