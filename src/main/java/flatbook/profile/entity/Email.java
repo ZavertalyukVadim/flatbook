@@ -18,6 +18,9 @@ public class Email {
     @Column(name = "is_primary")
     private Boolean isPrimary = false;
 
+    @Column(name = "activated")
+    private Boolean activated = false;
+
     @JsonBackReference
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
@@ -57,7 +60,15 @@ public class Email {
 
     @Override
     public boolean equals(Object o) {
-        Email email = (Email)(o);
+        Email email = (Email) (o);
         return this.content.equals(email.content);
+    }
+
+    public Boolean getActivated() {
+        return activated;
+    }
+
+    public void setActivated(Boolean activated) {
+        this.activated = activated;
     }
 }

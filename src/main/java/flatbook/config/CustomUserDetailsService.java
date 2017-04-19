@@ -22,8 +22,7 @@ public class CustomUserDetailsService {
 
         builder.userDetailsService(userDetailsService(userDao)).passwordEncoder(new BCryptPasswordEncoder());
     }
-
-    private UserDetailsService userDetailsService(final UserDao userDao) {
-        return username -> new CustomUserDetails(userDao.getUserByEmails(emailDao.findOneByContentAndIsPrimaryTrue(username)));
+        private UserDetailsService userDetailsService(final UserDao userDao) {
+        return username -> new CustomUserDetails(userDao.getUserByEmails(emailDao.findOneByContentAndIsPrimaryTrueAndActivatedTrue(username)));
     }
 }

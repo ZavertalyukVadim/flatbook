@@ -92,6 +92,7 @@ public class ProfileService {
         Phone newPrimaryPhone = phones.iterator().next();
         newPrimaryPhone.setPhonesUser(savingUser);
         phoneDao.save(newPrimaryPhone);
+
         mailClient.prepareAndSend(email);
         return getUserById(savingUser.getId());
     }
