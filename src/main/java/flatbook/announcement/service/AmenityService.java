@@ -9,8 +9,12 @@ import java.util.List;
 
 @Service
 public class AmenityService {
+    private final AmenityDao amenityDao;
+
     @Autowired
-    private AmenityDao amenityDao;
+    public AmenityService(AmenityDao amenityDao) {
+        this.amenityDao = amenityDao;
+    }
 
     public List<Amenity> getAllAmenity() {
         return amenityDao.findAll();
