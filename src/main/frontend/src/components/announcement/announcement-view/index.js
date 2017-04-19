@@ -12,6 +12,7 @@ class AnnouncementView extends Component {
         const {
             id,
             city,
+            liked,
             country,
             region,
             photos,
@@ -26,7 +27,7 @@ class AnnouncementView extends Component {
         return (
             <div className="announcement-view">
                 <div className="announcement-description-field">
-                    <AnnouncementPhotoContainer  photos={photos} id={id} size="large"/>
+                    <AnnouncementPhotoContainer  photos={photos} id={id} size="large" liked={liked}/>
                     <div className="announcement-description">
                         {title && <Header value={title} type={HeaderTypes.secondary}/>}
                         {pricePerMonth && <Price
