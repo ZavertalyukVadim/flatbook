@@ -23,7 +23,7 @@ public class PostDto {
 
     private Integer priceValue;
 
-    private Price priceType;
+    private PriceType priceTypeType;
 
     private Set<Amenity> amenities;
 
@@ -93,12 +93,12 @@ public class PostDto {
         this.priceValue = priceValue;
     }
 
-    public Price getPriceType() {
-        return priceType;
+    public PriceType getPriceTypeType() {
+        return priceTypeType;
     }
 
-    public void setPriceType(Price priceType) {
-        this.priceType = priceType;
+    public void setPriceTypeType(PriceType priceTypeType) {
+        this.priceTypeType = priceTypeType;
     }
 
     public Set<Amenity> getAmenities() {

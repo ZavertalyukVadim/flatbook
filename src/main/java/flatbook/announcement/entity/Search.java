@@ -11,7 +11,7 @@ public class Search {
     private Integer cityId;
     private Integer startingPrice;
     private Integer finalPrice;
-    private Price price;
+    private PriceType priceType;
     private Integer rooms;
     private Integer livingPlaces;
 
@@ -21,11 +21,11 @@ public class Search {
     public Search() {
     }
 
-    public Search(Integer cityId, Integer startingPrice, Integer finalPrice, Price price, Integer rooms, Integer livingPlaces) {
+    public Search(Integer cityId, Integer startingPrice, Integer finalPrice, PriceType priceType, Integer rooms, Integer livingPlaces) {
         this.cityId = cityId;
         this.startingPrice = startingPrice;
         this.finalPrice = finalPrice;
-        this.price = price;
+        this.priceType = priceType;
         this.rooms = rooms;
         this.livingPlaces = livingPlaces;
     }
@@ -42,8 +42,8 @@ public class Search {
         return finalPrice;
     }
 
-    public Price getPrice() {
-        return price;
+    public PriceType getPriceType() {
+        return priceType;
     }
 
     public Integer getRooms() {

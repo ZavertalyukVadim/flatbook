@@ -108,7 +108,7 @@ public class AnnouncementService {
         announcement.setStreet(postDto.getStreet());
         announcement.setLivingPlaces(postDto.getLivingPlaces());
         announcement.setPhotos(photos);
-        if (postDto.getPriceType() == Price.PRICE_PER_DAY) {
+        if (postDto.getPriceTypeType() == PriceType.PRICE_PER_DAY) {
             announcement.setPricePerDay(postDto.getPriceValue());
         } else {
 
@@ -142,7 +142,7 @@ public class AnnouncementService {
         announcement.setStreet(postDto.getStreet());
         announcement.setLivingPlaces(postDto.getLivingPlaces());
         announcement.setPhotos(photos);
-        if (postDto.getPriceType() == Price.PRICE_PER_DAY) {
+        if (postDto.getPriceTypeType() == PriceType.PRICE_PER_DAY) {
             announcement.setPricePerDay(postDto.getPriceValue());
         } else {
 
@@ -176,7 +176,7 @@ public class AnnouncementService {
 
     public Page<Announcement> getAnnouncementBySmallSearch(Search search) {
         PageRequest pageRequest = new PageRequest(search.getPageNum(), search.getItemsPerPage());
-        Page<Announcement> announcementPage = (search.getPrice() == Price.PRICE_PER_DAY)
+        Page<Announcement> announcementPage = (search.getPriceType() == PriceType.PRICE_PER_DAY)
                 ? announcementDao.getAnnouncementPerDay(search, pageRequest)
                 : announcementDao.getAnnouncementPerMonth(search, pageRequest);
         List<Integer> listAnnouncementId = getListAnnouncementIdWhichLikedCurrentUser();
@@ -190,7 +190,7 @@ public class AnnouncementService {
 
     public Page<Announcement> getAnnouncementByExtendedSearch(ExtendSearch extendSearch) {
         if (!containsAmenities(extendSearch)) {
-            Search search = new Search(extendSearch.getCityId(), extendSearch.getStartingPrice(), extendSearch.getFinalPrice(), extendSearch.getPrice(),
+            Search search = new Search(extendSearch.getCityId(), extendSearch.getStartingPrice(), extendSearch.getFinalPrice(), extendSearch.getPriceType(),
                     extendSearch.getRooms(), extendSearch.getLivingPlaces());
             search.setPageNum(extendSearch.getPageNum());
             search.setItemsPerPage(extendSearch.getItemsPerPage());
@@ -200,7 +200,7 @@ public class AnnouncementService {
         }
 
         PageRequest pageRequest = new PageRequest(extendSearch.getPageNum(), extendSearch.getItemsPerPage());
-        Page<Announcement> announcementPage = (extendSearch.getPrice() == Price.PRICE_PER_DAY)
+        Page<Announcement> announcementPage = (extendSearch.getPriceType() == PriceType.PRICE_PER_DAY)
                 ? announcementDao.getAnnouncementPerDayWithAmenities(extendSearch, pageRequest)
                 : announcementDao.getAnnouncementPerMonthWithAmenities(extendSearch, pageRequest);
         List<Integer> listAnnouncementId = getListAnnouncementIdWhichLikedCurrentUser();
