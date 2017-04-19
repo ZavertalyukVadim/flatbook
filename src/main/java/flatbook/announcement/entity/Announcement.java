@@ -82,6 +82,7 @@ public class Announcement {
     private Boolean isLiked = false;
 
     public Announcement() {
+        this.isLiked = false;
     }
 
     public Announcement(Integer pricePerDay, String description, Boolean visibility, Date date) {
@@ -89,6 +90,7 @@ public class Announcement {
         this.description = description;
         this.visibility = visibility;
         this.lastUpdated = date;
+        this.isLiked = false;
     }
 
     public Integer getId() {
