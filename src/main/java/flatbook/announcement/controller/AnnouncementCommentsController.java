@@ -19,22 +19,22 @@ public class AnnouncementCommentsController {
     }
 
     @GetMapping(value = "/{id}")
-    List<AnnouncementComments> getAllCommentsForPost(@PathVariable("id") Integer id) {
+    public List<AnnouncementComments> getAllCommentsForPost(@PathVariable("id") Integer id) {
         return announcementCommentsService.getAllCommentsForPost(id);
     }
 
     @PostMapping
-    AnnouncementComments createCommentsToAnnouncement(@RequestBody Comment comment) {
+    public AnnouncementComments createCommentsToAnnouncement(@RequestBody Comment comment) {
         return announcementCommentsService.createCommentsToAnnouncement(comment);
     }
 
     @PutMapping
-    AnnouncementComments updateComment(@RequestBody Comment comment) {
+    public AnnouncementComments updateComment(@RequestBody Comment comment) {
         return announcementCommentsService.updateComment(comment);
     }
 
     @DeleteMapping(value = "/{id}")
-    Boolean deleteComments(@PathVariable("id") Integer id) {
+    public Boolean deleteComments(@PathVariable("id") Integer id) {
         return announcementCommentsService.deleteComments(id);
     }
 }

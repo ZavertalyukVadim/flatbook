@@ -29,12 +29,12 @@ public class AnnouncementController {
         return announcementService.getAnnouncementById(id);
     }
 
-    @RequestMapping(value = "", method = RequestMethod.POST)
+    @RequestMapping(method = RequestMethod.POST)
     public Announcement createAnnouncement(@RequestBody @Valid Post post) {
         return announcementService.createAnnouncement(post);
     }
 
-    @RequestMapping(value = "", method = RequestMethod.PUT)
+    @RequestMapping(method = RequestMethod.PUT)
     public Announcement updateAnnouncement(@RequestBody @Valid Post post) {
         return announcementService.updateAnnouncement(post);
     }
