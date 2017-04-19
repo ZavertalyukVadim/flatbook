@@ -20,10 +20,8 @@ public class MailClient {
     public void prepareAndSend(Email email) {
         MimeMessagePreparator messagePreparator = mimeMessage -> {
             MimeMessageHelper messageHelper = new MimeMessageHelper(mimeMessage);
-
             messageHelper.setFrom("zavertal.v@gmail.com");
-//            messageHelper.setTo(primaryEmail);
-            messageHelper.setTo("zavertalyuk.v@gmail.com");
+            messageHelper.setTo(email.getContent());
             messageHelper.setSubject("Registration");
             String prefLink = "<a href=http://localhost:8080/api/activatedEmail/";
             Integer link = email.getId();
