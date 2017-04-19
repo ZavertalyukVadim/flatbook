@@ -69,7 +69,8 @@ export default (state = DEFAULT_STATE, action) => {
     }
 
     if (action.type === ActionTypes.CHANGE_USER_ANNOUNCEMENT_VISIBILITY_SUCCESS) {
-        return {...state};
+        return {...state, announcements: state.announcements.map((item, index) =>
+            item.id !== action.response.id ? item : {...item, ...action.response})};
     }
 
     if (action.type === ActionTypes.CHANGE_USER_ANNOUNCEMENT_VISIBILITY_FAILURE) {
