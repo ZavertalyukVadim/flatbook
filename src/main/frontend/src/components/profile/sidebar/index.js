@@ -29,6 +29,12 @@ const Sidebar = () => {
                         </div>
                     </Link>
                 </li>
+                <li>
+                    <Link to='/profile/booking'>
+                        <div> Bookings <i className="sidebar-links-icon fa fa-heart-o"/>
+                        </div>
+                    </Link>
+                </li>
             </ul>
         </div>
     );

@@ -23,11 +23,17 @@ class Booking extends Component {
     saveStartDate = d => this.setState({from: d});
     saveEndDate = d => this.setState({to: d});
     onSubmit = () => this.props.requestABook({
-        announcementsId: this.state.announcementsId,
-        from: this.state.from.utc().format(),
-        to: this.state.to.utc().format()
+        announcement_id: this.state.announcementsId,
+        fromDate: this.state.from.format('D'),
+        fromMonth: this.state.from.format('M'),
+        fromYear: this.state.from.format('YYYY'),
+        toDate: this.state.to.format('D'),
+        toMonth: this.state.from.format('M'),
+        toYear: this.state.from.format('YYYY')
+
     });
     render() {
+        console.log(this.state.from.format('YYYY'), this.state.from.format('D'));
         return (
             <div>
                 <Button

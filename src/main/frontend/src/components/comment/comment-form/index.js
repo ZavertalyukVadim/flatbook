@@ -20,6 +20,7 @@ class CommentForm extends Component {
     onAddNewComment = () => {
         this.props.id ?
             this.props.updateExistingComment(this.state) : this.props.addNewComment(this.state);
+        this.setState({text: ''});
 
     };
 

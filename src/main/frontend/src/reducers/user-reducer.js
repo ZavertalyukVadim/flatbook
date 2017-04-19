@@ -12,6 +12,11 @@ const DEFAULT_STATE = {
         phones: [],
         emails: []
     },
+    booking: {
+        data: [],
+        loaded: false,
+        pending: false
+    },
     auth: {
         pending: false,
         logged: false,
@@ -186,6 +191,30 @@ export default (state = DEFAULT_STATE, action) => {
 
     if (action.type === ActionTypes.SIGN_UP_FAILURE) {
         return {...state, signup: {registered: false}};
+    }
+
+    if (action.type === ActionTypes.GET_USER_BOOKINGS_REQUEST) {
+        return {...state, booking: {loaded: false, pending: true}};
+    }
+
+    if (action.type === ActionTypes.GET_USER_BOOKINGS_SUCCESS) {
+        return {...state, booking: {data: action.response,  loaded: true, pending: false}};
+    }
+
+    if (action.type === ActionTypes.GET_USER_BOOKINGS_FAILURE) {
+        return {...state, booking: {loaded: false, pending: false}};
+    }
+
+    if (action.type === ActionTypes.SIGN_IN_FACEBOOK_REQUEST) {
+        return {...state};
+    }
+
+    if (action.type === ActionTypes.SIGN_IN_FACEBOOK_SUCCESS) {
+        return {...state};
+    }
+
+    if (action.type === ActionTypes.SIGN_IN_FACEBOOK_FAILURE) {
+        return {...state};
     }
 
     return state;

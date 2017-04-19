@@ -1,19 +1,20 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {getLikedAnnouncements} from '../../../actions/user-actions';
+import {getUserBookings} from '../../../actions/user-actions';
 import Container from '../../../components/container';
 import Sidebar from '../../../components/profile/sidebar';
 import Loader from '../../../components/loader';
-import AnnouncementPreview from '../../../components/announcement/announcement-preview';
+import BookingView from '../../../components/booking/booking-view';
 
-class Favourite extends Component {
+class UserBookings extends Component {
 
     componentDidMount() {
-        this.props.getLikedAnnouncements();
+        this.props.getUserBookings();
     }
 
     render() {
-        const {loaded, data} = this.props.user.favouriteAnnouncements;
+         const {loaded, data} = this.props.user.booking;
+        console.log(this.props.user.booking);
         return (
             <Container
                 sidebar={
@@ -24,7 +25,7 @@ class Favourite extends Component {
                     {loaded ? (
                         <div className="announcements-field">
                             {data.map((item, index) =>
-                                <AnnouncementPreview
+                                <BookingView
                                     key={index}
                                     {...item}
 
@@ -40,4 +41,4 @@ class Favourite extends Component {
 }
 ;
 
-export default connect(({user}) => ({user: user}), {getLikedAnnouncements})(Favourite);
+export default connect(({user}) => ({user: user}), {getUserBookings})(UserBookings);
