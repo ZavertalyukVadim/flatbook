@@ -1,10 +1,9 @@
 package flatbook.rent.entity;
 
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.time.LocalDate;
 
 @Entity
 @Table(name = "rents")
@@ -14,10 +13,10 @@ public class Rent {
     private Integer id;
 
     @Column(name = "`from`")
-    private Date from;
+    private LocalDate from;
 
     @Column(name = "`to`")
-    private Date to;
+    private LocalDate to;
 
     @JsonIgnore
     @Column(name = "user_id")
@@ -25,22 +24,6 @@ public class Rent {
 
     @Column(name = "announcement_id")
     private Integer announcementsId;
-
-    public Date getFrom() {
-        return from;
-    }
-
-    public void setFrom(Date from) {
-        this.from = from;
-    }
-
-    public Date getTo() {
-        return to;
-    }
-
-    public void setTo(Date to) {
-        this.to = to;
-    }
 
     public Integer getUserId() {
         return userId;
@@ -56,5 +39,21 @@ public class Rent {
 
     public void setAnnouncementsId(Integer announcementsId) {
         this.announcementsId = announcementsId;
+    }
+
+    public LocalDate getFrom() {
+        return from;
+    }
+
+    public void setFrom(LocalDate from) {
+        this.from = from;
+    }
+
+    public LocalDate getTo() {
+        return to;
+    }
+
+    public void setTo(LocalDate to) {
+        this.to = to;
     }
 }

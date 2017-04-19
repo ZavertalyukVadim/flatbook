@@ -3,11 +3,13 @@ package flatbook.rent.service;
 import flatbook.profile.entity.User;
 import flatbook.profile.service.ProfileService;
 import flatbook.rent.dao.RentDao;
+import flatbook.rent.dto.RentDto;
 import flatbook.rent.entity.Rent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -33,7 +35,15 @@ public class RentService {
     }
 
     @Transactional
-    public Rent rent(Rent rent) throws Exception {
+    public Rent rent(RentDto rentDto) throws Exception {
+        Rent rent = new Rent();
+
+        rent.setFrom(LocalDate.of(rentDto.getFromYear(), rentDto.getFromMonth(), rentDto.getFromDate()));
+        rent.setTo(LocalDate.of(rentDto.getToYear(), rentDto.getToMonth(), rentDto.getToDate()));
+
+        rent.setUserId(profileService.getCurrentUser().getId());
+        rent.setAnnouncementsId(rentDto.getAnnouncement_id());
+
         normalizeRent(rent);
 
         if (!isCorrectRent(rent)) throw new Exception("Uncorrected rent");
@@ -47,22 +57,36 @@ public class RentService {
     }
 
     private boolean isCorrectRent(Rent rent) throws Exception {
-        Date from = rent.getFrom();
-        Date to = rent.getTo();
-        Date now = normalizeDate(new Date());
+//        Date from = rent.getFrom();
+//        Date to = rent.getTo();
+//        Date now = normalizeDate(new Date());
+//
+//        from.set
+//
+//        Calendar calendarFrom = Calendar.getInstance();
+//        calendarFrom.setTime(from);
+//
+//        Calendar calendarNow = Calendar.getInstance();
+//        calendarNow.setTime(now);
 
-        return from.getTime() >= now.getTime() && from.getTime() < to.getTime();
+        LocalDate from = rent.getFrom();
+        LocalDate to = rent.getTo();
+        LocalDate now = LocalDate.now();
+
+        return ( from.isAfter(now) || from.isEqual(now) ) && from.isBefore(to);
     }
 
     private void normalizeRent(Rent rent) {
-        Date from = rent.getFrom();
-        Date to = rent.getTo();
-
-        from = normalizeDate(from);
-        to = normalizeDate(to);
-
-        rent.setFrom(from);
-        rent.setTo(to);
+        rent.setFrom(normalizeDate(rent.getFrom()));
+        rent.setTo(normalizeDate(rent.getTo()));
+//        Date from = rent.getFrom();
+//        Date to = rent.getTo();
+//
+//        from = normalizeDate(from);
+//        to = normalizeDate(to);
+//
+//        rent.setFrom(from);
+//        rent.setTo(to);
     }
 
     private Date normalizeDate(Date date) {
@@ -76,5 +100,9 @@ public class RentService {
         calendar.set(year, month, date_, 0, 0, 0);
 
         return calendar.getTime();
+    }
+
+    private LocalDate normalizeDate(LocalDate localDate) {
+        return LocalDate.of(localDate.getYear(), localDate.getMonth(), localDate.getDayOfMonth());
     }
 }

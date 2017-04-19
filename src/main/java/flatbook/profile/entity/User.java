@@ -49,7 +49,7 @@ public class User implements UserDetails {
         this.emails = emails;
     }
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
     private Set<Email> emails;
 
     @OneToMany(mappedBy = "phonesUser", fetch = FetchType.EAGER)
