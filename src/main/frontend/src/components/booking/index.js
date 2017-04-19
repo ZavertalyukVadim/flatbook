@@ -13,7 +13,8 @@ class Booking extends Component {
         this.state = {
             announcementsId: props.id,
             from: moment(),
-            to: moment().add(5, 'days')
+            to: moment().add(5, 'days'),
+            isModalOpen: false
         };
     }
 
@@ -27,7 +28,6 @@ class Booking extends Component {
         to: this.state.to.utc().format()
     });
     render() {
-        console.log(this.state.from.utc().format(), this.state.to.utc().format());
         return (
             <div>
                 <Button
