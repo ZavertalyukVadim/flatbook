@@ -38,7 +38,7 @@ public class ResourceConfigurer extends ResourceServerConfigurerAdapter {
                 .and()
                 .authorizeRequests()
                 .antMatchers(HttpMethod.GET,"/api/search/**").permitAll()
-                .antMatchers(HttpMethod.POST,"/api/search/*").permitAll()
+                .antMatchers(HttpMethod.POST,"/api/search/**").permitAll()
                 .antMatchers(HttpMethod.GET, "/api/announcement/**").permitAll()
                 .antMatchers(HttpMethod.GET, "/api/announcement").permitAll()
                 .antMatchers(HttpMethod.GET, "/api/profile/photo/**").permitAll()
