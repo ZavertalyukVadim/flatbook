@@ -12,10 +12,14 @@ import java.util.List;
 @RestController
 @RequestMapping(value = "/api/amenity")
 public class AmenityController {
-    @Autowired
-    private AmenityService amenityService;
+    private final AmenityService amenityService;
 
-    @RequestMapping(value = "", method = RequestMethod.GET)
+    @Autowired
+    public AmenityController(AmenityService amenityService) {
+        this.amenityService = amenityService;
+    }
+
+    @RequestMapping(method = RequestMethod.GET)
     public List<Amenity> getAllAnnouncement() {
         return amenityService.getAllAmenity();
     }

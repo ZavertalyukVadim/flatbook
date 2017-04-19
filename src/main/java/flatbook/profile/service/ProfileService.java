@@ -1,11 +1,11 @@
 package flatbook.profile.service;
 
-import flatbook.announcement.dao.AnnouncementByUserDao;
 import flatbook.announcement.dao.AnnouncementDao;
 import flatbook.announcement.dao.FavoriteAnnouncementInUserDao;
+import flatbook.announcement.dao.UserAnnouncementsDao;
 import flatbook.announcement.entity.Announcement;
-import flatbook.announcement.entity.AnnouncementByUser;
-import flatbook.announcement.entity.FavoriteAnnouncementInUser;
+import flatbook.announcement.entity.FavoriteAnnouncements;
+import flatbook.announcement.entity.UserAnnouncements;
 import flatbook.profile.dao.*;
 import flatbook.profile.entity.*;
 import flatbook.profile.util.FileUtil;
@@ -31,20 +31,20 @@ public class ProfileService {
     private final EmailDao emailDao;
     private final PhoneDao phoneDao;
     private final ImageDao imageDao;
-    private final AnnouncementByUserDao announcementByUserDao;
+    private final UserAnnouncementsDao userAnnouncementsDao;
     private final EntityManager entityManager;
     private final AnnouncementDao announcementDao;
     private final FavoriteAnnouncementInUserDao favoriteAnnouncementInUserDao;
     private final RoleDao roleDao;
 
     @Autowired
-    public ProfileService(UserDao userDao, EmailDao emailDao, PhoneDao phoneDao, EntityManager entityManager, ImageDao imageDao, AnnouncementByUserDao announcementByUserDao, AnnouncementDao announcementDao, FavoriteAnnouncementInUserDao favoriteAnnouncementInUserDao, RoleDao roleDao) {
+    public ProfileService(UserDao userDao, EmailDao emailDao, PhoneDao phoneDao, EntityManager entityManager, ImageDao imageDao, UserAnnouncementsDao userAnnouncementsDao, AnnouncementDao announcementDao, FavoriteAnnouncementInUserDao favoriteAnnouncementInUserDao, RoleDao roleDao) {
         this.userDao = userDao;
         this.emailDao = emailDao;
         this.phoneDao = phoneDao;
         this.entityManager = entityManager;
         this.imageDao = imageDao;
-        this.announcementByUserDao = announcementByUserDao;
+        this.userAnnouncementsDao = userAnnouncementsDao;
         this.announcementDao = announcementDao;
         this.favoriteAnnouncementInUserDao = favoriteAnnouncementInUserDao;
         this.roleDao = roleDao;
@@ -300,11 +300,11 @@ public class ProfileService {
         return getUserPrimaryEmail(getCurrentUser());
     }
 
-    public String getContentPrimaryEmail() {
+    private String getContentPrimaryEmail() {
         return getUserDetails().getName();
     }
 
-    public Email getUserPrimaryEmail(User user) throws Exception {
+    private Email getUserPrimaryEmail(User user) throws Exception {
         Optional<Email> primary = user.getEmails().stream().filter(Email::getPrimary).findFirst();
         if (!primary.isPresent()) throw new Exception("There is no primary email");
 
@@ -344,10 +344,6 @@ public class ProfileService {
         return getCurrentUser().getPhones();
     }
 
-    private void setOwnersPrimaryEmail(User user, Email email) {
-        if (isUserEmailOwner(user, email)) makeEmailPrimary(email);
-    }
-
     private String getCurrentUserPrimaryEmail() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         return authentication.getName();
@@ -355,10 +351,6 @@ public class ProfileService {
 
     private void makeEmailPrimary(Email email) {
         if (!isEmailPrimary(email)) email.setPrimary(true);
-    }
-
-    private boolean isEmailExists(Email email) {
-        return emailDao.exists(email.getId());
     }
 
     private boolean isUserEmailOwner(User user, Email email) {
@@ -393,14 +385,6 @@ public class ProfileService {
 
             return currentNumber.equals(newNumber);
         });
-    }
-
-    private boolean isUserEqualsToSecurityUser(User user) {
-        String securityPrimaryEmail = getCurrentUserPrimaryEmail();
-
-//        return user.getPrimaryEmail().equals(securityPrimaryEmail);
-//
-        return false;
     }
 
     private boolean isEmailUsed(Email email) {
@@ -447,12 +431,12 @@ public class ProfileService {
         return SecurityContextHolder.getContext().getAuthentication();
     }
 
-    public Set<Announcement> getAnnouncementsByUser() {
-        Set<Announcement> announcements = new HashSet<>();
+    public List<Announcement> getAnnouncementsByUser() {
+        List<Announcement> announcements = new ArrayList<>();
         List<Integer> listAnnouncementId = getListAnnouncementIdWhichLikedCurrentUser();
-        Set<AnnouncementByUser> announcementByUser = announcementByUserDao.getAnnouncementIdByUserId(getCurrentUser().getId());
-        for (AnnouncementByUser i : announcementByUser) {
-            Announcement announcement = announcementDao.getAnnouncementById(i.getAnnouncementId());
+        List<UserAnnouncements> userAnnouncements = userAnnouncementsDao.getUserAnnouncementsByUserId(getCurrentUser().getId());
+        for (UserAnnouncements i : userAnnouncements) {
+            Announcement announcement = announcementDao.findOne(i.getAnnouncementId());
             if (listAnnouncementId.contains(announcement.getId())) {
                 announcement.setLiked(true);
             } else {
@@ -460,25 +444,27 @@ public class ProfileService {
             }
             announcements.add(announcement);
         }
+        announcements.sort(Comparator.comparing(Announcement::getLastUpdated).reversed());
+
         return announcements;
     }
 
     private List<Integer> getListAnnouncementIdWhichLikedCurrentUser() {
         List<Integer> listAnnouncementId = new ArrayList<>();
-        List<FavoriteAnnouncementInUser> announcementByUser = favoriteAnnouncementInUserDao.getAnnouncementIdByUserId(getCurrentUser().getId());
-        for (FavoriteAnnouncementInUser favoriteAnnouncementInUser : announcementByUser) {
-            listAnnouncementId.add(favoriteAnnouncementInUser.getAnnouncementId());
+        List<FavoriteAnnouncements> announcementByUser = favoriteAnnouncementInUserDao.getFavoriteAnnouncementInUserByUserId(getCurrentUser().getId());
+        for (FavoriteAnnouncements favoriteAnnouncements : announcementByUser) {
+            listAnnouncementId.add(favoriteAnnouncements.getAnnouncementId());
         }
         return listAnnouncementId;
     }
 
 
-    public Set<Announcement> getLikedAnnouncementsByUser() {
-        Set<Announcement> announcements = new HashSet<>();
+    public List<Announcement> getLikedAnnouncementsByUser() {
+        List<Announcement> announcements = new ArrayList<>();
         List<Integer> listAnnouncementId = getListAnnouncementIdWhichLikedCurrentUser();
-        Set<FavoriteAnnouncementInUser> announcementByUser = new HashSet<>(favoriteAnnouncementInUserDao.getAnnouncementIdByUserId(getCurrentUser().getId()));
-        for (FavoriteAnnouncementInUser i : announcementByUser) {
-            Announcement announcement = announcementDao.getAnnouncementById(i.getAnnouncementId());
+        List<FavoriteAnnouncements> announcementByUser = favoriteAnnouncementInUserDao.getFavoriteAnnouncementInUserByUserId(getCurrentUser().getId());
+        for (FavoriteAnnouncements i : announcementByUser) {
+            Announcement announcement = announcementDao.findOne(i.getAnnouncementId());
             if (listAnnouncementId.contains(announcement.getId())) {
                 announcement.setLiked(true);
             } else {
@@ -496,10 +482,10 @@ public class ProfileService {
     }
 
     public Boolean markFavorite(Integer id) {
-        FavoriteAnnouncementInUser favoriteAnnouncementInUser = new FavoriteAnnouncementInUser();
-        favoriteAnnouncementInUser.setUser(getCurrentUser());
-        favoriteAnnouncementInUser.setAnnouncementId(id);
-        favoriteAnnouncementInUserDao.save(favoriteAnnouncementInUser);
+        FavoriteAnnouncements favoriteAnnouncements = new FavoriteAnnouncements();
+        favoriteAnnouncements.setUser(getCurrentUser());
+        favoriteAnnouncements.setAnnouncementId(id);
+        favoriteAnnouncementInUserDao.save(favoriteAnnouncements);
         return true;
     }
 

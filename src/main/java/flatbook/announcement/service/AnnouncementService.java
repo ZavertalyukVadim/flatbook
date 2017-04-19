@@ -35,14 +35,14 @@ public class AnnouncementService {
 
     private final UserDao userDao;
 
-    private final AnnouncementByUserDao announcementByUserDao;
+    private final UserAnnouncementsDao userAnnouncementsDao;
 
     private final PhotoDao photoDao;
 
     private final FavoriteAnnouncementInUserDao favoriteAnnouncementInUserDao;
 
     @Autowired
-    public AnnouncementService(AnnouncementDao announcementDao, CountryDao countryDao, RegionDao regionDao, CityDao cityDao, AmenityDao amenityDao, DistrictDao districtDao, EmailDao emailDao, UserDao userDao, AnnouncementByUserDao announcementByUserDao, PhotoDao photoDao, FavoriteAnnouncementInUserDao favoriteAnnouncementInUserDao) {
+    public AnnouncementService(AnnouncementDao announcementDao, CountryDao countryDao, RegionDao regionDao, CityDao cityDao, AmenityDao amenityDao, DistrictDao districtDao, EmailDao emailDao, UserDao userDao, UserAnnouncementsDao userAnnouncementsDao, PhotoDao photoDao, FavoriteAnnouncementInUserDao favoriteAnnouncementInUserDao) {
         this.announcementDao = announcementDao;
         this.countryDao = countryDao;
         this.regionDao = regionDao;
@@ -51,7 +51,7 @@ public class AnnouncementService {
         this.districtDao = districtDao;
         this.emailDao = emailDao;
         this.userDao = userDao;
-        this.announcementByUserDao = announcementByUserDao;
+        this.userAnnouncementsDao = userAnnouncementsDao;
         this.photoDao = photoDao;
         this.favoriteAnnouncementInUserDao = favoriteAnnouncementInUserDao;
     }
@@ -78,9 +78,9 @@ public class AnnouncementService {
 
     private List<Integer> getListAnnouncementIdWhichLikedCurrentUser() {
         List<Integer> listAnnouncementId = new ArrayList<>();
-        List<FavoriteAnnouncementInUser> announcementByUser = favoriteAnnouncementInUserDao.getAnnouncementIdByUserId(getCurrentUser().getId());
-        for (FavoriteAnnouncementInUser favoriteAnnouncementInUser : announcementByUser) {
-            listAnnouncementId.add(favoriteAnnouncementInUser.getAnnouncementId());
+        List<FavoriteAnnouncements> announcementByUser = favoriteAnnouncementInUserDao.getFavoriteAnnouncementInUserByUserId(getCurrentUser().getId());
+        for (FavoriteAnnouncements favoriteAnnouncements : announcementByUser) {
+            listAnnouncementId.add(favoriteAnnouncements.getAnnouncementId());
         }
         return listAnnouncementId;
     }
@@ -95,32 +95,37 @@ public class AnnouncementService {
         return announcement;
     }
 
-    public Announcement updateAnnouncement(Post post) {
-        City city = cityDao.findOne(post.getCityId());
-        Announcement announcement = announcementDao.findOne(post.getAnnouncementId());
+    public Announcement updateAnnouncement(PostDto postDto) {
+        City city = cityDao.findOne(postDto.getCityId());
+        Announcement announcement = announcementDao.findOne(postDto.getAnnouncementId());
         Set<Photo> photos = new HashSet<>();
-        for (Integer photo : post.getPhotos()) {
+        for (Integer photo : postDto.getPhotos()) {
             photos.add(photoDao.findOne(photo));
         }
-        announcement.setTitle(post.getTitle());
-        announcement.setDescription(post.getDescription());
-        announcement.setRooms(post.getRooms());
-        announcement.setStreet(post.getStreet());
-        announcement.setLivingPlaces(post.getLivingPlaces());
+        announcement.setTitle(postDto.getTitle());
+        announcement.setDescription(postDto.getDescription());
+        announcement.setRooms(postDto.getRooms());
+        announcement.setStreet(postDto.getStreet());
+        announcement.setLivingPlaces(postDto.getLivingPlaces());
         announcement.setPhotos(photos);
-        if (post.getPriceType() == Price.PRICE_PER_DAY) {
-            announcement.setPricePerDay(post.getPriceValue());
+        if (postDto.getPriceTypeType() == PriceType.PRICE_PER_DAY) {
+            announcement.setPricePerDay(postDto.getPriceValue());
         } else {
 
-            announcement.setPricePerMonth(post.getPriceValue());
+            announcement.setPricePerMonth(postDto.getPriceValue());
         }
-        announcement.setAmenities(post.getAmenities());
+        announcement.setAmenities(postDto.getAmenities());
         announcement.setLastUpdated(new Date());
         announcement.setCity(city);
         announcement.setRegion(city.getRegion());
         announcement.setCountry(city.getRegion().getCountry());
         announcement.setUser(getCurrentUser());
-        return announcementDao.save(announcement);
+        Announcement savedAnnouncement =  announcementDao.save(announcement);
+        for (Photo photo : savedAnnouncement.getPhotos()) {
+            photo.setAnnouncement(savedAnnouncement);
+            photoDao.save(photo);
+        }
+        return announcementDao.findOne(savedAnnouncement.getId());
     }
 
     public Boolean deleteAnnouncement(Integer id) {
@@ -128,27 +133,27 @@ public class AnnouncementService {
         return true;
     }
 
-    public Announcement createAnnouncement(Post post) {
-        City city = cityDao.findOne(post.getCityId());
+    public Announcement createAnnouncement(PostDto postDto) {
+        City city = cityDao.findOne(postDto.getCityId());
 
         Announcement announcement = new Announcement();
         Set<Photo> photos = new HashSet<>();
-        for (Integer photo : post.getPhotos()) {
+        for (Integer photo : postDto.getPhotos()) {
             photos.add(photoDao.findOne(photo));
         }
-        announcement.setTitle(post.getTitle());
-        announcement.setDescription(post.getDescription());
-        announcement.setRooms(post.getRooms());
-        announcement.setStreet(post.getStreet());
-        announcement.setLivingPlaces(post.getLivingPlaces());
+        announcement.setTitle(postDto.getTitle());
+        announcement.setDescription(postDto.getDescription());
+        announcement.setRooms(postDto.getRooms());
+        announcement.setStreet(postDto.getStreet());
+        announcement.setLivingPlaces(postDto.getLivingPlaces());
         announcement.setPhotos(photos);
-        if (post.getPriceType() == Price.PRICE_PER_DAY) {
-            announcement.setPricePerDay(post.getPriceValue());
+        if (postDto.getPriceTypeType() == PriceType.PRICE_PER_DAY) {
+            announcement.setPricePerDay(postDto.getPriceValue());
         } else {
 
-            announcement.setPricePerMonth(post.getPriceValue());
+            announcement.setPricePerMonth(postDto.getPriceValue());
         }
-        announcement.setAmenities(post.getAmenities());
+        announcement.setAmenities(postDto.getAmenities());
         announcement.setLastUpdated(new Date());
         announcement.setCity(city);
         announcement.setRegion(city.getRegion());
@@ -160,10 +165,10 @@ public class AnnouncementService {
             photo.setAnnouncement(savedAnnouncement);
             photoDao.save(photo);
         }
-        AnnouncementByUser announcementByUser = new AnnouncementByUser();
-        announcementByUser.setUserId(getCurrentUser().getId());
-        announcementByUser.setAnnouncementId(savedAnnouncement.getId());
-        announcementByUserDao.save(announcementByUser);
+        UserAnnouncements userAnnouncements = new UserAnnouncements();
+        userAnnouncements.setUserId(getCurrentUser().getId());
+        userAnnouncements.setAnnouncementId(savedAnnouncement.getId());
+        userAnnouncementsDao.save(userAnnouncements);
         return announcementDao.findOne(savedAnnouncement.getId());
     }
 
@@ -176,7 +181,7 @@ public class AnnouncementService {
 
     public Page<Announcement> getAnnouncementBySmallSearch(Search search) {
         PageRequest pageRequest = new PageRequest(search.getPageNum(), search.getItemsPerPage());
-        Page<Announcement> announcementPage = (search.getPrice() == Price.PRICE_PER_DAY)
+        Page<Announcement> announcementPage = (search.getPriceType() == PriceType.PRICE_PER_DAY)
                 ? announcementDao.getAnnouncementPerDay(search, pageRequest)
                 : announcementDao.getAnnouncementPerMonth(search, pageRequest);
         List<Integer> listAnnouncementId = getListAnnouncementIdWhichLikedCurrentUser();
@@ -190,7 +195,7 @@ public class AnnouncementService {
 
     public Page<Announcement> getAnnouncementByExtendedSearch(ExtendSearch extendSearch) {
         if (!containsAmenities(extendSearch)) {
-            Search search = new Search(extendSearch.getCityId(), extendSearch.getStartingPrice(), extendSearch.getFinalPrice(), extendSearch.getPrice(),
+            Search search = new Search(extendSearch.getCityId(), extendSearch.getStartingPrice(), extendSearch.getFinalPrice(), extendSearch.getPriceType(),
                     extendSearch.getRooms(), extendSearch.getLivingPlaces());
             search.setPageNum(extendSearch.getPageNum());
             search.setItemsPerPage(extendSearch.getItemsPerPage());
@@ -200,7 +205,7 @@ public class AnnouncementService {
         }
 
         PageRequest pageRequest = new PageRequest(extendSearch.getPageNum(), extendSearch.getItemsPerPage());
-        Page<Announcement> announcementPage = (extendSearch.getPrice() == Price.PRICE_PER_DAY)
+        Page<Announcement> announcementPage = (extendSearch.getPriceType() == PriceType.PRICE_PER_DAY)
                 ? announcementDao.getAnnouncementPerDayWithAmenities(extendSearch, pageRequest)
                 : announcementDao.getAnnouncementPerMonthWithAmenities(extendSearch, pageRequest);
         List<Integer> listAnnouncementId = getListAnnouncementIdWhichLikedCurrentUser();

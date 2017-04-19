@@ -3,7 +3,7 @@ package flatbook.announcement.entity;
 import javax.validation.constraints.Size;
 import java.util.Set;
 
-public class Post {
+public class PostDto {
     private Integer announcementId;
 
     private Integer cityId;
@@ -23,7 +23,7 @@ public class Post {
 
     private Integer priceValue;
 
-    private Price priceType;
+    private PriceType priceTypeType;
 
     private Set<Amenity> amenities;
 
@@ -93,12 +93,12 @@ public class Post {
         this.priceValue = priceValue;
     }
 
-    public Price getPriceType() {
-        return priceType;
+    public PriceType getPriceTypeType() {
+        return priceTypeType;
     }
 
-    public void setPriceType(Price priceType) {
-        this.priceType = priceType;
+    public void setPriceTypeType(PriceType priceTypeType) {
+        this.priceTypeType = priceTypeType;
     }
 
     public Set<Amenity> getAmenities() {

@@ -1,7 +1,7 @@
 package flatbook.announcement.entity;
 
 
-public class Comment {
+public class CommentDto {
     private Integer comment_id;
     private String text;
     private Integer announcement_id;

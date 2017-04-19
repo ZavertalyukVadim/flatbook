@@ -6,15 +6,13 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "favorites_announcements_in_user")
-public class FavoriteAnnouncementInUser {
+public class FavoriteAnnouncements {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-//    @Column(name = "id", nullable = false)
     private Integer id;
 
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = User.class)
     private User user;
-
 
     @JoinColumn(name = "announcement_id")
     private Integer announcementId;
