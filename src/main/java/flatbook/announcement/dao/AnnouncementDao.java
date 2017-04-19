@@ -1,6 +1,7 @@
 package flatbook.announcement.dao;
 
 import flatbook.announcement.entity.*;
+import flatbook.chat.dto.UserWithId;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -51,6 +52,9 @@ public interface AnnouncementDao extends JpaRepository<Announcement, Integer> {
             "group by a")
     Page<Announcement> getAnnouncementPerMonthWithAmenities(@Param("search") ExtendSearch search, Pageable pageable);
 
+    @Query("SELECT distinct m.announcementId FROM Message m where m.senderId=:#{#userIdPar.id} or m.receiverId=:#{#userIdPar.id} ")
+    List<Integer> getChatsAnnouncements(@Param("userIdPar") UserWithId userIdPar);
+
     Announcement findTopByOrderByPricePerDayDesc();
 
     Announcement findTopByOrderByPricePerMonthDesc();
@@ -68,4 +72,6 @@ public interface AnnouncementDao extends JpaRepository<Announcement, Integer> {
     List<Announcement> getAnnouncementByCityOrderByPricePerMonthDesc(City city);
 
     Page<Announcement> getAllByVisibilityTrueOrderByLastUpdatedDesc(Pageable pageable);
+
+
 }

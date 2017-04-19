@@ -13,17 +13,23 @@ public class Message {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     @Column(name = "`date`")
     private Date localDatetime;
 
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     @Column(name = "sender_id")
     private Integer senderId;
 
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     @Column(name = "receiver_id")
     private Integer receiverId;
 
     @Column(name = "announcement_id")
     private Integer announcementId;
+
+    @Column(name = "content")
+    private String content;
 
     public Integer getId() {
         return id;
@@ -63,5 +69,13 @@ public class Message {
 
     public void setLocalDatetime(Date localDatetime) {
         this.localDatetime = localDatetime;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
     }
 }

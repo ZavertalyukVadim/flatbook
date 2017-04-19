@@ -4,6 +4,7 @@ import flatbook.announcement.dao.AnnouncementDao;
 import flatbook.announcement.entity.Announcement;
 import flatbook.chat.dao.MessageDao;
 import flatbook.chat.dto.PageMessage;
+import flatbook.chat.dto.UserWithId;
 import flatbook.chat.entity.Message;
 import flatbook.profile.service.ProfileService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityManager;
 import java.util.Date;
+import java.util.List;
 
 @Service
 public class ChatService {
@@ -34,6 +36,9 @@ public class ChatService {
     public Message sendMessage(Message message) throws Exception {
         message.setSenderId(profileService.getCurrentUser().getId());
         message.setLocalDatetime(new Date());
+
+        message.setReceiverId(announcementDao.findOne(message.getAnnouncementId()).getUser().getId());
+
         return messageDao.save(message);
     }
 
@@ -50,7 +55,15 @@ public class ChatService {
         return messages;
     }
 
+    public void getChats(PageMessage pageMessage) {
+
+    }
+
     private boolean senderIsReceiver(Message message) {
         return message.getReceiverId() == message.getSenderId();
+    }
+
+    public List<Integer> getChatsAnnouncements() {
+        return announcementDao.getChatsAnnouncements(new UserWithId(profileService.getCurrentUser().getId()));
     }
 }
