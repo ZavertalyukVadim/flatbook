@@ -1,11 +1,11 @@
 package flatbook.profile.service;
 
-import flatbook.announcement.dao.AnnouncementByUserDao;
 import flatbook.announcement.dao.AnnouncementDao;
 import flatbook.announcement.dao.FavoriteAnnouncementInUserDao;
+import flatbook.announcement.dao.UserAnnouncementsDao;
 import flatbook.announcement.entity.Announcement;
-import flatbook.announcement.entity.AnnouncementByUser;
 import flatbook.announcement.entity.FavoriteAnnouncementInUser;
+import flatbook.announcement.entity.UserAnnouncements;
 import flatbook.profile.dao.*;
 import flatbook.profile.entity.*;
 import flatbook.profile.util.FileUtil;
@@ -31,20 +31,20 @@ public class ProfileService {
     private final EmailDao emailDao;
     private final PhoneDao phoneDao;
     private final ImageDao imageDao;
-    private final AnnouncementByUserDao announcementByUserDao;
+    private final UserAnnouncementsDao userAnnouncementsDao;
     private final EntityManager entityManager;
     private final AnnouncementDao announcementDao;
     private final FavoriteAnnouncementInUserDao favoriteAnnouncementInUserDao;
     private final RoleDao roleDao;
 
     @Autowired
-    public ProfileService(UserDao userDao, EmailDao emailDao, PhoneDao phoneDao, EntityManager entityManager, ImageDao imageDao, AnnouncementByUserDao announcementByUserDao, AnnouncementDao announcementDao, FavoriteAnnouncementInUserDao favoriteAnnouncementInUserDao, RoleDao roleDao) {
+    public ProfileService(UserDao userDao, EmailDao emailDao, PhoneDao phoneDao, EntityManager entityManager, ImageDao imageDao, UserAnnouncementsDao userAnnouncementsDao, AnnouncementDao announcementDao, FavoriteAnnouncementInUserDao favoriteAnnouncementInUserDao, RoleDao roleDao) {
         this.userDao = userDao;
         this.emailDao = emailDao;
         this.phoneDao = phoneDao;
         this.entityManager = entityManager;
         this.imageDao = imageDao;
-        this.announcementByUserDao = announcementByUserDao;
+        this.userAnnouncementsDao = userAnnouncementsDao;
         this.announcementDao = announcementDao;
         this.favoriteAnnouncementInUserDao = favoriteAnnouncementInUserDao;
         this.roleDao = roleDao;
@@ -450,8 +450,8 @@ public class ProfileService {
     public Set<Announcement> getAnnouncementsByUser() {
         Set<Announcement> announcements = new HashSet<>();
         List<Integer> listAnnouncementId = getListAnnouncementIdWhichLikedCurrentUser();
-        Set<AnnouncementByUser> announcementByUser = announcementByUserDao.getAnnouncementIdByUserId(getCurrentUser().getId());
-        for (AnnouncementByUser i : announcementByUser) {
+        Set<UserAnnouncements> userAnnouncements = userAnnouncementsDao.getUserAnnouncementsByUserId(getCurrentUser().getId());
+        for (UserAnnouncements i : userAnnouncements) {
             Announcement announcement = announcementDao.findOne(i.getAnnouncementId());
             if (listAnnouncementId.contains(announcement.getId())) {
                 announcement.setLiked(true);

@@ -35,14 +35,14 @@ public class AnnouncementService {
 
     private final UserDao userDao;
 
-    private final AnnouncementByUserDao announcementByUserDao;
+    private final UserAnnouncementsDao userAnnouncementsDao;
 
     private final PhotoDao photoDao;
 
     private final FavoriteAnnouncementInUserDao favoriteAnnouncementInUserDao;
 
     @Autowired
-    public AnnouncementService(AnnouncementDao announcementDao, CountryDao countryDao, RegionDao regionDao, CityDao cityDao, AmenityDao amenityDao, DistrictDao districtDao, EmailDao emailDao, UserDao userDao, AnnouncementByUserDao announcementByUserDao, PhotoDao photoDao, FavoriteAnnouncementInUserDao favoriteAnnouncementInUserDao) {
+    public AnnouncementService(AnnouncementDao announcementDao, CountryDao countryDao, RegionDao regionDao, CityDao cityDao, AmenityDao amenityDao, DistrictDao districtDao, EmailDao emailDao, UserDao userDao, UserAnnouncementsDao userAnnouncementsDao, PhotoDao photoDao, FavoriteAnnouncementInUserDao favoriteAnnouncementInUserDao) {
         this.announcementDao = announcementDao;
         this.countryDao = countryDao;
         this.regionDao = regionDao;
@@ -51,7 +51,7 @@ public class AnnouncementService {
         this.districtDao = districtDao;
         this.emailDao = emailDao;
         this.userDao = userDao;
-        this.announcementByUserDao = announcementByUserDao;
+        this.userAnnouncementsDao = userAnnouncementsDao;
         this.photoDao = photoDao;
         this.favoriteAnnouncementInUserDao = favoriteAnnouncementInUserDao;
     }
@@ -160,10 +160,10 @@ public class AnnouncementService {
             photo.setAnnouncement(savedAnnouncement);
             photoDao.save(photo);
         }
-        AnnouncementByUser announcementByUser = new AnnouncementByUser();
-        announcementByUser.setUserId(getCurrentUser().getId());
-        announcementByUser.setAnnouncementId(savedAnnouncement.getId());
-        announcementByUserDao.save(announcementByUser);
+        UserAnnouncements userAnnouncements = new UserAnnouncements();
+        userAnnouncements.setUserId(getCurrentUser().getId());
+        userAnnouncements.setAnnouncementId(savedAnnouncement.getId());
+        userAnnouncementsDao.save(userAnnouncements);
         return announcementDao.findOne(savedAnnouncement.getId());
     }
 
