@@ -24,7 +24,11 @@ public class Announcement {
 
     //    @JsonIgnore
 //    @JsonBackReference
-    @ManyToOne(fetch = FetchType.EAGER, targetEntity = User.class)
+//    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinTable(name = "users_announcements", joinColumns = {
+            @JoinColumn(name = "announcement_id")},
+            inverseJoinColumns = {@JoinColumn(name = "user_id")})
     private User user;
 
     @Column(name = "title")
