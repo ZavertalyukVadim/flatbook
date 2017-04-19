@@ -475,9 +475,16 @@ public class ProfileService {
 
     public Set<Announcement> getLikedAnnouncementsByUser() {
         Set<Announcement> announcements = new HashSet<>();
+        List<Integer> listAnnouncementId = getListAnnouncementIdWhichLikedCurrentUser();
         Set<FavoriteAnnouncementInUser> announcementByUser = new HashSet<>(favoriteAnnouncementInUserDao.getAnnouncementIdByUserId(getCurrentUser().getId()));
         for (FavoriteAnnouncementInUser i : announcementByUser) {
-            announcements.add(announcementDao.getAnnouncementById(i.getAnnouncementId()));
+            Announcement announcement = announcementDao.getAnnouncementById(i.getAnnouncementId());
+            if (listAnnouncementId.contains(announcement.getId())) {
+                announcement.setLiked(true);
+            } else {
+                announcement.setLiked(false);
+            }
+            announcements.add(announcement);
         }
         return announcements;
     }
