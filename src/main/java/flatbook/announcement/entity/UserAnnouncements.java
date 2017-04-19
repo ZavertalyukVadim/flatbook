@@ -10,11 +10,11 @@ public class UserAnnouncements {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @JoinColumn(name = "user_id", nullable = false)
+    @Column(name = "user_id")
     private Integer userId;
 
 
-    @JoinColumn(name = "announcement_id")
+    @Column(name = "announcement_id")
     private Integer announcementId;
 
 

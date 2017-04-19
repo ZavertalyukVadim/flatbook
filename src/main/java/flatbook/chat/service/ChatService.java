@@ -43,7 +43,7 @@ public class ChatService {
 
         entityManager.clear();
         Announcement announcement = announcementDao.findOne(pageMessage.getAnnouncementId());
-        pageMessage.setReceiverId(announcementDao.getAnnouncementById(pageMessage.getAnnouncementId()).getUser().getId());
+        pageMessage.setReceiverId(announcementDao.findOne(pageMessage.getAnnouncementId()).getUser().getId());
 
         Page<Message> messages =  messageDao.getMessages(pageMessage, pageRequest);
 
