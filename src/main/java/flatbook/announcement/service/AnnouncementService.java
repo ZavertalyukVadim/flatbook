@@ -120,7 +120,12 @@ public class AnnouncementService {
         announcement.setRegion(city.getRegion());
         announcement.setCountry(city.getRegion().getCountry());
         announcement.setUser(getCurrentUser());
-        return announcementDao.save(announcement);
+        Announcement savedAnnouncement =  announcementDao.save(announcement);
+        for (Photo photo : savedAnnouncement.getPhotos()) {
+            photo.setAnnouncement(savedAnnouncement);
+            photoDao.save(photo);
+        }
+        return announcementDao.findOne(savedAnnouncement.getId());
     }
 
     public Boolean deleteAnnouncement(Integer id) {
