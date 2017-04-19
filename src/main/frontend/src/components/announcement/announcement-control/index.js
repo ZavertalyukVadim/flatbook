@@ -11,12 +11,20 @@ class AnnouncementControl extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            visibility: !props.visibility
+            hidden: !props.visibility
+        }
+    }
+
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.visibility !== this.props.hidden) {
+            this.setState({
+                hidden: !nextProps.visibility
+            })
         }
     }
 
     onChangeAnnouncementVisibility = () => {
-        this.setState({visibility: !this.state.visibility});
+        this.setState({hidden: !this.state.hidden});
         this.props.changeUserAnnouncementVisibility(this.props.id);
     };
     onDeleteAnnouncement = () => this.props.deleteAnnouncement(this.props.id);
@@ -25,7 +33,7 @@ class AnnouncementControl extends Component {
 
     render() {
         const {
-            visibility
+            hidden
         } = this.state;
 
         return (
@@ -35,7 +43,7 @@ class AnnouncementControl extends Component {
                     <Checkbox
                         className="hide-announcement"
                         onClick={this.onChangeAnnouncementVisibility}
-                        checked={visibility}
+                        checked={hidden}
                         disabled={false}
                     >Hide</Checkbox>
                     <Button
