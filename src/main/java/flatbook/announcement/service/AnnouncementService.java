@@ -238,7 +238,7 @@ public class AnnouncementService {
     }
 
     private User getCurrentUser() {
-        Email email = emailDao.findOneByContent(getUserEmail());
+        Email email = emailDao.findOneByContentAndIsPrimaryTrue(getUserEmail());
         return userDao.getUserByEmails(email);
     }
 
