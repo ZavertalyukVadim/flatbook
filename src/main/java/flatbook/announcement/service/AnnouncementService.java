@@ -60,6 +60,7 @@ public class AnnouncementService {
         PageRequest pageRequest = new PageRequest(page, itemsPerPage);
         Page<Announcement> announcements = announcementDao.getAllByVisibilityTrueOrderByLastUpdatedDesc(pageRequest);
 
+//        return announcements;
         try {
             List<Integer> listAnnouncementId = getListAnnouncementIdWhichLikedCurrentUser();
             for (Announcement announcement : announcements) {
