@@ -59,12 +59,20 @@ public class AnnouncementService {
     public Page<Announcement> getAllAnnouncement(int page, int itemsPerPage) {
         PageRequest pageRequest = new PageRequest(page, itemsPerPage);
         Page<Announcement> announcements = announcementDao.getAllByVisibilityTrueOrderByLastUpdatedDesc(pageRequest);
-        List<Integer> listAnnouncementId = getListAnnouncementIdWhichLikedCurrentUser();
-        for (Announcement announcement : announcements) {
-            if (listAnnouncementId.contains(announcement.getId())) {
-                announcement.setLiked(true);
+
+        try {
+            List<Integer> listAnnouncementId = getListAnnouncementIdWhichLikedCurrentUser();
+            for (Announcement announcement : announcements) {
+                if (getCurrentUser().isEnabled()) {
+                    if (listAnnouncementId.contains(announcement.getId())) {
+                        announcement.setLiked(true);
+                    }
+                }
             }
+        } catch (Exception ignored) {
+
         }
+
         return announcements;
     }
 
