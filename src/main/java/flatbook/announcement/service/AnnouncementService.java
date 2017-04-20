@@ -166,10 +166,6 @@ public class AnnouncementService {
             photo.setAnnouncement(savedAnnouncement);
             photoDao.save(photo);
         }
-        UserAnnouncements userAnnouncements = new UserAnnouncements();
-        userAnnouncements.setUserId(getCurrentUser().getId());
-        userAnnouncements.setAnnouncementId(savedAnnouncement.getId());
-        userAnnouncementsDao.save(userAnnouncements);
         return announcementDao.findOne(savedAnnouncement.getId());
     }
 
