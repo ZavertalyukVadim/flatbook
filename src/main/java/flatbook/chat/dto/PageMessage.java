@@ -3,7 +3,10 @@ package flatbook.chat.dto;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 public class PageMessage {
+    @JsonIgnore
     private Integer pageNum;
+
+    @JsonIgnore
     private Integer itemsPerPage;
 
     @JsonIgnore

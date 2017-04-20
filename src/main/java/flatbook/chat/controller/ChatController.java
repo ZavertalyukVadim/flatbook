@@ -5,10 +5,7 @@ import flatbook.chat.entity.Message;
 import flatbook.chat.service.ChatService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -28,12 +25,15 @@ public class ChatController {
         return chatService.sendMessage(message);
     }
 
-    @PostMapping
-    public Page<Message> getMessages(@RequestBody PageMessage pageMessage) {
+    @PostMapping(value = "/{pageNum}/{itemsPerPage}")
+    public Page<Message> getMessages(@PathVariable("pageNum") Integer page, @PathVariable("itemsPerPage") Integer itemsPerPage, @RequestBody PageMessage pageMessage) {
+        pageMessage.setItemsPerPage(itemsPerPage);
+        pageMessage.setPageNum(page);
+
         return chatService.getMessages(pageMessage);
     }
 
-    @PostMapping("/chats")
+    @GetMapping("/chats")
     public List<Integer> getChatsAnnouncement() {
         return chatService.getChatsAnnouncements();
     }
