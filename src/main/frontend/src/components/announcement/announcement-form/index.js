@@ -40,7 +40,7 @@ class AnnouncementForm extends Component {
             PRICE_PER_DAY: props.PRICE_PER_DAY,
             PRICE_PER_MONTH: props.PRICE_PER_MONTH,
             priceType: isNull(props.PRICE_PER_DAY) ? pricePerMonth : pricePerDay,
-            photos: props.photos,
+            photos: typeof props.photos[0] === 'object' ? props.photos.map(p => p.id) : props.photos,
             toggleValue: isNull(props.PRICE_PER_DAY)
         }
     }
@@ -136,7 +136,8 @@ class AnnouncementForm extends Component {
             livingPlaces,
             chosenCityID,
             amenities,
-            priceType
+            priceType,
+            photos
         } = this.state;
 
         this.props.onSave({
@@ -149,7 +150,7 @@ class AnnouncementForm extends Component {
             priceType: priceType,
             priceValue: +this.state[priceType],
             amenities: amenities.filter(a => a.checked).map(a => ({id: a.id, name: a.name})),
-            photos: this.state.photos
+            photos: photos
         });
     };
     onDiscard = () => this.setState({
@@ -317,7 +318,7 @@ class AnnouncementForm extends Component {
                                 (p, i) =>
                                     <li className="announcement-form-photo-item">
                                         <img className="announcement-form-photo"
-                                             src={urlResolver(`photo/${typeof p === 'object' ? p.id : p}`)}
+                                             src={urlResolver(`photo/${p}`)}
                                              key={i}/>
                                         <Button
                                             type={ButtonTypes.danger}

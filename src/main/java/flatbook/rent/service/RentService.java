@@ -29,7 +29,6 @@ public class RentService {
         this.mailClient = mailClient;
     }
 
-
     public List<Rent> getCurrentUserRents() {
         User user = profileService.getCurrentUser();
         Integer userId = user.getId();

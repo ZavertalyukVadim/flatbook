@@ -1,2 +1,2 @@
-ALTER TABLE `team5`.`phones`
+ALTER TABLE `phones`
   ADD UNIQUE INDEX `content_UNIQUE` (`content` ASC);
