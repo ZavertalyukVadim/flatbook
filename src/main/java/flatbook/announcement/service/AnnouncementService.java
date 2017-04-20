@@ -61,16 +61,7 @@ public class AnnouncementService {
         Page<Announcement> announcements = announcementDao.getAllByVisibilityTrueOrderByLastUpdatedDesc(pageRequest);
 
 //        return announcements;
-        try {
-            List<Integer> listAnnouncementId = getListAnnouncementIdWhichLikedCurrentUser();
-            for (Announcement announcement : announcements) {
-                    if (listAnnouncementId.contains(announcement.getId())) {
-                        announcement.setLiked(true);
-                }
-            }
-        } catch (Exception ignored) {
-
-        }
+        chackedLikedAnnouncement(announcements);
 
         return announcements;
     }
@@ -93,7 +84,7 @@ public class AnnouncementService {
                 announcement.setLiked(true);
             }
         }
-        catch (Exception e){}
+        catch (Exception ignored){}
 
         return announcement;
     }
@@ -188,6 +179,11 @@ public class AnnouncementService {
         Page<Announcement> announcementPage = (search.getPriceType() == PriceType.PRICE_PER_DAY)
                 ? announcementDao.getAnnouncementPerDay(search, pageRequest)
                 : announcementDao.getAnnouncementPerMonth(search, pageRequest);
+        chackedLikedAnnouncement(announcementPage);
+        return announcementPage;
+    }
+
+    private void chackedLikedAnnouncement(Page<Announcement> announcementPage) {
         try {
             List<Integer> listAnnouncementId = getListAnnouncementIdWhichLikedCurrentUser();
             for (Announcement announcement : announcementPage) {
@@ -199,7 +195,6 @@ public class AnnouncementService {
         catch (Exception e){
 
         }
-        return announcementPage;
     }
 
     public Page<Announcement> getAnnouncementByExtendedSearch(ExtendSearch extendSearch) {
