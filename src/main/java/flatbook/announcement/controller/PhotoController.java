@@ -2,6 +2,7 @@ package flatbook.announcement.controller;
 
 import flatbook.announcement.entity.Photo;
 import flatbook.announcement.service.PhotoService;
+import flatbook.profile.service.ProfileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -14,11 +15,13 @@ import java.util.List;
 @RequestMapping(value = "/api/photo")
 public class PhotoController {
     private final PhotoService photoService;
+    private final ProfileService profileService;
     private final String FORMAT_FOR_UPLOAD_IMAGE = "image/jpeg";
 
     @Autowired
-    public PhotoController(PhotoService photoService) {
+    public PhotoController(PhotoService photoService, ProfileService profileService) {
         this.photoService = photoService;
+        this.profileService = profileService;
     }
 
     @RequestMapping(method = RequestMethod.GET)
@@ -51,5 +54,18 @@ public class PhotoController {
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public Photo deletePhoto(@PathVariable("id") Integer id) {
         return photoService.deletePhoto(id);
+    }
+
+
+
+    @GetMapping(value = "/getPhotoByIdUser/{id}")
+    public void getPhotoByIdUser(@PathVariable("id") Integer id, HttpServletResponse response){
+        try {
+            response.setContentType("image/jpeg");
+            response.getOutputStream().write(profileService.getImageByIdUser(id));
+            response.getOutputStream().flush();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

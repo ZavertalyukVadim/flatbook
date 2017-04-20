@@ -237,6 +237,9 @@ public class ProfileService {
         }
         return photo;
     }
+    public byte[] getImageByIdUser(Integer id) throws Exception {
+        return imageDao.getImageByUser(userDao.findOne(id)).getPhoto();
+    }
 
     public byte[] getImageById(Integer id) throws Exception {
         return imageDao.findOne(id).getPhoto();
