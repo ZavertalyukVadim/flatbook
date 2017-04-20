@@ -4,7 +4,10 @@ import AnnouncementsList from '../../components/announcement/announcements-list'
 import SearchForm from '../../components/search/search-form';
 
 export default () =>
-    <Container>
+    <Container
+        image='https://www.mebel.ru/images/interiors/26112015/144.jpg'
+    >
+
         <SearchForm/>
         <AnnouncementsList/>
     </Container>;

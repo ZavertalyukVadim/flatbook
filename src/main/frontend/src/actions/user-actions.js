@@ -236,3 +236,42 @@ export const signInWithFacebook = body => dispatch => {
         }
     });
 };
+
+export const sendAMessage = body => dispatch => {
+    return dispatch({
+        [CALL_API]: {
+            types: [
+                ActionTypes.SEND_A_MESSAGE_REQUEST,
+                ActionTypes.SEND_A_MESSAGE_SUCCESS,
+                ActionTypes.SEND_A_MESSAGE_FAILURE
+            ],
+            endpoint: () => post('chat/send', body)
+        }
+    });
+};
+
+export const getAnnouncementChats = () => dispatch => {
+    return dispatch({
+        [CALL_API]: {
+            types: [
+                ActionTypes.GET_CHATS_REQUEST,
+                ActionTypes.GET_CHATS_SUCCESS,
+                ActionTypes.GET_CHATS_FAILURE
+            ],
+            endpoint: () => post('chat/chats')
+        }
+    });
+};
+
+export const getAnnouncementMessages = () => dispatch => {
+    return dispatch({
+        [CALL_API]: {
+            types: [
+                ActionTypes.GET_MESSAGES_REQUEST,
+                ActionTypes.GET_MESSAGES_SUCCESS,
+                ActionTypes.GET_MESSAGES_FAILURE
+            ],
+            endpoint: () => post('chat/chats')
+        }
+    });
+};
