@@ -1,5 +1,6 @@
 package flatbook.rent.service;
 
+import flatbook.config.MailClient;
 import flatbook.profile.entity.User;
 import flatbook.profile.service.ProfileService;
 import flatbook.rent.dao.RentDao;
@@ -19,11 +20,13 @@ public class RentService {
 
     private final RentDao rentDao;
     private final ProfileService profileService;
+    private final MailClient mailClient;
 
     @Autowired
-    public RentService(RentDao rentDao, ProfileService profileService) {
+    public RentService(RentDao rentDao, ProfileService profileService, MailClient mailClient) {
         this.rentDao = rentDao;
         this.profileService = profileService;
+        this.mailClient = mailClient;
     }
 
 
@@ -52,8 +55,9 @@ public class RentService {
         Integer currentUserId = user.getId();
 
         rent.setUserId(currentUserId);
-
-        return rentDao.save(rent);
+        Rent savedRent = rentDao.save(rent);
+        mailClient.prepareAndSend(rent);
+        return savedRent;
     }
 
     private boolean isCorrectRent(Rent rent) throws Exception {
