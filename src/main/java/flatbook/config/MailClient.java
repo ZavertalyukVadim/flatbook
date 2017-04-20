@@ -23,7 +23,7 @@ public class MailClient {
             messageHelper.setFrom("zavertal.v@gmail.com");
             messageHelper.setTo(email.getContent());
             messageHelper.setSubject("Registration");
-            String prefLink = "<a href=http://localhost:8080/api/activatedEmail/";
+            String prefLink = "<a href=https://flatrent.herokuapp.com/api/activatedEmail/";
             Integer link = email.getId();
             String sufLink=">click!</a>";
             String fullLink = prefLink+link+sufLink;
