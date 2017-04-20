@@ -38,7 +38,24 @@ public class MailClient {
             Integer link = email.getId();
             String sufLink = ">click!</a>";
             String fullLink = prefLink + link + sufLink;
-            messageHelper.setText("Hello dear. You registration on Flatbook. If it's you click and work with this app - " + fullLink + " to continue authorization.", true);
+            messageHelper.setText("Welcome to Flatrent!<br>" +
+                    "<br>" +
+                    "Please, save this message. Your personal information:<br>" +
+                    "----------------------------<br>" +
+                    "Dear " + email.getUser().getFirstName() + " " + email.getUser().getLastName() +
+                    "<br>" +
+                    "----------------------------<br>" +
+                    "<br>" +
+                    "Your account is still inactive, and can’t sign. To activate - please go to following link:<br>" +
+                    "<br>" +
+                    "" + fullLink +
+                    "<br>" +
+                    "<br>" +
+                    "If it is not your account – please, ignore this message.<br>" +
+                    "<br>" +
+                    "Please, do not forget your password:  it stores in our base in encrypted way, so we can’t send it anymore. However, If you forget your password, please request new, wich must be activated the same way, as your account.<br>" +
+                    "<br>" +
+                    "Thanks for registering Flatrent!", true);
         };
         try {
             mailSender.send(messagePreparator);
@@ -54,14 +71,22 @@ public class MailClient {
             Announcement announcement = announcementDao.findOne(rent.getAnnouncementsId());
 
             String primaryEmail = null;
-            for (Email email :announcement.getUser().getEmails()) {
+            for (Email email : announcement.getUser().getEmails()) {
                 if (email.getPrimary()) {
                     primaryEmail = email.getContent();
                 }
             }
             messageHelper.setTo(primaryEmail);
             messageHelper.setSubject("Booking");
-            messageHelper.setText("Your apartmant booked "+announcement.getTitle());
+            messageHelper.setText("Hello!<br>" +
+                    "<br>" +
+                    "User: " + user.getFirstName()+" "+user.getLastName()+
+                    "<br>has booked tour apartment - " + announcement.getTitle() +
+                    "<br>" +
+                    "<br>" +
+                    "Please, confirm booking, or discuss all details in personal chat.<br>" +
+                    "<br>" +
+                    "Thanks for using Flatrent!",true);
         };
         try {
             mailSender.send(messagePreparator);
@@ -69,5 +94,4 @@ public class MailClient {
             e.printStackTrace();
         }
     }
-
 }
