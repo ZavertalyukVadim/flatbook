@@ -66,7 +66,6 @@ public class ProfileController {
         try {
             photoId =  profileService.getIdPhoto();
         } catch (Exception e) {
-
             response.setStatus(HttpServletResponse.SC_NOT_FOUND);
         }
         return photoId;
@@ -108,5 +107,16 @@ public class ProfileController {
     @GetMapping(value = "/issigned")
     @Secured("ROLE_USER")
     public void isSignedIn() throws Exception {
+    }
+
+    @GetMapping(value = "/getPhotoByIdUser/{id}")
+    public void getPhotoByIdUser(@PathVariable("id") Integer id, HttpServletResponse response){
+        try {
+            response.setContentType("image/jpeg");
+            response.getOutputStream().write(profileService.getImageByIdUser(id));
+            response.getOutputStream().flush();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

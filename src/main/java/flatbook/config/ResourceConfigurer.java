@@ -32,6 +32,7 @@ public class ResourceConfigurer extends ResourceServerConfigurerAdapter {
                 .antMatchers(HttpMethod.DELETE, "/api/announcement/**").access("hasRole('ROLE_USER')")
                 .antMatchers(HttpMethod.PUT, "/api/announcement").access("hasRole('ROLE_USER')")
                 .antMatchers(HttpMethod.POST, "/api/chat/**").permitAll()
+                .antMatchers(HttpMethod.GET,"/api/profile/**").permitAll()
                 .antMatchers("/api/profile").access("hasRole('ROLE_USER')")
                 .antMatchers("/api/profile/**").access("hasRole('ROLE_USER')")
                 .antMatchers("/api/profile").access("hasRole('ROLE_USER')")
