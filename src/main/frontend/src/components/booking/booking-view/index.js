@@ -19,7 +19,7 @@ class BookingView extends Component {
                     <div className="announcements-field">
                         <div>From: {from.dayOfMonth}, {from.month}, {from.year} <br/>
                             To: {to.dayOfMonth}, {to.month}, {to.year}</div>
-                        <AnnouncementPreview{...data}/>
+                        <AnnouncementPreview vertical={true} {...data}/>
                     </div> : <div>Loading</div>
                 }
             </div>

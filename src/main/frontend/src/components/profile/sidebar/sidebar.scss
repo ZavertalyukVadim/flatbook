@@ -1,28 +1,37 @@
+@import '../../../style/color-theme';
+
 .profile-sidebar {
 	text-align: center;
-	background-color: #34495e;
-	padding: 28px;
+	background-color: #fff;
 	position: fixed;
 	box-sizing: border-box;
-	height: 80%;
 }
 
 .profile-sidebar-links {
 	list-style-type: none;
 	text-transform: uppercase;
-	margin: 100px 0;
+
 }
 
 .sidebar-links-icon {
 	float: right;
-	color: #1abc9c;
+	color: #262626;
 }
 
 .profile-sidebar-links li {
+	padding: 20px 28px;
 	text-align: left;
-	margin: 8px 0;
+	border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 }
 
 .profile-sidebar-links li a {
-	color: white;
+	color: #262626;
+	&:hover {
+		color: #67b5ea;
+	}
+}
+
+.avatar-field {
+	padding: 28px;
+	background: #262626;
 }

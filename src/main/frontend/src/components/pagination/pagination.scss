@@ -1,9 +1,18 @@
+@import '../../style/color-theme';
+
 .pagination {
   list-style-type: none;
 
   .pagination-item {
     display: inline-block;
     cursor: pointer;
-    margin: 0 16px;
+    padding: 16px;
+    background-color: $primary;
+    color: #fff;
+    border: 1px solid;
   }
+}
+
+a {
+  color: #262626;
 }

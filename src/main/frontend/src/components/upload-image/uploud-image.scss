@@ -5,8 +5,6 @@
 
   cursor: pointer;
   text-align: center;
-  border: 2px solid;
-  border-radius: 2px;
   margin: map-get($indentSizes, s);
 
   &:hover {
@@ -20,5 +18,12 @@
 
   input {
     display: none;
+  }
+
+  .upload-image-button {
+    padding: 15px;
+    box-sizing: border-box;
+    color: white;
+    border: 1px solid #fff;
   }
 }
