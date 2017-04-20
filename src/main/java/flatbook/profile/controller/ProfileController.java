@@ -108,15 +108,4 @@ public class ProfileController {
     @Secured("ROLE_USER")
     public void isSignedIn() throws Exception {
     }
-
-    @GetMapping(value = "/getPhotoByIdUser/{id}")
-    public void getPhotoByIdUser(@PathVariable("id") Integer id, HttpServletResponse response){
-        try {
-            response.setContentType("image/jpeg");
-            response.getOutputStream().write(profileService.getImageByIdUser(id));
-            response.getOutputStream().flush();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
 }
