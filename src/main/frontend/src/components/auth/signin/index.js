@@ -1,12 +1,10 @@
 import React, {Component} from "react";
 import {connect} from "react-redux";
-import {noop} from "lodash";
 import Input from "../../input";
 import Button, {ButtonSizes, ButtonTypes} from "../../button";
 import Header from "../../header";
 import "../auth.scss";
-import {signin, signInWithFacebook} from "../../../actions/user-actions";
-import FacebookLogin from 'react-facebook-login';
+import {signin} from "../../../actions/user-actions";
 
 class SignIn extends Component {
 
@@ -18,7 +16,6 @@ class SignIn extends Component {
         };
     }
 
-    signInWithFB = response => response.status !== 'unknown' ? this.props.signInWithFacebook(response) : noop();
     onInputChange = val => e => this.setState({[val]: e.target.value});
     onLinkClick = () => this.props.redirect('/signup');
     onSubmit = () => this.props.signin({username: this.state.email, password: this.state.password});
@@ -53,24 +50,10 @@ class SignIn extends Component {
                     type={ButtonTypes.primary}
                     size={ButtonSizes.block}
                     caption="Sign In"
+                    disabled={!(email && password)}
                     onClick={this.onSubmit}
                 />
                 <span className="auth-item">or</span>
-                <div className="auth-social-button-field">
-                    <Button
-                        type={ButtonTypes.info}
-                        size={ButtonSizes.block}
-                        caption={[<i className="fa fa-facebook auth-icon"/>, 'Sign in with Facebook']}
-                        onClick={noop}
-                        className="auth-social-button"
-                    />
-                    <Button
-                        type={ButtonTypes.danger}
-                        size={ButtonSizes.block}
-                        caption={[<i className="fa fa-google auth-icon"/>, 'Sign in with Google']}
-                        onClick={noop}
-                    />
-                </div>
                 <div className="auth-link">
                     <p className="auth-link-description">Don't have an account?</p>
                     <Button
@@ -80,15 +63,9 @@ class SignIn extends Component {
                         onClick={this.onLinkClick}
                     />
                 </div>
-                <FacebookLogin
-                    appId="1429168600437309"
-                    autoLoad={false}
-                    fields="name,email"
-                    cssClass="info"
-                    callback={this.signInWithFB} />
             </div>
         );
     }
 }
 
-export default connect(({signin}) => ({user: {...signin}}), {signin, signInWithFacebook})(SignIn);
+export default connect(({signin}) => ({user: {...signin}}), {signin})(SignIn);

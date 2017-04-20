@@ -105,24 +105,10 @@ class SignUp extends Component {
                     type={ButtonTypes.primary}
                     size={ButtonSizes.block}
                     onClick={this.onSubmit}
+                    disabled={!(confirmPass === password && checked && password)}
                     caption="Sign up"
                 />
                 <span className="auth-item">or</span>
-                <div className="auth-social-button-field">
-                    <Button
-                        type={ButtonTypes.info}
-                        size={ButtonSizes.block}
-                        onClick={noop}
-                        caption={[<i className="fa fa-facebook auth-icon"/>, 'Sign up with Facebook']}
-                        className="auth-social-button"
-                    />
-                    <Button
-                        type={ButtonTypes.danger}
-                        size={ButtonSizes.block}
-                        onClick={noop}
-                        caption={[<i className="fa fa-google auth-icon"/>, 'Sign up with Google']}
-                    />
-                </div>
                 <div className="auth-link">
                     <p className="auth-link-description">Already have an account?</p>
                     <Button

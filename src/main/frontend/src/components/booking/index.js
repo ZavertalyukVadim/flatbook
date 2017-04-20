@@ -33,7 +33,6 @@ class Booking extends Component {
 
     });
     render() {
-        console.log(this.state.from.format('YYYY'), this.state.from.format('D'));
         return (
             <div>
                 <Button

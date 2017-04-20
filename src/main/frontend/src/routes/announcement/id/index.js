@@ -31,7 +31,7 @@ class Announcement extends Component {
             <Container>
                 {loaded && this.props.user.loaded ? (
                     <div>
-                        <AnnouncementView data={data}/>
+                        <AnnouncementView data={data} currentUser={user.data.id}/>
                         {comments.data.map((item, index) =>
                             user.data.id !== item.user.id ?
                                 <CommentView
@@ -44,7 +44,7 @@ class Announcement extends Component {
                                     onDelete={this.props.deleteComment}
                                 />
                         )}
-                        <CommentForm announcementId={data.id}/>
+                        <CommentForm user={user.data} announcementId={data.id}/>
                     </div>) : (<Loader/>)}
 
             </Container>

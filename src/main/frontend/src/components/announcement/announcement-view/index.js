@@ -5,6 +5,8 @@ import Header, {HeaderTypes} from '../../header';
 import AnnouncementPhotoContainer from '../announcement-photo-container';
 import Booking from '../../booking';
 import './announcement-view.scss';
+import ContactOwner from '../../contact-owner';
+import Amenities from '../../amenities';
 
 class AnnouncementView extends Component {
 
@@ -22,6 +24,7 @@ class AnnouncementView extends Component {
             title,
             amenities,
             user
+
         } = this.props.data;
 
         return (
@@ -41,6 +44,7 @@ class AnnouncementView extends Component {
                         <p>Region: {region.name}</p>
                         <p>City: {city.name}</p>
                         <Booking id={id}/>
+                        <ContactOwner id={id} sender={this.props.currentUser} receiver={user.id}/>
                     </div>
 
                 </div>
@@ -49,11 +53,7 @@ class AnnouncementView extends Component {
                     <p className="description">{description}</p>
                 </div>
                 <div className="amenities-field">
-                    {amenities.map((item, index) =>
-                        <div key={index}>
-                            <p>{item.name}</p>
-                        </div>
-                    )}
+                    <Amenities data={amenities}/>
                 </div>
             </div>
         )

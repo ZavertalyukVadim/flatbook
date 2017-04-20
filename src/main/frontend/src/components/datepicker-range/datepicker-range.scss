@@ -16,14 +16,14 @@
       display: block;
       text-align: center;
       width: 90%;
-      border: 2px solid $text-field-default-border-color;
+      border: 1px solid $text-field-default-border-color;
       color: $text-field-default-text-color;
       font-family: $default-font-family;
       font-size: $text-field-font-size;
       line-height: $text-field-default-line-height;
       padding: map-get($indentSizes, s) map-get($indentSizes, m);
       height: 40px;
-      border-radius: 6px;
+      border-radius: 3px;
       box-shadow: none;
       box-sizing: border-box;
       background: $text-field-background;
