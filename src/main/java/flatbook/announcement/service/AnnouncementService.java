@@ -215,10 +215,17 @@ public class AnnouncementService {
                 ? announcementDao.getAnnouncementPerDayWithAmenities(extendSearch, pageRequest)
                 : announcementDao.getAnnouncementPerMonthWithAmenities(extendSearch, pageRequest);
         List<Integer> listAnnouncementId = getListAnnouncementIdWhichLikedCurrentUser();
-        for (Announcement announcement : announcementPage) {
-            if (listAnnouncementId.contains(announcement.getId())) {
-                announcement.setLiked(true);
+        try {
+
+
+            for (Announcement announcement : announcementPage) {
+                if (listAnnouncementId.contains(announcement.getId())) {
+                    announcement.setLiked(true);
+                }
             }
+        }
+        catch (Exception ignored){
+
         }
         return announcementPage;
     }
