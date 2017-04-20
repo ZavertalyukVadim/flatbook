@@ -17,11 +17,9 @@ public class Message {
     @Column(name = "`date`")
     private Date localDatetime;
 
-    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     @Column(name = "sender_id")
     private Integer senderId;
 
-    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     @Column(name = "receiver_id")
     private Integer receiverId;
 
@@ -30,6 +28,12 @@ public class Message {
 
     @Column(name = "content")
     private String content;
+
+
+//    private Boolean my;
+
+    public Message() {
+    }
 
     public Integer getId() {
         return id;
@@ -78,4 +82,12 @@ public class Message {
     public void setContent(String content) {
         this.content = content;
     }
+
+//    public Boolean getMy() {
+//        return my;
+//    }
+//
+//    public void setMy(Boolean my) {
+//        this.my = my;
+//    }
 }
