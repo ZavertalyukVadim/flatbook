@@ -6,7 +6,9 @@ import './sidebar.scss';
 const Sidebar = () => {
     return (
         <div className="profile-sidebar">
-            <AvatarContainer/>
+            <div className="avatar-field">
+                <AvatarContainer/>
+            </div>
             <ul className="profile-sidebar-links">
                 <li>
                     <Link to='/profile'>

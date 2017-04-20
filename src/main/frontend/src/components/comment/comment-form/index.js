@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import Button, {ButtonTypes, ButtonSizes} from '../../button';
 import Textarea from '../../textarea';
 import {connect} from 'react-redux';
+import AvatarContainer from '../../avatar-container';
 import {addNewComment, updateExistingComment} from '../../../actions/announcement-actions';
 import './comment.scss';
 
@@ -25,8 +26,11 @@ class CommentForm extends Component {
     };
 
     render() {
+        const {user} = this.props;
+        console.log(this.props);
         return (
             <div className="comment">
+                <AvatarContainer firstName={user.firstName} lastName={user.lastName} view={true}/>
                 <Textarea
                     placeholder="Leave your comment..."
                     onChange={this.onInputChange}

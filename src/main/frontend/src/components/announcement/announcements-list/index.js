@@ -29,6 +29,7 @@ class AnnouncementsList extends Component {
                         <div className="announcements-field">
                             {data.content.map((item, index) =>
                                 <AnnouncementPreview
+                                    vertical={true}
                                     key={index}
                                     {...item}
                                 />

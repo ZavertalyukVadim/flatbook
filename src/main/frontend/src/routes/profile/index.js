@@ -36,6 +36,7 @@ class Profile extends Component {
                     </div>
                     {this.props.user.announcements.map((item, index) =>
                         <AnnouncementControl
+                            horisontal={true}
                             key={index}
                             {...item}
                         />

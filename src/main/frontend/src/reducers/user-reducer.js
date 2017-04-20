@@ -28,6 +28,14 @@ const DEFAULT_STATE = {
     signup: {
         registered: false
     },
+    messages: {
+        chats: [],
+        received: {
+            data: []
+        }, sent: {
+            data: []
+        }
+    },
     loaded: false
 };
 
@@ -74,8 +82,10 @@ export default (state = DEFAULT_STATE, action) => {
     }
 
     if (action.type === ActionTypes.CHANGE_USER_ANNOUNCEMENT_VISIBILITY_SUCCESS) {
-        return {...state, announcements: state.announcements.map((item, index) =>
-            item.id !== action.response.id ? item : {...action.response})};
+        return {
+            ...state, announcements: state.announcements.map((item, index) =>
+                item.id !== action.response.id ? item : {...action.response})
+        };
     }
 
     if (action.type === ActionTypes.CHANGE_USER_ANNOUNCEMENT_VISIBILITY_FAILURE) {
@@ -174,7 +184,7 @@ export default (state = DEFAULT_STATE, action) => {
     }
 
     if (action.type === ActionTypes.GET_USER_AVATAR_SUCCESS) {
-        return {...state, avatar:{loaded: true, id: action.response}};
+        return {...state, avatar: {loaded: true, id: action.response}};
     }
 
     if (action.type === ActionTypes.GET_USER_AVATAR_FAILURE) {
@@ -198,7 +208,7 @@ export default (state = DEFAULT_STATE, action) => {
     }
 
     if (action.type === ActionTypes.GET_USER_BOOKINGS_SUCCESS) {
-        return {...state, booking: {data: action.response,  loaded: true, pending: false}};
+        return {...state, booking: {data: action.response, loaded: true, pending: false}};
     }
 
     if (action.type === ActionTypes.GET_USER_BOOKINGS_FAILURE) {
@@ -217,5 +227,40 @@ export default (state = DEFAULT_STATE, action) => {
         return {...state};
     }
 
+    if (action.type === ActionTypes.SEND_A_MESSAGE_REQUEST) {
+        return {...state};
+    }
+
+    if (action.type === ActionTypes.SEND_A_MESSAGE_SUCCESS) {
+        return {...state};
+    }
+
+    if (action.type === ActionTypes.SEND_A_MESSAGE_FAILURE) {
+        return {...state};
+    }
+
+    if (action.type === ActionTypes.GET_CHATS_REQUEST) {
+        return {...state};
+    }
+
+    if (action.type === ActionTypes.GET_CHATS_SUCCESS) {
+        return {...state, messages: {...state.messages, chats: action.response}};
+    }
+
+    if (action.type === ActionTypes.GET_CHATS_FAILURE) {
+        return {...state};
+    }
+
+    if (action.type === ActionTypes.GET_MESSAGES_REQUEST) {
+        return {...state};
+    }
+
+    if (action.type === ActionTypes.GET_MESSAGES_SUCCESS) {
+        return {...state, messages:  {...state.messages, received: action.response}};
+    }
+
+    if (action.type === ActionTypes.GET_MESSAGES_FAILURE) {
+        return {...state};
+    }
     return state;
 };

@@ -1,25 +1,26 @@
 //Common colors
 $success: #2ecc71;
-$primary: #008489;
+$primary: #67b5ea;
 $danger: #ff5a5f;
 $info: #3498db;
-$inverse: #34495e;
-$default-text-color: #34495e;
+$inverse: #262626;
+$default-text-color: #464646;
+$default-background-color: #262626;
 
 //Buttons
 $btn-text-color: #fff;
 $btn-disabled-color: #bdc3c7;
 
 //Input and Textarea
-$text-field-default-border-color: #bdc3c7;
-$text-field-default-text-color: #34495e;
+$text-field-default-border-color: #464646;
+$text-field-default-text-color: #464646;
 $text-field-background: #fff;
 $text-field-disabled-background: #f4f6f6;
 $text-field-disabled-border: #d5dbdb;
 $text-field-disabled-text-color: #d5dbdb;
 
 //Checkbox
-$checkbox-background: #bdc3c7;
+$checkbox-background: #464646;
 $checkbox-disabled: #e6e8ea;
 $check-icon-color: #fff;
 
@@ -32,4 +33,5 @@ $dropdown-background-color: #ecf0f1;
 $dropdown-hover-background-color: #d2d6d7;
 
 //Search
-$search-form-default-color: #fff;
+$search-form-default-color: #464646;
+

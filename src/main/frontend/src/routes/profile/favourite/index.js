@@ -25,6 +25,7 @@ class Favourite extends Component {
                         <div className="announcements-field">
                             {data.map((item, index) =>
                                 <AnnouncementPreview
+                                    vertical={true}
                                     key={index}
                                     {...item}
 
