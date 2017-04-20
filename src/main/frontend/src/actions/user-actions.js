@@ -224,19 +224,6 @@ export const getUserBookings = () => (dispatch, getState) => {
     });
 };
 
-export const signInWithFacebook = body => dispatch => {
-    return dispatch({
-        [CALL_API]: {
-            types: [
-                ActionTypes.SIGN_IN_FACEBOOK_REQUEST,
-                ActionTypes.SIGN_IN_FACEBOOK_SUCCESS,
-                ActionTypes.SIGN_IN_FACEBOOK_FAILURE
-            ],
-            endpoint: () => post('login/facebook', body)
-        }
-    });
-};
-
 export const sendAMessage = body => dispatch => {
     return dispatch({
         [CALL_API]: {
