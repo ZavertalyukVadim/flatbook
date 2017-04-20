@@ -38,7 +38,7 @@ public class MailClient {
             Integer link = email.getId();
             String sufLink = ">click!</a>";
             String fullLink = prefLink + link + sufLink;
-            messageHelper.setText("Hello dear. You registration on Flatbook. If it's you click and work with this app -  " + fullLink + " to continue authorization.", true);
+            messageHelper.setText("Hello dear. You registration on Flatbook. If it's you click and work with this app - " + fullLink + " to continue authorization.", true);
         };
         try {
             mailSender.send(messagePreparator);
@@ -61,7 +61,7 @@ public class MailClient {
             }
             messageHelper.setTo(primaryEmail);
             messageHelper.setSubject("Booking");
-            messageHelper.setText("Your partman booked "+announcement.getTitle());
+            messageHelper.setText("Your apartmant booked "+announcement.getTitle());
         };
         try {
             mailSender.send(messagePreparator);
