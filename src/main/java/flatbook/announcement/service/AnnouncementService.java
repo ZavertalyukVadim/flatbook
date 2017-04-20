@@ -85,11 +85,15 @@ public class AnnouncementService {
     }
 
     public Announcement getAnnouncementById(Integer id) {
-        List<Integer> listAnnouncementId = getListAnnouncementIdWhichLikedCurrentUser();
         Announcement announcement = announcementDao.findOne(id);
-        if (listAnnouncementId.contains(announcement.getId())) {
-            announcement.setLiked(true);
+        try {
+            List<Integer> listAnnouncementId = getListAnnouncementIdWhichLikedCurrentUser();
+
+            if (listAnnouncementId.contains(announcement.getId())) {
+                announcement.setLiked(true);
+            }
         }
+        catch (Exception e){}
 
         return announcement;
     }
