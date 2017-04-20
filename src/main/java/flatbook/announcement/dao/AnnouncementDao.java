@@ -13,6 +13,7 @@ import java.util.List;
 public interface AnnouncementDao extends JpaRepository<Announcement, Integer> {
 
     @Query("SELECT a FROM Announcement a where a.city.id = :#{#search.cityId} " +
+            "and a.pricePerDay is not null " +
             "and  a.rooms=:#{#search.rooms} " +
             "and a.visibility = true " +
             "and a.livingPlaces=:#{#search.livingPlaces} " +
@@ -22,6 +23,7 @@ public interface AnnouncementDao extends JpaRepository<Announcement, Integer> {
     Page<Announcement> getAnnouncementPerDay(@Param("search") Search search, Pageable pageable);
 
     @Query("SELECT a FROM Announcement a where a.city.id = :#{#search.cityId} " +
+            "and a.pricePerMonth is not null " +
             "and  a.rooms=:#{#search.rooms} " +
             "and a.visibility = true " +
             "and a.livingPlaces=:#{#search.livingPlaces} " +
@@ -31,6 +33,7 @@ public interface AnnouncementDao extends JpaRepository<Announcement, Integer> {
     Page<Announcement> getAnnouncementPerMonth(@Param("search") Search search, Pageable pageable);
 
     @Query(value = "SELECT a FROM Announcement a INNER JOIN a.amenities amenities where a.city.id = :#{#search.cityId} " +
+            "and a.pricePerDay is not null " +
             "and a.rooms=:#{#search.rooms} " +
             "and a.visibility = true " +
             "and a.livingPlaces=:#{#search.livingPlaces} " +
@@ -42,6 +45,7 @@ public interface AnnouncementDao extends JpaRepository<Announcement, Integer> {
     Page<Announcement> getAnnouncementPerDayWithAmenities(@Param("search") ExtendSearch search, Pageable pageRequest);
 
     @Query("SELECT a FROM Announcement a INNER JOIN  a.amenities amenities where a.city.id = :#{#search.cityId} " +
+            "and a.pricePerMonth is not null " +
             "and a.rooms = :#{#search.rooms} " +
             "and a.visibility = true " +
             "and a.livingPlaces = :#{#search.livingPlaces} " +
