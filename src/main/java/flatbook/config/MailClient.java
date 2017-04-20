@@ -78,7 +78,15 @@ public class MailClient {
             }
             messageHelper.setTo(primaryEmail);
             messageHelper.setSubject("Booking");
-            messageHelper.setText("Your apartmant booked " + announcement.getTitle());
+            messageHelper.setText("Hello!<br>" +
+                    "<br>" +
+                    "User: " + user.getFirstName()+" "+user.getLastName()+
+                    "<br>has booked tour apartment - " + announcement.getTitle() +
+                    "<br>" +
+                    "<br>" +
+                    "Please, confirm booking, or discuss all details in personal chat.<br>" +
+                    "<br>" +
+                    "Thanks for using Flatrent!",true);
         };
         try {
             mailSender.send(messagePreparator);
