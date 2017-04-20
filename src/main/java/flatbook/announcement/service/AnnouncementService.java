@@ -59,10 +59,7 @@ public class AnnouncementService {
     public Page<Announcement> getAllAnnouncement(int page, int itemsPerPage) {
         PageRequest pageRequest = new PageRequest(page, itemsPerPage);
         Page<Announcement> announcements = announcementDao.getAllByVisibilityTrueOrderByLastUpdatedDesc(pageRequest);
-
-//        return announcements;
         chackedLikedAnnouncement(announcements);
-
         return announcements;
     }
 
