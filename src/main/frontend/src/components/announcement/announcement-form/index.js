@@ -316,7 +316,8 @@ class AnnouncementForm extends Component {
                             photos.map(
                                 (p, i) =>
                                     <li className="announcement-form-photo-item">
-                                        <img className="announcement-form-photo" src={urlResolver(`photo/${p}`)}
+                                        <img className="announcement-form-photo"
+                                             src={urlResolver(`photo/${typeof p === 'object' ? p.id : p}`)}
                                              key={i}/>
                                         <Button
                                             type={ButtonTypes.danger}
