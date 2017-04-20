@@ -1,0 +1,8 @@
+.idea/
+src/main/frontend/node_modules
+src/main/frontend/build
+src/main/frontend/npm-debug.log
+/target/
+/SPDU_Team4.iml
+/Spring-boot.iml
+*.iml

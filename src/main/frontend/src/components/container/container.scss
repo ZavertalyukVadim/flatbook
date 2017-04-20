@@ -1,0 +1,58 @@
+@import "../../style/sizes.scss";
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-bottom: 100px;
+}
+
+.main-container {
+  width: 80%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-content: stretch;
+  align-items: flex-start;
+  background: #f3f3f3;
+  box-sizing: border-box;
+  margin-top: 70px;
+
+}
+
+.sidebar-wrapper, .content-wrapper {
+  order: 0;
+  flex: 0 1 auto;
+  align-self: stretch;
+}
+
+.sidebar-wrapper, .content-wrapper, .main-container {
+  height:90%;
+}
+
+.content-wrapper {
+  display: flex;
+  flex-direction: column;
+  width: 75%;
+  text-align: center;
+  padding: 0 28px;
+}
+
+.sidebar-wrapper {
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+  width: 25%;
+}
+
+.navbar-wrapper {
+  width: 100%;
+  height: $navbar-height;
+  position: fixed;
+  z-index: 10;
+}
+
+.footer-wrapper {
+  width: 100%;
+}

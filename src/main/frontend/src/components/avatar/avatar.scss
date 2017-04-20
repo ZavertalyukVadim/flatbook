@@ -1,0 +1,14 @@
+@import "../../style/color-theme";
+@import "../../style/sizes";
+
+.img-circled {
+  max-width: 100%;
+  width: $img-small-width;
+  border: 1px solid $img-border-color;
+  padding: map-get($indentSizes, xxs);
+  border-radius: 50%;
+}
+
+.avatar {
+  max-width: 100%;
+}

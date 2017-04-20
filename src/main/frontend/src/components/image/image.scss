@@ -1,0 +1,54 @@
+@import '../../style/sizes';
+@import '../../style/color-theme';
+
+.image-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.img-rectangle {
+  background-color: $img-background-color;
+  border: 1px solid $img-border-color;
+  border-radius: 4px;
+  padding: map-get($indentSizes, xxs);
+}
+
+.small {
+  max-width: $img-small-width;
+}
+
+.medium {
+  max-width: $img-medium-width;
+}
+
+.large {
+  max-width: $img-large-width;
+}
+
+.like {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  font-size: 28px;
+  padding: map-get($indentSizes, m);
+  color: #fff;
+  text-align: right;
+  opacity: 0;
+  transition: opacity 0.6s;
+  &:hover {
+    opacity: .7;
+  }
+}
+
+.liked {
+  opacity: 1;
+  &:hover {
+    opacity: 1;
+  }
+}
+
+.like-icon {
+  cursor: pointer;
+}

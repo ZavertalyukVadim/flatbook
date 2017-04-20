@@ -1,0 +1,57 @@
+@import "../../../style/sizes";
+@import "../../../style/color-theme";
+
+.announcement-form {
+  width: 50%;
+  align-self: center;
+
+  .announcement-form-custom-field {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+
+    .announcement-form-custom-field-toggle {
+      align-self: center;
+      margin-right: map-get($indentSizes, m);
+    }
+
+    .announcement-form-custom-field-input {
+      input {
+        margin: 0;
+      }
+    }
+  }
+
+  .announcement-form-amenties {
+
+  }
+
+  .announcement-form-required-field {
+    color: $danger;
+  }
+
+  .announcement-btn {
+    margin-right: map-get($indentSizes, m);
+  }
+
+  .announcement-form-item {
+    margin: map-get($indentSizes, l) 0;
+  }
+
+  .announcement-form-photo-list {
+    list-style: none;
+
+    .announcement-form-photo-item {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      .announcement-form-photo {
+        border-radius: 3px;
+        max-width: 400px;
+        max-height: 400px;
+      }
+    }
+
+  }
+}

@@ -1,0 +1,18 @@
+.announcement-description-field {
+  display: flex;
+  flex-direction: row;
+
+}
+.description-field {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.description {
+  text-align: justify;
+  width: 100%;
+  margin-left: 40px;
+
+}

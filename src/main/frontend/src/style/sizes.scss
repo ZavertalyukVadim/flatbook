@@ -1,0 +1,19 @@
+$baseIndent: 4px;
+
+$indentSizes: (
+  xxs: $baseIndent / 2,
+  xs: $baseIndent,
+  s: $baseIndent * 2,
+  m: $baseIndent * 3,
+  l: $baseIndent * 4,
+  xl: $baseIndent * 6,
+  xls: $baseIndent * 8,
+  xxl: $baseIndent * 16
+);
+
+//Image
+$img-small-width:  200px;
+$img-medium-width: 400px;
+$img-large-width: 800px;
+
+$navbar-height: 53px;

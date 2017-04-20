@@ -1,0 +1,60 @@
+@import "../../style/color-theme.scss";
+
+$toggle-width: 80px;
+$toggle-height: 34px;
+
+.toggle {
+
+  .toggle-switch {
+    position: relative;
+    display: inline-block;
+    width: $toggle-width;
+    height: $toggle-height;
+
+    input {
+      display: none;
+    }
+  }
+
+  .toggle-slider {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: $inverse;
+    border-radius: 4px;
+
+    &:before {
+      position: absolute;
+      content: "";
+      height: $toggle-height;
+      width: $toggle-height;
+      background-color: $primary;
+      -webkit-transition: .4s;
+      transition: .4s;
+      top: 0;
+      right: 0;
+      border-radius: 0 4px 4px 0;
+    }
+
+    .toggle-icon {
+      color: $primary;
+      font-size: 20px;
+      padding: 7px;
+    }
+  }
+
+  input {
+    &:checked + .toggle-slider:before {
+      -webkit-transform: translateX(-($toggle-width - $toggle-height));
+      -ms-transform: translateX(-($toggle-width - $toggle-height));
+      transform: translateX(-($toggle-width - $toggle-height));
+      border-radius: 4px 0 0 4px;
+    }
+  }
+}

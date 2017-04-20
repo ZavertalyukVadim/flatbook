@@ -1,0 +1,41 @@
+@import "../../style/sizes.scss";
+@import "../../style/color-theme.scss";
+
+.navbar {
+  width: 100%;
+  height: $navbar-height;
+  background-color: $inverse;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  overflow: hidden;
+
+  .navbar-logo {
+    margin-left: map-get($indentSizes, l);
+    height: 100%;
+
+    .navbar-logo-img {
+      height: 100%;
+    }
+  }
+
+  .navbar-links {
+    display: flex;
+    flex-direction: row;
+    margin-right: map-get($indentSizes, xl);
+
+    .navbar-link {
+      align-self: center;
+      color: $primary;
+      padding: map-get($indentSizes, l) map-get($indentSizes, xl);
+      font-size: 18px;
+      margin: 0;
+      cursor: pointer;
+
+      .navbar-link-icon {
+        margin: 0 map-get($indentSizes, m);
+      }
+    }
+  }
+}

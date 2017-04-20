@@ -1,0 +1,60 @@
+@import "../../style/color-theme.scss";
+@import "../../style/font.scss";
+@import "../../style/sizes.scss";
+
+.input-container {
+   width: 100%;
+  .input {
+    display: block;
+    width: 100%;
+    border: 2px solid $text-field-default-border-color;
+    color: $text-field-default-text-color;
+    font-family: $default-font-family;
+    font-size: $text-field-font-size;
+    line-height: $text-field-default-line-height;
+    padding: map-get($indentSizes, s) map-get($indentSizes, m);
+    height: 45px;
+    border-radius: 3px;
+    box-shadow: none;
+    box-sizing: border-box;
+    background: $text-field-background;
+    margin: map-get($indentSizes, m) 0;
+
+    &:focus {
+      outline: none;
+    }
+
+    &:disabled {
+      background-color: $text-field-disabled-background;
+      border-color: $text-field-disabled-border;
+      color: $text-field-disabled-text-color;
+      cursor: default;
+      opacity: 0.7;
+      filter: alpha(opacity=70);
+    }
+  }
+
+  .input-default {
+    &:focus {
+      border: 2px solid $primary;
+      outline: none;
+    }
+  }
+
+  .input-error {
+    color: $danger;
+    border-color: $danger;
+    box-shadow: none;
+  }
+
+  .input-success {
+    color: $success;
+    border-color: $success;
+    box-shadow: none;
+  }
+
+  .error-massage {
+    color: $danger;
+    padding-left: map-get($indentSizes, m);
+  }
+}

@@ -1,0 +1,79 @@
+@import "../../style/color-theme.scss";
+@import "../../style/sizes.scss";
+
+$btn-border-radius: 3px;
+
+.btn-default {
+  cursor: pointer;
+  text-align: center;
+  border: none;
+  border-radius: $btn-border-radius;
+  color: $btn-text-color;
+  margin: map-get($indentSizes, s);
+
+  &:hover {
+    opacity: .75;
+    transition: opacity 0.5s linear;
+  }
+}
+
+/*Type*/
+
+.btn-info {
+  background-color: $info;
+}
+
+.btn-danger {
+  background-color: $danger;
+}
+
+.btn-success {
+  background-color: $success;
+}
+
+.btn-primary {
+  background-color: $primary;
+}
+
+.btn-disabled {
+  cursor: not-allowed;
+  filter: alpha(opacity=65);
+  -webkit-box-shadow: none;
+  box-shadow: none;
+  opacity: .65;
+  background-color: $btn-disabled-color;
+  &:hover {
+    opacity: .65;
+  }
+}
+
+/*Size*/
+
+.small {
+  padding: map-get($indentSizes, xs) map-get($indentSizes, m);
+  font-size: 14px;
+}
+
+.medium {
+  padding:  map-get($indentSizes, m) map-get($indentSizes, l);
+  font-size: 16px;
+}
+
+.large {
+  padding:  map-get($indentSizes, l) map-get($indentSizes, xl);
+  font-size: 18px;
+}
+
+.btn-block {
+  width: 100%;
+  padding: map-get($indentSizes, l) map-get($indentSizes, xl);
+  font-size: 18px;
+  margin-left: 0;
+  margin-right: 0;
+}
+
+.btn-link {
+  background: none;
+  color: #008489;
+  margin: 0;
+} 

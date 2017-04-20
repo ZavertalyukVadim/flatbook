@@ -1,0 +1,31 @@
+ .profile-settings {
+ 	width: 50%;
+ }
+
+.contact-info {
+	margin-top: 15%;	
+}
+ .contact-info-field {
+   display: flex;
+   flex-direction: row;
+   align-items: center;
+   
+ }
+
+ .profile-settings-field {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+ }
+
+ .modal .modal-content {
+   width: 30%;
+ }
+
+ .contact-info-header {
+   display: flex;
+   flex-direction: row;
+   justify-content: space-between;
+   align-items: baseline;
+ }

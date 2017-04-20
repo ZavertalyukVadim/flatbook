@@ -1,0 +1,38 @@
+@import "../../style/color-theme.scss";
+@import "../../style/font.scss";
+@import "../../style/sizes.scss";
+
+$checkbox-size: 20px;
+$checkbox-border-radius: 3px;
+
+.checkbox {
+  display: flex;
+  margin: 16px;
+
+  .checkbox-icon {
+    width: $checkbox-size;
+    min-width: $checkbox-size;
+    height: $checkbox-size;
+    border-radius: $checkbox-border-radius;
+    font-size: $default-font-size;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: 0.2s linear;
+    color: $check-icon-color;
+    margin-right: map-get($indentSizes, xs);
+    background-color: $checkbox-background;
+  }
+
+  .checkbox-checked {
+    background-color: $primary;
+
+    &:before {
+      content: "\2714";
+    }
+  }
+
+  .checkbox-disabled {
+    background-color: $checkbox-disabled;
+  }
+}

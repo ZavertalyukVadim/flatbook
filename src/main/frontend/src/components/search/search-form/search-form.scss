@@ -1,0 +1,82 @@
+@import "../../../style/color-theme.scss";
+@import "../../../style/font.scss";
+@import "../../../style/sizes.scss";
+
+.search-form {
+  border: 2px solid $inverse;
+  border-radius: 6px;
+  background-color: $inverse;
+  color: $inverse;
+  min-width: 80%;
+
+  .search-form-options-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+
+    .search-form-address {
+      width: 100%;
+    }
+
+    .search-form-dropdown {
+      margin: map-get($indentSizes, xl);
+    }
+
+    .search-form-price {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-width: 100%;
+
+      .search-form-price-slider {
+        min-width: 100%;
+
+      }
+      .search-form-price-radio {
+        min-width: 100%;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        margin: 8px 0;
+      }
+    }
+
+    .search-form-options {
+      color: $search-form-default-color;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      margin: map-get($indentSizes, l);
+
+      .search-form-options-label {
+        display: flex;
+        flex-direction: column;
+        margin: map-get($indentSizes, m) map-get($indentSizes, l);
+      }
+
+      .search-form-options-ranges {
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        margin: 8px 0;
+      }
+    }
+  }
+
+  .search-form-amenities {
+    color: $search-form-default-color;
+  }
+
+  .search-form-button {
+    width: 60%;
+  }
+}
+
+.search-vertical {
+  min-width: 35%;
+  flex-direction: column !important;
+}

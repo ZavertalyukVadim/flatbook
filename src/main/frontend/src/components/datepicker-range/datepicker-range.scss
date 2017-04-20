@@ -1,0 +1,42 @@
+@import "../../style/color-theme.scss";
+@import "../../style/font.scss";
+@import "../../style/sizes.scss";
+
+.datepicker-range {
+
+  display: flex;
+  flex-direction: row;
+
+  .datepicker-range-item {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+
+    input {
+      display: block;
+      text-align: center;
+      width: 90%;
+      border: 2px solid $text-field-default-border-color;
+      color: $text-field-default-text-color;
+      font-family: $default-font-family;
+      font-size: $text-field-font-size;
+      line-height: $text-field-default-line-height;
+      padding: map-get($indentSizes, s) map-get($indentSizes, m);
+      height: 40px;
+      border-radius: 6px;
+      box-shadow: none;
+      box-sizing: border-box;
+      background: $text-field-background;
+      margin: map-get($indentSizes, s) map-get($indentSizes, m);
+
+      &:focus {
+        border: 2px solid $primary;
+        outline: none;
+      }
+    }
+  }
+
+  .datepicker-range-label {
+
+  }
+}

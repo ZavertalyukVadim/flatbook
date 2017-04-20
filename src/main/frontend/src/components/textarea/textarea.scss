@@ -1,0 +1,34 @@
+@import "../../style/color-theme.scss";
+@import "../../style/font.scss";
+@import "../../style/sizes.scss";
+
+.textarea {
+  display: block;
+  resize: vertical;
+  width: 100%;
+  border: 2px solid $text-field-default-border-color;
+  color: $text-field-default-text-color;
+  font-family: $default-font-family;
+  font-size: $text-field-font-size;
+  line-height: $text-field-default-line-height;
+  padding: map-get($indentSizes, s) map-get($indentSizes, m);
+  height: 90px;
+  border-radius: 3px;
+  box-shadow: none;
+  box-sizing: border-box;
+  background: $text-field-background;
+
+  &:focus {
+    border: 2px solid $primary;
+    outline: none;
+  }
+
+  &:disabled {
+    background-color: $text-field-disabled-background;
+    border-color: $text-field-disabled-border;
+    color: $text-field-disabled-text-color;
+    cursor: default;
+    opacity: 0.7;
+    filter: alpha(opacity=70);
+  }
+}

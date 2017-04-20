@@ -1,0 +1,35 @@
+spring:
+  application:
+    name: jpa
+  mail:
+     host: smtp.gmail.com
+     username: flatbookspd@gmail.com
+     password: qwerty12345!
+     port: 587
+     properties:
+       mail:
+         smtp:
+           starttls:
+             enable: true
+management:
+  context_path: /
+security:
+  user:
+    password: password
+  oauth2:
+    resource:
+      filter-order: 3
+facebook:
+  client:
+    clientId: 1429168600437309
+    clientSecret: bf7467af774b1685fae487e731347db0
+    accessTokenUri: https://graph.facebook.com/oauth/access_token
+    userAuthorizationUri: https://www.facebook.com/dialog/oauth
+    tokenName: oauth_token
+    authenticationScheme: query
+    clientAuthenticationScheme: form
+  resource:
+    userInfoUri: https://graph.facebook.com/me
+logging:
+  level:
+    # org.springframework.security: DEBUG
