@@ -9,6 +9,7 @@ import Radio from '../../radio';
 import Button, {ButtonSizes, ButtonTypes} from '../../button';
 import InputRange from '../../input-range';
 import DatePickerRange from '../../datepicker-range';
+import Checkbox from "../../checkbox/index";
 import './search-form.scss';
 import {
     getCountries,
@@ -18,9 +19,11 @@ import {
     getCountyMaxPrice,
     getRegionMaxPrice,
     getCityMaxPrice,
-    search
+    search,
+    advancedSearch
 } from '../../../actions/search-actions';
 import {redirect} from "../../../utils/history";
+import {getAmenity} from "../../../actions/amenity-actions";
 
 class SearchForm extends Component {
     constructor(props) {
@@ -36,13 +39,25 @@ class SearchForm extends Component {
             rooms: 1,
             livingPlaces: 2,
             startDate: moment(),
-            endDate: moment().add(5, 'days')
+            endDate: moment().add(5, 'days'),
+            amenities: []
         }
     }
 
     componentDidMount() {
-        this.props.getCountries();
-        this.props.getWorldMaxPrice();
+        const {
+            getCountries,
+            getWorldMaxPrice,
+            getAmenity,
+            type
+        } = this.props;
+
+        if (type === 'vertical') {
+            getAmenity();
+        }
+
+        getCountries();
+        getWorldMaxPrice();
     }
 
     componentWillUpdate() {
@@ -81,6 +96,12 @@ class SearchForm extends Component {
                         nextProps.maxPrice.city.data.pricePerDay : nextProps.maxPrice.city.data.pricePerMonth
                 })
             }
+        }
+
+        if (nextProps.allAmenities !== this.props.allAmenities) {
+            this.setState({
+                amenities: nextProps.allAmenities.data.map(A => ({...A, checked: false}))
+            })
         }
     }
 
@@ -151,6 +172,9 @@ class SearchForm extends Component {
     changeLeavingPlaces = v => this.setState({livingPlaces: v});
     saveStartDate = d => this.setState({startDate: d});
     saveEndDate = d => this.setState({endDate: d});
+    checkAmenity = id => () => this.setState({
+        amenities: this.state.amenities.map(a => a.id === id ? {name: a.name, checked: !a.checked, id: a.id} : a)
+    });
     search = () => {
         const {
             chosenCityID,
@@ -159,10 +183,11 @@ class SearchForm extends Component {
             priceType,
             rooms,
             startDate,
-            endDate
+            endDate,
+            amenities
         } = this.state;
 
-        this.props.search({
+        const searchProps = {
             cityId: chosenCityID,
             finalPrice: priceValue[1],
             livingPlaces: livingPlaces,
@@ -173,8 +198,17 @@ class SearchForm extends Component {
             pageNum: 0,
             startDate: startDate.format(),
             endDate: endDate.format()
-        });
-        redirect('/search');
+        };
+
+        if (this.props.type === 'vertical') {
+            this.props.advancedSearch({
+                ...searchProps,
+                amenities: amenities.filter(a => a.checked).map(a => ({id: a.id, name: a.name}))
+            })
+        } else {
+            this.props.search(searchProps);
+            redirect('/search');
+        }
     };
 
     render() {
@@ -194,9 +228,9 @@ class SearchForm extends Component {
             livingPlaces,
             startDate,
             endDate,
-            maxPrice
+            maxPrice,
+            amenities
         } = this.state;
-
 
         const formClassName = classNames('search-form', {['search-vertical']: type === 'vertical'});
         const containerClassName = classNames('search-form-options-container', {['search-vertical']: type === 'vertical'});
@@ -281,6 +315,21 @@ class SearchForm extends Component {
                         </div>
                     </div>
                 </div>
+                {
+                    type === 'vertical' ?
+                        amenities.map(
+                            (a, i) =>
+                                <div key={i} className="search-form-amenities">
+                                    <Checkbox
+                                        className="hide-announcement"
+                                        onClick={this.checkAmenity(a.id)}
+                                        checked={a.checked}
+                                        disabled={false}
+                                    >{a.name}</Checkbox>
+                                </div>
+                        )
+                        : null
+                }
                 <Button
                     onClick={this.search}
                     caption="Search"
@@ -296,7 +345,8 @@ class SearchForm extends Component {
 
 SearchForm.defaultProps = {
     type: 'horizontal',
-    redirect: noop
+    redirect: noop,
+    allAmenities: []
 };
 
 SearchForm.propTypes = {
@@ -311,12 +361,14 @@ export default connect(
              regions,
              cities,
              maxPrice
-         }
+         },
+         amenity
      }) => ({
         countries: countries,
         regions: regions,
         cities: cities,
-        maxPrice: maxPrice
+        maxPrice: maxPrice,
+        allAmenities: amenity
     }), {
         getCountries,
         getRegions,
@@ -325,5 +377,7 @@ export default connect(
         getCountyMaxPrice,
         getRegionMaxPrice,
         getCityMaxPrice,
-        search
+        search,
+        advancedSearch,
+        getAmenity
     })(SearchForm);
