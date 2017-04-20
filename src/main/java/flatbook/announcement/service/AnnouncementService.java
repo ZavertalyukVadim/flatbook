@@ -64,10 +64,8 @@ public class AnnouncementService {
         try {
             List<Integer> listAnnouncementId = getListAnnouncementIdWhichLikedCurrentUser();
             for (Announcement announcement : announcements) {
-                if (getCurrentUser().isEnabled()) {
                     if (listAnnouncementId.contains(announcement.getId())) {
                         announcement.setLiked(true);
-                    }
                 }
             }
         } catch (Exception ignored) {
