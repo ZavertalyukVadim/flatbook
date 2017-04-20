@@ -34,7 +34,15 @@ public class RentService {
         User user = profileService.getCurrentUser();
         Integer userId = user.getId();
 
-        return rentDao.getAllByUserId(userId);
+        List<Rent> rents = rentDao.getAllByUserId(userId);
+        rents.forEach(rent -> {
+            LocalDate from = rent.getFrom();
+            LocalDate to = rent.getTo();
+            rent.setFrom(LocalDate.of(from.getYear(), from.getMonth(), from.getDayOfMonth()));
+            rent.setTo(LocalDate.of(to.getYear(), to.getMonth(), to.getDayOfMonth()));
+        });
+
+        return rents;
     }
 
     @Transactional
@@ -50,6 +58,10 @@ public class RentService {
         normalizeRent(rent);
 
         if (!isCorrectRent(rent)) throw new Exception("Uncorrected rent");
+        if (isBookedRent(rent)) throw new Exception("Rent is booked");
+
+        rent.setFrom(LocalDate.of(rent.getFrom().getYear(), rent.getFrom().getMonth(), rent.getFrom().getDayOfMonth() + 1));
+        rent.setTo(LocalDate.of(rent.getTo().getYear(), rent.getTo().getMonth(), rent.getTo().getDayOfMonth() + 1));
 
         User user = profileService.getCurrentUser();
         Integer currentUserId = user.getId();
@@ -61,23 +73,15 @@ public class RentService {
     }
 
     private boolean isCorrectRent(Rent rent) throws Exception {
-//        Date from = rent.getFrom();
-//        Date to = rent.getTo();
-//        Date now = normalizeDate(new Date());
-//
-//        from.set
-//
-//        Calendar calendarFrom = Calendar.getInstance();
-//        calendarFrom.setTime(from);
-//
-//        Calendar calendarNow = Calendar.getInstance();
-//        calendarNow.setTime(now);
-
         LocalDate from = rent.getFrom();
         LocalDate to = rent.getTo();
         LocalDate now = LocalDate.now();
 
         return ( from.isAfter(now) || from.isEqual(now) ) && from.isBefore(to);
+    }
+
+    private boolean isBookedRent(Rent rent) {
+        return rentDao.getCount(rent.getFrom(), rent.getTo(), rent.getAnnouncementsId()) != 0;
     }
 
     private void normalizeRent(Rent rent) {
