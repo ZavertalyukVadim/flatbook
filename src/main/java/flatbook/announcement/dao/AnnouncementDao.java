@@ -56,8 +56,8 @@ public interface AnnouncementDao extends JpaRepository<Announcement, Integer> {
             "group by a")
     Page<Announcement> getAnnouncementPerMonthWithAmenities(@Param("search") ExtendSearch search, Pageable pageable);
 
-    @Query("SELECT distinct m.announcementId FROM Message m where m.senderId=:#{#userIdPar.id} or m.receiverId=:#{#userIdPar.id} ")
-    List<Integer> getChatsAnnouncements(@Param("userIdPar") UserWithId userIdPar);
+    @Query("SELECT distinct m.announcementId, m.senderId, m.receiverId  FROM Message m where m.senderId=:#{#userIdPar.id} or m.receiverId=:#{#userIdPar.id} group by m.announcementId, m.senderId, m.receiverId")
+    List<Object[]> getChatsAnnouncements(@Param("userIdPar") UserWithId userIdPar);
 
     Announcement findTopByOrderByPricePerDayDesc();
 
