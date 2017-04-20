@@ -18,7 +18,7 @@ public interface AnnouncementDao extends JpaRepository<Announcement, Integer> {
             "and a.livingPlaces=:#{#search.livingPlaces} " +
             "and a.pricePerDay between :#{#search.startingPrice} and :#{#search.finalPrice} " +
             "and 0 in (select count(rent) from Rent rent where a.id=rent.announcementsId " +
-            "and not (:#{#search.endDate} <= rent.from or :#{#search.endDate} >= rent.to))")
+            "and not (:#{#search.endLocalDate} <= rent.from or :#{#search.endLocalDate} >= rent.to))")
     Page<Announcement> getAnnouncementPerDay(@Param("search") Search search, Pageable pageable);
 
     @Query("SELECT a FROM Announcement a where a.city.id = :#{#search.cityId} " +
@@ -27,7 +27,7 @@ public interface AnnouncementDao extends JpaRepository<Announcement, Integer> {
             "and a.livingPlaces=:#{#search.livingPlaces} " +
             "and a.pricePerMonth between :#{#search.startingPrice} and :#{#search.finalPrice} " +
             "and 0 in (select count(rent) from Rent rent where a.id=rent.announcementsId " +
-            "and not (:#{#search.endDate} <= rent.from or :#{#search.endDate} >= rent.to))")
+            "and not (:#{#search.endLocalDate} <= rent.from or :#{#search.endLocalDate} >= rent.to))")
     Page<Announcement> getAnnouncementPerMonth(@Param("search") Search search, Pageable pageable);
 
     @Query(value = "SELECT a FROM Announcement a INNER JOIN a.amenities amenities where a.city.id = :#{#search.cityId} " +
@@ -37,7 +37,7 @@ public interface AnnouncementDao extends JpaRepository<Announcement, Integer> {
             "and amenities in :#{#search.amenities} " +
             "and a.pricePerDay between :#{#search.startingPrice} and :#{#search.finalPrice} " +
             "and 0 in (select count(rent) from Rent rent where a.id=rent.announcementsId " +
-            "and not (:#{#search.endDate} <= rent.from or :#{#search.endDate} >= rent.to))" +
+            "and not (:#{#search.endLocalDate} <= rent.from or :#{#search.endLocalDate} >= rent.to))" +
             " group by a")
     Page<Announcement> getAnnouncementPerDayWithAmenities(@Param("search") ExtendSearch search, Pageable pageRequest);
 
@@ -48,7 +48,7 @@ public interface AnnouncementDao extends JpaRepository<Announcement, Integer> {
             "and amenities in  :#{#search.amenities} " +
             "and a.pricePerMonth between :#{#search.startingPrice} and :#{#search.finalPrice} " +
             "and 0 in (select count(rent) from Rent rent where a.id=rent.announcementsId " +
-            "and not (:#{#search.endDate} <= rent.from or :#{#search.endDate} >= rent.to))" +
+            "and not (:#{#search.endLocalDate} <= rent.from or :#{#search.endLocalDate} >= rent.to))" +
             "group by a")
     Page<Announcement> getAnnouncementPerMonthWithAmenities(@Param("search") ExtendSearch search, Pageable pageable);
 

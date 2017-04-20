@@ -176,16 +176,26 @@ public class AnnouncementService {
         return announcement;
     }
 
+    @Transactional
     public Page<Announcement> getAnnouncementBySmallSearch(Search search) {
         PageRequest pageRequest = new PageRequest(search.getPageNum(), search.getItemsPerPage());
+
+        search.setEndLocalDate(search.getEndLocalDate());
+        search.setStartLocalDate(search.getStartLocalDate());
+
         Page<Announcement> announcementPage = (search.getPriceType() == PriceType.PRICE_PER_DAY)
                 ? announcementDao.getAnnouncementPerDay(search, pageRequest)
                 : announcementDao.getAnnouncementPerMonth(search, pageRequest);
-        List<Integer> listAnnouncementId = getListAnnouncementIdWhichLikedCurrentUser();
-        for (Announcement announcement : announcementPage) {
-            if (listAnnouncementId.contains(announcement.getId())) {
-                announcement.setLiked(true);
+        try {
+            List<Integer> listAnnouncementId = getListAnnouncementIdWhichLikedCurrentUser();
+            for (Announcement announcement : announcementPage) {
+                if (listAnnouncementId.contains(announcement.getId())) {
+                    announcement.setLiked(true);
+                }
             }
+        }
+        catch (Exception e){
+
         }
         return announcementPage;
     }
@@ -196,10 +206,15 @@ public class AnnouncementService {
                     extendSearch.getRooms(), extendSearch.getLivingPlaces());
             search.setPageNum(extendSearch.getPageNum());
             search.setItemsPerPage(extendSearch.getItemsPerPage());
+
             search.setStartDate(extendSearch.getStartDate());
             search.setEndDate(extendSearch.getEndDate());
+
             return getAnnouncementBySmallSearch(search);
         }
+
+        extendSearch.setStartLocalDate(extendSearch.getStartLocalDate());
+        extendSearch.setEndLocalDate(extendSearch.getEndLocalDate());
 
         PageRequest pageRequest = new PageRequest(extendSearch.getPageNum(), extendSearch.getItemsPerPage());
         Page<Announcement> announcementPage = (extendSearch.getPriceType() == PriceType.PRICE_PER_DAY)

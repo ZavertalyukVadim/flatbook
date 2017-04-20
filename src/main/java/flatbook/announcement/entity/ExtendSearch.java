@@ -1,5 +1,7 @@
 package flatbook.announcement.entity;
 
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.Date;
 import java.util.List;
 
@@ -13,8 +15,12 @@ public class ExtendSearch {
     private Integer rooms;
     private Integer livingPlaces;
     private List<Amenity> amenities;
+
     private Date startDate;
     private Date endDate;
+
+    private LocalDate startLocalDate;
+    private LocalDate endLocalDate;
 
     public ExtendSearch() {
     }
@@ -144,5 +150,21 @@ public class ExtendSearch {
 
     public Date getStartDate() {
         return startDate;
+    }
+
+    public LocalDate getStartLocalDate() {
+        return startDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+    }
+
+    public LocalDate getEndLocalDate() {
+        return endDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+    }
+
+    public void setStartLocalDate(LocalDate startLocalDate) {
+        this.startLocalDate = startLocalDate;
+    }
+
+    public void setEndLocalDate(LocalDate endLocalDate) {
+        this.endLocalDate = endLocalDate;
     }
 }

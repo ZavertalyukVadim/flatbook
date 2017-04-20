@@ -1,6 +1,10 @@
 package flatbook.announcement.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.Date;
 
 public class Search {
@@ -17,6 +21,12 @@ public class Search {
 
     private Date startDate;
     private Date endDate;
+
+    @JsonIgnore
+    private LocalDate startLocalDate;
+
+    @JsonIgnore
+    private LocalDate endLocalDate;
 
     public Search() {
     }
@@ -84,5 +94,21 @@ public class Search {
 
     public void setEndDate(Date endDate) {
         this.endDate = endDate;
+    }
+
+    public LocalDate getStartLocalDate() {
+        return startDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+    }
+
+    public LocalDate getEndLocalDate() {
+        return endDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+    }
+
+    public void setStartLocalDate(LocalDate startLocalDate) {
+        this.startLocalDate = startLocalDate;
+    }
+
+    public void setEndLocalDate(LocalDate endLocalDate) {
+        this.endLocalDate = endLocalDate;
     }
 }
