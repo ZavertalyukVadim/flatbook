@@ -2,6 +2,9 @@ import {
     SEARCH_REQUEST,
     SEARCH_SUCCESS,
     SEARCH_FAILURE,
+    ADVANCED_SEARCH_REQUEST,
+    ADVANCED_SEARCH_SUCCESS,
+    ADVANCED_SEARCH_FAILURE,
     GET_COUNTRIES_REQUEST,
     GET_COUNTRIES_SUCCESS,
     GET_COUNTRIES_FAILURE,
@@ -67,15 +70,15 @@ const DEFAULT_STATE = {
 
 export default (state = DEFAULT_STATE, action) => {
 
-    if (action.type === SEARCH_REQUEST) {
+    if (action.type === SEARCH_REQUEST || action.type === ADVANCED_SEARCH_REQUEST) {
         return {...state, searchResult: {...state.searchResult, pending: true}}
     }
 
-    if (action.type === SEARCH_SUCCESS) {
+    if (action.type === SEARCH_SUCCESS || action.type === ADVANCED_SEARCH_SUCCESS) {
         return {...state, searchResult: {...state.searchResult, data: action.response, pending: false}}
     }
 
-    if (action.type === SEARCH_FAILURE) {
+    if (action.type === SEARCH_FAILURE || action.type === ADVANCED_SEARCH_FAILURE) {
         return {...state, searchResult: {...state.searchResult, data: [], pending: false}}
     }
 

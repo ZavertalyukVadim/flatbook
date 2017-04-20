@@ -3,6 +3,9 @@ import {
     SEARCH_REQUEST,
     SEARCH_SUCCESS,
     SEARCH_FAILURE,
+    ADVANCED_SEARCH_REQUEST,
+    ADVANCED_SEARCH_SUCCESS,
+    ADVANCED_SEARCH_FAILURE,
     GET_COUNTRIES_REQUEST,
     GET_COUNTRIES_SUCCESS,
     GET_COUNTRIES_FAILURE,
@@ -41,6 +44,25 @@ export const search = body => (dispatch, getState) => {
                 SEARCH_FAILURE
             ],
             endpoint: () => post('search/', body)
+        }
+    });
+};
+
+export const advancedSearch = body => (dispatch, getState) => {
+    const {search: {countries: {pending}}} = getState();
+
+    if (pending) {
+        return null;
+    }
+
+    return dispatch({
+        [CALL_API]: {
+            types: [
+                ADVANCED_SEARCH_REQUEST,
+                ADVANCED_SEARCH_SUCCESS,
+                ADVANCED_SEARCH_FAILURE,
+            ],
+            endpoint: () => post('search/extended/', body)
         }
     });
 };
