@@ -29,7 +29,7 @@ class AnnouncementView extends Component {
             user
 
         } = this.props.data;
-        console.log(user);
+
         return (
             <div className="announcement-view">
                 <div className="announcement-contacts-field">

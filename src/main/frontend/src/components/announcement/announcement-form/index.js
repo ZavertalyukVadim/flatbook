@@ -79,8 +79,6 @@ class AnnouncementForm extends Component {
     componentWillReceiveProps(nextProps) {
         const {allAmenities, chosenAmenities} = this.props;
 
-        console.log(nextProps);
-
         if (allAmenities.data !== nextProps.allAmenities.data) {
 
             this.setState({
