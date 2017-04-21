@@ -94,14 +94,18 @@ public class RentService {
 
 
         User currentUser = profileService.getCurrentUser();
-        String bookMessage = String.format("Hello!\n" +
-                "\n" +
-                "User: ($0, $1) has booked tour apartment - ($2).\n" +
-                "\n" +
-                "Please, confirm booking, or discuss all details in personal chat.\n" +
-                "\n" +
-                "Thanks for using Flatrent!", announcement.getUser().getFirstName(), announcement.getUser().getLastName(), announcement.getTitle());
+        String bookMessage = "Hello!<br>" +
+                "<br>" +
+                "User: " + currentUser.getFirstName()+" "+currentUser.getLastName()+
+                "<br>Has booked your apartment: " + announcement.getTitle() +
+                "<br>" +
+                "<br>" +
+                "Please, confirm booking, or discuss all details in personal chat.<br>" +
+                "<br>" +
+                "Thanks for using Flatrent!";
+
         message.setContent(bookMessage);
+
 
         messageDao.save(message);
 
