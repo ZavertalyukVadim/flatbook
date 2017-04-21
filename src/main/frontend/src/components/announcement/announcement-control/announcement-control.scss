@@ -1,10 +1,14 @@
 .announcement-item {
-  width: 100%;
-  position: relative;
+  width: 35%;
+  display: inline-block;
   background-color: #ebebeb;
   padding: 12px;
   box-sizing: border-box;
-  margin: 16px 0;
+  margin:  16px ;
+
+  .announcement-preview-control {
+   width: 100%;
+  }
 }
 
 .announcement-description {
@@ -22,10 +26,9 @@
 }
 
 .announcement-buttons {
-    position: absolute;
-    bottom: 0;
-    right: 0;
-    display: flex;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
 }
 
 h2 {

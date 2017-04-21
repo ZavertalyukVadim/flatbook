@@ -3,12 +3,12 @@ package flatbook.config;
 import flatbook.profile.dao.EmailDao;
 import flatbook.profile.dao.UserDao;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.stereotype.Component;
 
-@Configuration
+@Component
 public class CustomUserDetailsService {
     private final EmailDao emailDao;
 

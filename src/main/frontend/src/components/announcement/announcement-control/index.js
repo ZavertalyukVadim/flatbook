@@ -38,7 +38,8 @@ class AnnouncementControl extends Component {
     
         return (
             <div className="announcement-item">
-                <AnnouncementPreview {...this.props}/>
+                <div className="announcement-preview-control">
+                    <AnnouncementPreview {...this.props} horisontal={true}/></div>
                 <div className="announcement-buttons">
                     <Checkbox
                         className="hide-announcement"
@@ -47,7 +48,7 @@ class AnnouncementControl extends Component {
                         disabled={false}
                     >Hide</Checkbox>
                     <Button
-                        type={ButtonTypes.info}
+                        type={ButtonTypes.success}
                         size={ButtonSizes.small}
                         caption="Show more"
                         onClick={this.onMore}
