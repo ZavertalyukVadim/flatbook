@@ -2,6 +2,7 @@
 @import '../../style/color-theme';
 
 .image-wrapper {
+  width: 100%;
   position: relative;
   display: inline-block;
 }
@@ -10,7 +11,7 @@
   background-color: $img-background-color;
   border: 1px solid $img-border-color;
   border-radius: 4px;
-  padding: map-get($indentSizes, xxs);
+  padding: 0;
 }
 
 .small {
@@ -18,7 +19,8 @@
 }
 
 .medium {
-  max-width: $img-medium-width;
+  width: $img-medium-width;
+  height: $img-medium-height;
 }
 
 .large {

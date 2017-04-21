@@ -26,7 +26,7 @@ class UploadImage extends Component {
     render() {
         return (
             <label className="upload-image">
-                <span>{this.props.caption}</span>
+                <div className="upload-image-button">{this.props.caption}</div>
                 <input type="file" onChange={this.saveImage}/>
             </label>
         );
