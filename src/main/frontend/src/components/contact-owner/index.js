@@ -5,6 +5,8 @@ import moment from 'moment';
 import {connect} from 'react-redux';
 import {sendAMessage} from '../../actions/user-actions';
 import Modal from '../modal';
+import Header, {HeaderTypes} from '../header';
+import './contact-owner.scss';
 
 class ContactOwner extends Component {
 
@@ -22,7 +24,7 @@ class ContactOwner extends Component {
     onInputChange = e => this.setState({content: e.target.value});
     openModal = () => this.setState({isModalOpen: true});
     closeModal = () => this.setState({isModalOpen: false});
-    onSubmit = () => this.props.sendAMessage(this.state);
+    onSubmit = () => {this.props.sendAMessage(this.state); this.setState({isModalOpen: false})};
     render() {
         return (
             <div>
@@ -36,6 +38,8 @@ class ContactOwner extends Component {
                     isOpen={this.state.isModalOpen}
                     close={this.closeModal}
                 >
+                    <div className="contact-owner-field">
+                        <Header type={HeaderTypes.primary} value='Send your message'/>
                     <Textarea
                         placeholder="Enter your message..."
                         onChange={this.onInputChange}
@@ -47,6 +51,7 @@ class ContactOwner extends Component {
                         onClick={this.onSubmit}
                         caption="Send"
                     />
+                    </div>
                 </Modal>
             </div>
         );

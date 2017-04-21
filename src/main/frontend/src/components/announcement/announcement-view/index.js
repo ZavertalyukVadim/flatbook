@@ -58,31 +58,39 @@ class AnnouncementView extends Component {
 
 
                 </div>
+                <div className="announcement-view-main-field">
+                    <div className="announcement-main-info">
+                        <div className="announcement-view-description-field">
+                            <Header value='Description' type={HeaderTypes.primary}/>
+                            <p className="description-content">{description}</p>
+                        </div>
+                        <div className="announcement-overview">
+                            <Header value='Overview' type={HeaderTypes.primary}/>
+                            <ul className="announcement-overview-list">
+                                <li><i className="fa fa-flag"/> Country: <span
+                                    className="announcement-view-item">{country.name}</span></li>
+                                <li><i className="fa fa-map-signs"/> Region: <span
+                                    className="announcement-view-item">{region.name}</span></li>
+                                <li><i className="fa fa-map-marker"/> City: <span
+                                    className="announcement-view-item">{city.name}</span></li>
+                                <li><i className="fa fa-street-view"/> Street: <span
+                                    className="announcement-view-item">{street}</span></li>
+                                <li><i className="fa fa-building-o"/> Rooms: <span
+                                    className="announcement-view-item">{rooms}</span></li>
 
-                <div className="announcement-main-info">
-                    <div className="announcement-view-description-field">
-                        <Header value='Description' type={HeaderTypes.primary}/>
-                        <p className="description-content">{description}</p>
+                                <li><i className="fa fa-bed"/> Living Places: <span
+                                    className="announcement-view-item">{livingPlaces}</span></li>
+                            </ul>
+                        </div>
                     </div>
-                    <div className="announcement-overview">
-                        <Header value='Overview' type={HeaderTypes.primary}/>
-                        <ul className="announcement-overview-list">
-                            <li><i className="fa fa-flag"/> Country: <span className="announcement-view-item">{country.name}</span></li>
-                            <li><i className="fa fa-map-signs" /> Region: <span className="announcement-view-item">{region.name}</span></li>
-                        <li><i className="fa fa-map-marker"/> City: <span className="announcement-view-item">{city.name}</span></li>
-                    <li><i className="fa fa-street-view" /> Street: <span className="announcement-view-item">{street}</span></li>
-                <li><i className="fa fa-building-o" /> Rooms: <span className="announcement-view-item">{rooms}</span></li>
 
-        <li><i className="fa fa-bed" /> Living Places: <span className="announcement-view-item">{livingPlaces}</span></li>
-    </ul>
-    </div>
-    </div>
-
-        <div className="amenities-field">
-            <Amenities data={amenities}/>
-        </div>
-    </div>
-    )
+                    <div className="announcement-amenities-field">
+                        <Header type={HeaderTypes.primary} value='Amenities'/>
+                        <Amenities data={amenities}/>
+                    </div>
+                </div>
+            </div>
+        )
     }
 }
 

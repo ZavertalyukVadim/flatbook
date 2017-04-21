@@ -333,7 +333,7 @@ class AnnouncementForm extends Component {
                 </div>
                 <div className="announcement-form-custom-field announcement-form-item">
                     <Button
-                        type={ButtonTypes.primary}
+                        type={ButtonTypes.info}
                         size={ButtonSizes.block}
                         caption="Publish"
                         className="announcement-btn"

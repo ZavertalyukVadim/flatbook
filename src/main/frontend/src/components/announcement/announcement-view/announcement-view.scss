@@ -3,7 +3,7 @@
   display: flex;
   flex-direction: column;
   .announcement-images-field {
-    width: 70%;
+    width: 77%;
     position: relative;
     .announcement-header {
       color: white;
@@ -19,6 +19,18 @@
   }
 }
 
+.announcement-view-main-field {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  .announcement-amenities-field {
+    width: 20%;
+    padding: 16px;
+    margin: 0 85px;
+    text-align: left;
+  }
+
+}
 .announcement-contacts-field {
   width: 100%;
   display: flex;
@@ -31,13 +43,13 @@
   display: flex;
   flex-direction: column;
   align-items: baseline;
-  width: 50%;
+  width: 100%;
   padding: 16px;
 }
 
 .announcement-overview {
   text-align: left;
-  width: 50%;
+  width: 100%;
   padding: 16px;
 }
 
@@ -59,9 +71,9 @@
 }
 
 .announcement-main-info {
-  width: 100%;
+  width: 50%;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
 }
 
 .announcement-overview-list {
