@@ -27,7 +27,6 @@ export const updateUser = values => (dispatch, getState) => {
     if (pending) {
         return null;
     }
-    console.log(values);
     return dispatch({
         [CALL_API]: {
             types: [
@@ -60,7 +59,6 @@ export const getUserAnnouncements = id => (dispatch, getState) => {
 };
 
 export const deleteAnnouncement = id => dispatch => {
-    console.log(id);
     return dispatch({
         [CALL_API]: {
             types: [

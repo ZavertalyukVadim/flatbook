@@ -14,8 +14,8 @@ class UserBookings extends Component {
     }
 
     render() {
-         const {loaded, data} = this.props.user.booking;
-        console.log(this.props.user.booking);
+        const {loaded, data} = this.props.user.booking;
+
         return (
             <Container
                 sidebar={
