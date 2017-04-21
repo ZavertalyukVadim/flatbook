@@ -2,12 +2,13 @@
 
 .pagination {
   list-style-type: none;
+  margin-top: 40px;
 
   .pagination-item {
     display: inline-block;
     cursor: pointer;
     padding: 16px;
-    background-color: $primary;
+    background-color: #262626;
     color: #fff;
     border: 1px solid;
   }

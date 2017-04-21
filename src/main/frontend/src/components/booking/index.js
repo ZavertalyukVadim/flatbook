@@ -5,6 +5,8 @@ import {connect} from 'react-redux';
 import {requestABook} from '../../actions/announcement-actions';
 import DatePickerRange from '../datepicker-range';
 import Modal from '../modal';
+import Header, {HeaderTypes} from '../header';
+import './booking.scss';
 
 class Booking extends Component {
 
@@ -22,16 +24,20 @@ class Booking extends Component {
     closeModal = () => this.setState({isModalOpen: false});
     saveStartDate = d => this.setState({from: d});
     saveEndDate = d => this.setState({to: d});
-    onSubmit = () => this.props.requestABook({
-        announcement_id: this.state.announcementsId,
-        fromDate: this.state.from.format('D'),
-        fromMonth: this.state.from.format('M'),
-        fromYear: this.state.from.format('YYYY'),
-        toDate: this.state.to.format('D'),
-        toMonth: this.state.from.format('M'),
-        toYear: this.state.from.format('YYYY')
+    onSubmit = () => {
+        this.props.requestABook({
+            announcement_id: this.state.announcementsId,
+            fromDate: this.state.from.format('D'),
+            fromMonth: this.state.from.format('M'),
+            fromYear: this.state.from.format('YYYY'),
+            toDate: this.state.to.format('D'),
+            toMonth: this.state.from.format('M'),
+            toYear: this.state.from.format('YYYY')
 
-    });
+        });
+        this.setState({isModalOpen: false})
+    };
+
     render() {
         return (
             <div>
@@ -45,18 +51,21 @@ class Booking extends Component {
                     isOpen={this.state.isModalOpen}
                     close={this.closeModal}
                 >
-                    <DatePickerRange
-                        startDate={this.state.from}
-                        endDate={this.state.to}
-                        handleChangeStart={this.saveStartDate}
-                        handleChangeEnd={this.saveEndDate}
-                    />
-                    <Button
-                        type={ButtonTypes.success}
-                        size={ButtonSizes.large}
-                        onClick={this.onSubmit}
-                        caption="Request a book"
-                    />
+                    <div className="booking-request-field">
+                        <Header type={HeaderTypes.primary} value="Request a book"/>
+                        <DatePickerRange
+                            startDate={this.state.from}
+                            endDate={this.state.to}
+                            handleChangeStart={this.saveStartDate}
+                            handleChangeEnd={this.saveEndDate}
+                        />
+                        <Button
+                            type={ButtonTypes.success}
+                            size={ButtonSizes.large}
+                            onClick={this.onSubmit}
+                            caption="Request a book"
+                        />
+                    </div>
                 </Modal>
             </div>
         );
