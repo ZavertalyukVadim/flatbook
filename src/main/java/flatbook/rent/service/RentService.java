@@ -78,7 +78,7 @@ public class RentService {
 
         rent.setUserId(currentUserId);
         Rent savedRent = rentDao.save(rent);
-        mailClient.prepareAndSend(rent);
+        mailClient.bookApartment(rent);
 
         Message message = new Message();
 
@@ -94,14 +94,14 @@ public class RentService {
 
 
         User currentUser = profileService.getCurrentUser();
-        String bookMessage = String.format("Hello!\n" +
-                "\n" +
-                "User: ($0, $1) has booked tour apartment - ($2).\n" +
-                "\n" +
-                "Please, confirm booking, or discuss all details in personal chat.\n" +
-                "\n" +
-                "Thanks for using Flatrent!", announcement.getUser().getFirstName(), announcement.getUser().getLastName(), announcement.getTitle());
+        String bookMessage = "Hello!" +
+                "User: " + currentUser.getFirstName()+" "+currentUser.getLastName()+
+                "Has booked your apartment: " + announcement.getTitle() +
+                " Please, confirm booking, or discuss all details in personal chat" +
+                " Thanks for using Flatrent!";
+
         message.setContent(bookMessage);
+
 
         messageDao.save(message);
 

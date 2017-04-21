@@ -18,12 +18,7 @@ class AnnouncementsList extends Component {
         const {totalPages, number} = data;
 
         return (
-            <div>
-                <Header
-                    type={HeaderTypes.primary}
-                    value="Last updated announcements"
-                    className="main-header"
-                />
+            <div className="last-updated-announcements">
                 {
                     loaded ? (
                         <div className="announcements-field">

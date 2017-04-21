@@ -79,7 +79,11 @@ public class ChatService {
         Page<Message> messages = messageDao.getMessages(pageMessage, pageRequest);
 
         Page<MessageDto> messagesResult =  markMyMessages(messages);
-        return setCommunicators(messagesResult, messages);
+
+         CommunicatorsPageDto communicatorsPageDto = setCommunicators(messagesResult, messages);
+         communicatorsPageDto.setYou(userDao.findOne(pageMessage.getReceiverId()));
+
+        return communicatorsPageDto;
     }
 
     private CommunicatorsPageDto setCommunicators(Page<MessageDto> dtoPage, Page<Message> messagePage) {

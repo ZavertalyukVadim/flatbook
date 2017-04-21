@@ -75,10 +75,13 @@
 
   .search-form-button {
     width: 60%;
+    margin: 2%;
   }
 }
 
 .search-vertical {
   min-width: 35%;
   flex-direction: column !important;
+  margin: 0;
+  text-align: center;
 }

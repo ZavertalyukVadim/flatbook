@@ -81,7 +81,7 @@ public class MailClient {
             messageHelper.setText("Hello!<br>" +
                     "<br>" +
                     "User: " + user.getFirstName()+" "+user.getLastName()+
-                    "<br>has booked tour apartment - " + announcement.getTitle() +
+                    "<br>Has booked your apartment: " + announcement.getTitle() +
                     "<br>" +
                     "<br>" +
                     "Please, confirm booking, or discuss all details in personal chat.<br>" +

@@ -17,7 +17,6 @@ class Navbar extends Component {
                 {
                     auth.logged ?
                         <div className="navbar-links">
-                            <Link to="/showroom" className="navbar-link">Showroom</Link>
                             <Link to="/profile" className="navbar-link">
                                 <span>Profile</span>
                                 <i className="fa fa-user-circle-o navbar-link-icon"/>
@@ -29,7 +28,6 @@ class Navbar extends Component {
                         </div>
                         :
                         <div className="navbar-links">
-                            <Link to="/showroom" className="navbar-link">Showroom</Link>
                             <Link to="/signin" className="navbar-link">
                                 <span>Sign in</span>
                                 <i className="fa fa-sign-in navbar-link-icon"/>
