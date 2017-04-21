@@ -2,7 +2,6 @@ import React from 'react';
 import {Router} from 'react-router';
 import {Route, Switch} from 'react-router-dom';
 import {Provider} from 'react-redux';
-import Showroom from '../components/showroom';
 import Root from '../routes/root';
 import SignUp from '../routes/signup';
 import SignIn from '../routes/signin';
@@ -32,7 +31,6 @@ export default () =>
                 <Route path="/profile/messages" component={Messages}/>
                 <Route path="/profile/settings" component={Settings}/>
                 <Route path="/profile" component={Profile}/>
-                <Route path="/showroom" component={Showroom}/>
                 <Route path="/search" component={Search}/>
                 <Route path="/signup" component={SignUp}/>
                 <Route path="/signin" component={SignIn}/>
