@@ -120,11 +120,27 @@ public class ChatService {
             ChatDto chatDto = new ChatDto();
 
             chatDto.setAnnouncementId((Integer) objects1[0]);
-            chatDto.setSenderId((Integer) objects1[1]);
-            chatDto.setReceiverId((Integer) objects1[2]);
+
+            Integer currentUserId = profileService.getCurrentUser().getId();
+
+            Integer firstSender = (Integer) objects1[1];
+            Integer secondSender = (Integer) objects1[2];
+
+            if(currentUserId == firstSender) {
+                chatDto.setSenderId(firstSender);
+                chatDto.setReceiverId(secondSender);
+            } else {
+                chatDto.setSenderId(secondSender);
+                chatDto.setReceiverId(firstSender);
+            }
+
+
+//            chatDto.setSenderId((Integer) objects1[1]);
+//            chatDto.setReceiverId((Integer) objects1[2]);
 
             chatDtos.add(chatDto);
         });
+
 
         return chatDtos;
     }
