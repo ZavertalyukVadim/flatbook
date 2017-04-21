@@ -28,7 +28,7 @@ class ContactOwner extends Component {
             <div>
                 <Button
                     type={ButtonTypes.primary}
-                    size={ButtonSizes.large}
+                    size={ButtonSizes.block}
                     onClick={this.openModal}
                     caption="Send a message"
                 />

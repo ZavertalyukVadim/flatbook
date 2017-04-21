@@ -22,19 +22,24 @@ class Carousel extends Component {
 
     renderSlides = () => this.props.slides.map((obj, index) => {
 
-        const imageClassNames = classNames('carousel-slide', {
+        const imageClassNames = classNames('carousel-slide',{
             'carousel-slide-shown': index === this.state.counter
         });
+
         return (
             <div  key={index} className={imageClassNames}>
-                <Image src={urlResolver(`photo/${obj.id}`)} liked={this.props.liked} onLike={this.props.onLike}/>
+                <Image src={urlResolver(`photo/${obj.id}`)} liked={this.props.liked} onLike={this.props.onLike} size={this.props.size}/>
             </div>
         );
     });
 
     render() {
+        const wrapperClassNames = classNames('carousel-wrapper',{
+            'carousel-medium': this.props.size === 'img-medium',
+            'carousel-large': this.props.size === 'img-large'
+        });
         return (
-            <div className="carousel-wrapper">
+            <div className={wrapperClassNames}>
                 {this.renderSlides()}
                 <div className="carousel-prev" onClick={this.prevSlide}><i className="fa fa-chevron-left"/></div>
                 <div className="carousel-next" onClick={this.nextSlide}><i className="fa fa-chevron-right"/></div>

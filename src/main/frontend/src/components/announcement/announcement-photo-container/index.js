@@ -34,6 +34,7 @@ class AnnouncementPhotoContainer extends Component {
                         liked={this.state.liked}
                         onLike={this.onLike}
                         size={size}
+
                     /> :
                     photos.length ?
                         <Image

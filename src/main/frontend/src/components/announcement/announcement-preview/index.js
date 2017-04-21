@@ -28,7 +28,7 @@ class AnnouncementPreview extends Component {
         return (
             <div className={ClassName}>
                 <div className="announcement-photo-field">
-                <AnnouncementPhotoContainer photos={photos} id={id} liked={liked} size="medium"/>
+                <AnnouncementPhotoContainer photos={photos} id={id} liked={liked} size="img-medium"/>
                     <Link to={`/announcement/${id}`}>
                         <h2 className="announcement-header">{title}</h2>
                     </Link>

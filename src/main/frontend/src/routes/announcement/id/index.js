@@ -8,6 +8,7 @@ import CommentForm from '../../../components/comment/comment-form';
 import CommentContainer from '../../../components/comment/comment-container';
 import CommentView from '../../../components/comment/comment-view';
 import {connect} from 'react-redux';
+import './announcement-id.scss';
 
 class Announcement extends Component {
     constructor(props) {
@@ -30,7 +31,7 @@ class Announcement extends Component {
         return (
             <Container>
                 {loaded && this.props.user.loaded ? (
-                    <div>
+                    <div className="announcement-view-container">
                         <AnnouncementView data={data} currentUser={user.data.id}/>
                         {comments.data.map((item, index) =>
                             user.data.id !== item.user.id ?

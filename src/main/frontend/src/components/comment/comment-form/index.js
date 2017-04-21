@@ -22,6 +22,7 @@ class CommentForm extends Component {
         this.props.id ?
             this.props.updateExistingComment(this.state) : this.props.addNewComment(this.state);
         this.setState({text: ''});
+        this.props.close();
 
     };
 
@@ -30,7 +31,8 @@ class CommentForm extends Component {
         console.log(this.props);
         return (
             <div className="comment">
-                <AvatarContainer firstName={user.firstName} lastName={user.lastName} view={true}/>
+                <div className="comment-avatar-field">
+                <AvatarContainer firstName={user.firstName} lastName={user.lastName} view={true}/></div>
                 <Textarea
                     placeholder="Leave your comment..."
                     onChange={this.onInputChange}
@@ -38,7 +40,7 @@ class CommentForm extends Component {
                 />
                 <Button
                     className="btn-submit"
-                    type={ButtonTypes.info}
+                    type={ButtonTypes.primary}
                     size={ButtonSizes.medium}
                     caption="Submit"
                     onClick={this.onAddNewComment}

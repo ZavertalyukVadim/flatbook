@@ -1,4 +1,6 @@
 import React from 'react';
+import Header, {HeaderTypes} from '../header';
+import './amenities.scss'
 
 const Amenities = props => {
     const {
@@ -21,6 +23,7 @@ const Amenities = props => {
     ];
     return (
         <ul className="amenities-list">
+            <Header type={HeaderTypes.primary} value='Amenities'/>
             {data.map((item) => myAmenities[item.id - 1])}
         </ul>
     );
