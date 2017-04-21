@@ -38,7 +38,7 @@ class AnnouncementPreview extends Component {
                         {pricePerMonth && <Price payment={PriceTypes.monthly} className="price-per-month" value={pricePerMonth}/>}
                         {pricePerDay && <Price payment={PriceTypes.daily} value={pricePerDay}/>}
                         <span className="announcement-region"><i className="announcement-region-icon fa fa-map-marker" />{region.name}</span>
-                        {horisontal && <p>{description}</p>}
+
                     </div>
                 </div>
             </div>
