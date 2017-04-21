@@ -74,6 +74,11 @@ public class AnnouncementService {
 
     public Announcement getAnnouncementById(Integer id) {
         Announcement announcement = announcementDao.findOne(id);
+        chacked(announcement);
+        return announcement;
+    }
+
+    private void chacked(Announcement announcement) {
         try {
             List<Integer> listAnnouncementId = getListAnnouncementIdWhichLikedCurrentUser();
 
@@ -82,8 +87,6 @@ public class AnnouncementService {
             }
         }
         catch (Exception ignored){}
-
-        return announcement;
     }
 
     public Announcement updateAnnouncement(PostDto postDto) {
