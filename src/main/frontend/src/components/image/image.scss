@@ -14,17 +14,19 @@
   padding: 0;
 }
 
-.small {
+.img-small {
   max-width: $img-small-width;
 }
 
-.medium {
+.img-medium {
   width: $img-medium-width;
   height: $img-medium-height;
 }
 
-.large {
-  max-width: $img-large-width;
+.img-large {
+
+  width: 100%;
+  height: 600px;
 }
 
 .like {
