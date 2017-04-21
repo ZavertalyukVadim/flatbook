@@ -21,8 +21,8 @@ class CommentContainer extends Component {
             <div className="comment-container">
                 {this.state.editMode ?
                     <div>
-                        <span onClick={this.onEditMode}>X</span>
-                        <CommentForm {...this.props}/>
+
+                        <CommentForm {...this.props} close={this.onEditMode}/>
                     </div>
                     :
                     <div className="comment-view-container">

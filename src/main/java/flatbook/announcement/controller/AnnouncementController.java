@@ -24,7 +24,7 @@ public class AnnouncementController {
         return announcementService.getAllAnnouncement(page, itemPerPage);
     }
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    @GetMapping(value = "/{id}")
     public Announcement getAnnouncementById(@PathVariable("id") Integer id) {
         return announcementService.getAnnouncementById(id);
     }

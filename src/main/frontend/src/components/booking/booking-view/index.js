@@ -1,22 +1,30 @@
-import React  from 'react';
-import DatePickerRange from '../../datepicker-range';
-import moment from 'moment';
-import {Link} from 'react-router-dom';
+import React, {Component}  from 'react';
+import {connect} from 'react-redux';
+import {getAnnouncementById} from '../../../actions/announcement-actions';
+import AnnouncementPreview from '../../../components/announcement/announcement-preview';
 
-const BookingView = props => {
-    const {from, to, announcementsId} = props;
-    console.log(moment());
-    return (
-        <div className="booking-view">
-            {/*<DatePickerRange*/}
-                {/*startDate={from}*/}
-                {/*endDate={to}*/}
-            {/*/>*/}
-            <Link to={`/announcement/${announcementsId}`}>
-                <div>Show announcement details...</div>
-            </Link>
-        </div>
-    );
-};
+class BookingView extends Component {
 
-export default BookingView;
+    componentDidMount() {
+        const {announcementsId} = this.props;
+        this.props.getAnnouncementById(announcementsId);
+    }
+
+    render() {
+        const {from, to} = this.props;
+        const {data, loaded} = this.props.announcements;
+        return (
+            <div className="booking-view">
+                {loaded ?
+                    <div className="announcements-field">
+                        <div>From: {from.dayOfMonth}, {from.month}, {from.year} <br/>
+                            To: {to.dayOfMonth}, {to.month}, {to.year}</div>
+                        <AnnouncementPreview vertical={true} {...data}/>
+                    </div> : <div>Loading</div>
+                }
+            </div>
+        );
+    };
+}
+
+export default connect(({announcements}) => ({announcements: announcements.announcementView}), {getAnnouncementById})(BookingView);

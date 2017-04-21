@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import Button, {ButtonTypes, ButtonSizes} from '../../button';
 import Textarea from '../../textarea';
 import {connect} from 'react-redux';
+import AvatarContainer from '../../avatar-container';
 import {addNewComment, updateExistingComment} from '../../../actions/announcement-actions';
 import './comment.scss';
 
@@ -21,12 +22,17 @@ class CommentForm extends Component {
         this.props.id ?
             this.props.updateExistingComment(this.state) : this.props.addNewComment(this.state);
         this.setState({text: ''});
+        this.props.close();
 
     };
 
     render() {
+        const {user} = this.props;
+        console.log(this.props);
         return (
             <div className="comment">
+                <div className="comment-avatar-field">
+                <AvatarContainer firstName={user.firstName} lastName={user.lastName} view={true}/></div>
                 <Textarea
                     placeholder="Leave your comment..."
                     onChange={this.onInputChange}
@@ -34,7 +40,7 @@ class CommentForm extends Component {
                 />
                 <Button
                     className="btn-submit"
-                    type={ButtonTypes.info}
+                    type={ButtonTypes.primary}
                     size={ButtonSizes.medium}
                     caption="Submit"
                     onClick={this.onAddNewComment}

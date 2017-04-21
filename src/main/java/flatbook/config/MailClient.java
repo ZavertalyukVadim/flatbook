@@ -29,7 +29,7 @@ public class MailClient {
         this.announcementDao = announcementDao;
     }
 
-    public void prepareAndSend(Email email) {
+    public void activateEmail(Email email) {
         MimeMessagePreparator messagePreparator = mimeMessage -> {
             MimeMessageHelper messageHelper = new MimeMessageHelper(mimeMessage);
             messageHelper.setTo(email.getContent());
@@ -64,7 +64,7 @@ public class MailClient {
         }
     }
 
-    public void prepareAndSend(Rent rent) {
+    public void bookApartment(Rent rent) {
         MimeMessagePreparator messagePreparator = mimeMessage -> {
             MimeMessageHelper messageHelper = new MimeMessageHelper(mimeMessage);
             User user = userDao.findOne(rent.getUserId());

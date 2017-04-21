@@ -11,9 +11,16 @@ const CommentView = props => {
     } = props;
     return (
         <div className="comment-view">
-            <AvatarContainer firstName={user.firstName} lastName={user.lastName} view={true}/>
-            <p className="comment-text">{text}</p>
-            <span>comment left: {moment(dateCreate).format("DD MMM YYYY hh:mm a")}</span>
+            <div className="comment-view-avatar-field">
+            <AvatarContainer view={true}/></div>
+            <div className="comment-info">
+
+                <p className="comment-info-field comment-username">{user.firstName} {user.lastName}</p>
+                <p className="comment-info-field"><i className="calendar-icon fa fa-calendar"/> {moment(dateCreate).format("DD MMM YYYY hh:mm a")}</p>
+                <p className="comment-info-field comment-text">{text}</p>
+            </div>
+
+
         </div>
     );
 };

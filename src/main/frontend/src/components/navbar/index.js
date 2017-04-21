@@ -12,7 +12,7 @@ class Navbar extends Component {
         return (
             <div className="navbar">
                 <Link to="/" className="navbar-logo">
-                    <img className="navbar-logo-img" src="http://spd-university.com/images/logo-header.png"/>
+                    <img className="navbar-logo-img" src="https://files.slack.com/files-pri/T2EJRA9N0-F52A69K43/logo.png"/>
                 </Link>
                 {
                     auth.logged ?

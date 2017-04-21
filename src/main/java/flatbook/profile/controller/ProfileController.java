@@ -66,7 +66,6 @@ public class ProfileController {
         try {
             photoId =  profileService.getIdPhoto();
         } catch (Exception e) {
-
             response.setStatus(HttpServletResponse.SC_NOT_FOUND);
         }
         return photoId;

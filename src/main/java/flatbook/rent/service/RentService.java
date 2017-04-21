@@ -1,5 +1,10 @@
 package flatbook.rent.service;
 
+import flatbook.announcement.dao.AnnouncementDao;
+import flatbook.announcement.entity.Announcement;
+import flatbook.chat.dao.MessageDao;
+import flatbook.chat.entity.Message;
+import flatbook.chat.service.ChatService;
 import flatbook.config.MailClient;
 import flatbook.profile.entity.User;
 import flatbook.profile.service.ProfileService;
@@ -21,14 +26,19 @@ public class RentService {
     private final RentDao rentDao;
     private final ProfileService profileService;
     private final MailClient mailClient;
+    private final ChatService chatService;
+    private final AnnouncementDao announcementDao;
+    private final MessageDao messageDao;
 
     @Autowired
-    public RentService(RentDao rentDao, ProfileService profileService, MailClient mailClient) {
+    public RentService(RentDao rentDao, ProfileService profileService, MailClient mailClient, ChatService chatService, AnnouncementDao announcementDao, MessageDao messageDao) {
         this.rentDao = rentDao;
         this.profileService = profileService;
         this.mailClient = mailClient;
+        this.chatService = chatService;
+        this.announcementDao = announcementDao;
+        this.messageDao = messageDao;
     }
-
 
     public List<Rent> getCurrentUserRents() {
         User user = profileService.getCurrentUser();
@@ -69,6 +79,32 @@ public class RentService {
         rent.setUserId(currentUserId);
         Rent savedRent = rentDao.save(rent);
         mailClient.prepareAndSend(rent);
+
+        Message message = new Message();
+
+        Integer senderId = profileService.getCurrentUser().getId();
+        Announcement announcement = announcementDao.findOne(rentDto.getAnnouncement_id());
+        Integer receiverId = announcement.getUser().getId();
+        Integer announcementId = rentDto.getAnnouncement_id();
+
+        message.setSenderId(senderId);
+        message.setReceiverId(receiverId);
+        message.setAnnouncementId(announcementId);
+        message.setLocalDatetime(new Date());
+
+
+        User currentUser = profileService.getCurrentUser();
+        String bookMessage = String.format("Hello!\n" +
+                "\n" +
+                "User: ($0, $1) has booked tour apartment - ($2).\n" +
+                "\n" +
+                "Please, confirm booking, or discuss all details in personal chat.\n" +
+                "\n" +
+                "Thanks for using Flatrent!", announcement.getUser().getFirstName(), announcement.getUser().getLastName(), announcement.getTitle());
+        message.setContent(bookMessage);
+
+        messageDao.save(message);
+
         return savedRent;
     }
 

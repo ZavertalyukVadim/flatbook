@@ -6,7 +6,7 @@
   display: block;
   resize: vertical;
   width: 100%;
-  border: 2px solid $text-field-default-border-color;
+  border: 1px solid $text-field-default-border-color;
   color: $text-field-default-text-color;
   font-family: $default-font-family;
   font-size: $text-field-font-size;
@@ -19,7 +19,7 @@
   background: $text-field-background;
 
   &:focus {
-    border: 2px solid $primary;
+    border: 1px solid $primary;
     outline: none;
   }
 

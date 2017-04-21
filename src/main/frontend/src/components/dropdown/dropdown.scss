@@ -4,7 +4,7 @@
 
 .dropdown {
   position: relative;
-
+color: white;
   .dropdown-options {
     position: absolute;
     display: none;
@@ -16,15 +16,15 @@
   }
 
   .dropdown-disabled {
-    background-color: $btn-disabled-color !important;
-    border: 2px solid $btn-disabled-color !important;
+    background-color: #464646 !important;
+    border: 1px solid #464646 !important;
   }
 
   .dropdown-selected,
   .dropdown-options-open {
     display: block;
     font-size: $text-field-font-size;
-    border: 2px solid $primary;
+    border: 1px solid $primary;
     border-radius: 3px;
   }
 

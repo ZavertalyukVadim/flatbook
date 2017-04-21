@@ -35,7 +35,7 @@ class AnnouncementControl extends Component {
         const {
             hidden
         } = this.state;
-
+    
         return (
             <div className="announcement-item">
                 <AnnouncementPreview {...this.props}/>

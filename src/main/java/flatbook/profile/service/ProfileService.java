@@ -93,7 +93,7 @@ public class ProfileService {
         newPrimaryPhone.setPhonesUser(savingUser);
         phoneDao.save(newPrimaryPhone);
 
-        mailClient.prepareAndSend(email);
+        mailClient.activateEmail(email);
         return getUserById(savingUser.getId());
     }
 
@@ -215,15 +215,18 @@ public class ProfileService {
 
         byte[] imageBytes = FileUtil.multipartToBytes(multipartFile);
         Image imageEntity = new Image();
+        try {
+            User currentUser = getCurrentUser();
 
-        User currentUser = getCurrentUser();
+            imageEntity.setUser(currentUser);
+            imageEntity.setPhoto(imageBytes);
+            imageDao.save(imageEntity);
 
-        imageEntity.setUser(currentUser);
-        imageEntity.setPhoto(imageBytes);
-        imageDao.save(imageEntity);
-
-        currentUser.setImage(imageDao.save(imageEntity));
-        userDao.save(currentUser);
+            currentUser.setImage(imageDao.save(imageEntity));
+            userDao.save(currentUser);
+        } catch (Exception e) {
+            return null;
+        }
 
         return imageEntity.getId();
     }
@@ -236,6 +239,10 @@ public class ProfileService {
 
         }
         return photo;
+    }
+
+    public byte[] getImageByIdUser(Integer id) throws Exception {
+        return imageDao.getImageByUser(userDao.findOne(id)).getPhoto();
     }
 
     public byte[] getImageById(Integer id) throws Exception {

@@ -3,8 +3,16 @@
 .carousel-wrapper {
   position: relative;
   min-width: $img-medium-width;
-  height: 250px;
+
   overflow: hidden;
+}
+
+.carousel-medium {
+  height: 320px;
+}
+
+.carousel-large {
+  height: 600px;
 }
 
 .carousel-slide {

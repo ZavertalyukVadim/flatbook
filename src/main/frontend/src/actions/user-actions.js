@@ -224,15 +224,41 @@ export const getUserBookings = () => (dispatch, getState) => {
     });
 };
 
-export const signInWithFacebook = body => dispatch => {
+export const sendAMessage = body => dispatch => {
     return dispatch({
         [CALL_API]: {
             types: [
-                ActionTypes.SIGN_IN_FACEBOOK_REQUEST,
-                ActionTypes.SIGN_IN_FACEBOOK_SUCCESS,
-                ActionTypes.SIGN_IN_FACEBOOK_FAILURE
+                ActionTypes.SEND_A_MESSAGE_REQUEST,
+                ActionTypes.SEND_A_MESSAGE_SUCCESS,
+                ActionTypes.SEND_A_MESSAGE_FAILURE
             ],
-            endpoint: () => post('login/facebook', body)
+            endpoint: () => post('chat/send', body)
+        }
+    });
+};
+
+export const getAnnouncementChats = () => dispatch => {
+    return dispatch({
+        [CALL_API]: {
+            types: [
+                ActionTypes.GET_CHATS_REQUEST,
+                ActionTypes.GET_CHATS_SUCCESS,
+                ActionTypes.GET_CHATS_FAILURE
+            ],
+            endpoint: () => post('chat/chats')
+        }
+    });
+};
+
+export const getAnnouncementMessages = () => dispatch => {
+    return dispatch({
+        [CALL_API]: {
+            types: [
+                ActionTypes.GET_MESSAGES_REQUEST,
+                ActionTypes.GET_MESSAGES_SUCCESS,
+                ActionTypes.GET_MESSAGES_FAILURE
+            ],
+            endpoint: () => post('chat/chats')
         }
     });
 };

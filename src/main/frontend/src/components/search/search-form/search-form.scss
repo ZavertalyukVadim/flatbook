@@ -3,11 +3,13 @@
 @import "../../../style/sizes.scss";
 
 .search-form {
-  border: 2px solid $inverse;
-  border-radius: 6px;
-  background-color: $inverse;
-  color: $inverse;
+  box-shadow: 0 0 6px 1px rgba(0, 0, 0, 0.22);
+  border-radius: 3px;
+  background-color: white;
+  color: white;
   min-width: 80%;
+  margin-top: -250px;
+  opacity: .90;
 
   .search-form-options-container {
     display: flex;

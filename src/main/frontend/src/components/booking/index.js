@@ -33,12 +33,11 @@ class Booking extends Component {
 
     });
     render() {
-        console.log(this.state.from.format('YYYY'), this.state.from.format('D'));
         return (
             <div>
                 <Button
-                    type={ButtonTypes.primary}
-                    size={ButtonSizes.large}
+                    type={ButtonTypes.success}
+                    size={ButtonSizes.block}
                     onClick={this.openModal}
                     caption="Request a book"
                 />
@@ -53,7 +52,7 @@ class Booking extends Component {
                         handleChangeEnd={this.saveEndDate}
                     />
                     <Button
-                        type={ButtonTypes.primary}
+                        type={ButtonTypes.success}
                         size={ButtonSizes.large}
                         onClick={this.onSubmit}
                         caption="Request a book"

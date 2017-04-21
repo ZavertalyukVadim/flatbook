@@ -3,9 +3,9 @@ import classNames from 'classnames';
 import './image.scss';
 
 export const ImageSizes = {
-    small: 'small',
-    medium:'medium',
-    large: 'large'
+    small: 'img-small',
+    medium:'img-medium',
+    large: 'img-large'
 };
 
 class Image extends Component {

@@ -1,14 +1,11 @@
 package flatbook.chat.dto;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 public class PageMessage {
+
     private Integer pageNum;
     private Integer itemsPerPage;
 
-    @JsonIgnore
     private Integer senderId;
-    @JsonIgnore
     private Integer receiverId;
 
     private Integer announcementId;

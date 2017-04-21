@@ -26,6 +26,7 @@ class UserBookings extends Component {
                         <div className="announcements-field">
                             {data.map((item, index) =>
                                 <BookingView
+
                                     key={index}
                                     {...item}
 
