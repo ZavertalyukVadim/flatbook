@@ -16,4 +16,10 @@ public class AdviceController {
     @ResponseBody
     public void processValidationError() {
     }
+
+    @ExceptionHandler(Exception.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ResponseBody
+    public void rentBookedError() {
+    }
 }

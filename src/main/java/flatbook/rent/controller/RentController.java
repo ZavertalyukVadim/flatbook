@@ -12,8 +12,13 @@ import java.util.List;
 @RequestMapping(value = "/api/rent")
 public class RentController {
 
+    private final RentService rentService;
+
     @Autowired
-    private RentService rentService;
+    public RentController(RentService rentService) {
+        this.rentService = rentService;
+    }
+
 
     @GetMapping(value = "/current")
     public List<Rent> getRents() {
