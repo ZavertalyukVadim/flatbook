@@ -7,10 +7,10 @@ export const PriceTypes = {
 };
 
 const Price = props => {
-    const {value, payment} = props;
+    const {value, payment, className} = props;
 
     return (
-        <p className="price-payment">{payment}: <span className="price-value">  {value} <i className="price-icon fa fa-usd"/> </span></p>
+        <p className={`price-payment ${className}`}>{payment}: <span className="price-value">  {value} <i className="price-icon fa fa-usd"/> </span></p>
     );
 };
 

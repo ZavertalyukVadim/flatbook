@@ -27,7 +27,6 @@ export const updateUser = values => (dispatch, getState) => {
     if (pending) {
         return null;
     }
-    console.log(values);
     return dispatch({
         [CALL_API]: {
             types: [
@@ -60,7 +59,6 @@ export const getUserAnnouncements = id => (dispatch, getState) => {
 };
 
 export const deleteAnnouncement = id => dispatch => {
-    console.log(id);
     return dispatch({
         [CALL_API]: {
             types: [
@@ -245,12 +243,12 @@ export const getAnnouncementChats = () => dispatch => {
                 ActionTypes.GET_CHATS_SUCCESS,
                 ActionTypes.GET_CHATS_FAILURE
             ],
-            endpoint: () => post('chat/chats')
+            endpoint: () => get('chat/chats')
         }
     });
 };
 
-export const getAnnouncementMessages = () => dispatch => {
+export const getAnnouncementMessages = (announcementId, receiverId, pageNum = 0, itemsPerPage = 20) => dispatch => {
     return dispatch({
         [CALL_API]: {
             types: [
@@ -258,7 +256,7 @@ export const getAnnouncementMessages = () => dispatch => {
                 ActionTypes.GET_MESSAGES_SUCCESS,
                 ActionTypes.GET_MESSAGES_FAILURE
             ],
-            endpoint: () => post('chat/chats')
+            endpoint: () => get(`chat/${pageNum}/${itemsPerPage}/${announcementId}/${receiverId}`)
         }
     });
 };

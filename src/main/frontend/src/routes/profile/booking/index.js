@@ -5,6 +5,7 @@ import Container from '../../../components/container';
 import Sidebar from '../../../components/profile/sidebar';
 import Loader from '../../../components/loader';
 import BookingView from '../../../components/booking/booking-view';
+import './booking.scss';
 
 class UserBookings extends Component {
 
@@ -13,8 +14,8 @@ class UserBookings extends Component {
     }
 
     render() {
-         const {loaded, data} = this.props.user.booking;
-        console.log(this.props.user.booking);
+        const {loaded, data} = this.props.user.booking;
+
         return (
             <Container
                 sidebar={
@@ -23,7 +24,7 @@ class UserBookings extends Component {
             >
                 <div className="announcements-field">
                     {loaded ? (
-                        <div className="announcements-field">
+                        <div className="booking-announcements-list">
                             {data.map((item, index) =>
                                 <BookingView
 

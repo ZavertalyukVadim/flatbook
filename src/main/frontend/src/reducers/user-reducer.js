@@ -30,11 +30,9 @@ const DEFAULT_STATE = {
     },
     messages: {
         chats: [],
-        received: {
-            data: []
-        }, sent: {
-            data: []
-        }
+        received: [{
+            messageDtoPage: {content: []}
+        }]
     },
     loaded: false
 };
@@ -215,18 +213,6 @@ export default (state = DEFAULT_STATE, action) => {
         return {...state, booking: {loaded: false, pending: false}};
     }
 
-    if (action.type === ActionTypes.SIGN_IN_FACEBOOK_REQUEST) {
-        return {...state};
-    }
-
-    if (action.type === ActionTypes.SIGN_IN_FACEBOOK_SUCCESS) {
-        return {...state};
-    }
-
-    if (action.type === ActionTypes.SIGN_IN_FACEBOOK_FAILURE) {
-        return {...state};
-    }
-
     if (action.type === ActionTypes.SEND_A_MESSAGE_REQUEST) {
         return {...state};
     }
@@ -256,7 +242,7 @@ export default (state = DEFAULT_STATE, action) => {
     }
 
     if (action.type === ActionTypes.GET_MESSAGES_SUCCESS) {
-        return {...state, messages:  {...state.messages, received: action.response}};
+        return {...state, messages: {...state.messages, received: [action.response]}};
     }
 
     if (action.type === ActionTypes.GET_MESSAGES_FAILURE) {

@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import AnnouncementPreview from '../../announcement/announcement-preview';
 import Loader from '../../loader';
+import './search-results.scss';
 
 class SearchResult extends Component {
 
@@ -21,8 +22,8 @@ class SearchResult extends Component {
         }
 
         return (
-            <div>
-                {result.data.content.map(a => <AnnouncementPreview {...a}/>)}
+            <div className="search-results-field">
+                {result.data.content.map(a => <AnnouncementPreview vertical={true} {...a}/>)}
             </div>
         )
     }

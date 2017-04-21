@@ -22,7 +22,7 @@ const Sidebar = () => {
                 </li>
                 <li>
                     <Link to='/profile/messages'>
-                        <div>Messages <i className="sidebar-links-icon fa fa-envelope-o"/></div>
+                        <div >Messages <i className="sidebar-links-icon fa fa-envelope-o"/></div>
                     </Link>
                 </li>
                 <li>
@@ -33,7 +33,7 @@ const Sidebar = () => {
                 </li>
                 <li>
                     <Link to='/profile/booking'>
-                        <div> Bookings <i className="sidebar-links-icon fa fa-heart-o"/>
+                        <div> Bookings <i className="sidebar-links-icon fa fa-calendar"/>
                         </div>
                     </Link>
                 </li>

@@ -29,23 +29,30 @@ class AnnouncementView extends Component {
             user
 
         } = this.props.data;
-        console.log(user);
+
         return (
             <div className="announcement-view">
                 <div className="announcement-contacts-field">
                     <div className="announcement-images-field">
                         <AnnouncementPhotoContainer photos={photos} id={id} size="img-large" liked={liked}/>
                         {title &&
-                        <div className="announcement-header"><Header value={title} type={HeaderTypes.secondary}/>Price: {pricePerMonth && <Price
-                            payment={PriceTypes.monthly}
-                            className="price-per-month"
-                            value={pricePerMonth}/>}
-                            {pricePerDay && <Price
+                        <div className="announcement-header">
+                            <Header value={title} type={HeaderTypes.secondary}/>
+                            {pricePerMonth &&
+                            <Price
+                                payment={PriceTypes.monthly}
+                                className="price"
+                                value={pricePerMonth}/>}
+                            {pricePerDay &&
+                            <Price
+                                className="price"
                                 payment={PriceTypes.daily}
-                                value={pricePerDay}/>}</div>}
+                                value={pricePerDay}/>}
+                        </div>}
                     </div>
 
                     <div className="avatar-announcement-field">
+
                         <h2>Owner Information</h2>
                         <AvatarContainer firstName={user.firstName} lastName={user.lastName} view={true}/>
                         {user.emails.map((item, i) => <p className="owner-contact-info"><i
