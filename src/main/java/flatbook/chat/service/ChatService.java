@@ -5,6 +5,7 @@ import flatbook.announcement.entity.Announcement;
 import flatbook.chat.dao.MessageDao;
 import flatbook.chat.dto.*;
 import flatbook.chat.entity.Message;
+import flatbook.profile.dao.UserDao;
 import flatbook.profile.entity.User;
 import flatbook.profile.service.ProfileService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,25 +17,24 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityManager;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 @Service
 public class ChatService {
     private final MessageDao messageDao;
     private final AnnouncementDao announcementDao;
     private final EntityManager entityManager;
+    private final UserDao userDao;
 
 
     private final ProfileService profileService;
 
     @Autowired
-    public ChatService(MessageDao messageDao, AnnouncementDao announcementDao, EntityManager entityManager, ProfileService profileService) {
+    public ChatService(MessageDao messageDao, AnnouncementDao announcementDao, EntityManager entityManager, UserDao userDao, ProfileService profileService) {
         this.messageDao = messageDao;
         this.announcementDao = announcementDao;
         this.entityManager = entityManager;
+        this.userDao = userDao;
         this.profileService = profileService;
     }
 
@@ -67,7 +67,7 @@ public class ChatService {
         return messageDao.save(message);
     }
 
-    public Page<MessageDto> getMessages(PageMessage pageMessage) {
+    public CommunicatorsPageDto getMessages(PageMessage pageMessage) {
         PageRequest pageRequest = new PageRequest(pageMessage.getPageNum(), pageMessage.getItemsPerPage());
 
         Integer senderId = profileService.getCurrentUser().getId();
@@ -77,12 +77,28 @@ public class ChatService {
         pageMessage.setReceiverId(receiverId);
 
         Page<Message> messages = messageDao.getMessages(pageMessage, pageRequest);
-        return markMyMessages(messages);
-//
-//        MessageDto messageDto = new MessageDto();
-//        messageDto.setMessages();
-//
-//        return messages;
+
+        Page<MessageDto> messagesResult =  markMyMessages(messages);
+        return setCommunicators(messagesResult, messages);
+    }
+
+    private CommunicatorsPageDto setCommunicators(Page<MessageDto> dtoPage, Page<Message> messagePage) {
+        User me = profileService.getCurrentUser();
+        User you = null;
+
+        for (Message message: messagePage.getContent()) {
+            Integer possibleYou = messagePage.getContent().get(0).getReceiverId();
+            if (me.getId() == possibleYou) continue;
+                you = userDao.findOne(possibleYou);
+        }
+
+        CommunicatorsPageDto communicatorsPageDto = new CommunicatorsPageDto();
+
+        communicatorsPageDto.setMe(me);
+        communicatorsPageDto.setYou(you);
+        communicatorsPageDto.setMessageDtoPage(dtoPage);
+
+        return communicatorsPageDto;
     }
 
     public void getChats(PageMessage pageMessage) {
@@ -94,6 +110,8 @@ public class ChatService {
     }
 
     public List<ChatDto> getChatsAnnouncements() {
+        Set<ChatDto> chatDtoSet = new HashSet<>();
+
         List<ChatDto> chatDtos = new ArrayList<>();
 
         List<Object[]> objects = announcementDao.getChatsAnnouncements(new UserWithId(profileService.getCurrentUser().getId()));
@@ -101,12 +119,31 @@ public class ChatService {
             ChatDto chatDto = new ChatDto();
 
             chatDto.setAnnouncementId((Integer) objects1[0]);
-            chatDto.setSenderId((Integer) objects1[1]);
-            chatDto.setReceiverId((Integer) objects1[2]);
 
-            chatDtos.add(chatDto);
+            Integer currentUserId = profileService.getCurrentUser().getId();
+
+            Integer firstSender = (Integer) objects1[1];
+            Integer secondSender = (Integer) objects1[2];
+
+            if(currentUserId == firstSender) {
+                chatDto.setSenderId(firstSender);
+                chatDto.setReceiverId(secondSender);
+            } else {
+                chatDto.setSenderId(secondSender);
+                chatDto.setReceiverId(firstSender);
+            }
+//            chatDto.setSenderId((Integer) objects1[1]);
+//            chatDto.setReceiverId((Integer) objects1[2]);
+
+            if (chatDtoSet.stream().anyMatch(chatDto1 -> chatDto1.equals(chatDto))) return;
+
+            chatDtoSet.add(chatDto);
+
+//            chatDtos.add(chatDto);
         });
 
+
+        chatDtos.addAll(chatDtoSet);
         return chatDtos;
     }
 

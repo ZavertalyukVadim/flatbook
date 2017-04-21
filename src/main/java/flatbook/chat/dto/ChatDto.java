@@ -32,4 +32,17 @@ public class ChatDto {
     public void setAnnouncementId(Integer announcementId) {
         this.announcementId = announcementId;
     }
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        ChatDto chatDto = (ChatDto) o;
+
+        if (senderId != null ? !senderId.equals(chatDto.senderId) : chatDto.senderId != null) return false;
+        if (receiverId != null ? !receiverId.equals(chatDto.receiverId) : chatDto.receiverId != null) return false;
+        return announcementId != null ? announcementId.equals(chatDto.announcementId) : chatDto.announcementId == null;
+    }
 }

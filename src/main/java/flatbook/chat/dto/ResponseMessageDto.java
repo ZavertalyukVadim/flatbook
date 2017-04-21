@@ -13,4 +13,14 @@ public class ResponseMessageDto {
     }
 
     private Page<MessageDto> message;
+
+    public CommunicatorsPageDto getCommunicatorsPageDto() {
+        return communicatorsPageDto;
+    }
+
+    public void setCommunicatorsPageDto(CommunicatorsPageDto communicatorsPageDto) {
+        this.communicatorsPageDto = communicatorsPageDto;
+    }
+
+    private CommunicatorsPageDto communicatorsPageDto;
 }

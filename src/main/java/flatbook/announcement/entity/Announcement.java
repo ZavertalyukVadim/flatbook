@@ -22,9 +22,6 @@ public class Announcement {
     @Column(name = "price_per_month")
     private Integer pricePerMonth;
 
-    //    @JsonIgnore
-//    @JsonBackReference
-//    @ManyToOne(fetch = FetchType.EAGER)
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinTable(name = "users_announcements", joinColumns = {
             @JoinColumn(name = "announcement_id")},
