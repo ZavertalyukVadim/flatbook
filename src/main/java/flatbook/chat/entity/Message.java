@@ -29,9 +29,6 @@ public class Message {
     @Column(name = "content")
     private String content;
 
-
-//    private Boolean my;
-
     public Message() {
     }
 
@@ -82,12 +79,4 @@ public class Message {
     public void setContent(String content) {
         this.content = content;
     }
-
-//    public Boolean getMy() {
-//        return my;
-//    }
-//
-//    public void setMy(Boolean my) {
-//        this.my = my;
-//    }
 }

@@ -5,6 +5,7 @@ import flatbook.announcement.entity.Announcement;
 import flatbook.chat.dao.MessageDao;
 import flatbook.chat.dto.*;
 import flatbook.chat.entity.Message;
+import flatbook.profile.dao.UserDao;
 import flatbook.profile.entity.User;
 import flatbook.profile.service.ProfileService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,15 +27,17 @@ public class ChatService {
     private final MessageDao messageDao;
     private final AnnouncementDao announcementDao;
     private final EntityManager entityManager;
+    private final UserDao userDao;
 
 
     private final ProfileService profileService;
 
     @Autowired
-    public ChatService(MessageDao messageDao, AnnouncementDao announcementDao, EntityManager entityManager, ProfileService profileService) {
+    public ChatService(MessageDao messageDao, AnnouncementDao announcementDao, EntityManager entityManager, UserDao userDao, ProfileService profileService) {
         this.messageDao = messageDao;
         this.announcementDao = announcementDao;
         this.entityManager = entityManager;
+        this.userDao = userDao;
         this.profileService = profileService;
     }
 
@@ -67,7 +70,7 @@ public class ChatService {
         return messageDao.save(message);
     }
 
-    public Page<MessageDto> getMessages(PageMessage pageMessage) {
+    public CommunicatorsPageDto getMessages(PageMessage pageMessage) {
         PageRequest pageRequest = new PageRequest(pageMessage.getPageNum(), pageMessage.getItemsPerPage());
 
         Integer senderId = profileService.getCurrentUser().getId();
@@ -77,12 +80,28 @@ public class ChatService {
         pageMessage.setReceiverId(receiverId);
 
         Page<Message> messages = messageDao.getMessages(pageMessage, pageRequest);
-        return markMyMessages(messages);
-//
-//        MessageDto messageDto = new MessageDto();
-//        messageDto.setMessages();
-//
-//        return messages;
+
+        Page<MessageDto> messagesResult =  markMyMessages(messages);
+        return setCommunicators(messagesResult, messages);
+    }
+
+    private CommunicatorsPageDto setCommunicators(Page<MessageDto> dtoPage, Page<Message> messagePage) {
+        User me = profileService.getCurrentUser();
+        User you = null;
+
+        for (Message message: messagePage.getContent()) {
+            Integer possibleYou = messagePage.getContent().get(0).getReceiverId();
+            if (me.getId() == possibleYou) continue;
+                you = userDao.findOne(possibleYou);
+        }
+
+        CommunicatorsPageDto communicatorsPageDto = new CommunicatorsPageDto();
+
+        communicatorsPageDto.setMe(me);
+        communicatorsPageDto.setYou(you);
+        communicatorsPageDto.setMessageDtoPage(dtoPage);
+
+        return communicatorsPageDto;
     }
 
     public void getChats(PageMessage pageMessage) {

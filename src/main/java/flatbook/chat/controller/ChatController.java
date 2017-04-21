@@ -5,6 +5,7 @@ import flatbook.chat.dto.PageMessage;
 import flatbook.chat.dto.ResponseMessageDto;
 import flatbook.chat.entity.Message;
 import flatbook.chat.service.ChatService;
+import flatbook.profile.service.ProfileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,10 +16,12 @@ import java.util.List;
 public class ChatController {
 
     private final ChatService chatService;
+    private final ProfileService profileService;
 
     @Autowired
-    public ChatController(ChatService chatService) {
+    public ChatController(ChatService chatService, ProfileService profileService) {
         this.chatService = chatService;
+        this.profileService = profileService;
     }
 
 
@@ -40,7 +43,7 @@ public class ChatController {
         pageMessage.setReceiverId(receiverId);
 
         ResponseMessageDto responseMessageDto = new ResponseMessageDto();
-        responseMessageDto.setMessage(chatService.getMessages(pageMessage));
+        responseMessageDto.setCommunicatorsPageDto(chatService.getMessages(pageMessage));
 
         return responseMessageDto;
     }
