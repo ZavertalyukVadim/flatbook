@@ -78,7 +78,7 @@ public class RentService {
 
         rent.setUserId(currentUserId);
         Rent savedRent = rentDao.save(rent);
-        mailClient.prepareAndSend(rent);
+        mailClient.bookApartment(rent);
 
         Message message = new Message();
 
