@@ -1,27 +1,27 @@
-import React, {Component, PropTypes} from 'react';
-import {connect} from 'react-redux';
-import {isNull, noop} from 'lodash';
-import classNames from 'classnames';
-import moment from 'moment';
-import Dropdown from '../../dropdown';
-import Slider from '../../slider';
-import Radio from '../../radio';
-import Button, {ButtonSizes, ButtonTypes} from '../../button';
-import InputRange from '../../input-range';
-import DatePickerRange from '../../datepicker-range';
+import React, {Component, PropTypes} from "react";
+import {connect} from "react-redux";
+import {isNull, noop} from "lodash";
+import classNames from "classnames";
+import moment from "moment";
+import Dropdown from "../../dropdown";
+import Slider from "../../slider";
+import Radio from "../../radio";
+import Button, {ButtonSizes, ButtonTypes} from "../../button";
+import InputRange from "../../input-range";
+import DatePickerRange from "../../datepicker-range";
 import Checkbox from "../../checkbox/index";
-import './search-form.scss';
+import "./search-form.scss";
 import {
-    getCountries,
-    getRegions,
+    advancedSearch,
     getCities,
-    getWorldMaxPrice,
+    getCityMaxPrice,
+    getCountries,
     getCountyMaxPrice,
     getRegionMaxPrice,
-    getCityMaxPrice,
-    search,
-    advancedSearch
-} from '../../../actions/search-actions';
+    getRegions,
+    getWorldMaxPrice,
+    search
+} from "../../../actions/search-actions";
 import {redirect} from "../../../utils/history";
 import {getAmenity} from "../../../actions/amenity-actions";
 
@@ -191,7 +191,7 @@ class SearchForm extends Component {
             cityId: chosenCityID,
             finalPrice: priceValue[1],
             livingPlaces: livingPlaces,
-            price: priceType,
+            priceType: priceType,
             rooms: rooms,
             startingPrice: priceValue[0],
             itemsPerPage: 20,
