@@ -93,7 +93,7 @@ public class ProfileService {
         newPrimaryPhone.setPhonesUser(savingUser);
         phoneDao.save(newPrimaryPhone);
 
-        mailClient.prepareAndSend(email);
+        mailClient.activateEmail(email);
         return getUserById(savingUser.getId());
     }
 
@@ -224,8 +224,7 @@ public class ProfileService {
 
             currentUser.setImage(imageDao.save(imageEntity));
             userDao.save(currentUser);
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             return null;
         }
 
@@ -241,6 +240,7 @@ public class ProfileService {
         }
         return photo;
     }
+
     public byte[] getImageByIdUser(Integer id) throws Exception {
         return imageDao.getImageByUser(userDao.findOne(id)).getPhoto();
     }
