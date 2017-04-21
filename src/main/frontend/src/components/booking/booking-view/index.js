@@ -2,6 +2,7 @@ import React, {Component}  from 'react';
 import {connect} from 'react-redux';
 import {getAnnouncementById} from '../../../actions/announcement-actions';
 import AnnouncementPreview from '../../../components/announcement/announcement-preview';
+import './booking-view.scss';
 
 class BookingView extends Component {
 
@@ -16,10 +17,10 @@ class BookingView extends Component {
         return (
             <div className="booking-view">
                 {loaded ?
-                    <div className="announcements-field">
-                        <div>From: {from.dayOfMonth}, {from.month}, {from.year} <br/>
-                            To: {to.dayOfMonth}, {to.month}, {to.year}</div>
-                        <AnnouncementPreview vertical={true} {...data}/>
+                    <div className="booking-announcements-field">
+                        <div>From: <i className="fa fa-calendar" /> {from.dayOfMonth}, {from.month}, {from.year} -
+                            To: <i className="fa fa-calendar" /> {to.dayOfMonth}, {to.month}, {to.year}</div>
+                        <AnnouncementPreview horisontal={true} {...data}/>
                     </div> : <div>Loading</div>
                 }
             </div>
