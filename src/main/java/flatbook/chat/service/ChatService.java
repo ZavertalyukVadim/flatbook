@@ -17,10 +17,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityManager;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 @Service
 public class ChatService {
@@ -113,6 +110,8 @@ public class ChatService {
     }
 
     public List<ChatDto> getChatsAnnouncements() {
+        Set<ChatDto> chatDtoSet = new HashSet<>();
+
         List<ChatDto> chatDtos = new ArrayList<>();
 
         List<Object[]> objects = announcementDao.getChatsAnnouncements(new UserWithId(profileService.getCurrentUser().getId()));
@@ -133,15 +132,18 @@ public class ChatService {
                 chatDto.setSenderId(secondSender);
                 chatDto.setReceiverId(firstSender);
             }
-
-
 //            chatDto.setSenderId((Integer) objects1[1]);
 //            chatDto.setReceiverId((Integer) objects1[2]);
 
-            chatDtos.add(chatDto);
+            if (chatDtoSet.stream().anyMatch(chatDto1 -> chatDto1.equals(chatDto))) return;
+
+            chatDtoSet.add(chatDto);
+
+//            chatDtos.add(chatDto);
         });
 
 
+        chatDtos.addAll(chatDtoSet);
         return chatDtos;
     }
 
